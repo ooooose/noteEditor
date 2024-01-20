@@ -1,36 +1,33 @@
-import React from "react";
-import { Button } from "@/components/ui/button"
+import React, { ReactNode } from 'react'
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
-  DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from '@/components/ui/dialog'
 
-const AuthModal = () => {
+type ModalProps = {
+  text: string
+  description: string
+  children: ReactNode
+}
+
+const Modal = ({ text, description, children }: ModalProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">はじめる</Button>
+        <Button variant='outline'>{text}</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className='sm:max-w-[425px]'>
         <DialogHeader>
-          <DialogDescription>
-            Markdown形式のメモアプリ
-          </DialogDescription>
+          <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <Button variant="outline">Googleアカウントでログイン</Button>
-          <Button variant="outline">メールアドレスでログイン</Button>
-        </div>
+        <div className='grid gap-4 py-4'>{children}</div>
       </DialogContent>
     </Dialog>
   )
 }
 
-export default AuthModal
+export default Modal
