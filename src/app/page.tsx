@@ -6,14 +6,14 @@ import { useSession } from 'next-auth/react'
 export default function Home() {
   const { status } = useSession()
   if (status === 'loading') {
-    return <div>Loading...</div>
+    return <div className='flex flex-col items-center justify-between'>Loading...</div>
   }
 
-  if (status !== 'authenticated') {
+  if (status === 'authenticated') {
     return (
-      <div>
-        <p>あなたはログインしていません</p>
-      </div>
+      <main className='flex flex-col items-center justify-between'>
+        <p>あなたはログインしています。</p>
+      </main>
     )
   }
 

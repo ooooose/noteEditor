@@ -13,7 +13,9 @@ export const Logout = () => {
         ログアウト
       </Button>
       <DialogClose asChild>
-        <Button variant='outline'>キャンセル</Button>
+        <Button variant='outline' className='bg-gray-100'>
+          キャンセル
+        </Button>
       </DialogClose>
     </Modal>
   )
