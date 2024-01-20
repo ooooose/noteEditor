@@ -1,1 +1,1 @@
-export { AuthModal } from './Modal'
+export { Modal } from './Modal'
