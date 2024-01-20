@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import AuthModal from "@/components/AuthModal"
+import AuthModal from "@/components/elements/Modal/AuthModal"
 
 export default function Home() {
   return (
@@ -9,7 +9,7 @@ export default function Home() {
       </div>
       <div className="my-10">
         <p>
-          Noterは、Markdown形式のメモアプリです。
+          Tipserは、あなたの持っているTipsを共有するアプリです。
         </p>
       </div>
       <AuthModal />
