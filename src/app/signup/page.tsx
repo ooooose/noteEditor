@@ -4,11 +4,11 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { signInWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '@/lib/firebase/client'
 import { signIn as signInByNextAuth } from 'next-auth/react'
 
-function SignIn() {
+function SignUp() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
@@ -17,7 +17,7 @@ function SignIn() {
     if (!password) return
 
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password)
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password)
       const idToken = await userCredential.user.getIdToken()
       await signInByNextAuth('credentials', {
         idToken,
@@ -48,7 +48,7 @@ function SignIn() {
       </div>
       <div className='w-full text-right mb-5'>
         <p className='text-xs'>
-          新規登録は<Link href='/signup'>こちら</Link>
+          ログインは<Link href='/signin'>こちら</Link>
         </p>
       </div>
       <Button
@@ -58,10 +58,10 @@ function SignIn() {
         }}
         disabled={!email || !password}
       >
-        ログイン
+        新規登録
       </Button>
     </div>
   )
 }
 
-export default SignIn
+export default SignUp
