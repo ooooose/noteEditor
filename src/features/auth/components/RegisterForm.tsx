@@ -71,7 +71,7 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
               registration={register('password')}
             />
             <div>
-              <Button type='submit' className='w-full'>
+              <Button type='submit' className='w-full mt-6'>
                 新規登録
               </Button>
             </div>

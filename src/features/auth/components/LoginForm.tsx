@@ -62,7 +62,7 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
               registration={register('password')}
             />
             <div>
-              <Button isLoading={!!session} type='submit' className='w-full'>
+              <Button isLoading={!!session} type='submit' className='w-full mt-6'>
                 ログイン
               </Button>
             </div>
