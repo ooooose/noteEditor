@@ -1,69 +1,15 @@
 'use client'
 
-import React, { useState } from 'react'
+import React from 'react'
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
+import { RegisterForm } from '@/features/auth/components/RegisterForm'
 
 function Register() {
   const router = useRouter()
-  const [data, setData] = useState({
-    name: '',
-    email: '',
-    password: '',
-  })
-
-  const registerUser = async (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
-    e.preventDefault()
-    const response = await fetch('/api/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ data }),
-    })
-    const userInfo = await response.json()
-    router.push('/login')
-  }
 
   return (
-    <div className='flex flex-col items-center w-1/3 m-auto'>
-      <div className='w-full space-y-5'>
-        <Input
-          type='text'
-          value={data.name}
-          required
-          onChange={(event) => setData({ ...data, name: event.target.value })}
-          placeholder='お名前'
-        />
-        <Input
-          type='email'
-          value={data.email}
-          required
-          onChange={(event) => setData({ ...data, email: event.target.value })}
-          placeholder='メールアドレス'
-        />
-        <Input
-          type='password'
-          value={data.password}
-          required
-          onChange={(event) => setData({ ...data, password: event.target.value })}
-          placeholder='パスワード'
-        />
-      </div>
-      <div className='w-full text-right mb-5'>
-        <p className='text-xs'>
-          ログインは<Link href='/login'>こちら</Link>
-        </p>
-      </div>
-      <Button
-        variant='outline'
-        onClick={registerUser}
-        disabled={!data.email || !data.password || !data.name}
-      >
-        新規登録
-      </Button>
+    <div className='flex flex-col m-auto w-1/4'>
+      <RegisterForm onSuccess={() => router.push('/login')} />
     </div>
   )
 }

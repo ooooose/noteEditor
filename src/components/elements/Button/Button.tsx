@@ -4,12 +4,6 @@ import React, { ReactElement, forwardRef } from 'react'
 import { Button as ButtonComponent } from '@/components/ui/button'
 import { Spinner } from '../Spinner'
 
-const variants = {
-  primary: 'outline',
-  inverse: 'bg-white text-blue-600',
-  danger: 'bg-red-600 text-white',
-}
-
 const sizes = {
   sm: 'py-2 px-4 text-sm',
   md: 'py-2 px-6 text-md',
@@ -22,7 +16,15 @@ type IconProps =
   | { endIcon?: undefined; startIcon?: undefined }
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: keyof typeof variants
+  variant?:
+    | 'outline'
+    | 'default'
+    | 'destructive'
+    | 'secondary'
+    | 'ghost'
+    | 'link'
+    | null
+    | undefined
   size?: keyof typeof sizes
   isLoading?: boolean
 } & IconProps
@@ -32,7 +34,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     {
       type = 'button',
       className = '',
-      variant = 'primary',
+      variant = 'default',
       size = 'md',
       isLoading = false,
       startIcon,
@@ -45,12 +47,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <ButtonComponent
         ref={ref}
         type={type}
-        className={clsx(
-          'flex justify-center items-center border border-gray-300 disabled:opacity-70 disabled:cursor-not-allowed rounded-md shadow-sm font-medium focus:outline-none hover:opacity-80',
-          variants[variant],
-          sizes[size],
-          className,
-        )}
+        variant={variant}
+        className={clsx(sizes[size], className)}
         {...props}
       >
         {isLoading && <Spinner size='sm' className='text-current' />}
