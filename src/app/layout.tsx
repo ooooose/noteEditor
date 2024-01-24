@@ -3,6 +3,7 @@ import { Noto_Sans_JP } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/layouts/Header/Header'
 import NextAuthProvider from '@/lib/next-auth/NextAuthProvider'
+import { cn } from '@/lib/utils'
 
 const notoSansJP = Noto_Sans_JP({ subsets: ['latin'] })
 
@@ -14,7 +15,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang='ja'>
-      <body className={notoSansJP.className}>
+      <body
+        className={cn('min-h-screen bg-background font-sans antialiased', notoSansJP.className)}
+      >
         <NextAuthProvider>
           <Header />
           {children}
