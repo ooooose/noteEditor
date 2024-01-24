@@ -5,6 +5,7 @@ import { PrismaAdapter } from '@auth/prisma-adapter'
 import { PrismaClient } from '@prisma/client'
 import type { Adapter } from 'next-auth/adapters'
 import { auth } from '../firebase/admin'
+import bcrypt from 'bcrypt'
 
 type ClientType = {
   clientId: string
@@ -21,25 +22,52 @@ export const options: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
     } as ClientType),
     CredentialsProvider({
-      credentials: {},
-      // @ts-ignore
-      authorize: async ({ idToken }: any, _req) => {
-        if (idToken) {
-          try {
-            const decoded = await auth.verifyIdToken(idToken)
-            return { ...decoded }
-          } catch (err) {
-            console.error(err)
-          }
-        }
-        return null
+      name: 'credentials',
+      credentials: {
+        email: { label: 'Email', type: 'email' },
+        password: { label: 'Password', type: 'password' },
       },
+      // @ts-ignore
+      async authorize(credentials) {
+        if (!credentials?.email || !credentials.password) {
+          return null
+        }
+
+        const user = await prisma.user.findUnique({
+          where: {
+            email: credentials.email,
+          },
+        })
+        if (!user) {
+          return null
+        }
+        const passwordsMatch = await bcrypt.compare(credentials.password, user.hashedPassword ?? '')
+
+        if (!passwordsMatch) {
+          return null
+        }
+
+        return user
+      },
+      // @ts-ignore
+      // authorize: async ({ idToken }: any, _req) => {
+      //   if (idToken) {
+      //     try {
+      //       const decoded = await auth.verifyIdToken(idToken)
+      //       return { ...decoded }
+      //     } catch (err) {
+      //       console.error(err)
+      //     }
+      //   }
+      //   return null
+      // },
     }),
   ],
   adapter: PrismaAdapter(prisma) as Adapter,
   session: {
     strategy: 'jwt',
   },
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     // @ts-ignore
     async jwt({ token, user }) {
@@ -48,7 +76,12 @@ export const options: NextAuthOptions = {
     async session({ session, token }) {
       session.user.emailVerified = token.emailVerified
       session.user.uid = token.uid
-      return session
+      return {
+        ...session,
+        user: {
+          ...session.user,
+        },
+      }
     },
   },
 }

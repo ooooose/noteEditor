@@ -12,7 +12,7 @@ export const Login = () => {
         Googleアカウントでログイン
       </Button>
       <Button variant='outline' className='bg-gray-100' asChild>
-        <Link href='/signin'>メールでログイン</Link>
+        <Link href='/login'>メールでログイン</Link>
       </Button>
     </Modal>
   )
