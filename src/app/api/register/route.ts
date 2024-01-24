@@ -28,8 +28,9 @@ export async function POST(request: Request) {
       name,
       email,
       hashedPassword,
+      emailVerified: new Date(),
     },
   })
 
-  return NextResponse.json(user)
+  return NextResponse.json(user, { status: 201 })
 }

@@ -4,7 +4,6 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import { PrismaAdapter } from '@auth/prisma-adapter'
 import { PrismaClient } from '@prisma/client'
 import type { Adapter } from 'next-auth/adapters'
-import { auth } from '../firebase/admin'
 import bcrypt from 'bcrypt'
 
 type ClientType = {
@@ -49,18 +48,6 @@ export const options: NextAuthOptions = {
 
         return user
       },
-      // @ts-ignore
-      // authorize: async ({ idToken }: any, _req) => {
-      //   if (idToken) {
-      //     try {
-      //       const decoded = await auth.verifyIdToken(idToken)
-      //       return { ...decoded }
-      //     } catch (err) {
-      //       console.error(err)
-      //     }
-      //   }
-      //   return null
-      // },
     }),
   ],
   adapter: PrismaAdapter(prisma) as Adapter,
