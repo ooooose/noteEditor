@@ -54,7 +54,7 @@ function Register() {
       </div>
       <div className='w-full text-right mb-5'>
         <p className='text-xs'>
-          ログインは<Link href='/signin'>こちら</Link>
+          ログインは<Link href='/login'>こちら</Link>
         </p>
       </div>
       <Button
