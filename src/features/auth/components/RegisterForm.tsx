@@ -6,8 +6,8 @@ import * as z from 'zod'
 import { Button } from '@/components/elements/Button'
 import { Form, Input } from '@/components/elements/Form'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 const schema = z.object({
   name: z.string().min(1, '必須項目です'),
@@ -28,14 +28,21 @@ type RegisterFormProps = {
 export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
   const router = useRouter()
   const registerUser = async (data: RegisterValues) => {
-    const response = await fetch('/api/register', {
+    await fetch('/api/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ data }),
+    }).then(async (res: Response) => {
+      if (res) {
+        await signIn('credentials', {
+          ...data,
+          redirect: false,
+        })
+        router.push('/')
+      }
     })
-    const userInfo = await response.json()
   }
 
   return (
