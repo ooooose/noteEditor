@@ -4,7 +4,7 @@ import React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import * as z from 'zod'
-import { useSession, signIn } from 'next-auth/react'
+import { useSession, signIn, SignInResponse } from 'next-auth/react'
 import { useToast } from '@/components/ui/use-toast'
 
 import { Button } from '@/components/elements/Button'
@@ -32,8 +32,16 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
     await signIn('credentials', {
       ...data,
       redirect: false,
+    }).then((res: SignInResponse | undefined) => {
+      if (res && res.status === 200) {
+        router.push('/')
+      } else if (res?.status === 401) {
+        toast({
+          description: 'ログインに失敗しました',
+          variant: 'destructive',
+        })
+      }
     })
-    router.push('/')
   }
 
   const onSubmit = async (values: LoginValues) => {

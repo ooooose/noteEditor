@@ -4,6 +4,7 @@ import './globals.css'
 import Header from '@/components/layouts/Header/Header'
 import NextAuthProvider from '@/lib/next-auth/NextAuthProvider'
 import { cn } from '@/lib/utils'
+import { Toaster } from '@/components/ui/toaster'
 
 const notoSansJP = Noto_Sans_JP({ subsets: ['latin'] })
 
@@ -21,6 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <NextAuthProvider>
           <Header />
           {children}
+          <Toaster />
         </NextAuthProvider>
       </body>
     </html>

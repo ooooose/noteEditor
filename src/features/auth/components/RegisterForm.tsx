@@ -8,6 +8,7 @@ import { Form, Input } from '@/components/elements/Form'
 import Link from 'next/link'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import { useToast } from '@/components/ui/use-toast'
 
 const schema = z.object({
   name: z.string().min(1, '必須項目です'),
@@ -26,6 +27,7 @@ type RegisterFormProps = {
 }
 
 export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
+  const { toast } = useToast()
   const router = useRouter()
   const registerUser = async (data: RegisterValues) => {
     await fetch('/api/register', {
@@ -35,12 +37,17 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
       },
       body: JSON.stringify({ data }),
     }).then(async (res: Response) => {
-      if (res) {
+      if (res.status === 200) {
         await signIn('credentials', {
           ...data,
           redirect: false,
         })
         router.push('/')
+      } else if (res.status === 400) {
+        toast({
+          description: '新規登録に失敗しました',
+          variant: 'destructive',
+        })
       }
     })
   }
