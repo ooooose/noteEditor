@@ -13,3 +13,22 @@ export async function GET(req: Request, res: NextResponse) {
     await prisma.$disconnect()
   }
 }
+
+// テーマ全取得API
+export async function POST(req: Request, res: NextResponse) {
+  try {
+    const { userId, title } = await req.json()
+    await main()
+    const theme = await prisma.theme.create({
+      data: {
+        userId,
+        title,
+      },
+    })
+    return NextResponse.json({ message: 'Success', theme }, { status: 201 })
+  } catch (err) {
+    return NextResponse.json({ message: 'Error', err }, { status: 500 })
+  } finally {
+    await prisma.$disconnect()
+  }
+}
