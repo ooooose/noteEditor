@@ -34,7 +34,7 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
       redirect: false,
     }).then((res: SignInResponse | undefined) => {
       if (res && res.status === 200) {
-        router.push('/')
+        router.push('/themes')
       } else if (res?.status === 401) {
         toast({
           description: 'ログインに失敗しました',

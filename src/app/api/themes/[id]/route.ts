@@ -33,7 +33,7 @@ export async function PUT(req: Request, res: NextResponse) {
   }
 }
 
-// テーマ更新API
+// テーマ削除API
 export async function DELETE(req: Request, res: NextResponse) {
   try {
     const id: string = req.url.split('/themes/')[1]
