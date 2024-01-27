@@ -5,7 +5,7 @@ import { RegisterForm } from '@/features/auth/components/RegisterForm'
 
 function Register() {
   return (
-    <div className='flex flex-col m-auto w-1/4'>
+    <div>
       <RegisterForm onSuccess={() => {}} />
     </div>
   )
