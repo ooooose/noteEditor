@@ -5,7 +5,7 @@ import { LoginForm } from '@/features/auth/components/LoginForm'
 
 function Login() {
   return (
-    <div className='flex flex-col m-auto w-1/4'>
+    <div>
       <LoginForm onSuccess={() => {}} />
     </div>
   )

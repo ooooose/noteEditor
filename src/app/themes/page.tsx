@@ -10,7 +10,7 @@ function Themes() {
   if (isError) return <div>Error loading themes</div>
 
   return (
-    <div className='flex flex-col m-auto'>
+    <div>
       {themes?.map((theme: Theme) => {
         return <div key={theme.id}>{theme.title}</div>
       })}

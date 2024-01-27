@@ -3,6 +3,7 @@ import { Noto_Sans_JP } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/layouts/Header/Header'
 import NextAuthProvider from '@/lib/next-auth/NextAuthProvider'
+import { ThemeProvider } from '@/components/elements/Provider/ThemeProvider'
 import { cn } from '@/lib/utils'
 import { Toaster } from '@/components/ui/toaster'
 
@@ -20,9 +21,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         className={cn('min-h-screen bg-background font-sans antialiased', notoSansJP.className)}
       >
         <NextAuthProvider>
-          <Header />
-          {children}
-          <Toaster />
+          <ThemeProvider
+            attribute='class'
+            defaultTheme='Light'
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div className='xl:w-2/3 w-full mx-auto '>
+              <Header />
+              <div className='flex flex-col items-center justify-between'>{children}</div>
+            </div>
+            <Toaster />
+          </ThemeProvider>
         </NextAuthProvider>
       </body>
     </html>
