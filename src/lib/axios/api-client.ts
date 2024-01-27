@@ -15,23 +15,23 @@ class ApiClient {
     })
   }
 
-  async apiGet<T>(url: string, query = {}): Promise<AxiosResponse<T>> {
-    return await this.axios.get<T>(`${url}`, { ...query })
+  async apiGet(url: string, query = {}): Promise<AxiosResponse> {
+    return await this.axios.get(`${url}`, { ...query })
   }
 
-  async apiPost<T>(url: string, body = {}): Promise<AxiosResponse<T>> {
-    return await this.axios.post<T>(`${url}`, body)
+  async apiPost(url: string, body = {}): Promise<AxiosResponse> {
+    return await this.axios.post(`${url}`, body)
   }
 
-  async apiPut<T>(url: string, body = {}): Promise<AxiosResponse<T>> {
-    return await this.axios.put<T>(`${url}`, body)
+  async apiPut(url: string, body = {}): Promise<AxiosResponse> {
+    return await this.axios.put(`${url}`, body)
   }
 
-  async apiDelete<T>(url: string, body = {}): Promise<AxiosResponse<T>> {
+  async apiDelete(url: string, body = {}): Promise<AxiosResponse> {
     const config = {
       data: body,
     }
-    return await this.axios.delete<T>(`${url}`, config)
+    return await this.axios.delete(`${url}`, config)
   }
 }
 
