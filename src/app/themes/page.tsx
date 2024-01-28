@@ -1,8 +1,8 @@
 import React from 'react'
-import { Layout } from '@/features/themes/components/Layout'
+import { ThemesLayout } from '@/features/themes/components/ThemesLayout'
 
 function Themes() {
-  return <Layout />
+  return <ThemesLayout />
 }
 
 export default Themes
