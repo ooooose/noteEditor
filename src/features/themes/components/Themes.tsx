@@ -1,6 +1,7 @@
 'use client'
 
 import * as React from 'react'
+import Link from 'next/link'
 import { useFetchThemes } from '@/features/themes/hooks/useFetchThemes'
 import { Theme as ThemeType } from '@/features/themes/types'
 import { Theme } from './Theme'
@@ -11,7 +12,7 @@ export const Themes = () => {
   if (isLoading)
     return (
       <div className='flex flex-wrap gap-x-3 gap-y-5'>
-        {[...Array(5)].map((_, i) => {
+        {[...Array(6)].map((_, i) => {
           return <SkeletonCard key={i} />
         })}
       </div>
@@ -21,7 +22,11 @@ export const Themes = () => {
   return (
     <div className='flex flex-wrap gap-x-3 gap-y-5'>
       {themes?.map((theme: ThemeType) => {
-        return <Theme key={theme.id} title={theme.title} />
+        return (
+          <Link key={theme.id} href={`/themes/${theme.id}`}>
+            <Theme title={theme.title} />
+          </Link>
+        )
       })}
     </div>
   )
