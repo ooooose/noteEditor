@@ -7,7 +7,14 @@ import { Logout } from './Logout'
 
 export const AuthButton = () => {
   // TODO: いらないかも、要修正
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
+  if (status === 'loading') {
+    return (
+      <main className='flex flex-col items-center justify-between'>
+        <p>Loading...</p>
+      </main>
+    )
+  }
   if (session) {
     return <Logout />
   }
