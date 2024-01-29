@@ -17,12 +17,12 @@ export async function GET(req: Request, res: NextResponse) {
 // テーマ全取得API
 export async function POST(req: Request, res: NextResponse) {
   try {
-    const { userId, title } = await req.json()
+    const { title, userId } = await req.json()
     await main()
     const theme = await prisma.theme.create({
       data: {
-        userId,
         title,
+        userId,
       },
     })
     return NextResponse.json({ message: 'Success', theme }, { status: 201 })
