@@ -4,7 +4,7 @@ import { apiClient } from '@/lib/axios/api-client'
 export const useFetchThemeById = (id: string) => {
   const { data, error, isLoading } = useSWR(
     '/api/themes/${id}',
-    (endpoint) => apiClient.apiGet(endpoint).then((result) => result.data?.themes),
+    (endpoint) => apiClient.apiGet(endpoint).then((result) => result.data?.theme),
     {
       revalidateIfStale: false,
       revalidateOnFocus: false,
@@ -13,7 +13,7 @@ export const useFetchThemeById = (id: string) => {
   )
 
   return {
-    themes: data,
+    theme: data,
     isLoading: isLoading,
     isError: error,
   }
