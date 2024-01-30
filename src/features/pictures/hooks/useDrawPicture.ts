@@ -74,6 +74,11 @@ export const useDrawPicture = ({ width, height }: IProps) => {
     ctx.clearRect(0, 0, width, height)
   }
 
+  const convertBase64 = () => {
+    // base64に変換するロジックを記述
+    const data = canvasRef.current?.toDataURL('image/png')
+  }
+
   return {
     canvasRef,
     OnClick,
