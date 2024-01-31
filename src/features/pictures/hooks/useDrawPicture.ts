@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useState, useRef } from 'react'
 
 interface IProps {
   width: number
@@ -18,6 +18,12 @@ export const useDrawPicture = ({ width, height }: IProps) => {
   let canvasRef = useRef<HTMLCanvasElement | null>(null)
   let mouseX: number | null = null
   let mouseY: number | null = null
+  const [selectedId, setSelectedId] = useState<string>('')
+
+  const handleSelectChange = (value: string) => {
+    const selectedValue = value
+    setSelectedId(selectedValue)
+  }
 
   const getContext = (): CanvasRenderingContext2D => {
     const canvas: any = canvasRef.current
@@ -85,5 +91,7 @@ export const useDrawPicture = ({ width, height }: IProps) => {
     OnMove,
     DrawEnd,
     Reset,
+    handleSelectChange,
+    selectedId,
   }
 }

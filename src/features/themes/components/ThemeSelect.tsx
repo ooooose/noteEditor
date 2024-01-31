@@ -1,31 +1,36 @@
 'use client'
 
-import React from 'react'
+import * as React from 'react'
+
 import { useFetchThemes } from '../hooks/useFetchThemes'
+import { Theme } from '@/features/themes/types'
+
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Theme } from '../types'
 
-export const ThemeSelect = () => {
+type ThemeSelectProps = {
+  handleSelectChange: (value: string) => void
+  selectedId: string
+}
+
+export const ThemeSelect = ({ handleSelectChange, selectedId }: ThemeSelectProps) => {
   const { themes, isLoading } = useFetchThemes()
-  const body = (
-    <Select disabled={isLoading}>
+  return (
+    <Select disabled={isLoading} onValueChange={handleSelectChange}>
       <SelectTrigger className='w-[280px]'>
-        <SelectValue placeholder='テーマを選択してください' />
+        <SelectValue placeholder='テーマを選んでください' />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>テーマ</SelectLabel>
-          {themes?.map((theme: Theme, idx: number) => {
+          {themes?.map((theme: Theme) => {
             return (
-              <SelectItem key={idx} value={theme.title}>
+              <SelectItem key={theme.id} value={theme.id}>
                 {theme.title}
               </SelectItem>
             )
@@ -34,5 +39,4 @@ export const ThemeSelect = () => {
       </SelectContent>
     </Select>
   )
-  return body
 }

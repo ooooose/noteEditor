@@ -12,13 +12,15 @@ interface IProps {
 
 export const Canvas: React.FC<IProps> = (props) => {
   const { width, height } = props
-  const { canvasRef, OnClick, OnMove, DrawEnd, Reset } = useDrawPicture({
-    width: width,
-    height: height,
-  })
+  const { canvasRef, OnClick, OnMove, DrawEnd, Reset, handleSelectChange, selectedId } =
+    useDrawPicture({
+      width: width,
+      height: height,
+    })
 
   return (
     <section>
+      <ThemeSelect handleSelectChange={handleSelectChange} selectedId={selectedId} />
       <div className='border mb-4'>
         <canvas
           onMouseDown={OnClick}
@@ -30,9 +32,8 @@ export const Canvas: React.FC<IProps> = (props) => {
           height={`${height}px`}
         />
       </div>
-      <div>
+      <div className='flex gap-2'>
         <Button onClick={Reset}>リセット</Button>
-        <ThemeSelect />
       </div>
     </section>
   )
