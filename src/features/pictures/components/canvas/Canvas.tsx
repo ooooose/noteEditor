@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button'
 import React from 'react'
 import { useDrawPicture } from '../../hooks/useDrawPicture'
+import { ThemeSelect } from '@/features/themes/components/ThemeSelect'
 
 interface IProps {
   width: number
@@ -31,6 +32,7 @@ export const Canvas: React.FC<IProps> = (props) => {
       </div>
       <div>
         <Button onClick={Reset}>リセット</Button>
+        <ThemeSelect />
       </div>
     </section>
   )

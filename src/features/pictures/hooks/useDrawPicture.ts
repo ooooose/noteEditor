@@ -62,7 +62,7 @@ export const useDrawPicture = ({ width, height }: IProps) => {
     }
     ctx.lineTo(x, y)
     ctx.lineCap = 'round'
-    ctx.lineWidth = 10
+    ctx.lineWidth = 2
     ctx.strokeStyle = '#000000'
     ctx.stroke()
     mouseX = x
