@@ -82,7 +82,15 @@ export const useDrawPicture = ({ width, height }: IProps) => {
 
   const convertBase64 = () => {
     // base64に変換するロジックを記述
-    const data = canvasRef.current?.toDataURL('image/png')
+    const file = canvasRef.current?.toDataURL('image/png')
+    console.log(file)
+    return file
+  }
+
+  const submitPicture = () => {
+    const file = convertBase64()
+    // useMutationでpictureを作成するフックを呼び出す。
+    // jotaiでUser情報を保持しておく必要があり、globalStateとしてuserIdを呼び出す。
   }
 
   return {
