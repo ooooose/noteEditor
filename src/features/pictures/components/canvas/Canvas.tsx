@@ -12,6 +12,7 @@ interface IProps {
 
 export const Canvas: React.FC<IProps> = (props) => {
   const { width, height } = props
+
   const { canvasRef, OnClick, OnMove, DrawEnd, Reset, handleSelectChange, selectedId } =
     useDrawPicture({
       width: width,

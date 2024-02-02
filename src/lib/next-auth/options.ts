@@ -5,7 +5,6 @@ import { PrismaAdapter } from '@auth/prisma-adapter'
 import type { Adapter } from 'next-auth/adapters'
 import bcrypt from 'bcrypt'
 import { prisma } from '../prisma'
-import { AuthUser } from '@/features/auth/types'
 
 type ClientType = {
   clientId: string
@@ -61,17 +60,6 @@ export const options: NextAuthOptions = {
     async session({ session, token }) {
       session.user.emailVerified = token.emailVerified
       session.user.uid = token.uid
-      const user = await prisma.user.findUnique({
-        where: {
-          email: session.user.email,
-        },
-      })
-      // sessionの情報をglobalStateに割り当てる
-      const currentUser: AuthUser = {
-        id: user.id,
-        name: user.name,
-        image: user.image,
-      }
       return {
         ...session,
         user: {
