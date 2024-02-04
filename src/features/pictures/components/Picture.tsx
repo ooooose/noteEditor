@@ -10,8 +10,16 @@ type PictureProps = {
 export const Picture = ({ src, author }: PictureProps) => {
   return (
     <>
-      <Card title={author}>
-        <Image src={src} width={200} height={150} alt={author} />
+      <Card title={`${author}さん`}>
+        <Image
+          src={src}
+          className='mx-auto border'
+          width={200}
+          height={150}
+          style={{ width: '80%', height: 'auto' }}
+          alt={author}
+          priority
+        />
       </Card>
     </>
   )

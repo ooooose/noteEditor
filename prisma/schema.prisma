@@ -49,7 +49,7 @@ model User {
   accounts       Account[]
   sessions       Session[]
   themes         Theme[]
-  Pictures       Picture[]
+  pictures       Picture[]
 }
 
 model VerificationToken {
@@ -67,13 +67,14 @@ model Theme {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Pictures  Picture[]
+  pictures  Picture[]
 }
 
 model Picture {
   id        String   @id @default(cuid())
   image     String
-  frameId   Int      @default(0)  
+  frameId   Int      @default(0) 
+  author    String 
   userId    String
   themeId   String
   createdAt DateTime @default(now())
