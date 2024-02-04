@@ -14,7 +14,7 @@ export async function GET(req: Request, res: NextResponse) {
   }
 }
 
-// テーマ全取得API
+// テーマ作成API
 export async function POST(req: Request, res: NextResponse) {
   try {
     const { title, userId } = await req.json()
