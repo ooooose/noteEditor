@@ -35,7 +35,7 @@ export async function POST(req: Request, res: NextResponse) {
     }
 
     const file = new File([buff.buffer], `${Date.now()}-${themeId}}`, { type: 'image/png' })
-    const fileName = `${Date.now()}-${themeId}}`
+    const fileName = `${Date.now()}-${themeId}`
 
     // File オブジェクトから Buffer に変換
     const buffer = Buffer.from(await file?.arrayBuffer())

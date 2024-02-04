@@ -1,9 +1,11 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
 import React from 'react'
 import { useDrawPicture } from '../../hooks/useDrawPicture'
 import { ThemeSelect } from '@/features/themes/components/ThemeSelect'
+import { Modal } from '@/components/elements'
+import { Button } from '@/components/ui/button'
+import { DialogClose } from '@/components/ui/dialog'
 import { useSession } from 'next-auth/react'
 
 interface IProps {
@@ -47,7 +49,16 @@ export const Canvas: React.FC<IProps> = (props) => {
       </div>
       <div className='flex gap-2'>
         <Button onClick={Reset}>リセット</Button>
-        <Button onClick={uploadPicture}>登録</Button>
+        <Modal text='登録' description='絵を登録しますか？'>
+          <Button disabled={!selectedId} variant='outline' onClick={uploadPicture}>
+            登録する
+          </Button>
+          <DialogClose asChild>
+            <Button variant='outline' className='bg-gray-100'>
+              キャンセル
+            </Button>
+          </DialogClose>
+        </Modal>
       </div>
     </section>
   )
