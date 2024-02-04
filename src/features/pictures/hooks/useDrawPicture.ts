@@ -1,8 +1,11 @@
+import { useFetchAuthUserByEmail } from '@/features/auth/hooks/useFetchAuthUserByEmail'
+import { apiClient } from '@/lib/axios/api-client'
 import { useState, useRef } from 'react'
 
 interface IProps {
   width: number
   height: number
+  email: string
 }
 
 interface IRect {
@@ -14,7 +17,8 @@ interface IRect {
   bottom: number
 }
 
-export const useDrawPicture = ({ width, height }: IProps) => {
+export const useDrawPicture = ({ width, height, email }: IProps) => {
+  const { authUser } = useFetchAuthUserByEmail(email)
   let canvasRef = useRef<HTMLCanvasElement | null>(null)
   let mouseX: number | null = null
   let mouseY: number | null = null
@@ -80,16 +84,35 @@ export const useDrawPicture = ({ width, height }: IProps) => {
     ctx.clearRect(0, 0, width, height)
   }
 
-  const convertBase64 = () => {
-    // base64に変換するロジックを記述
-    const file = canvasRef.current?.toDataURL('image/png')
-    console.log(file)
-    return file
+  const generateParams = (base64: string) => {
+    const pictureParams = {
+      image: base64,
+      email: email,
+      themeId: selectedId,
+    }
+    return pictureParams
   }
 
-  const submitPicture = () => {
-    const file = convertBase64()
-    // useMutationでpictureを作成するフックを呼び出す。
+  const uploadPicture = () => {
+    const base64 = canvasRef.current?.toDataURL('image/png') ?? ''
+    const params = generateParams(base64)
+    try {
+      apiClient.apiPost('/api/pictures', params)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  function toBlob(base64: string) {
+    const bin = atob(base64.replace(/^.*,/, ''))
+    const buffer = new Uint8Array(bin.length)
+    for (var i = 0; i < bin.length; i++) {
+      buffer[i] = bin.charCodeAt(i)
+    }
+    const blob = new Blob([buffer.buffer], {
+      type: 'image/png',
+    })
+    return blob
   }
 
   return {
@@ -100,5 +123,6 @@ export const useDrawPicture = ({ width, height }: IProps) => {
     Reset,
     handleSelectChange,
     selectedId,
+    uploadPicture,
   }
 }
