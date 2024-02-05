@@ -6,7 +6,12 @@ export async function GET(req: Request, res: NextResponse) {
   try {
     const id: string = req.url.split('/themes/')[1]
     await main()
-    const theme = await prisma.theme.findFirst({ where: { id } })
+    const theme = await prisma.theme.findFirst({
+      where: { id },
+      include: {
+        pictures: true,
+      },
+    })
     return NextResponse.json({ message: 'Success', theme }, { status: 200 })
   } catch (err) {
     return NextResponse.json({ message: 'Error', err }, { status: 500 })

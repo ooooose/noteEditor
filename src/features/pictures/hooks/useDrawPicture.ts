@@ -1,6 +1,6 @@
-import { useFetchAuthUserByEmail } from '@/features/auth/hooks/useFetchAuthUserByEmail'
 import { apiClient } from '@/lib/axios/api-client'
 import { useState, useRef } from 'react'
+import { useRouter } from 'next/navigation'
 
 interface IProps {
   width: number
@@ -18,7 +18,7 @@ interface IRect {
 }
 
 export const useDrawPicture = ({ width, height, email }: IProps) => {
-  const { authUser } = useFetchAuthUserByEmail(email)
+  const router = useRouter()
   let canvasRef = useRef<HTMLCanvasElement | null>(null)
   let mouseX: number | null = null
   let mouseY: number | null = null
@@ -97,7 +97,10 @@ export const useDrawPicture = ({ width, height, email }: IProps) => {
     const base64 = canvasRef.current?.toDataURL('image/png') ?? ''
     const params = generateParams(base64)
     try {
-      apiClient.apiPost('/api/pictures', params)
+      apiClient.apiPost('/api/pictures', params).then((res) => {
+        console.log(res.data)
+        router.push(`/themes/${selectedId}`)
+      })
     } catch (err) {
       console.log(err)
     }
