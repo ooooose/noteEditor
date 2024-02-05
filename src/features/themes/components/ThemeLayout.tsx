@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { useFetchThemeById } from '../hooks/useFetchThemeById'
-import { Picutres } from '@/features/pictures/components/Pictures'
+import { Pictures } from '@/features/pictures/components/Pictures'
 import { SkeletonCard } from '@/components/elements/Skeleton/SkeletonCard'
 
 type ThemeLayoutProps = {
@@ -30,7 +30,7 @@ export const ThemeLayout = ({ id }: ThemeLayoutProps) => {
       <div className='text-center py-5'>
         <p className='p-2'>{theme.title}</p>
       </div>
-      <Picutres pictures={theme.pictures} />
+      <Pictures pictures={theme.pictures} />
     </div>
   )
 }
