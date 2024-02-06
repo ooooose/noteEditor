@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 
 import { Modal } from '@/components/elements'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/elements/Button'
 import { useSession } from 'next-auth/react'
 import * as z from 'zod'
 import { useToast } from '@/components/ui/use-toast'
