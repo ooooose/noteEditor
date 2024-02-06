@@ -1,16 +1,16 @@
 'use client'
 
 import React from 'react'
-import { useFetchThemeById } from '../hooks/useFetchThemeById'
-import { Pictures } from '@/features/pictures/components/Pictures'
+import { useFetchPictureById } from '../hooks/useFetchPictureById'
+import { Picture } from './Picture'
 import { SkeletonCard } from '@/components/elements/Skeleton/SkeletonCard'
 
-type ThemeLayoutProps = {
+type PictureLayoutProps = {
   id: string
 }
 
-export const ThemeLayout = ({ id }: ThemeLayoutProps) => {
-  const { theme, isError, isLoading } = useFetchThemeById(id)
+export const PictureLayout = ({ id }: PictureLayoutProps) => {
+  const { picture, isError, isLoading } = useFetchPictureById(id)
   if (isLoading)
     return (
       <div>
@@ -18,9 +18,7 @@ export const ThemeLayout = ({ id }: ThemeLayoutProps) => {
           <p className='p-2'>loading...</p>
         </div>
         <div className='flex flex-wrap gap-x-3 gap-y-5'>
-          {[...Array(6)].map((_, i) => {
-            return <SkeletonCard key={i} />
-          })}
+          <SkeletonCard />
         </div>
       </div>
     )
@@ -28,9 +26,9 @@ export const ThemeLayout = ({ id }: ThemeLayoutProps) => {
   return (
     <div>
       <div className='text-center py-5'>
-        <p className='p-2'>{theme.title}</p>
+        <p className='p-2'>{picture.theme.title}</p>
       </div>
-      <Pictures pictures={theme.pictures} />
+      <Picture src={picture.image} author={picture.author} />
     </div>
   )
 }

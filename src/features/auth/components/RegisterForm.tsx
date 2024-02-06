@@ -6,7 +6,7 @@ import * as z from 'zod'
 import { Button } from '@/components/elements/Button'
 import { Form, Input } from '@/components/elements/Form'
 import Link from 'next/link'
-import { signIn } from 'next-auth/react'
+import { signIn, SignInResponse } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/components/ui/use-toast'
 
@@ -37,12 +37,20 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
       },
       body: JSON.stringify({ data }),
     }).then(async (res: Response) => {
-      if (res.status === 200) {
+      if (res.status === 201) {
         await signIn('credentials', {
           ...data,
           redirect: false,
+        }).then((res: SignInResponse | undefined) => {
+          if (res && res.status === 200) {
+            router.push('/themes')
+          } else if (res?.status === 401) {
+            toast({
+              description: 'ログインに失敗しました',
+              variant: 'destructive',
+            })
+          }
         })
-        router.push('/')
       } else if (res.status === 400) {
         toast({
           description: '新規登録に失敗しました',

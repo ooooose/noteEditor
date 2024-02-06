@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, SetStateAction } from 'react'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -12,11 +12,13 @@ type ModalProps = {
   text: string
   description: string
   children: ReactNode
+  open?: boolean
+  setOpen?: React.Dispatch<SetStateAction<boolean>>
 }
 
-const Modal = ({ text, description, children }: ModalProps) => {
+const Modal = ({ text, description, open, setOpen, children }: ModalProps) => {
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant='outline'>{text}</Button>
       </DialogTrigger>

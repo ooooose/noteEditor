@@ -1,10 +1,10 @@
 import useSWR from 'swr'
 import { apiClient } from '@/lib/axios/api-client'
 
-export const useFetchThemes = () => {
-  const { data, error, isLoading, mutate } = useSWR(
-    '/api/themes',
-    (endpoint) => apiClient.apiGet(endpoint).then((result) => result.data?.themes),
+export const useFetchPictures = () => {
+  const { data, error, isLoading } = useSWR(
+    '/api/pictures',
+    (endpoint) => apiClient.apiGet(endpoint).then((result) => result.data?.pictures),
     {
       revalidateIfStale: false,
       revalidateOnFocus: false,
@@ -12,9 +12,8 @@ export const useFetchThemes = () => {
     },
   )
   return {
-    themes: data,
+    pictures: data,
     isLoading: isLoading,
     isError: error,
-    mutate: mutate,
   }
 }

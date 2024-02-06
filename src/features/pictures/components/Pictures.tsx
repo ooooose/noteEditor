@@ -7,7 +7,7 @@ type PicutresProps = {
   pictures: PictureType[]
 }
 
-export const Picutres = ({ pictures }: PicutresProps) => {
+export const Pictures = ({ pictures }: PicutresProps) => {
   return (
     <div className='flex flex-wrap gap-x-3 gap-y-5'>
       {pictures?.map((picture: PictureType) => {
