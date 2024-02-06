@@ -49,7 +49,7 @@ export const CreateThemeModal = () => {
     await createTheme(values)
   }
 
-  if (!session) return <Skeleton className='w-[80px] h-[30px] ml-4' />
+  if (!session) return <Skeleton className='w-[100px] h-[40px] ml-4 inline-block' />
   return (
     <Modal
       text='テーマ作成'
