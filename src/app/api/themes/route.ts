@@ -21,7 +21,7 @@ export async function GET(req: Request, res: NextResponse) {
 // テーマ作成API
 export async function POST(req: Request, res: NextResponse) {
   try {
-    const { title, email } = await req.json()
+    const { email, title } = await req.json()
     await main()
 
     const user = await prisma.user.findUnique({
