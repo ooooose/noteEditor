@@ -1,11 +1,9 @@
 'use client'
 
-import React, { useId } from 'react'
+import React, { useState } from 'react'
 
 import { Modal } from '@/components/elements'
 import { Button } from '@/components/ui/button'
-import { DialogClose } from '@/components/ui/dialog'
-import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import * as z from 'zod'
 import { useToast } from '@/components/ui/use-toast'
@@ -28,7 +26,7 @@ export const CreateThemeModal = () => {
   const { mutate } = useFetchThemes()
   const { data: session } = useSession()
   const { toast } = useToast()
-  const router = useRouter()
+  const [open, setOpen] = useState(false)
   const createTheme = async (data: ThemeValue) => {
     const params = {
       ...data,
@@ -37,6 +35,7 @@ export const CreateThemeModal = () => {
     await apiClient.apiPost('/api/themes', params).then((res) => {
       if (res && res.status === 201) {
         mutate()
+        setOpen(false)
       } else if (res?.status === 500) {
         toast({
           description: '作成に失敗しました',
@@ -52,7 +51,12 @@ export const CreateThemeModal = () => {
 
   if (!session) return <Skeleton className='w-[80px] h-[30px] ml-4' />
   return (
-    <Modal text='テーマ作成' description='テーマを作成することができます'>
+    <Modal
+      text='テーマ作成'
+      description='テーマを作成することができます'
+      open={open}
+      setOpen={setOpen}
+    >
       <Form<ThemeValue, typeof schema>
         onSubmit={async (values) => {
           await onSubmit(values)
@@ -68,11 +72,9 @@ export const CreateThemeModal = () => {
               registration={register('title')}
             />
             <div>
-              <DialogClose asChild>
-                <Button type='submit' className='w-full mt-6' variant='outline'>
-                  作成する
-                </Button>
-              </DialogClose>
+              <Button type='submit' className='w-full mt-6' variant='outline'>
+                作成する
+              </Button>
             </div>
           </>
         )}
