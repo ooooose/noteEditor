@@ -8,6 +8,9 @@ export async function POST(req: Request, res: NextResponse) {
     await main()
     const user = await prisma.user.findFirst({
       where: { email: email },
+      include: {
+        likes: true,
+      },
     })
     return NextResponse.json({ message: 'Success', user }, { status: 200 })
   } catch (err) {
