@@ -1,7 +1,7 @@
 import useSWR from 'swr'
 import { apiClient } from '@/lib/axios/api-client'
 
-export const useFetchAuthUserByEmail = (email: string | undefined) => {
+export const useFetchAuthUserByEmail = (email: string) => {
   const params = {
     email: email,
   }

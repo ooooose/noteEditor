@@ -28,7 +28,7 @@ export const PictureLayout = ({ id }: PictureLayoutProps) => {
       <div className='text-center py-5'>
         <p className='p-2'>{picture.theme.title}</p>
       </div>
-      <Picture src={picture.image} author={picture.author} />
+      <Picture src={picture.image} author={picture.author} pictureId={picture.id} />
     </div>
   )
 }
