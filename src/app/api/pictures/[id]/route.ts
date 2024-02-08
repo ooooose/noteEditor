@@ -10,6 +10,7 @@ export async function GET(req: Request, res: NextResponse) {
       where: { id },
       include: {
         theme: true,
+        likes: true,
       },
     })
     return NextResponse.json({ message: 'Success', picture }, { status: 200 })

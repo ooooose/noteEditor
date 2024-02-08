@@ -34,7 +34,6 @@ export const PictureLayout = ({ id }: PictureLayoutProps) => {
         <Picture src={picture.image} author={picture.author} pictureId={picture.id} />
         <div className='float-right mt-3'>
           <Like pictureId={picture.id} />
-          <p className='text-xs mt-1'>5 いいね</p>
         </div>
       </Card>
     </div>

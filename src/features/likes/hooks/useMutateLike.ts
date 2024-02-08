@@ -2,13 +2,16 @@ import { useState } from 'react'
 import { apiClient } from '@/lib/axios/api-client'
 import { useSession } from 'next-auth/react'
 import { useFetchAuthUserByEmail } from '@/features/auth/hooks/useFetchAuthUserByEmail'
+import { useFetchPictureById } from '@/features/pictures/hooks/useFetchPictureById'
 import { useToast } from '@/components/ui/use-toast'
 import { Like } from '../types'
 
 export function useMutateLike(pictureId: string) {
   const { data: session } = useSession()
   const { user: authUser } = useFetchAuthUserByEmail(session?.user.email ?? '')
+  const { picture, mutate: pictureMutate } = useFetchPictureById(pictureId)
   const isLike = authUser && authUser.likes.find((like: Like) => like.pictureId === pictureId)
+  const Likes = picture?.likes.length
   const { toast } = useToast()
   const generateParams = () => {
     const params = {
@@ -25,6 +28,7 @@ export function useMutateLike(pictureId: string) {
     await apiClient.apiPost('/api/likes', params).then((res) => {
       if (res.status === 201) {
         mutate()
+        pictureMutate()
       } else if (res.status === 500) {
         toast({
           description: 'いいねに失敗しました',
@@ -39,6 +43,7 @@ export function useMutateLike(pictureId: string) {
     await apiClient.apiDelete('/api/likes', params).then((res) => {
       if (res.status === 200) {
         mutate()
+        pictureMutate()
       } else if (res.status === 500) {
         toast({
           description: 'いいね解除に失敗しました',
@@ -60,5 +65,6 @@ export function useMutateLike(pictureId: string) {
     like,
     isLoading,
     isLike,
+    Likes,
   }
 }
