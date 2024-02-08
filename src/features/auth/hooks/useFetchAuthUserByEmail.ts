@@ -1,13 +1,13 @@
 import useSWR from 'swr'
 import { apiClient } from '@/lib/axios/api-client'
 
-export const useFetchAuthUserByEmail = (email: string | undefined) => {
+export const useFetchAuthUserByEmail = (email: string) => {
   const params = {
     email: email,
   }
-  const { data, error, isLoading } = useSWR(
+  const { data, error, isLoading, mutate } = useSWR(
     '/api/me',
-    (endpoint) => apiClient.apiPost(endpoint, params).then((result) => result.data?.user),
+    (endpoint) => apiClient.apiPost(endpoint, params).then((result) => result.data.user),
     {
       revalidateIfStale: false,
       revalidateOnFocus: false,
@@ -16,8 +16,9 @@ export const useFetchAuthUserByEmail = (email: string | undefined) => {
   )
 
   return {
-    authUser: data,
+    user: data,
     isLoading: isLoading,
     isError: error,
+    mutate: mutate,
   }
 }

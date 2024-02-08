@@ -13,7 +13,7 @@ export const Pictures = ({ pictures }: PicutresProps) => {
       {pictures?.map((picture: PictureType) => {
         return (
           <Link key={picture.id} href={`/pictures/${picture.id}`}>
-            <Picture src={picture.image} author={picture.author} />
+            <Picture src={picture.image} author={picture.author} pictureId={picture.id} />
           </Link>
         )
       })}
