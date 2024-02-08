@@ -1,10 +1,14 @@
+import { useState } from 'react'
 import { apiClient } from '@/lib/axios/api-client'
 import { useSession } from 'next-auth/react'
 import { useFetchAuthUserByEmail } from '@/features/auth/hooks/useFetchAuthUserByEmail'
 import { useToast } from '@/components/ui/use-toast'
+import { Like } from '../types'
 
 export function useMutateLike(pictureId: string) {
   const { data: session } = useSession()
+  const { user: authUser } = useFetchAuthUserByEmail(session?.user.email ?? '')
+  const isLike = authUser && authUser.likes.find((like: Like) => like.pictureId === pictureId)
   const { toast } = useToast()
   const generateParams = () => {
     const params = {
@@ -34,7 +38,6 @@ export function useMutateLike(pictureId: string) {
     const params = generateParams()
     await apiClient.apiDelete('/api/likes', params).then((res) => {
       if (res.status === 200) {
-        console.log('成功！')
         mutate()
       } else if (res.status === 500) {
         toast({
@@ -45,9 +48,17 @@ export function useMutateLike(pictureId: string) {
     })
   }
 
+  const like = () => {
+    if (isLike) {
+      handleUnlike()
+    } else {
+      handleLike()
+    }
+  }
+
   return {
-    handleLike,
-    handleUnlike,
+    like,
     isLoading,
+    isLike,
   }
 }
