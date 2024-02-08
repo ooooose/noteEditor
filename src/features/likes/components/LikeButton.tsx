@@ -10,7 +10,6 @@ type LikeButtonType = {
 
 export const LikeButton = ({ pictureId }: LikeButtonType) => {
   const { handleLike } = useMutateLike(pictureId)
-
   return (
     <div className='p-3 border rounded-full cursor-pointer' onClick={handleLike}>
       <FaRegHeart />

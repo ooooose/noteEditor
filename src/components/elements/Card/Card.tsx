@@ -16,10 +16,10 @@ type CardProps = {
 
 export const Card = ({ title, description, children }: CardProps) => {
   return (
-    <CardComponent className='w-[300px] h-[250px]'>
-      <CardHeader>
+    <CardComponent className='w-[300px] h-[320px]'>
+      <CardHeader className='py-5'>
         <CardTitle>{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
+        {/* <CardDescription>{description}</CardDescription> */}
       </CardHeader>
       <CardContent>{children}</CardContent>
     </CardComponent>

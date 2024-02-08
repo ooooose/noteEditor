@@ -1,6 +1,6 @@
 import { apiClient } from '@/lib/axios/api-client'
 import { useSession } from 'next-auth/react'
-import { useFetchLikes } from './useFetchLikes'
+import { useFetchAuthUserByEmail } from '@/features/auth/hooks/useFetchAuthUserByEmail'
 import { useToast } from '@/components/ui/use-toast'
 
 export function useMutateLike(pictureId: string) {
@@ -14,7 +14,7 @@ export function useMutateLike(pictureId: string) {
     return params
   }
 
-  const { mutate } = useFetchLikes()
+  const { mutate, isLoading } = useFetchAuthUserByEmail(session?.user.email ?? '')
 
   const handleLike = async () => {
     const params = generateParams()
@@ -48,5 +48,6 @@ export function useMutateLike(pictureId: string) {
   return {
     handleLike,
     handleUnlike,
+    isLoading,
   }
 }

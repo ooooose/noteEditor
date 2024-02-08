@@ -22,7 +22,10 @@ export const Picture = ({ src, author, pictureId }: PictureProps) => {
           alt={author}
           priority
         />
-        <Like pictureId={pictureId} />
+        <div className='float-right mt-3'>
+          <Like pictureId={pictureId} />
+          <p className='text-xs mt-1'>5 いいね</p>
+        </div>
       </Card>
     </>
   )
