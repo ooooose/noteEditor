@@ -20,7 +20,6 @@ export const Pictures = ({ pictures }: PicutresProps) => {
             </Link>
             <div className='float-right mt-3'>
               <Like pictureId={picture.id} />
-              <p className='text-xs mt-1'>5 いいね</p>
             </div>
           </Card>
         )
