@@ -11,7 +11,7 @@ type LikeProps = {
 }
 
 export const Like = ({ pictureId }: LikeProps) => {
-  const { like, isLike, Likes, isLoading } = useMutateLike(pictureId)
+  const { like, liked, likeCount, isLoading } = useMutateLike(pictureId)
   if (isLoading)
     return (
       <div>
@@ -28,9 +28,9 @@ export const Like = ({ pictureId }: LikeProps) => {
   return (
     <div>
       <div className='flex gap-3'>
-        <LikeButton like={like} isLike={!!isLike} />
+        <LikeButton like={like} isLike={!!liked} />
       </div>
-      <p className='text-xs mt-1'>{Likes} いいね</p>
+      <p className='text-xs mt-1'>{likeCount} いいね</p>
     </div>
   )
 }
