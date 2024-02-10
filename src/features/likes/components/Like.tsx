@@ -20,7 +20,9 @@ export const Like = ({ pictureId }: LikeProps) => {
             <Spinner size='sm' />
           </div>
         </div>
-        <Skeleton className='mt-1 w-[50px] h-[20px]' />
+        <div className='flex'>
+          <Skeleton className='mt-1 w-[15px] h-[15px]' /> <p className='text-xs mt-1'>いいね</p>
+        </div>
       </div>
     )
   return (
