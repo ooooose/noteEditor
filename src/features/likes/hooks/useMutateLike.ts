@@ -1,18 +1,18 @@
-import { useState } from 'react'
-import { apiClient } from '@/lib/axios/api-client'
+import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useFetchAuthUserByEmail } from '@/features/auth/hooks/useFetchAuthUserByEmail'
-import { useFetchPictureById } from '@/features/pictures/hooks/useFetchPictureById'
-import { useToast } from '@/components/ui/use-toast'
+import { useFetchLikes } from './useFetchLikes'
 import { Like } from '../types'
+import { postLike } from '../api/postLike'
+import { deleteLike } from '../api/deleteLike'
 
 export function useMutateLike(pictureId: string) {
   const { data: session } = useSession()
+  const [liked, setLiked] = useState(false)
+  const [likeCount, setLikeCount] = useState(0)
   const { user: authUser } = useFetchAuthUserByEmail(session?.user.email ?? '')
-  const { picture, mutate: pictureMutate } = useFetchPictureById(pictureId)
-  const isLike = authUser && authUser.likes.find((like: Like) => like.pictureId === pictureId)
-  const Likes = picture?.likes.length
-  const { toast } = useToast()
+  const { likes, isLoading, mutate } = useFetchLikes(pictureId)
+
   const generateParams = () => {
     const params = {
       email: session?.user.email ?? '',
@@ -21,50 +21,44 @@ export function useMutateLike(pictureId: string) {
     return params
   }
 
-  const { mutate, isLoading } = useFetchAuthUserByEmail(session?.user.email ?? '')
+  useEffect(() => {
+    const fetchData = async () => {
+      await likes
+      setLikeCount(
+        (likes && likes?.filter((like: Like) => like.pictureId === pictureId).length) || 0,
+      )
+      setLiked(
+        likes &&
+          likes?.find((like: Like) => like.userId == authUser?.id && like.pictureId == pictureId),
+      )
+    }
+    if (!isLoading) {
+      fetchData()
+    }
+  }, [isLoading, setLiked, setLikeCount, likes, authUser?.id, pictureId])
 
-  const handleLike = async () => {
+  const like = async () => {
     const params = generateParams()
-    await apiClient.apiPost('/api/likes', params).then((res) => {
-      if (res.status === 201) {
-        mutate()
-        pictureMutate()
-      } else if (res.status === 500) {
-        toast({
-          description: 'いいねに失敗しました',
-          variant: 'destructive',
-        })
+    const newLiked = !liked
+    const newLikeCount = liked ? likeCount - 1 : likeCount + 1
+    setLiked(newLiked)
+    setLikeCount(newLikeCount)
+    try {
+      if (liked) {
+        await deleteLike(params)
+      } else {
+        await postLike(params)
       }
-    })
-  }
-
-  const handleUnlike = async () => {
-    const params = generateParams()
-    await apiClient.apiDelete('/api/likes', params).then((res) => {
-      if (res.status === 200) {
-        mutate()
-        pictureMutate()
-      } else if (res.status === 500) {
-        toast({
-          description: 'いいね解除に失敗しました',
-          variant: 'destructive',
-        })
-      }
-    })
-  }
-
-  const like = () => {
-    if (isLike) {
-      handleUnlike()
-    } else {
-      handleLike()
+    } catch (error) {
+      console.error('Failed to update like:', error)
     }
   }
 
   return {
     like,
-    isLoading,
-    isLike,
-    Likes,
+    isLoading: isLoading,
+    liked,
+    likeCount,
+    mutate,
   }
 }

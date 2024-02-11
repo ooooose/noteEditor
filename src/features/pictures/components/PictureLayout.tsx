@@ -2,10 +2,8 @@
 
 import React from 'react'
 import { useFetchPictureById } from '../hooks/useFetchPictureById'
-import { Picture } from './Picture'
-import { Card } from '@/components/elements/Card/Card'
-import { Like } from '@/features/likes/components'
 import { SkeletonCard } from '@/components/elements/Skeleton/SkeletonCard'
+import { PictureCard } from './PictureCard'
 
 type PictureLayoutProps = {
   id: string
@@ -30,12 +28,7 @@ export const PictureLayout = ({ id }: PictureLayoutProps) => {
       <div className='text-center py-5'>
         <p className='p-2'>{picture.theme.title}</p>
       </div>
-      <Card title={picture.author}>
-        <Picture src={picture.image} author={picture.author} pictureId={picture.id} />
-        <div className='float-right mt-3'>
-          <Like pictureId={picture.id} />
-        </div>
-      </Card>
+      <PictureCard picture={picture} />
     </div>
   )
 }

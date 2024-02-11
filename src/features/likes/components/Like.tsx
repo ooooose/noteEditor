@@ -8,10 +8,14 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 type LikeProps = {
   pictureId: string
+  like: () => void
+  liked: boolean
+  likeCount: number
+  isLoading: boolean
 }
 
 export const Like = ({ pictureId }: LikeProps) => {
-  const { like, isLike, Likes, isLoading } = useMutateLike(pictureId)
+  const { like, liked, likeCount, isLoading } = useMutateLike(pictureId)
   if (isLoading)
     return (
       <div>
@@ -20,15 +24,15 @@ export const Like = ({ pictureId }: LikeProps) => {
             <Spinner size='sm' />
           </div>
         </div>
-        <Skeleton className='mt-1 w-[50px] h-[20px]' />
+        <Skeleton className='mt-1 w-[15px] h-[15px] mx-auto' />
       </div>
     )
   return (
     <div>
       <div className='flex gap-3'>
-        <LikeButton like={like} isLike={!!isLike} />
+        <LikeButton like={like} isLike={liked} />
       </div>
-      <p className='text-xs mt-1'>{Likes} いいね</p>
+      <p className='text-xs mt-1 text-center'>{likeCount}</p>
     </div>
   )
 }

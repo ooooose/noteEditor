@@ -1,7 +1,5 @@
 import * as React from 'react'
-import { Card } from '@/components/elements/Card/Card'
 import Image from 'next/image'
-import { Like } from '@/features/likes/components'
 
 type PictureProps = {
   src: string
