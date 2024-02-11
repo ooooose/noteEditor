@@ -12,7 +12,6 @@ type LikeProps = {
 
 export const Like = ({ pictureId }: LikeProps) => {
   const { like, liked, likeCount, isLoading } = useMutateLike(pictureId)
-  console.log(isLoading)
   if (isLoading)
     return (
       <div>
@@ -21,17 +20,15 @@ export const Like = ({ pictureId }: LikeProps) => {
             <Spinner size='sm' />
           </div>
         </div>
-        <div className='flex'>
-          <Skeleton className='mt-1 w-[15px] h-[15px]' /> <p className='text-xs mt-1'>いいね</p>
-        </div>
+        <Skeleton className='mt-1 w-[15px] h-[15px] mx-auto' />
       </div>
     )
   return (
     <div>
       <div className='flex gap-3'>
-        <LikeButton like={like} isLike={!!liked} />
+        <LikeButton like={like} isLike={liked} />
       </div>
-      <p className='text-xs mt-1'>{likeCount} いいね</p>
+      <p className='text-xs mt-1 text-center'>{likeCount}</p>
     </div>
   )
 }

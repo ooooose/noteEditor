@@ -5,12 +5,9 @@ import { useFetchLikes } from './useFetchLikes'
 import { Like } from '../types'
 import { postLike } from '../api/postLike'
 import { deleteLike } from '../api/deleteLike'
-import { useSWRConfig } from 'swr'
-import { getLikes } from '../api/getLikes'
 
 export function useMutateLike(pictureId: string) {
   const { data: session } = useSession()
-  const { mutate: mutateLikes } = useSWRConfig()
   const [liked, setLiked] = useState(false)
   const [likeCount, setLikeCount] = useState(0)
   const [isLikesLoading, setIsLikesLoading] = useState(true)
@@ -53,11 +50,6 @@ export function useMutateLike(pictureId: string) {
       } else {
         await postLike(params)
       }
-
-      await mutateLikes(async () => {
-        const result = await getLikes()
-        return result
-      })
     } catch (error) {
       console.error('Failed to update like:', error)
     }
