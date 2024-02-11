@@ -3,8 +3,7 @@ import { useSession } from 'next-auth/react'
 import { useFetchAuthUserByEmail } from '@/features/auth/hooks/useFetchAuthUserByEmail'
 import { useFetchLikes } from './useFetchLikes'
 import { Like } from '../types'
-import { postLike } from '../api/postLike'
-import { deleteLike } from '../api/deleteLike'
+import { postLike, deleteLike } from '../api'
 
 export function useMutateLike(pictureId: string) {
   const { data: session } = useSession()
