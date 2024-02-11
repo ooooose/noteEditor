@@ -1,6 +1,7 @@
 import React from 'react'
 import type { Comment } from '../types'
 import { Skeleton } from '@/components/ui/skeleton'
+import { formatDate } from '@/utils/format'
 
 type CommentsListProps = {
   isLoading: boolean
@@ -24,6 +25,12 @@ export const CommentsList = ({ isLoading, comments }: CommentsListProps) => {
               key={`${comment.pictureId} - ${comment.userId} - ${index}`}
               className='w-full bg-white shadow-sm p-4'
             >
+              <div className='flex justify-between mt-2'>
+                <span className='font-bold'>{comment.commenterName}</span>
+                <span className='text-xs font-semibold opacity-50'>
+                  {formatDate(comment.createdAt)}
+                </span>
+              </div>
               {comment.body}
             </li>
           )
