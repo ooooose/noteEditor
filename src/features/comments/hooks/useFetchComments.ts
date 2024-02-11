@@ -1,7 +1,7 @@
 import useSWR from 'swr'
 import { getComments } from '../api'
 
-export const useFetchLikes = (pictureId: string) => {
+export const useFetchComments = (pictureId: string) => {
   const { data, error, isLoading, mutate } = useSWR(
     getComments(pictureId).then((result) => result),
     {
@@ -11,7 +11,7 @@ export const useFetchLikes = (pictureId: string) => {
     },
   )
   return {
-    likes: data,
+    comments: data,
     isLoading: isLoading,
     isError: error,
     mutate: mutate,
