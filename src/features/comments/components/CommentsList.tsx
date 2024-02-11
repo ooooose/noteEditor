@@ -14,11 +14,11 @@ export const CommentsList = ({ pictureId }: CommentsListProps) => {
   if (isLoading)
     return (
       <div className='w-full bg-white shadow-sm p-4'>
-        <Skeleton />
+        <Skeleton className='w-[200px] h-[30px]' />
       </div>
     )
   return (
-    <ul aria-label='comments' className='flex flex-col space-y-3'>
+    <ul aria-label='comments' className='flex flex-col space-y-3 max-h-60 overflow-y-auto'>
       {!!pictureComments ? (
         pictureComments.map((comment: Comment, index: number) => {
           return (

@@ -5,7 +5,11 @@ export async function GET(req: Request, res: NextResponse) {
   try {
     await main()
 
-    const comments = await prisma.comment.findMany()
+    const comments = await prisma.comment.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+    })
     return NextResponse.json({ message: 'Success', comments }, { status: 200 })
   } catch (err) {
     return NextResponse.json({ message: 'Error', err }, { status: 500 })
