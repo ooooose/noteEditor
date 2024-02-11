@@ -20,7 +20,7 @@ export const PictureCard = ({ picture }: PictureCardProps) => {
         <Picture src={picture.image} author={picture.author} pictureId={picture.id} />
       </a>
       <div className='float-right mt-3 flex gap-2'>
-        <Comment />
+        <Comment pictureId={picture.id} />
         <Like
           pictureId={picture.id}
           like={like}

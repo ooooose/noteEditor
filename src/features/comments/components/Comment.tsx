@@ -12,17 +12,15 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 
+import { CommentForm } from './CommentForm'
 import { FaRegComment } from 'react-icons/fa'
+import { CommentsList } from './CommentsList'
 
 type CommentProps = {
   pictureId: string
-  like: () => void
-  liked: boolean
-  likeCount: number
-  isLoading: boolean
 }
 
-export const Comment = () => {
+export const Comment = ({ pictureId }: CommentProps) => {
   // if (isLoading)
   //   return (
   //     <div>
@@ -47,11 +45,9 @@ export const Comment = () => {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>コメント一覧</DialogTitle>
-            <DialogDescription>
-              This action cannot be undone. This will permanently delete your account and remove
-              your data from our servers.
-            </DialogDescription>
           </DialogHeader>
+          <CommentsList pictureId={pictureId} />
+          <CommentForm pictureId={pictureId} />
         </DialogContent>
       </Dialog>
       {/* <p className='text-xs mt-1 text-center'>{commentCount}</p> */}

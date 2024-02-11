@@ -2,19 +2,20 @@
 
 import React from 'react'
 import type { Comment } from '../types'
-import { useFetchComments } from '../hooks/useFetchComments'
+import { useMutateComment } from '../hooks/useMutateComment'
 
 type CommentsListProps = {
   pictureId: string
 }
 
 export const CommentsList = ({ pictureId }: CommentsListProps) => {
-  const { comments, isLoading } = useFetchComments(pictureId)
+  const { pictureComments, isLoading } = useMutateComment(pictureId)
   if (isLoading) return <>...loading</>
+  console.groupCollapsed(pictureComments)
   return (
     <ul aria-label='comments' className='flex flex-col space-y-3'>
-      {comments ? (
-        comments.map((comment: Comment, index: number) => {
+      {pictureComments ? (
+        pictureComments.map((comment: Comment, index: number) => {
           ;<li
             aria-label={`comment-${comment.body}-${index}`}
             key={`${comment.pictureId} - ${comment.userId}`}
