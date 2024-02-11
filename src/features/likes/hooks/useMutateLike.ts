@@ -10,9 +10,9 @@ export function useMutateLike(pictureId: string) {
   const { data: session } = useSession()
   const [liked, setLiked] = useState(false)
   const [likeCount, setLikeCount] = useState(0)
-  const [isLikesLoading, setIsLikesLoading] = useState(true)
   const { user: authUser } = useFetchAuthUserByEmail(session?.user.email ?? '')
-  const { likes, isLoading } = useFetchLikes(pictureId)
+  const { likes, isLoading, mutate } = useFetchLikes(pictureId)
+
   const generateParams = () => {
     const params = {
       email: session?.user.email ?? '',
@@ -31,7 +31,6 @@ export function useMutateLike(pictureId: string) {
         likes &&
           likes?.find((like: Like) => like.userId == authUser?.id && like.pictureId == pictureId),
       )
-      setIsLikesLoading(false)
     }
     if (!isLoading) {
       fetchData()
@@ -57,8 +56,9 @@ export function useMutateLike(pictureId: string) {
 
   return {
     like,
-    isLoading: isLoading || isLikesLoading,
+    isLoading: isLoading,
     liked,
     likeCount,
+    mutate,
   }
 }

@@ -8,6 +8,10 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 type LikeProps = {
   pictureId: string
+  like: () => void
+  liked: boolean
+  likeCount: number
+  isLoading: boolean
 }
 
 export const Like = ({ pictureId }: LikeProps) => {
