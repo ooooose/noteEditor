@@ -5,12 +5,15 @@ import { useFetchLikes } from './useFetchLikes'
 import { Like } from '../types'
 import { postLike } from '../api/postLike'
 import { deleteLike } from '../api/deleteLike'
+import { useSWRConfig } from 'swr'
+import { getLikes } from '../api/getLikes'
 
 export function useMutateLike(pictureId: string) {
   const { data: session } = useSession()
-
+  const { mutate: mutateLikes } = useSWRConfig()
   const [liked, setLiked] = useState(false)
   const [likeCount, setLikeCount] = useState(0)
+  const [isLikesLoading, setIsLikesLoading] = useState(true)
   const { user: authUser } = useFetchAuthUserByEmail(session?.user.email ?? '')
   const { likes, isLoading } = useFetchLikes(pictureId)
   const generateParams = () => {
@@ -22,15 +25,21 @@ export function useMutateLike(pictureId: string) {
   }
 
   useEffect(() => {
-    !isLoading &&
+    const fetchData = async () => {
+      await likes
       setLikeCount(
         (likes && likes?.filter((like: Like) => like.pictureId === pictureId).length) || 0,
       )
-    !isLoading &&
       setLiked(
-        likes?.find((like: Like) => like.userId == authUser?.id && like.pictureId == pictureId),
+        likes &&
+          likes?.find((like: Like) => like.userId == authUser?.id && like.pictureId == pictureId),
       )
-  }, [isLoading, setLiked, setLikeCount])
+      setIsLikesLoading(false)
+    }
+    if (!isLoading) {
+      fetchData()
+    }
+  }, [isLoading, setLiked, setLikeCount, likes, authUser?.id, pictureId])
 
   const like = async () => {
     const params = generateParams()
@@ -38,16 +47,25 @@ export function useMutateLike(pictureId: string) {
     const newLikeCount = liked ? likeCount - 1 : likeCount + 1
     setLiked(newLiked)
     setLikeCount(newLikeCount)
-    if (liked) {
-      await deleteLike(params)
-    } else {
-      await postLike(params)
+    try {
+      if (liked) {
+        await deleteLike(params)
+      } else {
+        await postLike(params)
+      }
+
+      await mutateLikes(async () => {
+        const result = await getLikes()
+        return result
+      })
+    } catch (error) {
+      console.error('Failed to update like:', error)
     }
   }
 
   return {
     like,
-    isLoading,
+    isLoading: isLoading || isLikesLoading,
     liked,
     likeCount,
   }

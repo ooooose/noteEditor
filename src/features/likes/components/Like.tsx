@@ -12,6 +12,7 @@ type LikeProps = {
 
 export const Like = ({ pictureId }: LikeProps) => {
   const { like, liked, likeCount, isLoading } = useMutateLike(pictureId)
+  console.log(isLoading)
   if (isLoading)
     return (
       <div>
