@@ -5,8 +5,8 @@ import { Comment } from '../types'
 
 export const useMutateComment = (pictureId: string) => {
   const { data: session } = useSession()
-  const { comments, mutate, isLoading } = useFetchComments(pictureId)
-
+  const { comments, mutate, isLoading } = useFetchComments()
+  console.log(comments)
   const pictureComments =
     comments && comments?.filter((comment: Comment) => comment.pictureId === pictureId)
   const generateParams = () => {

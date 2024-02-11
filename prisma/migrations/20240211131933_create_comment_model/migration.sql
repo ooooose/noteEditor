@@ -1,11 +1,12 @@
 -- CreateTable
 CREATE TABLE "Comment" (
+    "id" SERIAL NOT NULL,
     "userId" TEXT NOT NULL,
-    "body" TEXT NOT NULL,
     "pictureId" TEXT NOT NULL,
+    "body" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "Comment_pkey" PRIMARY KEY ("userId","pictureId")
+    CONSTRAINT "Comment_pkey" PRIMARY KEY ("id")
 );
 
 -- AddForeignKey
