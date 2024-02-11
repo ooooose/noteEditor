@@ -4,6 +4,7 @@ CREATE TABLE "Comment" (
     "userId" TEXT NOT NULL,
     "pictureId" TEXT NOT NULL,
     "body" TEXT NOT NULL,
+    "commenterName" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Comment_pkey" PRIMARY KEY ("id")
