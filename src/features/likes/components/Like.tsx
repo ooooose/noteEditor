@@ -1,8 +1,5 @@
-'use client'
-
 import React from 'react'
 import { LikeButton } from '.'
-import { useMutateLike } from '../hooks/useMutateLike'
 import { Spinner } from '@/components/elements/Spinner'
 import { Skeleton } from '@/components/ui/skeleton'
 
@@ -14,8 +11,7 @@ type LikeProps = {
   isLoading: boolean
 }
 
-export const Like = ({ pictureId }: LikeProps) => {
-  const { like, liked, likeCount, isLoading } = useMutateLike(pictureId)
+export const Like = ({ pictureId, like, liked, likeCount, isLoading }: LikeProps) => {
   if (isLoading)
     return (
       <div>
