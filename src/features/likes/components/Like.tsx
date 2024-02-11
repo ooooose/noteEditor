@@ -20,7 +20,7 @@ export const Like = ({ pictureId, like, liked, likeCount, isLoading }: LikeProps
             <Spinner size='sm' />
           </div>
         </div>
-        <Skeleton className='mt-1 w-[15px] h-[15px] mx-auto' />
+        <Skeleton className='mt-1.5 w-[15px] h-[15px] mx-auto' />
       </div>
     )
   return (
@@ -28,7 +28,7 @@ export const Like = ({ pictureId, like, liked, likeCount, isLoading }: LikeProps
       <div className='flex gap-3'>
         <LikeButton like={like} isLike={liked} />
       </div>
-      <p className='text-xs mt-1 text-center'>{likeCount}</p>
+      <p className='text-xs mt-1.5 text-center'>{likeCount}</p>
     </div>
   )
 }

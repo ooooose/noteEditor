@@ -1,12 +1,9 @@
 'use client'
 
 import React from 'react'
-import { Spinner } from '@/components/elements/Spinner'
-import { Skeleton } from '@/components/ui/skeleton'
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -15,23 +12,13 @@ import {
 import { CommentForm } from './CommentForm'
 import { FaRegComment } from 'react-icons/fa'
 import { CommentsList } from './CommentsList'
+import { CommentCount } from './CommentCount'
 
 type CommentProps = {
   pictureId: string
 }
 
 export const Comment = ({ pictureId }: CommentProps) => {
-  // if (isLoading)
-  //   return (
-  //     <div>
-  //       <div className='flex gap-3'>
-  //         <div className='p-3 border rounded-full cursor-pointer opacity-50' onClick={like}>
-  //           <Spinner size='sm' />
-  //         </div>
-  //       </div>
-  //       <Skeleton className='mt-1 w-[15px] h-[15px] mx-auto' />
-  //     </div>
-  //   )
   return (
     <div>
       <Dialog>
@@ -50,7 +37,7 @@ export const Comment = ({ pictureId }: CommentProps) => {
           <CommentForm pictureId={pictureId} />
         </DialogContent>
       </Dialog>
-      {/* <p className='text-xs mt-1 text-center'>{commentCount}</p> */}
+      <CommentCount pictureId={pictureId} />
     </div>
   )
 }
