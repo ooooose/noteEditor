@@ -16,7 +16,7 @@ export const CommentsList = ({ isLoading, comments }: CommentsListProps) => {
       </div>
     )
   return (
-    <ul aria-label='comments' className='flex flex-col space-y-3 max-h-60 overflow-y-auto'>
+    <ul aria-label='comments' className='flex flex-col space-y-3 h-60 overflow-y-auto'>
       {!!comments ? (
         comments.map((comment: Comment, index: number) => {
           return (
