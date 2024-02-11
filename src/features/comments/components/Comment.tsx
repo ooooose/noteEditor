@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import {
   Dialog,
@@ -9,10 +7,10 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 
-import { CommentForm } from './CommentForm'
 import { FaRegComment } from 'react-icons/fa'
 import { CommentsList } from './CommentsList'
 import { CommentCount } from './CommentCount'
+import { CommentForm } from './CommentForm'
 
 type CommentProps = {
   pictureId: string
