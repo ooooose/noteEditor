@@ -1,16 +1,13 @@
-'use client'
-
 import React from 'react'
 import type { Comment } from '../types'
-import { useMutateComment } from '../hooks/useMutateComment'
 import { Skeleton } from '@/components/ui/skeleton'
 
 type CommentsListProps = {
-  pictureId: string
+  isLoading: boolean
+  comments: Comment[]
 }
 
-export const CommentsList = ({ pictureId }: CommentsListProps) => {
-  const { pictureComments, isLoading } = useMutateComment(pictureId)
+export const CommentsList = ({ isLoading, comments }: CommentsListProps) => {
   if (isLoading)
     return (
       <div className='w-full bg-white shadow-sm p-4'>
@@ -19,8 +16,8 @@ export const CommentsList = ({ pictureId }: CommentsListProps) => {
     )
   return (
     <ul aria-label='comments' className='flex flex-col space-y-3 max-h-60 overflow-y-auto'>
-      {!!pictureComments ? (
-        pictureComments.map((comment: Comment, index: number) => {
+      {!!comments ? (
+        comments.map((comment: Comment, index: number) => {
           return (
             <li
               aria-label={`comment-${comment.body}-${index}`}

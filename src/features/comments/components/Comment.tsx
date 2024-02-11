@@ -1,4 +1,6 @@
 import React from 'react'
+
+import { useMutateComment } from '../hooks/useMutateComment'
 import {
   Dialog,
   DialogContent,
@@ -11,12 +13,14 @@ import { FaRegComment } from 'react-icons/fa'
 import { CommentsList } from './CommentsList'
 import { CommentCount } from './CommentCount'
 import { CommentForm } from './CommentForm'
+import { Spinner } from '@/components/elements/Spinner'
 
 type CommentProps = {
   pictureId: string
 }
 
 export const Comment = ({ pictureId }: CommentProps) => {
+  const { pictureComments, isLoading, onSubmitComment } = useMutateComment(pictureId)
   return (
     <div>
       <Dialog>
@@ -31,11 +35,11 @@ export const Comment = ({ pictureId }: CommentProps) => {
           <DialogHeader>
             <DialogTitle>コメント一覧</DialogTitle>
           </DialogHeader>
-          <CommentsList pictureId={pictureId} />
-          <CommentForm pictureId={pictureId} />
+          <CommentsList isLoading={isLoading} comments={pictureComments} />
+          <CommentForm pictureId={pictureId} onSubmit={onSubmitComment} />
         </DialogContent>
       </Dialog>
-      <CommentCount pictureId={pictureId} />
+      <CommentCount isLoading={isLoading} commentCount={pictureComments?.length} />
     </div>
   )
 }
