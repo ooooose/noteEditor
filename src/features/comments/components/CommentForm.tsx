@@ -13,7 +13,6 @@ type CommentValue = {
 }
 
 type CommentFormProps = {
-  pictureId: string
   onSubmit: (body: string) => Promise<void>
 }
 

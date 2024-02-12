@@ -1,6 +1,6 @@
 import React from 'react'
 import { BsThreeDotsVertical } from 'react-icons/bs'
-import { FaRegTrashAlt } from 'react-icons/fa'
+import { FaRegTrashAlt, FaEdit } from 'react-icons/fa'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -28,6 +28,15 @@ export const CommentMenu = ({ commentId, handleDeleteComment }: CommentMenuProps
         >
           <FaRegTrashAlt className='mr-4' />
           Delete
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          className='cursor-pointer'
+          onClick={() => {
+            console.log('aaa')
+          }}
+        >
+          <FaEdit className='mr-4' />
+          Edit
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

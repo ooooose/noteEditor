@@ -1,4 +1,6 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 
 import { useMutateComment } from '../hooks/useMutateComment'
 import {
@@ -41,7 +43,7 @@ export const Comment = ({ pictureId }: CommentProps) => {
             handleDeleteComment={handleDeleteComment}
             userId={userId}
           />
-          <CommentForm pictureId={pictureId} onSubmit={onSubmitComment} />
+          <CommentForm onSubmit={onSubmitComment} />
         </DialogContent>
       </Dialog>
       <CommentCount isLoading={isLoading} commentCount={pictureComments?.length} />

@@ -42,7 +42,7 @@ export const CommentsList = ({
                 </div>
               </div>
               <div className='flex justify-between'>
-                {comment.body}
+                <div className='max-w-96 break-words whitespace-pre-wrap'>{comment.body}</div>
                 {userId === comment.userId && (
                   <div className='text-right'>
                     <CommentMenu commentId={comment.id} handleDeleteComment={handleDeleteComment} />
