@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Button } from '@/components/elements/Button'
 import * as z from 'zod'
-
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
 import { Form, Input } from '@/components/elements/Form'
 
 const schema = z.object({
@@ -17,28 +18,27 @@ type CommentFormProps = {
 }
 
 export const CommentForm = ({ onSubmit }: CommentFormProps) => {
+  const { register, handleSubmit, reset, formState } = useForm<CommentValue>({
+    resolver: zodResolver(schema),
+  })
   return (
-    <Form<CommentValue, typeof schema>
-      onSubmit={async (values) => {
+    <form
+      onSubmit={handleSubmit(async (values) => {
         await onSubmit(values.body)
-      }}
-      schema={schema}
+        reset()
+      })}
     >
-      {({ register, formState }) => (
-        <>
-          <Input
-            type='text'
-            label='コメント'
-            error={formState.errors['body']}
-            registration={register('body')}
-          />
-          <div>
-            <Button type='submit' className='w-full mt-6' variant='outline'>
-              投稿
-            </Button>
-          </div>
-        </>
-      )}
-    </Form>
+      <Input
+        type='text'
+        label='コメント'
+        error={formState.errors['body']}
+        registration={register('body')}
+      />
+      <div>
+        <Button type='submit' className='w-full mt-6' variant='outline'>
+          投稿
+        </Button>
+      </div>
+    </form>
   )
 }
