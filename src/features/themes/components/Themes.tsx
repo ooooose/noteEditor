@@ -24,7 +24,7 @@ export const Themes = () => {
       {themes?.map((theme: ThemeType) => {
         return (
           <Link key={theme.id} href={`/themes/${theme.id}`}>
-            <Theme title={theme.title} />
+            <Theme title={theme.title} themeId={theme.id} />
           </Link>
         )
       })}
