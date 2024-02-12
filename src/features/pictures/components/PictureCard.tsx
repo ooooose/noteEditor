@@ -21,13 +21,7 @@ export const PictureCard = ({ picture }: PictureCardProps) => {
       </a>
       <div className='float-right mt-3 flex gap-2'>
         <Comment pictureId={picture.id} />
-        <Like
-          pictureId={picture.id}
-          like={like}
-          liked={liked}
-          likeCount={likeCount}
-          isLoading={isLikeLoading}
-        />
+        <Like like={like} liked={liked} likeCount={likeCount} isLoading={isLikeLoading} />
       </div>
     </Card>
   )

@@ -4,20 +4,19 @@ import { Spinner } from '@/components/elements/Spinner'
 import { Skeleton } from '@/components/ui/skeleton'
 
 type LikeProps = {
-  pictureId: string
   like: () => void
   liked: boolean
   likeCount: number
   isLoading: boolean
 }
 
-export const Like = ({ pictureId, like, liked, likeCount, isLoading }: LikeProps) => {
+export const Like = ({ like, liked, likeCount, isLoading }: LikeProps) => {
   if (isLoading)
     return (
       <div>
         <div className='flex gap-3'>
-          <div className='p-3 border rounded-full cursor-pointer opacity-50' onClick={like}>
-            <Spinner size='sm' />
+          <div className='p-3 border rounded-full cursor-pointer'>
+            <Spinner size='sm' className='opacity-70' />
           </div>
         </div>
         <Skeleton className='mt-1.5 w-[15px] h-[15px] mx-auto' />

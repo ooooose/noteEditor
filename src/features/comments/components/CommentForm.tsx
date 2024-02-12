@@ -1,11 +1,8 @@
-'use client'
-
 import React, { useState } from 'react'
 import { Button } from '@/components/elements/Button'
 import * as z from 'zod'
 
 import { Form, Input } from '@/components/elements/Form'
-import { useMutateComment } from '../hooks/useMutateComment'
 
 const schema = z.object({
   body: z.string().min(1, '入力してください'),
@@ -17,14 +14,14 @@ type CommentValue = {
 
 type CommentFormProps = {
   pictureId: string
+  onSubmit: (body: string) => Promise<void>
 }
 
-export const CommentForm = ({ pictureId }: CommentFormProps) => {
-  const { onSubmitComment } = useMutateComment(pictureId)
+export const CommentForm = ({ onSubmit }: CommentFormProps) => {
   return (
     <Form<CommentValue, typeof schema>
       onSubmit={async (values) => {
-        await onSubmitComment(values.body)
+        await onSubmit(values.body)
       }}
       schema={schema}
     >

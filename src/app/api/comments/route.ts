@@ -29,6 +29,7 @@ export async function POST(req: Request, res: NextResponse) {
       data: {
         pictureId: pictureId,
         userId: user.id,
+        commenterName: user.name,
         body: body,
       },
     })
@@ -43,19 +44,10 @@ export async function POST(req: Request, res: NextResponse) {
 
 export async function DELETE(req: Request, res: NextResponse) {
   try {
-    const { email, pictureId } = await req.json()
+    const { id } = await req.json()
     await main()
-    const user = await prisma.user.findUnique({
-      where: { email: email },
-    })
-
     const comment = await prisma.comment.delete({
-      where: {
-        userId_pictureId: {
-          userId: user.id,
-          pictureId: pictureId,
-        },
-      },
+      where: { id: id },
     })
     return NextResponse.json({ message: 'Success', comment }, { status: 200 })
   } catch (err) {

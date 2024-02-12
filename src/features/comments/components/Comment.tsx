@@ -1,4 +1,6 @@
 import React from 'react'
+
+import { useMutateComment } from '../hooks/useMutateComment'
 import {
   Dialog,
   DialogContent,
@@ -17,6 +19,8 @@ type CommentProps = {
 }
 
 export const Comment = ({ pictureId }: CommentProps) => {
+  const { pictureComments, isLoading, onSubmitComment, handleDeleteComment, userId } =
+    useMutateComment(pictureId)
   return (
     <div>
       <Dialog>
@@ -31,11 +35,16 @@ export const Comment = ({ pictureId }: CommentProps) => {
           <DialogHeader>
             <DialogTitle>コメント一覧</DialogTitle>
           </DialogHeader>
-          <CommentsList pictureId={pictureId} />
-          <CommentForm pictureId={pictureId} />
+          <CommentsList
+            isLoading={isLoading}
+            comments={pictureComments}
+            handleDeleteComment={handleDeleteComment}
+            userId={userId}
+          />
+          <CommentForm pictureId={pictureId} onSubmit={onSubmitComment} />
         </DialogContent>
       </Dialog>
-      <CommentCount pictureId={pictureId} />
+      <CommentCount isLoading={isLoading} commentCount={pictureComments?.length} />
     </div>
   )
 }
