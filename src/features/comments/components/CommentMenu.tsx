@@ -11,9 +11,14 @@ import {
 type CommentMenuProps = {
   commentId: number
   handleDeleteComment: (commentId: number) => Promise<void>
+  setEditedFlag: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const CommentMenu = ({ commentId, handleDeleteComment }: CommentMenuProps) => {
+export const CommentMenu = ({
+  commentId,
+  handleDeleteComment,
+  setEditedFlag,
+}: CommentMenuProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -32,7 +37,7 @@ export const CommentMenu = ({ commentId, handleDeleteComment }: CommentMenuProps
         <DropdownMenuItem
           className='cursor-pointer'
           onClick={() => {
-            console.log('aaa')
+            setEditedFlag(true)
           }}
         >
           <FaEdit className='mr-4' />

@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Button } from '@/components/elements/Button'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { Form, Input } from '@/components/elements/Form'
+import { Input } from '@/components/elements/Form'
 
 const schema = z.object({
   body: z.string().min(1, '入力してください'),
@@ -35,7 +35,7 @@ export const CommentForm = ({ onSubmit }: CommentFormProps) => {
         registration={register('body')}
       />
       <div>
-        <Button type='submit' className='w-full mt-6' variant='outline'>
+        <Button type='submit' className='w-full mt-3' variant='outline'>
           投稿
         </Button>
       </div>
