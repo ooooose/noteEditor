@@ -33,23 +33,22 @@ export const CommentsList = ({
               key={`${comment.pictureId} - ${comment.userId} - ${index}`}
               className='w-full bg-white shadow-sm p-4'
             >
-              <div className='flex justify-between mt-2'>
+              <div className='flex justify-between mb-2'>
                 <span className='font-bold'>{comment.commenterName}</span>
                 <div className='flex flex-col'>
                   <span className='text-xs font-semibold opacity-50'>
                     {formatDate(comment.createdAt)}
                   </span>
-                  {userId === comment.userId && (
-                    <div className='text-right'>
-                      <CommentMenu
-                        commentId={comment.id}
-                        handleDeleteComment={handleDeleteComment}
-                      />
-                    </div>
-                  )}
                 </div>
               </div>
-              {comment.body}
+              <div className='flex justify-between'>
+                {comment.body}
+                {userId === comment.userId && (
+                  <div className='text-right'>
+                    <CommentMenu commentId={comment.id} handleDeleteComment={handleDeleteComment} />
+                  </div>
+                )}
+              </div>
             </li>
           )
         })
