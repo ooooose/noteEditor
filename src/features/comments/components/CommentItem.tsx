@@ -27,6 +27,10 @@ type CommentValue = {
 export const CommentItem = ({ comment, userId, handleDeleteComment }: CommentItemProps) => {
   const [editedFlag, setEditedFlag] = useState(false)
   const { register, handleSubmit, reset, formState } = useForm<CommentValue>({
+    mode: 'onChange',
+    defaultValues: {
+      body: comment.body,
+    },
     resolver: zodResolver(schema),
   })
   return (
@@ -45,6 +49,7 @@ export const CommentItem = ({ comment, userId, handleDeleteComment }: CommentIte
           className='flex flex-col'
           onSubmit={() => {
             console.log('aaa')
+            setEditedFlag(false)
           }}
         >
           <Input
@@ -53,7 +58,7 @@ export const CommentItem = ({ comment, userId, handleDeleteComment }: CommentIte
             error={formState.errors['body']}
             registration={register('body')}
           />
-          <div className='flex w-10 gap-2 mt-2 float-right'>
+          <div className='flex w-full gap-2 mt-2 justify-end'>
             <Button type='submit' variant='outline'>
               <FaCheck />
             </Button>
