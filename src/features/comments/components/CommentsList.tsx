@@ -7,6 +7,7 @@ type CommentsListProps = {
   isLoading: boolean
   comments: Comment[]
   handleDeleteComment: (commentId: number) => Promise<void>
+  handleUpdateComment: (commentId: number, body: string) => Promise<void>
   userId: string
 }
 
@@ -14,6 +15,7 @@ export const CommentsList = ({
   isLoading,
   comments,
   handleDeleteComment,
+  handleUpdateComment,
   userId,
 }: CommentsListProps) => {
   if (isLoading)
@@ -32,6 +34,7 @@ export const CommentsList = ({
               comment={comment}
               userId={userId}
               handleDeleteComment={handleDeleteComment}
+              handleUpdateComment={handleUpdateComment}
             />
           )
         })

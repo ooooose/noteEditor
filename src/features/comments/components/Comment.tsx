@@ -21,8 +21,14 @@ type CommentProps = {
 }
 
 export const Comment = ({ pictureId }: CommentProps) => {
-  const { pictureComments, isLoading, onSubmitComment, handleDeleteComment, userId } =
-    useMutateComment(pictureId)
+  const {
+    pictureComments,
+    isLoading,
+    onSubmitComment,
+    handleDeleteComment,
+    handleUpdateComment,
+    userId,
+  } = useMutateComment(pictureId)
   return (
     <div>
       <Dialog>
@@ -41,6 +47,7 @@ export const Comment = ({ pictureId }: CommentProps) => {
             isLoading={isLoading}
             comments={pictureComments}
             handleDeleteComment={handleDeleteComment}
+            handleUpdateComment={handleUpdateComment}
             userId={userId}
           />
           <CommentForm onSubmit={onSubmitComment} />

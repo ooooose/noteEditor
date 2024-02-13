@@ -14,6 +14,7 @@ type CommentItemProps = {
   comment: Comment
   userId: string
   handleDeleteComment: (commentId: number) => Promise<void>
+  handleUpdateComment: (commentId: number, body: string) => Promise<void>
 }
 
 const schema = z.object({
@@ -24,7 +25,12 @@ type CommentValue = {
   body: string
 }
 
-export const CommentItem = ({ comment, userId, handleDeleteComment }: CommentItemProps) => {
+export const CommentItem = ({
+  comment,
+  userId,
+  handleDeleteComment,
+  handleUpdateComment,
+}: CommentItemProps) => {
   const [editedFlag, setEditedFlag] = useState(false)
   const { register, handleSubmit, reset, formState } = useForm<CommentValue>({
     mode: 'onChange',
@@ -47,10 +53,10 @@ export const CommentItem = ({ comment, userId, handleDeleteComment }: CommentIte
       {editedFlag ? (
         <form
           className='flex flex-col'
-          onSubmit={() => {
-            console.log('aaa')
+          onSubmit={handleSubmit(async (values) => {
+            await handleUpdateComment(comment.id, values.body)
             setEditedFlag(false)
-          }}
+          })}
         >
           <Input
             className='w-full'
