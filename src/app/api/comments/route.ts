@@ -42,6 +42,23 @@ export async function POST(req: Request, res: NextResponse) {
   }
 }
 
+export async function PUT(req: Request, res: NextResponse) {
+  try {
+    const { id, body } = await req.json()
+    await main()
+    const comment = await prisma.comment.update({
+      where: { id: id },
+      data: { body: body },
+    })
+    return NextResponse.json({ message: 'Success', comment }, { status: 200 })
+  } catch (err) {
+    console.log(err)
+    return NextResponse.json({ message: 'Error', err }, { status: 500 })
+  } finally {
+    await prisma.$disconnect()
+  }
+}
+
 export async function DELETE(req: Request, res: NextResponse) {
   try {
     const { id } = await req.json()

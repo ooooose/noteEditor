@@ -1,4 +1,6 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 
 import { useMutateComment } from '../hooks/useMutateComment'
 import {
@@ -19,8 +21,14 @@ type CommentProps = {
 }
 
 export const Comment = ({ pictureId }: CommentProps) => {
-  const { pictureComments, isLoading, onSubmitComment, handleDeleteComment, userId } =
-    useMutateComment(pictureId)
+  const {
+    pictureComments,
+    isLoading,
+    onSubmitComment,
+    handleDeleteComment,
+    handleUpdateComment,
+    userId,
+  } = useMutateComment(pictureId)
   return (
     <div>
       <Dialog>
@@ -39,9 +47,10 @@ export const Comment = ({ pictureId }: CommentProps) => {
             isLoading={isLoading}
             comments={pictureComments}
             handleDeleteComment={handleDeleteComment}
+            handleUpdateComment={handleUpdateComment}
             userId={userId}
           />
-          <CommentForm pictureId={pictureId} onSubmit={onSubmitComment} />
+          <CommentForm onSubmit={onSubmitComment} />
         </DialogContent>
       </Dialog>
       <CommentCount isLoading={isLoading} commentCount={pictureComments?.length} />

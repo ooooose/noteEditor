@@ -1,13 +1,13 @@
 import React from 'react'
 import type { Comment } from '../types'
 import { Skeleton } from '@/components/ui/skeleton'
-import { formatDate } from '@/utils/format'
-import { CommentMenu } from './CommentMenu'
+import { CommentItem } from './CommentItem'
 
 type CommentsListProps = {
   isLoading: boolean
   comments: Comment[]
   handleDeleteComment: (commentId: number) => Promise<void>
+  handleUpdateComment: (commentId: number, body: string) => Promise<void>
   userId: string
 }
 
@@ -15,6 +15,7 @@ export const CommentsList = ({
   isLoading,
   comments,
   handleDeleteComment,
+  handleUpdateComment,
   userId,
 }: CommentsListProps) => {
   if (isLoading)
@@ -28,28 +29,13 @@ export const CommentsList = ({
       {!!comments ? (
         comments.map((comment: Comment, index: number) => {
           return (
-            <li
-              aria-label={`comment-${comment.body}-${index}`}
+            <CommentItem
               key={`${comment.pictureId} - ${comment.userId} - ${index}`}
-              className='w-full bg-white shadow-sm p-4'
-            >
-              <div className='flex justify-between mb-2'>
-                <span className='font-bold'>{comment.commenterName}</span>
-                <div className='flex flex-col'>
-                  <span className='text-xs font-semibold opacity-50'>
-                    {formatDate(comment.createdAt)}
-                  </span>
-                </div>
-              </div>
-              <div className='flex justify-between'>
-                {comment.body}
-                {userId === comment.userId && (
-                  <div className='text-right'>
-                    <CommentMenu commentId={comment.id} handleDeleteComment={handleDeleteComment} />
-                  </div>
-                )}
-              </div>
-            </li>
+              comment={comment}
+              userId={userId}
+              handleDeleteComment={handleDeleteComment}
+              handleUpdateComment={handleUpdateComment}
+            />
           )
         })
       ) : (

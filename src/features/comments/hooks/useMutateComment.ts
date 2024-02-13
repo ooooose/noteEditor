@@ -1,7 +1,7 @@
 import { useSession } from 'next-auth/react'
 import { useFetchAuthUserByEmail } from '@/features/auth/hooks/useFetchAuthUserByEmail'
 import { useFetchComments } from './useFetchComments'
-import { deleteComment, postComment } from '../api'
+import { deleteComment, postComment, updateComment } from '../api'
 import { Comment } from '../types'
 
 export const useMutateComment = (pictureId: string) => {
@@ -44,11 +44,25 @@ export const useMutateComment = (pictureId: string) => {
     }
   }
 
+  const handleUpdateComment = async (commentId: number, body: string) => {
+    const params = {
+      id: commentId,
+      body: body,
+    }
+    try {
+      await updateComment(params)
+      mutate()
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   return {
     isLoading,
     pictureComments,
     onSubmitComment,
     handleDeleteComment,
+    handleUpdateComment,
     userId,
   }
 }

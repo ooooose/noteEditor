@@ -1,6 +1,6 @@
 import React from 'react'
 import { BsThreeDotsVertical } from 'react-icons/bs'
-import { FaRegTrashAlt } from 'react-icons/fa'
+import { FaRegTrashAlt, FaEdit } from 'react-icons/fa'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,9 +11,14 @@ import {
 type CommentMenuProps = {
   commentId: number
   handleDeleteComment: (commentId: number) => Promise<void>
+  setEditedFlag: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const CommentMenu = ({ commentId, handleDeleteComment }: CommentMenuProps) => {
+export const CommentMenu = ({
+  commentId,
+  handleDeleteComment,
+  setEditedFlag,
+}: CommentMenuProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -28,6 +33,15 @@ export const CommentMenu = ({ commentId, handleDeleteComment }: CommentMenuProps
         >
           <FaRegTrashAlt className='mr-4' />
           Delete
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          className='cursor-pointer'
+          onClick={() => {
+            setEditedFlag(true)
+          }}
+        >
+          <FaEdit className='mr-4' />
+          Edit
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
