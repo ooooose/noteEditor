@@ -8,7 +8,7 @@ type PicutresProps = {
   pictures: PictureType[]
 }
 
-export const Pictures = ({ pictures }: PicutresProps) => {
+export const Pictures = React.memo(({ pictures }: PicutresProps) => {
   return (
     <div className='flex flex-wrap gap-x-5 gap-y-5'>
       {pictures?.map((picture: PictureType) => {
@@ -16,4 +16,6 @@ export const Pictures = ({ pictures }: PicutresProps) => {
       })}
     </div>
   )
-}
+})
+
+Pictures.displayName = 'Pictures'

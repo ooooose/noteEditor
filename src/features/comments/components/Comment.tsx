@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React from 'react'
 
 import { useMutateComment } from '../hooks/useMutateComment'
 import {
@@ -20,7 +20,7 @@ type CommentProps = {
   pictureId: string
 }
 
-export const Comment = ({ pictureId }: CommentProps) => {
+export const Comment = React.memo(({ pictureId }: CommentProps) => {
   const {
     pictureComments,
     isLoading,
@@ -56,4 +56,6 @@ export const Comment = ({ pictureId }: CommentProps) => {
       <CommentCount isLoading={isLoading} commentCount={pictureComments?.length} />
     </div>
   )
-}
+})
+
+Comment.displayName = 'Comment'

@@ -71,7 +71,7 @@ const Frame = styled.div`
   }
 `
 
-export const FirstPictureFrame = ({ children }: FirstPictureFrameProps) => {
+export const FirstPictureFrame = React.memo(({ children }: FirstPictureFrameProps) => {
   return (
     <>
       <OuterFrame>
@@ -79,4 +79,6 @@ export const FirstPictureFrame = ({ children }: FirstPictureFrameProps) => {
       </OuterFrame>
     </>
   )
-}
+})
+
+FirstPictureFrame.displayName = 'FirstPictureFrame'

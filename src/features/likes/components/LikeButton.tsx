@@ -7,10 +7,12 @@ type UnlikeButtonType = {
   isLike: boolean
 }
 
-export const LikeButton = ({ like, isLike }: UnlikeButtonType) => {
+export const LikeButton = React.memo(({ like, isLike }: UnlikeButtonType) => {
   return (
     <div className='p-3 border rounded-full cursor-pointer' onClick={like}>
       <FaHeart className={isLike ? 'text-red-500' : ' text-gray-500 opacity-50'} />
     </div>
   )
-}
+})
+
+LikeButton.displayName = 'LikeButton'

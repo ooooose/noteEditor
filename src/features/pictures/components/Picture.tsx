@@ -8,7 +8,7 @@ type PictureProps = {
   frameId: number
 }
 
-export const Picture = ({ src, author, frameId }: PictureProps) => {
+export const Picture = React.memo(({ src, author, frameId }: PictureProps) => {
   return (
     <Frames frameId={frameId}>
       <div>
@@ -24,4 +24,6 @@ export const Picture = ({ src, author, frameId }: PictureProps) => {
       </div>
     </Frames>
   )
-}
+})
+
+Picture.displayName = 'Picture'

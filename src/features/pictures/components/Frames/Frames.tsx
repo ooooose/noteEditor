@@ -6,11 +6,13 @@ type FramesProps = {
   children: React.ReactNode
 }
 
-export const Frames = ({ frameId, children }: FramesProps) => {
+export const Frames = React.memo(({ frameId, children }: FramesProps) => {
   switch (frameId) {
     case 0:
       return <FirstPictureFrame>{children}</FirstPictureFrame>
     default:
       return <FirstPictureFrame>{children}</FirstPictureFrame>
   }
-}
+})
+
+Frames.displayName = 'Frames'
