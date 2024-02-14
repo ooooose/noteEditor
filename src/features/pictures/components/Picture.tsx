@@ -19,6 +19,7 @@ export const Picture = ({ src, author, frameId }: PictureProps) => {
           height={150}
           alt={author}
           style={{ maxWidth: '110%' }}
+          priority
         />
       </div>
     </Frames>
