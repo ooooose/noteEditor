@@ -34,7 +34,7 @@ const components: { title: string; href: string; description: string }[] = [
 
 export function Navigation() {
   return (
-    <NavigationMenu>
+    <NavigationMenu className='z-20'>
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuTrigger>メニュー</NavigationMenuTrigger>
