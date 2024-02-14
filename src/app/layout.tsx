@@ -27,7 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             enableSystem
             disableTransitionOnChange
           >
-            <div className='md:w-2/3 w-full mx-auto'>
+            <div className='md:w-2/3 w-full mx-auto select-none'>
               <Header />
               <div className='flex flex-col items-center justify-between'>{children}</div>
             </div>

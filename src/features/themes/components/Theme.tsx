@@ -11,7 +11,9 @@ export const Theme = ({ title, themeId }: ThemeProps) => {
   return (
     <>
       <Card title={title}>
-        <TopPicture themeId={themeId} />
+        <div className='relative'>
+          <TopPicture themeId={themeId} />
+        </div>
       </Card>
     </>
   )

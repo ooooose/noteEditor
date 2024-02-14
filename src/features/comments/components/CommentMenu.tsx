@@ -14,36 +14,36 @@ type CommentMenuProps = {
   setEditedFlag: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const CommentMenu = ({
-  commentId,
-  handleDeleteComment,
-  setEditedFlag,
-}: CommentMenuProps) => {
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger>
-        <BsThreeDotsVertical />
-      </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuItem
-          className='text-red-500 cursor-pointer focus:text-red-500'
-          onClick={() => {
-            handleDeleteComment(commentId)
-          }}
-        >
-          <FaRegTrashAlt className='mr-4' />
-          Delete
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          className='cursor-pointer'
-          onClick={() => {
-            setEditedFlag(true)
-          }}
-        >
-          <FaEdit className='mr-4' />
-          Edit
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  )
-}
+export const CommentMenu = React.memo(
+  ({ commentId, handleDeleteComment, setEditedFlag }: CommentMenuProps) => {
+    return (
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <BsThreeDotsVertical />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem
+            className='text-red-500 cursor-pointer focus:text-red-500'
+            onClick={() => {
+              handleDeleteComment(commentId)
+            }}
+          >
+            <FaRegTrashAlt className='mr-4' />
+            Delete
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className='cursor-pointer'
+            onClick={() => {
+              setEditedFlag(true)
+            }}
+          >
+            <FaEdit className='mr-4' />
+            Edit
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    )
+  },
+)
+
+CommentMenu.displayName = 'CommentMenu'

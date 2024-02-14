@@ -10,7 +10,7 @@ type LikeProps = {
   isLoading: boolean
 }
 
-export const Like = ({ like, liked, likeCount, isLoading }: LikeProps) => {
+export const Like = React.memo(({ like, liked, likeCount, isLoading }: LikeProps) => {
   if (isLoading)
     return (
       <div>
@@ -30,4 +30,6 @@ export const Like = ({ like, liked, likeCount, isLoading }: LikeProps) => {
       <p className='text-xs mt-1.5 text-center'>{likeCount}</p>
     </div>
   )
-}
+})
+
+Like.displayName = 'Like'

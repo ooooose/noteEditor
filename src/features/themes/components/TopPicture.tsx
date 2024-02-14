@@ -2,9 +2,10 @@
 
 import React from 'react'
 import { Picture as PictureType } from '@/features/pictures/types'
-import { Picture } from '@/features/pictures/components/Picture'
+import Image from 'next/image'
 import { useFetchPictures } from '@/features/pictures/hooks/useFetchPictures'
 import { Skeleton } from '@/components/ui/skeleton'
+import { Picture } from '@/features/pictures/components/Picture'
 
 type TopPictureProps = {
   themeId: string
@@ -23,5 +24,5 @@ export const TopPicture = ({ themeId }: TopPictureProps) => {
     },
     themePictures[0],
   )
-  return <Picture src={topPicutre.image} author={topPicutre.author} pictureId={topPicutre.id} />
+  return <Picture src={topPicutre.image} author={topPicutre.author} frameId={topPicutre.frameId} />
 }
