@@ -8,6 +8,7 @@ import { Like } from '@/features/likes/components'
 import { useMutateLike } from '@/features/likes/hooks/useMutateLike'
 import { Comment } from '@/features/comments/components/Comment'
 import { PictureTheme } from './PictureTheme'
+import { PictureMenu } from './PictureMenu'
 
 type PictureCardProps = {
   picture: PictureType
@@ -35,9 +36,12 @@ export const PictureCard = React.memo(({ picture }: PictureCardProps) => {
           <div className='mt-3 ml-2'>
             {isDisplay && <PictureTheme title={picture.theme.title} />}
           </div>
-          <div className='float-right mt-3 flex gap-2'>
-            <Comment pictureId={picture.id} />
-            <Like like={like} liked={liked} likeCount={likeCount} isLoading={isLikeLoading} />
+          <div className='float-right flex gap-2'>
+            <div className='flex gap-2 mt-3'>
+              <Comment pictureId={picture.id} />
+              <Like like={like} liked={liked} likeCount={likeCount} isLoading={isLikeLoading} />
+            </div>
+            <PictureMenu />
           </div>
         </div>
       </div>
