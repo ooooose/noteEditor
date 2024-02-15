@@ -19,7 +19,8 @@ export const Picture = React.memo(({ src, author, frameId }: PictureProps) => {
           height={150}
           alt={author}
           style={{ maxWidth: '110%' }}
-          priority
+          priority={true}
+          quality={50}
         />
       </div>
     </Frames>
