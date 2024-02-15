@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import Link from 'next/link'
 import { Picture as PictureType } from '../types'
 import { Picture } from './Picture'
 import { usePathname } from 'next/navigation'
@@ -18,6 +17,7 @@ export const PictureCard = React.memo(({ picture }: PictureCardProps) => {
   const { like, liked, likeCount, isLoading: isLikeLoading } = useMutateLike(picture.id)
   const pathName = usePathname()
   const isDisabled = pathName === `/pictures/${picture.id}`
+  const isDisplay = pathName === '/timeline'
   return (
     <div className='w-[250px] h-[300px]'>
       <div className='py-3'>
@@ -33,7 +33,7 @@ export const PictureCard = React.memo(({ picture }: PictureCardProps) => {
         </div>
         <div className='flex justify-between'>
           <div className='mt-3 ml-2'>
-            <PictureTheme title={picture.theme.title} />
+            {isDisplay && <PictureTheme title={picture.theme.title} />}
           </div>
           <div className='float-right mt-3 flex gap-2'>
             <Comment pictureId={picture.id} />
