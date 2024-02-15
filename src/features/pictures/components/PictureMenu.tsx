@@ -6,6 +6,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { FaSquareXTwitter } from 'react-icons/fa6'
+import { IoMdDownload } from 'react-icons/io'
+import { MdChangeCircle } from 'react-icons/md'
 
 export const PictureMenu = () => {
   return (
@@ -14,8 +17,15 @@ export const PictureMenu = () => {
         <BsThreeDotsVertical />
       </DropdownMenuTrigger>
       <DropdownMenuContent className='flex' side='bottom' align='end'>
-        <DropdownMenuItem className='cursor-pointer'>Edit</DropdownMenuItem>
-        <DropdownMenuItem className='cursor-pointer'>Delete</DropdownMenuItem>
+        <DropdownMenuItem className='cursor-pointer'>
+          <FaSquareXTwitter size={24} />
+        </DropdownMenuItem>
+        <DropdownMenuItem className='cursor-pointer'>
+          <IoMdDownload size={24} />
+        </DropdownMenuItem>
+        <DropdownMenuItem className='cursor-pointer'>
+          <MdChangeCircle size={24} />
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )
