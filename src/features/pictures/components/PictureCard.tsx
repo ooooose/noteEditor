@@ -8,6 +8,7 @@ import { usePathname } from 'next/navigation'
 import { Like } from '@/features/likes/components'
 import { useMutateLike } from '@/features/likes/hooks/useMutateLike'
 import { Comment } from '@/features/comments/components/Comment'
+import { PictureTheme } from './PictureTheme'
 
 type PictureCardProps = {
   picture: PictureType
@@ -30,9 +31,14 @@ export const PictureCard = React.memo(({ picture }: PictureCardProps) => {
             <Picture src={picture.image} author={picture.author} frameId={picture.frameId} />
           </a>
         </div>
-        <div className='float-right mt-3 flex gap-2'>
-          <Comment pictureId={picture.id} />
-          <Like like={like} liked={liked} likeCount={likeCount} isLoading={isLikeLoading} />
+        <div className='flex justify-between'>
+          <div className='mt-3 ml-2'>
+            <PictureTheme title={picture.theme.title} />
+          </div>
+          <div className='float-right mt-3 flex gap-2'>
+            <Comment pictureId={picture.id} />
+            <Like like={like} liked={liked} likeCount={likeCount} isLoading={isLikeLoading} />
+          </div>
         </div>
       </div>
     </div>
