@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Link from 'next/link'
 import { Picture as PictureType } from '../types'
 import { Picture } from './Picture'
 import { usePathname } from 'next/navigation'

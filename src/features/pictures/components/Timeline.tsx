@@ -10,7 +10,7 @@ export const TimelineLayout = () => {
   if (isLoading)
     return (
       <div>
-        <div className='flex flex-wrap gap-x-3 gap-y-5'>
+        <div className='flex flex-wrap gap-1 w-[800px]'>
           {[...Array(6)].map((_, i) => {
             return <SkeletonCard key={i} />
           })}
