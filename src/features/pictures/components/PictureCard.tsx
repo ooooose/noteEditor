@@ -16,7 +16,7 @@ type PictureCardProps = {
 }
 
 export const PictureCard = React.memo(({ picture }: PictureCardProps) => {
-  const { like, liked, likeCount, isLoading: isLikeLoading } = useMutateLike(picture.id)
+  const { like, liked, likeCount, isLoading: isLikeLoading, userId } = useMutateLike(picture.id)
   const pathName = usePathname()
   const isDisplay = pathName === '/timeline'
   return (
@@ -44,7 +44,7 @@ export const PictureCard = React.memo(({ picture }: PictureCardProps) => {
               <Comment pictureId={picture.id} />
               <Like like={like} liked={liked} likeCount={likeCount} isLoading={isLikeLoading} />
             </div>
-            <PictureMenu picture={picture} />
+            {userId === picture.userId && <PictureMenu picture={picture} />}
           </div>
         </div>
       </div>

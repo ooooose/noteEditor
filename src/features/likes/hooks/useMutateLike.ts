@@ -13,6 +13,7 @@ export function useMutateLike(pictureId: string) {
   const { user: authUser } = useFetchAuthUserByEmail(session?.user.email ?? '')
   const { likes, isLoading } = useFetchLikes(pictureId)
   const { mutate } = useSWRConfig()
+  const userId = authUser && authUser?.id
 
   const generateParams = () => {
     const params = {
@@ -69,5 +70,6 @@ export function useMutateLike(pictureId: string) {
     liked,
     likeCount,
     mutate,
+    userId,
   }
 }
