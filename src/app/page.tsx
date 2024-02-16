@@ -1,5 +1,3 @@
-import { AuthButton } from '@/features/auth/components/AuthButton'
-
 export default function Home() {
   return (
     <main className='flex flex-col items-center justify-between'>
@@ -7,7 +5,6 @@ export default function Home() {
       <div className='my-10'>
         <p>Tipserは、あなたの持っているTipsを共有するアプリです。</p>
       </div>
-      <AuthButton />
     </main>
   )
 }

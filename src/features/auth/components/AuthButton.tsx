@@ -4,6 +4,7 @@ import React from 'react'
 import { useSession } from 'next-auth/react'
 import { Login } from './Login'
 import { Logout } from './Logout'
+import { Skeleton } from '@/components/ui/skeleton'
 
 export const AuthButton = () => {
   // TODO: いらないかも、要修正
@@ -11,7 +12,7 @@ export const AuthButton = () => {
   if (status === 'loading') {
     return (
       <main className='flex flex-col items-center justify-between'>
-        <p>Loading...</p>
+        <Skeleton className='w-[240px] h-[40px]' />
       </main>
     )
   }
