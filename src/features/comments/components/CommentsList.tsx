@@ -27,7 +27,7 @@ export const CommentsList = React.memo(
       )
     return (
       <ul aria-label='comments' className='flex flex-col space-y-3 h-60 overflow-y-auto'>
-        {!!comments ? (
+        {comments.length !== 0 ? (
           comments.map((comment: Comment, index: number) => {
             return (
               <CommentItem
