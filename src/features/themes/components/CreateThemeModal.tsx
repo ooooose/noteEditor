@@ -6,12 +6,11 @@ import { Modal } from '@/components/elements'
 import { Button } from '@/components/elements/Button'
 import { useSession } from 'next-auth/react'
 import * as z from 'zod'
-import { useToast } from '@/components/ui/use-toast'
-
 import { Form, Input } from '@/components/elements/Form'
 import { apiClient } from '@/lib/axios/api-client'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useFetchThemes } from '../hooks/useFetchThemes'
+import { toast } from 'sonner'
 
 const schema = z.object({
   title: z.string().min(1, '入力してください'),
@@ -25,7 +24,6 @@ type ThemeValue = {
 export const CreateThemeModal = () => {
   const { mutate } = useFetchThemes()
   const { data: session } = useSession()
-  const { toast } = useToast()
   const [open, setOpen] = useState(false)
   const createTheme = async (data: ThemeValue) => {
     const params = {
@@ -34,13 +32,11 @@ export const CreateThemeModal = () => {
     }
     await apiClient.apiPost('/api/themes', params).then((res) => {
       if (res && res.status === 201) {
+        toast('テーマを作成しました', { position: 'top-center' })
         mutate()
         setOpen(false)
       } else if (res?.status === 500) {
-        toast({
-          description: '作成に失敗しました',
-          variant: 'destructive',
-        })
+        toast('テーマの作成に失敗しました', { position: 'top-center' })
       }
     })
   }
