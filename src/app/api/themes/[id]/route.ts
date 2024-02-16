@@ -9,7 +9,11 @@ export async function GET(req: Request, res: NextResponse) {
     const theme = await prisma.theme.findFirst({
       where: { id },
       include: {
-        pictures: true,
+        pictures: {
+          orderBy: {
+            createdAt: 'desc',
+          },
+        },
       },
     })
     return NextResponse.json({ message: 'Success', theme }, { status: 200 })

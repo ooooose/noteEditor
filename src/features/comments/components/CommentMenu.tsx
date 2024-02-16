@@ -21,7 +21,7 @@ export const CommentMenu = React.memo(
         <DropdownMenuTrigger>
           <BsThreeDotsVertical />
         </DropdownMenuTrigger>
-        <DropdownMenuContent>
+        <DropdownMenuContent side='bottom' align='end'>
           <DropdownMenuItem
             className='cursor-pointer'
             onClick={() => {

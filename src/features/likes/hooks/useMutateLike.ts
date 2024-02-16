@@ -4,13 +4,15 @@ import { useFetchAuthUserByEmail } from '@/features/auth/hooks/useFetchAuthUserB
 import { useFetchLikes } from './useFetchLikes'
 import { Like } from '../types'
 import { postLike, deleteLike } from '../api'
+import { useSWRConfig } from 'swr'
 
 export function useMutateLike(pictureId: string) {
   const { data: session } = useSession()
   const [liked, setLiked] = useState(false)
   const [likeCount, setLikeCount] = useState(0)
   const { user: authUser } = useFetchAuthUserByEmail(session?.user.email ?? '')
-  const { likes, isLoading, mutate } = useFetchLikes(pictureId)
+  const { likes, isLoading } = useFetchLikes(pictureId)
+  const { mutate } = useSWRConfig()
 
   const generateParams = () => {
     const params = {
@@ -44,9 +46,17 @@ export function useMutateLike(pictureId: string) {
     setLikeCount(newLikeCount)
     try {
       if (liked) {
-        await deleteLike(params)
+        await deleteLike(params).then((res) => {
+          if (res.status === 200) {
+            mutate('/api/likes')
+          }
+        })
       } else {
-        await postLike(params)
+        await postLike(params).then((res) => {
+          if (res.status === 201) {
+            mutate('/api/likes')
+          }
+        })
       }
     } catch (error) {
       console.error('Failed to update like:', error)

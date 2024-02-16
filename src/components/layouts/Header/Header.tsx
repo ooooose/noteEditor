@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import { HeaderRight } from './HeaderRight'
+import Menu from '@/components/elements/Menu/Menu'
 
 const Header = () => {
   return (
@@ -8,7 +8,7 @@ const Header = () => {
       <div className='font-medium'>
         <Link href='/'>画HACK</Link>
       </div>
-      <HeaderRight />
+      <Menu />
     </div>
   )
 }
