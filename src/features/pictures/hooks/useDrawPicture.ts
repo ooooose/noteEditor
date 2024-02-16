@@ -94,7 +94,7 @@ export const useDrawPicture = ({ width, height, email }: IProps) => {
   }
 
   const uploadPicture = () => {
-    const base64 = canvasRef.current?.toDataURL('image/png') ?? ''
+    const base64 = canvasRef.current?.toDataURL('image/webp') ?? ''
     const params = generateParams(base64)
     try {
       apiClient.apiPost('/api/pictures', params).then((res) => {

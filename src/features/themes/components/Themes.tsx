@@ -12,7 +12,7 @@ export const Themes = () => {
   const { themes, isError, isLoading } = useFetchThemes()
   if (isLoading)
     return (
-      <div className='flex flex-wrap gap-x-3 gap-y-5'>
+      <div className='grid grid-cols-3 grid-rows-2 gap-x-3 gap-y-5'>
         {[...Array(6)].map((_, i) => {
           return (
             <Card key={i} className='w-[300px]'>
@@ -25,7 +25,7 @@ export const Themes = () => {
   if (isError) return <div>Error loading themes</div>
 
   return (
-    <div className='flex flex-wrap gap-x-3 gap-y-5'>
+    <div className='grid grid-cols-3 grid-rows-2 gap-x-3 gap-y-5'>
       {themes?.map((theme: ThemeType) => {
         return (
           <Link key={theme.id} href={`/themes/${theme.id}`}>
