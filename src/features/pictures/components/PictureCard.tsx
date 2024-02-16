@@ -17,7 +17,6 @@ type PictureCardProps = {
 export const PictureCard = React.memo(({ picture }: PictureCardProps) => {
   const { like, liked, likeCount, isLoading: isLikeLoading } = useMutateLike(picture.id)
   const pathName = usePathname()
-  const isDisabled = pathName === `/pictures/${picture.id}`
   const isDisplay = pathName === '/timeline'
   return (
     <div className='w-[250px] h-[300px]'>
@@ -28,9 +27,7 @@ export const PictureCard = React.memo(({ picture }: PictureCardProps) => {
       </div>
       <div>
         <div className='relative'>
-          <a href={`/pictures/${picture.id}`} className={isDisabled ? 'pointer-events-none' : ''}>
-            <Picture src={picture.image} author={picture.author} frameId={picture.frameId} />
-          </a>
+          <Picture src={picture.image} author={picture.author} frameId={picture.frameId} />
         </div>
         <div className='flex justify-between'>
           <div className='mt-3 ml-2'>
