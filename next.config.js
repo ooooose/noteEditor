@@ -1,11 +1,15 @@
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: [process.env.BUCKET_URL],
+    domains: [process.env.BUCKET_URL, process.env.GOOGLE_URL],
   },
   compiler: {
     styledComponents: true,
   },
 }
 
-module.exports = nextConfig
+module.exports = withBundleAnalyzer(nextConfig)

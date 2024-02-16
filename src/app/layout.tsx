@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 import { Noto_Sans_JP } from 'next/font/google'
 import './globals.css'
-import Header from '@/components/layouts/Header/Header'
 import NextAuthProvider from '@/lib/next-auth/NextAuthProvider'
 import { ThemeProvider } from '@/components/elements/Provider/ThemeProvider'
+import MainLayout from '@/components/layouts/Layout/MainLayout'
 import { cn } from '@/lib/utils'
 import { Toaster } from '@/components/ui/toaster'
 
@@ -27,10 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             enableSystem
             disableTransitionOnChange
           >
-            <div className='md:w-2/3 w-full mx-auto select-none'>
-              <Header />
-              <div className='flex flex-col items-center justify-between'>{children}</div>
-            </div>
+            <MainLayout>{children}</MainLayout>
             <Toaster />
           </ThemeProvider>
         </NextAuthProvider>

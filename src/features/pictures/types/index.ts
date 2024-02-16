@@ -1,4 +1,5 @@
 import { Like } from '@/features/likes/types'
+import { Theme } from '@/features/themes/types'
 
 export type Picture = {
   id: string
@@ -7,5 +8,6 @@ export type Picture = {
   frameId: number
   userId: string
   themeId: string
+  theme: Theme
   likes: Like[]
 }

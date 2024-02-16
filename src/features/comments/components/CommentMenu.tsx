@@ -23,15 +23,6 @@ export const CommentMenu = React.memo(
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuItem
-            className='text-red-500 cursor-pointer focus:text-red-500'
-            onClick={() => {
-              handleDeleteComment(commentId)
-            }}
-          >
-            <FaRegTrashAlt className='mr-4' />
-            Delete
-          </DropdownMenuItem>
-          <DropdownMenuItem
             className='cursor-pointer'
             onClick={() => {
               setEditedFlag(true)
@@ -39,6 +30,15 @@ export const CommentMenu = React.memo(
           >
             <FaEdit className='mr-4' />
             Edit
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className='text-red-500 cursor-pointer focus:text-red-500'
+            onClick={() => {
+              handleDeleteComment(commentId)
+            }}
+          >
+            <FaRegTrashAlt className='mr-4' />
+            Delete
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
