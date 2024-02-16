@@ -5,6 +5,7 @@ import { signOut } from 'next-auth/react'
 import { Modal } from '@/components/elements'
 import { Button } from '@/components/ui/button'
 import { DialogClose } from '@/components/ui/dialog'
+import { toast } from 'sonner'
 
 export const Logout = () => {
   return (

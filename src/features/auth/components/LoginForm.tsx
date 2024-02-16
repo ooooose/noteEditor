@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import * as z from 'zod'
 import { useSession, signIn, SignInResponse } from 'next-auth/react'
-import { useToast } from '@/components/ui/use-toast'
+import { toast } from 'sonner'
 
 import { Button } from '@/components/elements/Button'
 import { Form, Input } from '@/components/elements/Form'
@@ -25,23 +25,22 @@ type LoginFormProps = {
 }
 
 export const LoginForm = ({ onSuccess }: LoginFormProps) => {
-  const { toast } = useToast()
   const router = useRouter()
   const { data: session } = useSession()
   const loginUser = async (data: LoginValues) => {
-    await signIn('credentials', {
-      ...data,
-      redirect: false,
-    }).then((res: SignInResponse | undefined) => {
-      if (res && res.status === 200) {
-        router.push('/themes')
-      } else if (res?.status === 401) {
-        toast({
-          description: 'ログインに失敗しました',
-          variant: 'destructive',
-        })
-      }
-    })
+    try {
+      await signIn('credentials', {
+        ...data,
+        redirect: false,
+      }).then((res: SignInResponse | undefined) => {
+        if (res && res.status === 200) {
+          router.push('/themes')
+          // toast('ログインしました', { position: 'top-center' })
+        }
+      })
+    } catch (err) {
+      toast('ログインに失敗しました', { position: 'top-center' })
+    }
   }
 
   const onSubmit = async (values: LoginValues) => {
