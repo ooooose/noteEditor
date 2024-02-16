@@ -5,7 +5,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: [process.env.BUCKET_URL],
+    domains: [process.env.BUCKET_URL, process.env.GOOGLE_URL],
   },
   compiler: {
     styledComponents: true,

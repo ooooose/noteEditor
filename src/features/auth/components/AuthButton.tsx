@@ -20,7 +20,13 @@ export const AuthButton = () => {
     return (
       <>
         <div className='flex gap-4 items-end'>
-          <Image src={session.user.image ?? '/avatar.png'} width={70} height={70} alt='avatar' />
+          <Image
+            src={session.user.image ?? '/avatar.png'}
+            width={70}
+            height={70}
+            alt='avatar'
+            className='rounded-full'
+          />
           <p className='pb-2'>{session.user.name} さん</p>
         </div>
         <Logout />
