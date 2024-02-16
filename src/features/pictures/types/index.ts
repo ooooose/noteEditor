@@ -8,6 +8,7 @@ export type Picture = {
   frameId: number
   userId: string
   themeId: string
+  createdAt: Date
   theme: Theme
   likes: Like[]
 }

@@ -5,7 +5,7 @@ import NextAuthProvider from '@/lib/next-auth/NextAuthProvider'
 import { ThemeProvider } from '@/components/elements/Provider/ThemeProvider'
 import MainLayout from '@/components/layouts/Layout/MainLayout'
 import { cn } from '@/lib/utils'
-import { Toaster } from '@/components/ui/toaster'
+import { Toaster } from '@/components/ui/sonner'
 
 const notoSansJP = Noto_Sans_JP({ subsets: ['latin'] })
 

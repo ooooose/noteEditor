@@ -6,5 +6,5 @@ type paramsType = {
 }
 
 export const updateComment = async (params: paramsType) => {
-  await apiClient.apiPut('/api/comments', params)
+  return await apiClient.apiPut('/api/comments', params).then((result) => result)
 }

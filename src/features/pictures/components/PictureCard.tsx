@@ -9,6 +9,7 @@ import { useMutateLike } from '@/features/likes/hooks/useMutateLike'
 import { Comment } from '@/features/comments/components/Comment'
 import { PictureTheme } from './PictureTheme'
 import { PictureMenu } from './PictureMenu'
+import { formatDateForPicture } from '@/utils/format'
 
 type PictureCardProps = {
   picture: PictureType
@@ -21,8 +22,13 @@ export const PictureCard = React.memo(({ picture }: PictureCardProps) => {
   return (
     <div className='w-[250px] h-[300px]'>
       <div className='py-3'>
-        <div>
-          <span className='font-bold'>{picture.author}</span>さん
+        <div className='flex justify-between mx-3'>
+          <p>
+            <span className='font-bold'>{picture.author}</span>さん
+          </p>
+          <p className='text-sm font-semibold opacity-50'>
+            {formatDateForPicture(picture.createdAt)}
+          </p>
         </div>
       </div>
       <div>

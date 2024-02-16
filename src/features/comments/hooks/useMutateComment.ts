@@ -2,6 +2,7 @@ import { useSession } from 'next-auth/react'
 import { useFetchAuthUserByEmail } from '@/features/auth/hooks/useFetchAuthUserByEmail'
 import { useFetchComments } from './useFetchComments'
 import { deleteComment, postComment, updateComment } from '../api'
+import { toast } from 'sonner'
 import { Comment } from '../types'
 
 export const useMutateComment = (pictureId: string) => {
@@ -25,8 +26,12 @@ export const useMutateComment = (pictureId: string) => {
       await postComment({
         ...params,
         body: body,
+      }).then((res) => {
+        if (res.status === 201) {
+          toast('コメントを作成しました', { position: 'top-center' })
+          mutate()
+        }
       })
-      mutate()
     } catch (err) {
       console.log(err)
     }
@@ -37,8 +42,12 @@ export const useMutateComment = (pictureId: string) => {
       id: commentId,
     }
     try {
-      await deleteComment(params)
-      mutate()
+      await deleteComment(params).then((res) => {
+        if (res.status === 200) {
+          toast('コメントを削除しました', { position: 'top-center' })
+          mutate()
+        }
+      })
     } catch (err) {
       console.log(err)
     }
@@ -50,8 +59,12 @@ export const useMutateComment = (pictureId: string) => {
       body: body,
     }
     try {
-      await updateComment(params)
-      mutate()
+      await updateComment(params).then((res) => {
+        if (res.status === 200) {
+          toast('コメントを更新しました', { position: 'top-center' })
+          mutate()
+        }
+      })
     } catch (err) {
       console.log(err)
     }

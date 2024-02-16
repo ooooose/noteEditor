@@ -11,6 +11,9 @@ export async function GET(req: Request, res: NextResponse) {
         theme: true,
         user: true,
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     })
     return NextResponse.json({ message: 'Success', pictures }, { status: 200 })
   } catch (err) {

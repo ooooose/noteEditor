@@ -7,5 +7,5 @@ type paramsType = {
 }
 
 export const postComment = async (params: paramsType) => {
-  await apiClient.apiPost('/api/comments', params)
+  return await apiClient.apiPost('/api/comments', params).then((result) => result)
 }

@@ -5,5 +5,5 @@ type paramsType = {
 }
 
 export const deleteComment = async (params: paramsType) => {
-  await apiClient.apiDelete('/api/comments', params)
+  return await apiClient.apiDelete('/api/comments', params).then((result) => result)
 }
