@@ -6,13 +6,18 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { DeletePicture } from './menu'
 import { FaSquareXTwitter } from 'react-icons/fa6'
 import { IoMdDownload } from 'react-icons/io'
 import { MdChangeCircle } from 'react-icons/md'
-import { FaRegTrashAlt } from 'react-icons/fa'
 import { Tooltip } from '@/components/elements/Tooltip/Tooltip'
+import { Picture } from '../types'
 
-export const PictureMenu = () => {
+type PictureMenuProps = {
+  picture: Picture
+}
+
+export const PictureMenu = ({ picture }: PictureMenuProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className='h-[65px] focus:outline-none'>
@@ -34,11 +39,7 @@ export const PictureMenu = () => {
             <MdChangeCircle size={24} />
           </DropdownMenuItem>
         </Tooltip>
-        <Tooltip content='絵を削除する'>
-          <DropdownMenuItem className='cursor-pointer'>
-            <FaRegTrashAlt size={24} color='red' />
-          </DropdownMenuItem>
-        </Tooltip>
+        <DeletePicture pictureId={picture.id} image={picture.image} />
       </DropdownMenuContent>
     </DropdownMenu>
   )

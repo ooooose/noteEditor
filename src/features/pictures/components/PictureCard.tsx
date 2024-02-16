@@ -41,7 +41,7 @@ export const PictureCard = React.memo(({ picture }: PictureCardProps) => {
               <Comment pictureId={picture.id} />
               <Like like={like} liked={liked} likeCount={likeCount} isLoading={isLikeLoading} />
             </div>
-            <PictureMenu />
+            <PictureMenu picture={picture} />
           </div>
         </div>
       </div>
