@@ -1,6 +1,7 @@
 import React from 'react'
 import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
+import { Toaster } from '@/components/ui/sonner'
 
 type MainLayoutProps = {
   children: React.ReactNode
@@ -14,6 +15,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
         <div className='flex flex-col items-center justify-between h-screen'>{children}</div>
       </div>
       <Footer />
+      <Toaster />
     </div>
   )
 }

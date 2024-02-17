@@ -17,7 +17,7 @@ export const ThemeLayout = ({ id }: ThemeLayoutProps) => {
         <div className='text-center py-5'>
           <p className='p-2'>loading...</p>
         </div>
-        <div className='flex flex-wrap gap-x-3 gap-y-5'>
+        <div className='grid grid-cols-3 grid-rows-2'>
           {[...Array(6)].map((_, i) => {
             return <SkeletonCard key={i} />
           })}

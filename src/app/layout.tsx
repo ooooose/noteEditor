@@ -2,10 +2,8 @@ import type { Metadata } from 'next'
 import { Noto_Sans_JP } from 'next/font/google'
 import './globals.css'
 import NextAuthProvider from '@/lib/next-auth/NextAuthProvider'
-import { ThemeProvider } from '@/components/elements/Provider/ThemeProvider'
 import MainLayout from '@/components/layouts/Layout/MainLayout'
 import { cn } from '@/lib/utils'
-import { Toaster } from '@/components/ui/sonner'
 
 const notoSansJP = Noto_Sans_JP({ subsets: ['latin'] })
 
@@ -21,15 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         className={cn('min-h-screen bg-background font-sans antialiased', notoSansJP.className)}
       >
         <NextAuthProvider>
-          <ThemeProvider
-            attribute='class'
-            defaultTheme='Light'
-            enableSystem
-            disableTransitionOnChange
-          >
-            <MainLayout>{children}</MainLayout>
-            <Toaster />
-          </ThemeProvider>
+          <MainLayout>{children}</MainLayout>
         </NextAuthProvider>
       </body>
     </html>
