@@ -1,6 +1,7 @@
 'use client'
 
 import * as React from 'react'
+import Script from 'next/script'
 import { useFetchThemes } from '@/features/themes/hooks/useFetchThemes'
 import { Theme as ThemeType } from '@/features/themes/types'
 import { useRouter } from 'next/navigation'
@@ -38,6 +39,7 @@ export const Themes = () => {
           </div>
         )
       })}
+      <Script src={process.env.BUCKET_URL} />
     </div>
   )
 }

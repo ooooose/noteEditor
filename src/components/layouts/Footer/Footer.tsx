@@ -4,7 +4,7 @@ import { AuthButton } from '@/features/auth/components/AuthButton'
 
 const Footer = () => {
   return (
-    <footer className='bg-gray-50 border-t-m_gray-2 mt-0 border-0 border-t border-solid pt-6 pb-6 mt-12 text-gray-500'>
+    <footer className='bg-gray-50 border-t-m_gray-2 mt-0 border-0 border-t border-solid pt-6 pb-6 mt-36 text-gray-500'>
       <div className='w-3/4 mx-auto'>
         <div className='flex items-center justify-between px-4 pb-12'>
           <div className='flex flex-col gap-4'>
