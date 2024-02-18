@@ -24,12 +24,10 @@ export const CommentForm = React.memo(({ onSubmit }: CommentFormProps) => {
   })
   return (
     <form
-      onSubmit={() =>
-        handleSubmit(async (values) => {
-          await onSubmit(values.body)
-          reset()
-        })
-      }
+      onSubmit={handleSubmit(async (values) => {
+        await onSubmit(values.body)
+        reset()
+      })}
     >
       <Input
         error={formState.errors['body']}

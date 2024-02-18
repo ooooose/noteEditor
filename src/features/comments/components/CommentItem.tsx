@@ -55,12 +55,10 @@ export const CommentItem = React.memo(
         {editedFlag ? (
           <form
             className='flex flex-col'
-            onSubmit={() => {
-              return handleSubmit(async (values) => {
-                await handleUpdateComment(comment.id, values.body)
-                setEditedFlag(false)
-              })
-            }}
+            onSubmit={handleSubmit(async (values) => {
+              await handleUpdateComment(comment.id, values.body)
+              setEditedFlag(false)
+            })}
           >
             <Input
               className='w-full'
