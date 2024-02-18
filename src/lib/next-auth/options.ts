@@ -26,7 +26,7 @@ export const options: NextAuthOptions = {
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
       },
-      // @ts-expect-error
+      // @ts-ignore
       async authorize(credentials) {
         if (!credentials?.email || !credentials.password) {
           return null
@@ -55,7 +55,7 @@ export const options: NextAuthOptions = {
   },
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    // @ts-expect-error
+    // @ts-ignore
     async jwt({ token, user }) {
       return { ...token, ...user }
     },
