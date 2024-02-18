@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { CanvasLayout } from '@/features/pictures/components/canvas/Layout'
 
 function Canvas() {

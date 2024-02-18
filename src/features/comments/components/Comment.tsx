@@ -1,8 +1,8 @@
 'use client'
 
 import React from 'react'
+import { FaRegComment } from 'react-icons/fa'
 
-import { useMutateComment } from '../hooks/useMutateComment'
 import {
   Dialog,
   DialogContent,
@@ -11,10 +11,11 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 
-import { FaRegComment } from 'react-icons/fa'
-import { CommentsList } from './CommentsList'
+import { useMutateComment } from '../hooks/useMutateComment'
+
 import { CommentCount } from './CommentCount'
 import { CommentForm } from './CommentForm'
+import { CommentsList } from './CommentsList'
 
 type CommentProps = {
   pictureId: string
@@ -34,7 +35,7 @@ export const Comment = React.memo(({ pictureId }: CommentProps) => {
       <Dialog>
         <DialogTrigger>
           <div className='flex gap-3'>
-            <div className='p-3 border rounded-full cursor-pointer'>
+            <div className='cursor-pointer rounded-full border p-3'>
               <FaRegComment className='text-gray-500' />
             </div>
           </div>
@@ -44,16 +45,16 @@ export const Comment = React.memo(({ pictureId }: CommentProps) => {
             <DialogTitle>コメント一覧</DialogTitle>
           </DialogHeader>
           <CommentsList
-            isLoading={isLoading}
             comments={pictureComments}
             handleDeleteComment={handleDeleteComment}
             handleUpdateComment={handleUpdateComment}
+            isLoading={isLoading}
             userId={userId}
           />
           <CommentForm onSubmit={onSubmitComment} />
         </DialogContent>
       </Dialog>
-      <CommentCount isLoading={isLoading} commentCount={pictureComments?.length} />
+      <CommentCount commentCount={pictureComments?.length} isLoading={isLoading} />
     </div>
   )
 })

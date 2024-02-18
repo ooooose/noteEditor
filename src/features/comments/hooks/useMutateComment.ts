@@ -1,9 +1,12 @@
 import { useSession } from 'next-auth/react'
-import { useFetchAuthUserByEmail } from '@/features/auth/hooks/useFetchAuthUserByEmail'
-import { useFetchComments } from './useFetchComments'
-import { deleteComment, postComment, updateComment } from '../api'
 import { toast } from 'sonner'
+
+import { useFetchAuthUserByEmail } from '@/features/auth/hooks/useFetchAuthUserByEmail'
+
+import { deleteComment, postComment, updateComment } from '../api'
 import { Comment } from '../types'
+
+import { useFetchComments } from './useFetchComments'
 
 export const useMutateComment = (pictureId: string) => {
   const { data: session } = useSession()

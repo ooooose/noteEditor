@@ -1,6 +1,7 @@
 import React from 'react'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { FaRegTrashAlt, FaEdit } from 'react-icons/fa'
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,7 +22,7 @@ export const CommentMenu = React.memo(
         <DropdownMenuTrigger>
           <BsThreeDotsVertical />
         </DropdownMenuTrigger>
-        <DropdownMenuContent side='bottom' align='end'>
+        <DropdownMenuContent align='end' side='bottom'>
           <DropdownMenuItem
             className='cursor-pointer'
             onClick={() => {
@@ -32,9 +33,9 @@ export const CommentMenu = React.memo(
             Edit
           </DropdownMenuItem>
           <DropdownMenuItem
-            className='text-red-500 cursor-pointer focus:text-red-500'
+            className='cursor-pointer text-red-500 focus:text-red-500'
             onClick={() => {
-              handleDeleteComment(commentId)
+              void handleDeleteComment(commentId)
             }}
           >
             <FaRegTrashAlt className='mr-4' />

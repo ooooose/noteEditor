@@ -1,6 +1,5 @@
 import React from 'react'
 import { FaHeart } from 'react-icons/fa'
-import { useMutateLike } from '../hooks/useMutateLike'
 
 type UnlikeButtonType = {
   like: () => void
@@ -9,7 +8,7 @@ type UnlikeButtonType = {
 
 export const LikeButton = React.memo(({ like, isLike }: UnlikeButtonType) => {
   return (
-    <div className='p-3 border rounded-full cursor-pointer' onClick={like}>
+    <div className='cursor-pointer rounded-full border p-3' onClick={like}>
       <FaHeart className={isLike ? 'text-red-500' : ' text-gray-500 opacity-50'} />
     </div>
   )

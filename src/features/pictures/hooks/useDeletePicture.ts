@@ -1,6 +1,8 @@
-import { deletePicture } from '../api'
-import { useFetchPictures } from './useFetchPictures'
 import { toast } from 'sonner'
+
+import { deletePicture } from '../api'
+
+import { useFetchPictures } from './useFetchPictures'
 
 export const useDeletePicture = () => {
   const { mutate } = useFetchPictures()

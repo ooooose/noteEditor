@@ -1,7 +1,9 @@
 import React from 'react'
-import { LikeButton } from '.'
+
 import { Spinner } from '@/components/elements/Spinner'
 import { Skeleton } from '@/components/ui/skeleton'
+
+import { LikeButton } from '.'
 
 type LikeProps = {
   like: () => void
@@ -15,19 +17,19 @@ export const Like = React.memo(({ like, liked, likeCount, isLoading }: LikeProps
     return (
       <div>
         <div className='flex gap-3'>
-          <div className='p-3 border rounded-full cursor-pointer'>
-            <Spinner size='sm' className='opacity-70' />
+          <div className='cursor-pointer rounded-full border p-3'>
+            <Spinner className='opacity-70' size='sm' />
           </div>
         </div>
-        <Skeleton className='mt-1.5 w-[15px] h-[15px] mx-auto' />
+        <Skeleton className='mx-auto mt-1.5 size-[15px]' />
       </div>
     )
   return (
     <div>
       <div className='flex gap-3'>
-        <LikeButton like={like} isLike={liked} />
+        <LikeButton isLike={liked} like={like} />
       </div>
-      <p className='text-xs mt-1.5 text-center'>{likeCount}</p>
+      <p className='mt-1.5 text-center text-xs'>{likeCount}</p>
     </div>
   )
 })

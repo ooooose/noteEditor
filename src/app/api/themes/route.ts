@@ -1,8 +1,9 @@
-import { prisma, main } from '@/lib/prisma'
 import { NextResponse } from 'next/server'
 
+import { prisma, main } from '@/lib/prisma'
+
 // テーマ全取得API
-export async function GET(req: Request, res: NextResponse) {
+export async function GET() {
   try {
     await main()
     const themes = await prisma.theme.findMany({
@@ -19,7 +20,7 @@ export async function GET(req: Request, res: NextResponse) {
 }
 
 // テーマ作成API
-export async function POST(req: Request, res: NextResponse) {
+export async function POST(req: Request) {
   try {
     const { email, title } = await req.json()
     await main()

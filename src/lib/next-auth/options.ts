@@ -1,10 +1,12 @@
-import { NextAuthOptions } from 'next-auth'
-import GoogleProvider from 'next-auth/providers/google'
-import CredentialsProvider from 'next-auth/providers/credentials'
 import { PrismaAdapter } from '@auth/prisma-adapter'
-import type { Adapter } from 'next-auth/adapters'
 import bcrypt from 'bcrypt'
+import { NextAuthOptions } from 'next-auth'
+import CredentialsProvider from 'next-auth/providers/credentials'
+import GoogleProvider from 'next-auth/providers/google'
+
 import { prisma } from '../prisma'
+
+import type { Adapter } from 'next-auth/adapters'
 
 type ClientType = {
   clientId: string
@@ -24,7 +26,7 @@ export const options: NextAuthOptions = {
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
       },
-      // @ts-ignore
+      // @ts-expect-error
       async authorize(credentials) {
         if (!credentials?.email || !credentials.password) {
           return null
@@ -53,7 +55,7 @@ export const options: NextAuthOptions = {
   },
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    // @ts-ignore
+    // @ts-expect-error
     async jwt({ token, user }) {
       return { ...token, ...user }
     },

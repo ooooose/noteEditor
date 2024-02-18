@@ -1,4 +1,5 @@
 import React, { ReactNode, SetStateAction } from 'react'
+
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -18,7 +19,7 @@ type ModalProps = {
 
 const Modal = ({ text, description, open, setOpen, children }: ModalProps) => {
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog onOpenChange={setOpen} open={open}>
       <DialogTrigger asChild>
         <Button variant='outline'>{text}</Button>
       </DialogTrigger>

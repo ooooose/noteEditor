@@ -1,6 +1,6 @@
 import useSWR from 'swr'
+
 import { getComments } from '../api'
-import { apiClient } from '@/lib/axios/api-client'
 
 export const useFetchComments = () => {
   const { data, error, isLoading, mutate } = useSWR(

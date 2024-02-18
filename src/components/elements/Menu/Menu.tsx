@@ -1,5 +1,8 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
+import { CiCirclePlus } from 'react-icons/ci'
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,8 +12,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { useRouter } from 'next/navigation'
-import { CiCirclePlus } from 'react-icons/ci'
 
 const Menu = () => {
   const router = useRouter()
@@ -19,7 +20,7 @@ const Menu = () => {
       <DropdownMenuTrigger className='focus:outline-none'>
         <CiCirclePlus size={36} />
       </DropdownMenuTrigger>
-      <DropdownMenuContent className='w-56' side='bottom' align='end'>
+      <DropdownMenuContent align='end' className='w-56' side='bottom'>
         <DropdownMenuLabel>画HACK Menu</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>

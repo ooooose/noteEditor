@@ -1,6 +1,7 @@
 'use client'
 
-import React, { useState } from 'react'
+import React from 'react'
+
 import { LoginForm } from '@/features/auth/components/LoginForm'
 
 function Login() {

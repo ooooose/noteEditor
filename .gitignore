@@ -37,3 +37,6 @@ next-env.d.ts
 
 # Firebase
 firebaseSecretKey.json
+
+# VSCode
+.vscode

@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import React, { ReactElement, forwardRef } from 'react'
 
 import { Button as ButtonComponent } from '@/components/ui/button'
+
 import { Spinner } from '../Spinner'
 
 const sizes = {
@@ -45,13 +46,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     return (
       <ButtonComponent
+        className={clsx(sizes[size], className)}
         ref={ref}
         type={type}
         variant={variant}
-        className={clsx(sizes[size], className)}
         {...props}
       >
-        {isLoading && <Spinner size='sm' className='text-current' />}
+        {isLoading && <Spinner className='text-current' size='sm' />}
         {!isLoading && startIcon}
         <span className='mx-2'>{props.children}</span> {!isLoading && endIcon}
       </ButtonComponent>

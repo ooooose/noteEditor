@@ -1,4 +1,5 @@
 import useSWR from 'swr'
+
 import { apiClient } from '@/lib/axios/api-client'
 
 export const useFetchLikes = (pictureId: string) => {

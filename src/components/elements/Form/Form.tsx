@@ -1,7 +1,6 @@
-import React, { ReactNode } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
-
+import React, { ReactNode } from 'react'
 import { useForm, UseFormReturn, SubmitHandler, UseFormProps, FieldValues } from 'react-hook-form'
 import { ZodType, ZodTypeDef } from 'zod'
 
@@ -29,8 +28,8 @@ export const Form = <
   return (
     <form
       className={clsx('space-y-4', className)}
-      onSubmit={methods.handleSubmit(onSubmit)}
       id={id}
+      onSubmit={methods.handleSubmit(onSubmit)}
     >
       {children(methods)}
     </form>

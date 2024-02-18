@@ -1,8 +1,9 @@
-import { prisma, main } from '@/lib/prisma'
 import { NextResponse } from 'next/server'
 
+import { prisma, main } from '@/lib/prisma'
+
 // テーマ取得API
-export async function GET(req: Request, res: NextResponse) {
+export async function GET(req: Request) {
   try {
     const id: string = req.url.split('/themes/')[1]
     await main()
@@ -25,7 +26,7 @@ export async function GET(req: Request, res: NextResponse) {
 }
 
 // テーマ更新API
-export async function PUT(req: Request, res: NextResponse) {
+export async function PUT(req: Request) {
   try {
     const id: string = req.url.split('/themes/')[1]
     const { userId, title } = await req.json()
@@ -43,7 +44,7 @@ export async function PUT(req: Request, res: NextResponse) {
 }
 
 // テーマ削除API
-export async function DELETE(req: Request, res: NextResponse) {
+export async function DELETE(req: Request) {
   try {
     const id: string = req.url.split('/themes/')[1]
     const { userId } = await req.json()

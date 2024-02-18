@@ -1,5 +1,7 @@
-import * as React from 'react'
+import React from 'react'
+
 import { Card } from '@/components/elements/Card/Card'
+
 import { TopPicture } from './TopPicture'
 
 type ThemeProps = {
