@@ -4,12 +4,9 @@ import { useSWRConfig } from 'swr'
 import { postLike, deleteLike } from '../api'
 import { Like } from '../types'
 
-import { useFetchLikes } from './useFetchLikes'
-
-export function useMutateLike(pictureId: string, userId: string) {
+export function useMutateLike(pictureId: string, userId: string, likes: Like[]) {
   const [liked, setLiked] = useState(false)
   const [likeCount, setLikeCount] = useState(0)
-  const { likes, isLoading } = useFetchLikes()
   const { mutate } = useSWRConfig()
 
   const generateParams = () => {
@@ -22,18 +19,11 @@ export function useMutateLike(pictureId: string, userId: string) {
 
   useEffect(() => {
     const fetchData = async () => {
-      await likes
-      setLikeCount(
-        (likes && likes?.filter((like: Like) => like.pictureId === pictureId).length) || 0,
-      )
-      setLiked(
-        likes && likes?.find((like: Like) => like.userId == userId && like.pictureId == pictureId),
-      )
+      setLikeCount(likes && likes?.length)
+      setLiked(!!(likes && likes?.find((like: Like) => like.userId == userId)))
     }
-    if (!isLoading) {
-      fetchData()
-    }
-  }, [isLoading, setLiked, setLikeCount, likes, userId, pictureId])
+    fetchData()
+  }, [setLiked, setLikeCount, likes, userId, pictureId])
 
   const like = async () => {
     const params = generateParams()
@@ -62,10 +52,8 @@ export function useMutateLike(pictureId: string, userId: string) {
 
   return {
     like,
-    isLoading: isLoading,
     liked,
     likeCount,
     mutate,
-    userId,
   }
 }

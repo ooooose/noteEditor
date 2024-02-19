@@ -8,6 +8,7 @@ import { Comment } from '@/features/comments/components/Comment'
 import { Comment as CommentType } from '@/features/comments/types'
 import { Like } from '@/features/likes/components'
 import { useMutateLike } from '@/features/likes/hooks/useMutateLike'
+import { Like as LikeType } from '@/features/likes/types'
 import { formatDateForPicture } from '@/utils/format'
 
 import { Picture as PictureType } from '../types'
@@ -19,17 +20,13 @@ import { PictureTheme } from './PictureTheme'
 type PictureCardProps = {
   picture: PictureType
   comments: CommentType[]
+  likes: LikeType[]
   user: AuthUser
 }
 
-export const PictureCard = React.memo(({ picture, comments, user }: PictureCardProps) => {
-  const {
-    like,
-    liked,
-    isLoading: isLikeLoading,
-    likeCount,
-    userId,
-  } = useMutateLike(picture.id, user.id)
+export const PictureCard = React.memo(({ picture, comments, user, likes }: PictureCardProps) => {
+  const { like, liked, likeCount } = useMutateLike(picture.id, user.id, likes)
+
   const pathName = usePathname()
   const isDisplay = pathName === '/timeline'
   return (
@@ -55,9 +52,9 @@ export const PictureCard = React.memo(({ picture, comments, user }: PictureCardP
           <div className='float-right flex gap-2'>
             <div className='mt-3 flex gap-2'>
               <Comment comments={comments} pictureId={picture.id} user={user} />
-              <Like isLoading={isLikeLoading} like={like} likeCount={likeCount} liked={liked} />
+              <Like like={like} likeCount={likeCount} liked={liked} />
             </div>
-            {userId === picture.userId && <PictureMenu picture={picture} />}
+            {user.id === picture.userId && <PictureMenu picture={picture} />}
           </div>
         </div>
       </div>

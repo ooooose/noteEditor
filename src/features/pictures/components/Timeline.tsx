@@ -6,6 +6,7 @@ import { SkeletonCard } from '@/components/elements/Skeleton/SkeletonCard'
 
 import { useFetchAuthUserByEmail } from '@/features/auth/hooks/useFetchAuthUserByEmail'
 import { useFetchComments } from '@/features/comments/hooks/useFetchComments'
+import { useFetchLikes } from '@/features/likes/hooks/useFetchLikes'
 
 import { useFetchPictures } from '../hooks/useFetchPictures'
 
@@ -14,6 +15,7 @@ import { Pictures } from './Pictures'
 export const TimelineLayout = () => {
   const { pictures, isLoading: isPicturesLoading, isError } = useFetchPictures()
   const { comments } = useFetchComments()
+  const { likes } = useFetchLikes()
   const { user, isLoading: isUserLoading } = useFetchAuthUserByEmail()
   const isLoading = isPicturesLoading || isUserLoading
   if (isLoading)
@@ -27,5 +29,5 @@ export const TimelineLayout = () => {
       </div>
     )
   if (isError) return <>Error loading theme</>
-  return <Pictures comments={comments} pictures={pictures} user={user} />
+  return <Pictures comments={comments} likes={likes} pictures={pictures} user={user} />
 }
