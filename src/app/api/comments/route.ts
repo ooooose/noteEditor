@@ -22,19 +22,16 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
-    const { email, pictureId, body } = await req.json()
+    const { userId, userName, pictureId, body } = await req.json()
     await main()
-    const user = await prisma.user.findUnique({
-      where: { email: email },
-    })
-    const comment = (await prisma.comment.create({
+    const comment = await prisma.comment.create({
       data: {
         pictureId: pictureId,
-        userId: user.id,
-        commenterName: user.name,
+        userId: userId,
+        commenterName: userName,
         body: body,
       },
-    })) as Comment
+    })
     return NextResponse.json({ message: 'Success', comment }, { status: 201 })
   } catch (err) {
     console.log(err)

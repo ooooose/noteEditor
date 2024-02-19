@@ -3,7 +3,9 @@
 import { usePathname } from 'next/navigation'
 import React from 'react'
 
+import { AuthUser } from '@/features/auth/types'
 import { Comment } from '@/features/comments/components/Comment'
+import { Comment as CommentType } from '@/features/comments/types'
 import { Like } from '@/features/likes/components'
 import { useMutateLike } from '@/features/likes/hooks/useMutateLike'
 import { formatDateForPicture } from '@/utils/format'
@@ -16,10 +18,18 @@ import { PictureTheme } from './PictureTheme'
 
 type PictureCardProps = {
   picture: PictureType
+  comments: CommentType[]
+  user: AuthUser
 }
 
-export const PictureCard = React.memo(({ picture }: PictureCardProps) => {
-  const { like, liked, likeCount, isLoading: isLikeLoading, userId } = useMutateLike(picture.id)
+export const PictureCard = React.memo(({ picture, comments, user }: PictureCardProps) => {
+  const {
+    like,
+    liked,
+    isLoading: isLikeLoading,
+    likeCount,
+    userId,
+  } = useMutateLike(picture.id, user.id)
   const pathName = usePathname()
   const isDisplay = pathName === '/timeline'
   return (
@@ -44,7 +54,7 @@ export const PictureCard = React.memo(({ picture }: PictureCardProps) => {
           </div>
           <div className='float-right flex gap-2'>
             <div className='mt-3 flex gap-2'>
-              <Comment pictureId={picture.id} />
+              <Comment comments={comments} pictureId={picture.id} user={user} />
               <Like isLoading={isLikeLoading} like={like} likeCount={likeCount} liked={liked} />
             </div>
             {userId === picture.userId && <PictureMenu picture={picture} />}

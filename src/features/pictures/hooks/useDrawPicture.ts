@@ -99,7 +99,7 @@ export const useDrawPicture = ({ width, height, email }: IProps) => {
     const base64 = canvasRef.current?.toDataURL('image/webp') ?? ''
     const params = generateParams(base64)
     try {
-      void apiClient.apiPost('/api/pictures', params).then((res) => {
+      apiClient.apiPost('/api/pictures', params).then((res) => {
         console.log(res.data)
         router.push(`/themes/${selectedId}`)
       })

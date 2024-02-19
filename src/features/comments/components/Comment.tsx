@@ -11,7 +11,10 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 
+import { AuthUser } from '@/features/auth/types'
+
 import { useMutateComment } from '../hooks/useMutateComment'
+import { Comment as CommentType } from '../types'
 
 import { CommentCount } from './CommentCount'
 import { CommentForm } from './CommentForm'
@@ -19,17 +22,15 @@ import { CommentsList } from './CommentsList'
 
 type CommentProps = {
   pictureId: string
+  comments: CommentType[]
+  user: AuthUser
 }
 
-export const Comment = React.memo(({ pictureId }: CommentProps) => {
-  const {
-    pictureComments,
-    isLoading,
-    onSubmitComment,
-    handleDeleteComment,
-    handleUpdateComment,
-    userId,
-  } = useMutateComment(pictureId)
+export const Comment = React.memo(({ pictureId, comments, user }: CommentProps) => {
+  const { isLoading, onSubmitComment, handleDeleteComment, handleUpdateComment } = useMutateComment(
+    pictureId,
+    user,
+  )
   return (
     <div>
       <Dialog>
@@ -45,16 +46,16 @@ export const Comment = React.memo(({ pictureId }: CommentProps) => {
             <DialogTitle>コメント一覧</DialogTitle>
           </DialogHeader>
           <CommentsList
-            comments={pictureComments}
+            comments={comments}
             handleDeleteComment={handleDeleteComment}
             handleUpdateComment={handleUpdateComment}
             isLoading={isLoading}
-            userId={userId}
+            userId={user.id}
           />
           <CommentForm onSubmit={onSubmitComment} />
         </DialogContent>
       </Dialog>
-      <CommentCount commentCount={pictureComments?.length} isLoading={isLoading} />
+      <CommentCount commentCount={comments?.length} isLoading={isLoading} />
     </div>
   )
 })

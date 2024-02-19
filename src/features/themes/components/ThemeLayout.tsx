@@ -4,6 +4,8 @@ import React from 'react'
 
 import { SkeletonCard } from '@/components/elements/Skeleton/SkeletonCard'
 
+import { useFetchAuthUserByEmail } from '@/features/auth/hooks/useFetchAuthUserByEmail'
+import { useFetchComments } from '@/features/comments/hooks/useFetchComments'
 import { Pictures } from '@/features/pictures/components/Pictures'
 
 import { useFetchThemeById } from '../hooks/useFetchThemeById'
@@ -14,6 +16,8 @@ type ThemeLayoutProps = {
 
 export const ThemeLayout = ({ id }: ThemeLayoutProps) => {
   const { theme, isError, isLoading } = useFetchThemeById(id)
+  const { comments } = useFetchComments()
+  const { user } = useFetchAuthUserByEmail()
   if (isLoading)
     return (
       <div>
@@ -33,7 +37,7 @@ export const ThemeLayout = ({ id }: ThemeLayoutProps) => {
       <div className='py-5 text-center'>
         <p className='p-2'>{theme.title}</p>
       </div>
-      <Pictures pictures={theme.pictures} />
+      <Pictures comments={comments} pictures={theme.pictures} user={user} />
     </div>
   )
 }

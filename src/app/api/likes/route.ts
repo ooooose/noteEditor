@@ -7,7 +7,7 @@ export async function GET() {
   try {
     await main()
 
-    const likes = (await prisma.like.findMany()) as Like[]
+    const likes = await prisma.like.findMany()
     return NextResponse.json({ message: 'Success', likes }, { status: 200 })
   } catch (err) {
     return NextResponse.json({ message: 'Error', err }, { status: 500 })
@@ -18,17 +18,14 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
-    const { email, pictureId } = await req.json()
+    const { userId, pictureId } = await req.json()
     await main()
-    const user = await prisma.user.findUnique({
-      where: { email: email },
-    })
-    const like = (await prisma.like.create({
+    const like = await prisma.like.create({
       data: {
         pictureId: pictureId,
-        userId: user.id,
+        userId: userId,
       },
-    })) as Like[]
+    })
     return NextResponse.json({ message: 'Success', like }, { status: 201 })
   } catch (err) {
     return NextResponse.json({ message: 'Error', err }, { status: 500 })
@@ -39,16 +36,13 @@ export async function POST(req: Request) {
 
 export async function DELETE(req: Request) {
   try {
-    const { email, pictureId } = await req.json()
+    const { userId, pictureId } = await req.json()
     await main()
-    const user = await prisma.user.findUnique({
-      where: { email: email },
-    })
 
     const like = (await prisma.like.delete({
       where: {
         userId_pictureId: {
-          userId: user.id,
+          userId: userId,
           pictureId: pictureId,
         },
       },

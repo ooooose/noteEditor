@@ -1,26 +1,20 @@
-import { useSession } from 'next-auth/react'
 import { useState, useEffect } from 'react'
 import { useSWRConfig } from 'swr'
-
-import { useFetchAuthUserByEmail } from '@/features/auth/hooks/useFetchAuthUserByEmail'
 
 import { postLike, deleteLike } from '../api'
 import { Like } from '../types'
 
 import { useFetchLikes } from './useFetchLikes'
 
-export function useMutateLike(pictureId: string) {
-  const { data: session } = useSession()
+export function useMutateLike(pictureId: string, userId: string) {
   const [liked, setLiked] = useState(false)
   const [likeCount, setLikeCount] = useState(0)
-  const { user: authUser } = useFetchAuthUserByEmail(session?.user.email ?? '')
-  const { likes, isLoading } = useFetchLikes(pictureId)
+  const { likes, isLoading } = useFetchLikes()
   const { mutate } = useSWRConfig()
-  const userId = authUser && authUser?.id
 
   const generateParams = () => {
     const params = {
-      email: session?.user.email ?? '',
+      userId: userId,
       pictureId: pictureId,
     }
     return params
@@ -33,14 +27,13 @@ export function useMutateLike(pictureId: string) {
         (likes && likes?.filter((like: Like) => like.pictureId === pictureId).length) || 0,
       )
       setLiked(
-        likes &&
-          likes?.find((like: Like) => like.userId == authUser?.id && like.pictureId == pictureId),
+        likes && likes?.find((like: Like) => like.userId == userId && like.pictureId == pictureId),
       )
     }
     if (!isLoading) {
       fetchData()
     }
-  }, [isLoading, setLiked, setLikeCount, likes, authUser?.id, pictureId])
+  }, [isLoading, setLiked, setLikeCount, likes, userId, pictureId])
 
   const like = async () => {
     const params = generateParams()

@@ -1,7 +1,7 @@
 import { apiClient } from '@/lib/axios/api-client'
 
 type paramsType = {
-  email: string
+  userId: string
   pictureId: string
 }
 

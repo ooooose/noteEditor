@@ -1,8 +1,11 @@
+import { useSession } from 'next-auth/react'
 import useSWR from 'swr'
 
 import { apiClient } from '@/lib/axios/api-client'
 
-export const useFetchAuthUserByEmail = (email: string) => {
+export const useFetchAuthUserByEmail = () => {
+  const { data: session } = useSession()
+  const email = session && session?.user.email
   const params = {
     email: email,
   }

@@ -1,23 +1,19 @@
-import { useSession } from 'next-auth/react'
 import { toast } from 'sonner'
 
-import { useFetchAuthUserByEmail } from '@/features/auth/hooks/useFetchAuthUserByEmail'
+import { AuthUser } from '@/features/auth/types'
 
 import { deleteComment, postComment, updateComment } from '../api'
 import { Comment } from '../types'
 
 import { useFetchComments } from './useFetchComments'
 
-export const useMutateComment = (pictureId: string) => {
-  const { data: session } = useSession()
+export const useMutateComment = (pictureId: string, user: AuthUser) => {
   const { comments, mutate, isLoading } = useFetchComments()
-  const { user: authUser } = useFetchAuthUserByEmail(session?.user.email ?? '')
-  const userId = authUser?.id
   const pictureComments =
     comments && comments?.filter((comment: Comment) => comment.pictureId === pictureId)
   const generateParams = () => {
     const params = {
-      email: session?.user.email ?? '',
+      userId: user.id,
       pictureId: pictureId,
     }
     return params
@@ -28,6 +24,7 @@ export const useMutateComment = (pictureId: string) => {
     try {
       await postComment({
         ...params,
+        userName: user.name,
         body: body,
       }).then((res) => {
         if (res.status === 201) {
@@ -79,6 +76,5 @@ export const useMutateComment = (pictureId: string) => {
     onSubmitComment,
     handleDeleteComment,
     handleUpdateComment,
-    userId,
   }
 }
