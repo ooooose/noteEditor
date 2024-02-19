@@ -1,19 +1,19 @@
-import { useSession } from 'next-auth/react'
-import { useFetchAuthUserByEmail } from '@/features/auth/hooks/useFetchAuthUserByEmail'
-import { useFetchComments } from './useFetchComments'
+import { toast } from 'sonner'
+
+import { AuthUser } from '@/features/auth/types'
+
 import { deleteComment, postComment, updateComment } from '../api'
 import { Comment } from '../types'
 
-export const useMutateComment = (pictureId: string) => {
-  const { data: session } = useSession()
+import { useFetchComments } from './useFetchComments'
+
+export const useMutateComment = (pictureId: string, user: AuthUser) => {
   const { comments, mutate, isLoading } = useFetchComments()
-  const { user: authUser } = useFetchAuthUserByEmail(session?.user.email ?? '')
-  const userId = authUser?.id
   const pictureComments =
     comments && comments?.filter((comment: Comment) => comment.pictureId === pictureId)
   const generateParams = () => {
     const params = {
-      email: session?.user.email ?? '',
+      userId: user.id,
       pictureId: pictureId,
     }
     return params
@@ -24,9 +24,14 @@ export const useMutateComment = (pictureId: string) => {
     try {
       await postComment({
         ...params,
+        userName: user.name,
         body: body,
+      }).then((res) => {
+        if (res.status === 201) {
+          toast('コメントを作成しました', { position: 'top-center' })
+          mutate()
+        }
       })
-      mutate()
     } catch (err) {
       console.log(err)
     }
@@ -37,8 +42,12 @@ export const useMutateComment = (pictureId: string) => {
       id: commentId,
     }
     try {
-      await deleteComment(params)
-      mutate()
+      await deleteComment(params).then((res) => {
+        if (res.status === 200) {
+          toast('コメントを削除しました', { position: 'top-center' })
+          mutate()
+        }
+      })
     } catch (err) {
       console.log(err)
     }
@@ -50,8 +59,12 @@ export const useMutateComment = (pictureId: string) => {
       body: body,
     }
     try {
-      await updateComment(params)
-      mutate()
+      await updateComment(params).then((res) => {
+        if (res.status === 200) {
+          toast('コメントを更新しました', { position: 'top-center' })
+          mutate()
+        }
+      })
     } catch (err) {
       console.log(err)
     }
@@ -63,6 +76,5 @@ export const useMutateComment = (pictureId: string) => {
     onSubmitComment,
     handleDeleteComment,
     handleUpdateComment,
-    userId,
   }
 }

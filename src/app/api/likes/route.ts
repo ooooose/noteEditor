@@ -1,7 +1,9 @@
-import { prisma, main } from '@/lib/prisma'
 import { NextResponse } from 'next/server'
 
-export async function GET(req: Request, res: NextResponse) {
+import { Like } from '@/features/likes/types'
+import { prisma, main } from '@/lib/prisma'
+
+export async function GET() {
   try {
     await main()
 
@@ -14,17 +16,14 @@ export async function GET(req: Request, res: NextResponse) {
   }
 }
 
-export async function POST(req: Request, res: NextResponse) {
+export async function POST(req: Request) {
   try {
-    const { email, pictureId } = await req.json()
+    const { userId, pictureId } = await req.json()
     await main()
-    const user = await prisma.user.findUnique({
-      where: { email: email },
-    })
     const like = await prisma.like.create({
       data: {
         pictureId: pictureId,
-        userId: user.id,
+        userId: userId,
       },
     })
     return NextResponse.json({ message: 'Success', like }, { status: 201 })
@@ -35,22 +34,19 @@ export async function POST(req: Request, res: NextResponse) {
   }
 }
 
-export async function DELETE(req: Request, res: NextResponse) {
+export async function DELETE(req: Request) {
   try {
-    const { email, pictureId } = await req.json()
+    const { userId, pictureId } = await req.json()
     await main()
-    const user = await prisma.user.findUnique({
-      where: { email: email },
-    })
 
-    const like = await prisma.like.delete({
+    const like = (await prisma.like.delete({
       where: {
         userId_pictureId: {
-          userId: user.id,
+          userId: userId,
           pictureId: pictureId,
         },
       },
-    })
+    })) as Like
     return NextResponse.json({ message: 'Success', like }, { status: 200 })
   } catch (err) {
     return NextResponse.json({ message: 'Error', err }, { status: 500 })

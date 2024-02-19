@@ -1,7 +1,10 @@
 import React from 'react'
-import type { Comment } from '../types'
+
 import { Skeleton } from '@/components/ui/skeleton'
+
 import { CommentItem } from './CommentItem'
+
+import type { Comment } from '../types'
 
 type CommentsListProps = {
   isLoading: boolean
@@ -21,21 +24,21 @@ export const CommentsList = React.memo(
   }: CommentsListProps) => {
     if (isLoading)
       return (
-        <div className='w-full bg-white shadow-sm p-4'>
-          <Skeleton className='w-[200px] h-[30px]' />
+        <div className='w-full bg-white p-4 shadow-sm'>
+          <Skeleton className='h-[30px] w-[200px]' />
         </div>
       )
     return (
-      <ul aria-label='comments' className='flex flex-col space-y-3 h-60 overflow-y-auto'>
+      <ul aria-label='comments' className='flex h-60 flex-col space-y-3 overflow-y-auto'>
         {comments.length !== 0 ? (
           comments.map((comment: Comment, index: number) => {
             return (
               <CommentItem
-                key={`${comment.pictureId} - ${comment.userId} - ${index}`}
                 comment={comment}
-                userId={userId}
                 handleDeleteComment={handleDeleteComment}
                 handleUpdateComment={handleUpdateComment}
+                key={`${comment.pictureId} - ${comment.userId} - ${index}`}
+                userId={userId}
               />
             )
           })

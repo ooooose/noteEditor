@@ -1,11 +1,12 @@
 import React from 'react'
-import { Themes } from './Themes'
+
 import { CreateThemeModal } from './CreateThemeModal'
+import { Themes } from './Themes'
 
 export const ThemesLayout = () => {
   return (
     <div>
-      <div className='text-center py-5 px-3 sm:px-10'>
+      <div className='px-3 py-5 text-center sm:px-10'>
         <p className='p-2'>テーマ一覧</p>
         <div className='text-right'>
           <CreateThemeModal />

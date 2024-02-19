@@ -1,12 +1,15 @@
 'use client'
 
+import { useSession } from 'next-auth/react'
 import React from 'react'
-import { useDrawPicture } from '../../hooks/useDrawPicture'
-import { ThemeSelect } from '@/features/themes/components/ThemeSelect'
+
 import { Modal } from '@/components/elements'
 import { Button } from '@/components/ui/button'
 import { DialogClose } from '@/components/ui/dialog'
-import { useSession } from 'next-auth/react'
+
+import { ThemeSelect } from '@/features/themes/components/ThemeSelect'
+
+import { useDrawPicture } from '../../hooks/useDrawPicture'
 
 interface IProps {
   width: number
@@ -35,26 +38,26 @@ export const Canvas: React.FC<IProps> = (props) => {
 
   return (
     <section>
-      <ThemeSelect handleSelectChange={handleSelectChange} selectedId={selectedId} />
-      <div className='border mb-4'>
+      <ThemeSelect handleSelectChange={handleSelectChange} />
+      <div className='mb-4 border'>
         <canvas
+          height={`${height}px`}
           onMouseDown={OnClick}
           onMouseMove={OnMove}
-          onMouseUp={DrawEnd}
           onMouseOut={DrawEnd}
+          onMouseUp={DrawEnd}
           ref={canvasRef}
           width={`${width}px`}
-          height={`${height}px`}
         />
       </div>
       <div className='flex gap-2'>
         <Button onClick={Reset}>リセット</Button>
-        <Modal text='登録' description='絵を登録しますか？'>
-          <Button disabled={!selectedId} variant='outline' onClick={uploadPicture}>
+        <Modal description='絵を登録しますか？' text='登録'>
+          <Button disabled={!selectedId} onClick={uploadPicture} variant='outline'>
             登録する
           </Button>
           <DialogClose asChild>
-            <Button variant='outline' className='bg-gray-100'>
+            <Button className='bg-gray-100' variant='outline'>
               キャンセル
             </Button>
           </DialogClose>

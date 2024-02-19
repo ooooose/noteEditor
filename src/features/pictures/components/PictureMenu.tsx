@@ -1,17 +1,20 @@
 import React from 'react'
 import { BsThreeDotsVertical } from 'react-icons/bs'
+import { FaSquareXTwitter } from 'react-icons/fa6'
+import { IoMdDownload } from 'react-icons/io'
+import { MdChangeCircle } from 'react-icons/md'
+
+import { Tooltip } from '@/components/elements/Tooltip/Tooltip'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { DeletePicture } from './menu'
-import { FaSquareXTwitter } from 'react-icons/fa6'
-import { IoMdDownload } from 'react-icons/io'
-import { MdChangeCircle } from 'react-icons/md'
-import { Tooltip } from '@/components/elements/Tooltip/Tooltip'
+
 import { Picture } from '../types'
+
+import { DeletePicture } from './menu'
 
 type PictureMenuProps = {
   picture: Picture
@@ -23,7 +26,7 @@ export const PictureMenu = ({ picture }: PictureMenuProps) => {
       <DropdownMenuTrigger className='h-[65px] focus:outline-none'>
         <BsThreeDotsVertical />
       </DropdownMenuTrigger>
-      <DropdownMenuContent className='flex' side='bottom' align='end'>
+      <DropdownMenuContent align='end' className='flex' side='bottom'>
         <Tooltip content='Xシェア'>
           <DropdownMenuItem className='cursor-pointer'>
             <FaSquareXTwitter size={24} />
@@ -39,7 +42,7 @@ export const PictureMenu = ({ picture }: PictureMenuProps) => {
             <MdChangeCircle size={24} />
           </DropdownMenuItem>
         </Tooltip>
-        <DeletePicture pictureId={picture.id} image={picture.image} />
+        <DeletePicture image={picture.image} pictureId={picture.id} />
       </DropdownMenuContent>
     </DropdownMenu>
   )

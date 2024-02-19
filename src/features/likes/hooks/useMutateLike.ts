@@ -1,20 +1,17 @@
 import { useState, useEffect } from 'react'
-import { useSession } from 'next-auth/react'
-import { useFetchAuthUserByEmail } from '@/features/auth/hooks/useFetchAuthUserByEmail'
-import { useFetchLikes } from './useFetchLikes'
-import { Like } from '../types'
-import { postLike, deleteLike } from '../api'
+import { useSWRConfig } from 'swr'
 
-export function useMutateLike(pictureId: string) {
-  const { data: session } = useSession()
+import { postLike, deleteLike } from '../api'
+import { Like } from '../types'
+
+export function useMutateLike(pictureId: string, userId: string, likes: Like[]) {
   const [liked, setLiked] = useState(false)
   const [likeCount, setLikeCount] = useState(0)
-  const { user: authUser } = useFetchAuthUserByEmail(session?.user.email ?? '')
-  const { likes, isLoading, mutate } = useFetchLikes(pictureId)
+  const { mutate } = useSWRConfig()
 
   const generateParams = () => {
     const params = {
-      email: session?.user.email ?? '',
+      userId: userId,
       pictureId: pictureId,
     }
     return params
@@ -22,19 +19,11 @@ export function useMutateLike(pictureId: string) {
 
   useEffect(() => {
     const fetchData = async () => {
-      await likes
-      setLikeCount(
-        (likes && likes?.filter((like: Like) => like.pictureId === pictureId).length) || 0,
-      )
-      setLiked(
-        likes &&
-          likes?.find((like: Like) => like.userId == authUser?.id && like.pictureId == pictureId),
-      )
+      setLikeCount(likes && likes?.length)
+      setLiked(!!(likes && likes?.find((like: Like) => like.userId == userId)))
     }
-    if (!isLoading) {
-      fetchData()
-    }
-  }, [isLoading, setLiked, setLikeCount, likes, authUser?.id, pictureId])
+    fetchData()
+  }, [setLiked, setLikeCount, likes, userId, pictureId])
 
   const like = async () => {
     const params = generateParams()
@@ -44,9 +33,17 @@ export function useMutateLike(pictureId: string) {
     setLikeCount(newLikeCount)
     try {
       if (liked) {
-        await deleteLike(params)
+        await deleteLike(params).then((res) => {
+          if (res.status === 200) {
+            mutate('/api/likes')
+          }
+        })
       } else {
-        await postLike(params)
+        await postLike(params).then((res) => {
+          if (res.status === 201) {
+            mutate('/api/likes')
+          }
+        })
       }
     } catch (error) {
       console.error('Failed to update like:', error)
@@ -55,7 +52,6 @@ export function useMutateLike(pictureId: string) {
 
   return {
     like,
-    isLoading: isLoading,
     liked,
     likeCount,
     mutate,

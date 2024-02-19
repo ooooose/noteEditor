@@ -1,21 +1,27 @@
 'use client'
 
 import Link from 'next/link'
+import { signIn } from 'next-auth/react'
+
 import { Modal } from '@/components/elements'
 import { Button } from '@/components/ui/button'
-import { signIn } from 'next-auth/react'
 import { DialogClose } from '@/components/ui/dialog'
 
 export const Login = () => {
   return (
-    <Modal text='はじめる' description='ログインしますか？'>
+    <Modal description='ログインしますか？' text='はじめる'>
       <DialogClose asChild>
-        <Button variant='outline' onClick={() => signIn('google', {}, { prompt: 'login' })}>
+        <Button
+          onClick={() => {
+            void signIn('google', {}, { prompt: 'login' })
+          }}
+          variant='outline'
+        >
           Googleアカウントでログイン
         </Button>
       </DialogClose>
       <DialogClose asChild>
-        <Button variant='outline' className='bg-gray-100' asChild>
+        <Button asChild className='bg-gray-100' variant='outline'>
           <Link href='/login'>メールでログイン</Link>
         </Button>
       </DialogClose>

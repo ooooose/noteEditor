@@ -1,9 +1,6 @@
 'use client'
 
-import * as React from 'react'
-
-import { useFetchThemes } from '../hooks/useFetchThemes'
-import { Theme } from '@/features/themes/types'
+import React from 'react'
 
 import {
   Select,
@@ -14,12 +11,15 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
+import { Theme } from '@/features/themes/types'
+
+import { useFetchThemes } from '../hooks/useFetchThemes'
+
 type ThemeSelectProps = {
   handleSelectChange: (value: string) => void
-  selectedId: string
 }
 
-export const ThemeSelect = ({ handleSelectChange, selectedId }: ThemeSelectProps) => {
+export const ThemeSelect = ({ handleSelectChange }: ThemeSelectProps) => {
   const { themes, isLoading } = useFetchThemes()
   return (
     <Select disabled={isLoading} onValueChange={handleSelectChange}>

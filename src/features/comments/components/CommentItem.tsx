@@ -1,14 +1,18 @@
-import React, { useState } from 'react'
-import { Comment } from '../types'
-import { formatDate } from '@/utils/format'
-import { CommentMenu } from './CommentMenu'
-import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Input } from '@/components/elements/Form'
-import { Button } from '@/components/elements/Button'
 import { FaCheck } from 'react-icons/fa'
 import { GiCancel } from 'react-icons/gi'
+import * as z from 'zod'
+
+import { Button } from '@/components/elements/Button'
+import { Input } from '@/components/elements/Form'
+
+import { formatDate } from '@/utils/format'
+
+import { Comment } from '../types'
+
+import { CommentMenu } from './CommentMenu'
 
 type CommentItemProps = {
   comment: Comment
@@ -28,7 +32,7 @@ type CommentValue = {
 export const CommentItem = React.memo(
   ({ comment, userId, handleDeleteComment, handleUpdateComment }: CommentItemProps) => {
     const [editedFlag, setEditedFlag] = useState(false)
-    const { register, handleSubmit, reset, formState } = useForm<CommentValue>({
+    const { register, handleSubmit, formState } = useForm<CommentValue>({
       mode: 'onChange',
       defaultValues: {
         body: comment.body,
@@ -38,9 +42,9 @@ export const CommentItem = React.memo(
     return (
       <li
         aria-label={`comment-${comment.body}-${comment.id}`}
-        className='w-full bg-white shadow-sm p-4'
+        className='w-full bg-white p-4 shadow-sm'
       >
-        <div className='flex justify-between mb-2'>
+        <div className='mb-2 flex justify-between'>
           <span className='font-bold'>{comment.commenterName}</span>
           <div className='flex flex-col'>
             <span className='text-xs font-semibold opacity-50'>
@@ -58,19 +62,19 @@ export const CommentItem = React.memo(
           >
             <Input
               className='w-full'
-              type='text'
               error={formState.errors['body']}
               registration={register('body')}
+              type='text'
             />
-            <div className='flex w-full gap-2 mt-2 justify-end'>
+            <div className='mt-2 flex w-full justify-end gap-2'>
               <Button type='submit' variant='outline'>
                 <FaCheck />
               </Button>
               <Button
-                variant='outline'
                 onClick={() => {
                   setEditedFlag(false)
                 }}
+                variant='outline'
               >
                 <GiCancel />
               </Button>
@@ -78,7 +82,7 @@ export const CommentItem = React.memo(
           </form>
         ) : (
           <div className='flex justify-between'>
-            <div className='max-w-96 break-words whitespace-pre-wrap'>{comment.body}</div>
+            <div className='max-w-96 whitespace-pre-wrap break-words'>{comment.body}</div>
             {userId === comment.userId && (
               <div className='text-right'>
                 <CommentMenu

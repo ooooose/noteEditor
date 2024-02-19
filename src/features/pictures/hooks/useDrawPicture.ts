@@ -1,6 +1,8 @@
-import { apiClient } from '@/lib/axios/api-client'
-import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
+import React from 'react'
+import { useState, useRef } from 'react'
+
+import { apiClient } from '@/lib/axios/api-client'
 
 interface IProps {
   width: number
@@ -19,7 +21,7 @@ interface IRect {
 
 export const useDrawPicture = ({ width, height, email }: IProps) => {
   const router = useRouter()
-  let canvasRef = useRef<HTMLCanvasElement | null>(null)
+  const canvasRef = useRef<HTMLCanvasElement | null>(null)
   let mouseX: number | null = null
   let mouseY: number | null = null
   const [selectedId, setSelectedId] = useState<string>('')
@@ -56,7 +58,7 @@ export const useDrawPicture = ({ width, height, email }: IProps) => {
     Draw(x, y)
   }
 
-  const DrawEnd = (e: React.MouseEvent<HTMLCanvasElement>) => {
+  const DrawEnd = () => {
     mouseX = null
     mouseY = null
   }
@@ -104,18 +106,6 @@ export const useDrawPicture = ({ width, height, email }: IProps) => {
     } catch (err) {
       console.log(err)
     }
-  }
-
-  function toBlob(base64: string) {
-    const bin = atob(base64.replace(/^.*,/, ''))
-    const buffer = new Uint8Array(bin.length)
-    for (var i = 0; i < bin.length; i++) {
-      buffer[i] = bin.charCodeAt(i)
-    }
-    const blob = new Blob([buffer.buffer], {
-      type: 'image/png',
-    })
-    return blob
   }
 
   return {

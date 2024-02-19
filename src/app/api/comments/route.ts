@@ -1,15 +1,17 @@
-import { prisma, main } from '@/lib/prisma'
 import { NextResponse } from 'next/server'
 
-export async function GET(req: Request, res: NextResponse) {
+import { Comment } from '@/features/comments/types'
+import { prisma, main } from '@/lib/prisma'
+
+export async function GET() {
   try {
     await main()
 
-    const comments = await prisma.comment.findMany({
+    const comments = (await prisma.comment.findMany({
       orderBy: {
         createdAt: 'desc',
       },
-    })
+    })) as Comment[]
     return NextResponse.json({ message: 'Success', comments }, { status: 200 })
   } catch (err) {
     return NextResponse.json({ message: 'Error', err }, { status: 500 })
@@ -18,18 +20,15 @@ export async function GET(req: Request, res: NextResponse) {
   }
 }
 
-export async function POST(req: Request, res: NextResponse) {
+export async function POST(req: Request) {
   try {
-    const { email, pictureId, body } = await req.json()
+    const { userId, userName, pictureId, body } = await req.json()
     await main()
-    const user = await prisma.user.findUnique({
-      where: { email: email },
-    })
     const comment = await prisma.comment.create({
       data: {
         pictureId: pictureId,
-        userId: user.id,
-        commenterName: user.name,
+        userId: userId,
+        commenterName: userName,
         body: body,
       },
     })
@@ -42,14 +41,14 @@ export async function POST(req: Request, res: NextResponse) {
   }
 }
 
-export async function PUT(req: Request, res: NextResponse) {
+export async function PUT(req: Request) {
   try {
     const { id, body } = await req.json()
     await main()
-    const comment = await prisma.comment.update({
+    const comment = (await prisma.comment.update({
       where: { id: id },
       data: { body: body },
-    })
+    })) as Comment
     return NextResponse.json({ message: 'Success', comment }, { status: 200 })
   } catch (err) {
     console.log(err)
@@ -59,13 +58,13 @@ export async function PUT(req: Request, res: NextResponse) {
   }
 }
 
-export async function DELETE(req: Request, res: NextResponse) {
+export async function DELETE(req: Request) {
   try {
     const { id } = await req.json()
     await main()
-    const comment = await prisma.comment.delete({
+    const comment = (await prisma.comment.delete({
       where: { id: id },
-    })
+    })) as Comment
     return NextResponse.json({ message: 'Success', comment }, { status: 200 })
   } catch (err) {
     return NextResponse.json({ message: 'Error', err }, { status: 500 })

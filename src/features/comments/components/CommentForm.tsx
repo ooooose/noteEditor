@@ -1,8 +1,9 @@
-import React from 'react'
-import { Button } from '@/components/elements/Button'
-import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import React from 'react'
 import { useForm } from 'react-hook-form'
+import * as z from 'zod'
+
+import { Button } from '@/components/elements/Button'
 import { Input } from '@/components/elements/Form'
 
 const schema = z.object({
@@ -29,13 +30,13 @@ export const CommentForm = React.memo(({ onSubmit }: CommentFormProps) => {
       })}
     >
       <Input
-        type='text'
-        label='コメント'
         error={formState.errors['body']}
+        label='コメント'
         registration={register('body')}
+        type='text'
       />
       <div>
-        <Button type='submit' className='w-full mt-3' variant='outline'>
+        <Button className='mt-3 w-full' type='submit' variant='outline'>
           投稿
         </Button>
       </div>

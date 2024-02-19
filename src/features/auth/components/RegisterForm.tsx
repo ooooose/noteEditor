@@ -1,13 +1,13 @@
 'use client'
 
-import * as React from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { signIn, SignInResponse } from 'next-auth/react'
+import React from 'react'
 import * as z from 'zod'
 
 import { Button } from '@/components/elements/Button'
 import { Form, Input } from '@/components/elements/Form'
-import Link from 'next/link'
-import { signIn, SignInResponse } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
 import { useToast } from '@/components/ui/use-toast'
 
 const schema = z.object({
@@ -67,33 +67,33 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
           await registerUser(values)
           onSuccess()
         }}
-        schema={schema}
         options={{
           shouldUnregister: true,
         }}
+        schema={schema}
       >
         {({ register, formState }) => (
           <>
             <Input
-              type='text'
-              label='お名前'
               error={formState.errors['name']}
+              label='お名前'
               registration={register('name')}
+              type='text'
             />
             <Input
-              type='email'
-              label='メールアドレス'
               error={formState.errors['email']}
+              label='メールアドレス'
               registration={register('email')}
+              type='email'
             />
             <Input
-              type='password'
-              label='パスワード'
               error={formState.errors['password']}
+              label='パスワード'
               registration={register('password')}
+              type='password'
             />
             <div>
-              <Button type='submit' className='w-full mt-6'>
+              <Button className='mt-6 w-full' type='submit'>
                 新規登録
               </Button>
             </div>
@@ -103,7 +103,7 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
       <div className='mt-2 flex items-center justify-end'>
         <div className='text-sm'>
           ログイン画面は
-          <Link href='/login' className='font-medium text-blue-600 hover:text-blue-500'>
+          <Link className='font-medium text-blue-600 hover:text-blue-500' href='/login'>
             こちら
           </Link>
         </div>

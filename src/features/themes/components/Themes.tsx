@@ -1,21 +1,30 @@
 'use client'
 
-import * as React from 'react'
-import Link from 'next/link'
-import { useFetchThemes } from '@/features/themes/hooks/useFetchThemes'
-import { Theme as ThemeType } from '@/features/themes/types'
-import { Theme } from './Theme'
+import { useRouter } from 'next/navigation'
+import Script from 'next/script'
+import React from 'react'
+
 import { SkeletonCard } from '@/components/elements/Skeleton/SkeletonCard'
 import { Card } from '@/components/ui/card'
 
+import { useFetchPictures } from '@/features/pictures/hooks/useFetchPictures'
+import { Picture } from '@/features/pictures/types'
+import { useFetchThemes } from '@/features/themes/hooks/useFetchThemes'
+import { Theme as ThemeType } from '@/features/themes/types'
+
+import { Theme } from './Theme'
+
 export const Themes = () => {
-  const { themes, isError, isLoading } = useFetchThemes()
+  const router = useRouter()
+  const { themes, isError, isLoading: isThemesLoading } = useFetchThemes()
+  const { pictures, isLoading: isPicturesLoading } = useFetchPictures()
+  const isLoading = isThemesLoading || isPicturesLoading
   if (isLoading)
     return (
       <div className='grid grid-cols-3 grid-rows-2 gap-x-3 gap-y-5'>
         {[...Array(6)].map((_, i) => {
           return (
-            <Card key={i} className='w-[300px]'>
+            <Card className='w-[300px]' key={i}>
               <SkeletonCard />
             </Card>
           )
@@ -27,12 +36,19 @@ export const Themes = () => {
   return (
     <div className='grid grid-cols-3 grid-rows-2 gap-x-3 gap-y-5'>
       {themes?.map((theme: ThemeType) => {
+        const picturesOfTheme =
+          pictures && pictures.filter((picture: Picture) => picture.themeId === theme.id)
         return (
-          <Link key={theme.id} href={`/themes/${theme.id}`}>
-            <Theme title={theme.title} themeId={theme.id} />
-          </Link>
+          <div
+            className='cursor-pointer'
+            key={theme.id}
+            onClick={() => router.push(`/themes/${theme.id}`)}
+          >
+            <Theme pictures={picturesOfTheme} title={theme.title} />
+          </div>
         )
       })}
+      <Script src={process.env.BUCKET_URL} />
     </div>
   )
 }

@@ -1,19 +1,25 @@
 'use client'
 
-import React from 'react'
 import { signOut } from 'next-auth/react'
+import React from 'react'
+
 import { Modal } from '@/components/elements'
 import { Button } from '@/components/ui/button'
 import { DialogClose } from '@/components/ui/dialog'
 
 export const Logout = () => {
   return (
-    <Modal text='ログアウト' description='ログアウトしますか？'>
-      <Button variant='outline' onClick={() => signOut()}>
+    <Modal description='ログアウトしますか？' text='ログアウト'>
+      <Button
+        onClick={() => {
+          void signOut()
+        }}
+        variant='outline'
+      >
         ログアウト
       </Button>
       <DialogClose asChild>
-        <Button variant='outline' className='bg-gray-100'>
+        <Button className='bg-gray-100' variant='outline'>
           キャンセル
         </Button>
       </DialogClose>

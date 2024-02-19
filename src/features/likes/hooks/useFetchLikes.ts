@@ -1,13 +1,11 @@
 import useSWR from 'swr'
+
 import { apiClient } from '@/lib/axios/api-client'
 
-export const useFetchLikes = (pictureId: string) => {
-  const params = {
-    pictureId: pictureId,
-  }
+export const useFetchLikes = () => {
   const { data, error, isLoading, mutate } = useSWR(
     `/api/likes`,
-    (endpoint) => apiClient.apiGet(endpoint, params).then((result) => result.data?.likes),
+    (endpoint) => apiClient.apiGet(endpoint).then((result) => result.data?.likes),
     {
       revalidateIfStale: false,
       revalidateOnFocus: false,

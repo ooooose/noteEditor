@@ -1,15 +1,19 @@
-import { prisma, main } from '@/lib/prisma'
-import { NextResponse } from 'next/server'
 import { S3Client, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3'
+import { NextResponse } from 'next/server'
+
+import { prisma, main } from '@/lib/prisma'
 
 // Pictures全取得API
-export async function GET(req: Request, res: NextResponse) {
+export async function GET() {
   try {
     await main()
     const pictures = await prisma.picture.findMany({
       include: {
         theme: true,
         user: true,
+      },
+      orderBy: {
+        createdAt: 'desc',
       },
     })
     return NextResponse.json({ message: 'Success', pictures }, { status: 200 })
@@ -21,7 +25,7 @@ export async function GET(req: Request, res: NextResponse) {
 }
 
 // Picture作成API
-export async function POST(req: Request, res: NextResponse) {
+export async function POST(req: Request) {
   try {
     const { image, email, themeId } = await req.json()
     const { ACCESS_KEY_ID, SECRET_ACCESS_KEY, REGION, S3_BUCKET_NAME } = process.env
@@ -75,7 +79,7 @@ export async function POST(req: Request, res: NextResponse) {
   }
 }
 
-export async function DELETE(req: Request, res: NextResponse) {
+export async function DELETE(req: Request) {
   try {
     const { id, image } = await req.json()
     const { ACCESS_KEY_ID, SECRET_ACCESS_KEY, REGION, S3_BUCKET_NAME } = process.env

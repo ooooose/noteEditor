@@ -1,11 +1,11 @@
 'use client'
 
-import React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import * as z from 'zod'
 import { useSession, signIn, SignInResponse } from 'next-auth/react'
-import { useToast } from '@/components/ui/use-toast'
+import React from 'react'
+import { toast } from 'sonner'
+import * as z from 'zod'
 
 import { Button } from '@/components/elements/Button'
 import { Form, Input } from '@/components/elements/Form'
@@ -20,28 +20,23 @@ type LoginValues = {
   password: string
 }
 
-type LoginFormProps = {
-  onSuccess: () => void
-}
-
-export const LoginForm = ({ onSuccess }: LoginFormProps) => {
-  const { toast } = useToast()
+export const LoginForm = () => {
   const router = useRouter()
   const { data: session } = useSession()
   const loginUser = async (data: LoginValues) => {
-    await signIn('credentials', {
-      ...data,
-      redirect: false,
-    }).then((res: SignInResponse | undefined) => {
-      if (res && res.status === 200) {
-        router.push('/themes')
-      } else if (res?.status === 401) {
-        toast({
-          description: 'ログインに失敗しました',
-          variant: 'destructive',
-        })
-      }
-    })
+    try {
+      await signIn('credentials', {
+        ...data,
+        redirect: false,
+      }).then((res: SignInResponse | undefined) => {
+        if (res && res.status === 200) {
+          router.push('/themes')
+          // toast('ログインしました', { position: 'top-center' })
+        }
+      })
+    } catch (err) {
+      toast('ログインに失敗しました', { position: 'top-center' })
+    }
   }
 
   const onSubmit = async (values: LoginValues) => {
@@ -58,19 +53,19 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
         {({ register, formState }) => (
           <>
             <Input
-              type='email'
-              label='メールアドレス'
               error={formState.errors['email']}
+              label='メールアドレス'
               registration={register('email')}
+              type='email'
             />
             <Input
-              type='password'
-              label='パスワード'
               error={formState.errors['password']}
+              label='パスワード'
               registration={register('password')}
+              type='password'
             />
             <div>
-              <Button isLoading={!!session} type='submit' className='w-full mt-6'>
+              <Button className='mt-6 w-full' isLoading={!!session} type='submit'>
                 ログイン
               </Button>
             </div>
@@ -80,7 +75,7 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
       <div className='mt-2 flex items-center justify-end'>
         <div className='text-sm'>
           新規登録は
-          <Link href='/register' className='font-medium text-blue-600 hover:text-blue-500'>
+          <Link className='font-medium text-blue-600 hover:text-blue-500' href='/register'>
             こちら
           </Link>
         </div>

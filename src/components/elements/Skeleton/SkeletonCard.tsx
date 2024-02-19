@@ -1,14 +1,13 @@
 import { Skeleton } from '@/components/ui/skeleton'
-import { Card } from '@/components/ui/card'
 
 export const SkeletonCard = () => {
   return (
-    <div className='w-[250px] h-[320px] mx-auto'>
+    <div className='mx-auto h-[320px] w-[250px]'>
       <div className='flex flex-col space-y-3 text-center'>
-        <div className='mt-5 mb-3'>
-          <Skeleton className='w-[120px] h-[30px] ml-4' />
+        <div className='mb-3 mt-5'>
+          <Skeleton className='ml-4 h-[30px] w-[120px]' />
         </div>
-        <Skeleton className='w-[200px] h-[150px] mx-auto' />
+        <Skeleton className='mx-auto h-[150px] w-[200px]' />
       </div>
     </div>
   )

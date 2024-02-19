@@ -1,4 +1,7 @@
+import { toast } from 'sonner'
+
 import { deletePicture } from '../api'
+
 import { useFetchPictures } from './useFetchPictures'
 
 export const useDeletePicture = () => {
@@ -11,6 +14,7 @@ export const useDeletePicture = () => {
     try {
       deletePicture(params).then((res) => {
         if (res.status === 200) {
+          toast('絵を削除しました', { position: 'top-center' })
           mutate()
         }
       })

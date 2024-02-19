@@ -1,20 +1,29 @@
-import * as React from 'react'
+import React from 'react'
+
 import { Card } from '@/components/elements/Card/Card'
-import { TopPicture } from './TopPicture'
+
+import { Picture } from '@/features/pictures/components/Picture'
+import { Picture as PictureType } from '@/features/pictures/types'
 
 type ThemeProps = {
   title: string
-  themeId: string
+  pictures: PictureType[]
 }
 
-export const Theme = ({ title, themeId }: ThemeProps) => {
+export const Theme = ({ title, pictures }: ThemeProps) => {
+  if (pictures.length === 0)
+    return <div className='mx-auto h-[150px] w-[200px] bg-gray-100'>No Image</div>
+  const topPicutre = pictures.reduce(
+    (maxLikedPicture: PictureType, currentPicture: PictureType) => {
+      return currentPicture.likes > maxLikedPicture.likes ? currentPicture : maxLikedPicture
+    },
+    pictures[0],
+  )
   return (
-    <>
-      <Card title={title}>
-        <div className='relative'>
-          <TopPicture themeId={themeId} />
-        </div>
-      </Card>
-    </>
+    <Card title={title}>
+      <div className='relative'>
+        <Picture author={topPicutre.author} frameId={topPicutre.frameId} src={topPicutre.image} />
+      </div>
+    </Card>
   )
 }

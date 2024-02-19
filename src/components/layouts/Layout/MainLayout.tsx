@@ -1,6 +1,9 @@
 import React from 'react'
-import Header from '../Header/Header'
+
+import { Toaster } from '@/components/ui/sonner'
+
 import Footer from '../Footer/Footer'
+import Header from '../Header/Header'
 
 type MainLayoutProps = {
   children: React.ReactNode
@@ -9,11 +12,12 @@ type MainLayoutProps = {
 const MainLayout = ({ children }: MainLayoutProps) => {
   return (
     <div className='select-none'>
-      <div className='md:w-2/3 w-full mx-auto'>
+      <div className='mx-auto w-full md:w-2/3'>
         <Header />
-        <div className='flex flex-col items-center justify-between h-screen'>{children}</div>
+        <div className='flex h-screen flex-col items-center justify-between'>{children}</div>
       </div>
       <Footer />
+      <Toaster />
     </div>
   )
 }

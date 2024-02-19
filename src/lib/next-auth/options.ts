@@ -1,10 +1,12 @@
-import { NextAuthOptions } from 'next-auth'
-import GoogleProvider from 'next-auth/providers/google'
-import CredentialsProvider from 'next-auth/providers/credentials'
 import { PrismaAdapter } from '@auth/prisma-adapter'
-import type { Adapter } from 'next-auth/adapters'
 import bcrypt from 'bcrypt'
+import { NextAuthOptions } from 'next-auth'
+import CredentialsProvider from 'next-auth/providers/credentials'
+import GoogleProvider from 'next-auth/providers/google'
+
 import { prisma } from '../prisma'
+
+import type { Adapter } from 'next-auth/adapters'
 
 type ClientType = {
   clientId: string

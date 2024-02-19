@@ -1,16 +1,17 @@
 'use client'
 
+import { useSession } from 'next-auth/react'
 import React, { useState } from 'react'
+import { toast } from 'sonner'
+import * as z from 'zod'
 
 import { Modal } from '@/components/elements'
 import { Button } from '@/components/elements/Button'
-import { useSession } from 'next-auth/react'
-import * as z from 'zod'
-import { useToast } from '@/components/ui/use-toast'
-
 import { Form, Input } from '@/components/elements/Form'
-import { apiClient } from '@/lib/axios/api-client'
 import { Skeleton } from '@/components/ui/skeleton'
+
+import { apiClient } from '@/lib/axios/api-client'
+
 import { useFetchThemes } from '../hooks/useFetchThemes'
 
 const schema = z.object({
@@ -25,7 +26,6 @@ type ThemeValue = {
 export const CreateThemeModal = () => {
   const { mutate } = useFetchThemes()
   const { data: session } = useSession()
-  const { toast } = useToast()
   const [open, setOpen] = useState(false)
   const createTheme = async (data: ThemeValue) => {
     const params = {
@@ -34,13 +34,11 @@ export const CreateThemeModal = () => {
     }
     await apiClient.apiPost('/api/themes', params).then((res) => {
       if (res && res.status === 201) {
-        mutate()
+        toast('テーマを作成しました', { position: 'top-center' })
+        void mutate()
         setOpen(false)
       } else if (res?.status === 500) {
-        toast({
-          description: '作成に失敗しました',
-          variant: 'destructive',
-        })
+        toast('テーマの作成に失敗しました', { position: 'top-center' })
       }
     })
   }
@@ -49,13 +47,13 @@ export const CreateThemeModal = () => {
     await createTheme(values)
   }
 
-  if (!session) return <Skeleton className='w-[100px] h-[40px] inline-block' />
+  if (!session) return <Skeleton className='inline-block h-[40px] w-[100px]' />
   return (
     <Modal
-      text='テーマ作成'
       description='テーマを作成することができます'
       open={open}
       setOpen={setOpen}
+      text='テーマ作成'
     >
       <Form<ThemeValue, typeof schema>
         onSubmit={async (values) => {
@@ -66,13 +64,13 @@ export const CreateThemeModal = () => {
         {({ register, formState }) => (
           <>
             <Input
-              type='text'
-              label='タイトル'
               error={formState.errors['title']}
+              label='タイトル'
               registration={register('title')}
+              type='text'
             />
             <div>
-              <Button type='submit' className='w-full mt-6' variant='outline'>
+              <Button className='mt-6 w-full' type='submit' variant='outline'>
                 作成する
               </Button>
             </div>

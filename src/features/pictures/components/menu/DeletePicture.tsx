@@ -1,5 +1,8 @@
 import React from 'react'
-import { useDeletePicture } from '../../hooks'
+import { FaRegTrashAlt } from 'react-icons/fa'
+
+import { Button } from '@/components/elements/Button'
+import { Tooltip } from '@/components/elements/Tooltip/Tooltip'
 import {
   Dialog,
   DialogContent,
@@ -8,9 +11,8 @@ import {
   DialogTrigger,
   DialogClose,
 } from '@/components/ui/dialog'
-import { Button } from '@/components/elements/Button'
-import { Tooltip } from '@/components/elements/Tooltip/Tooltip'
-import { FaRegTrashAlt } from 'react-icons/fa'
+
+import { useDeletePicture } from '../../hooks'
 
 type DeletePictureProps = {
   pictureId: string
@@ -23,7 +25,7 @@ export const DeletePicture = React.memo(({ pictureId, image }: DeletePictureProp
     <Dialog>
       <Tooltip content='絵を削除する'>
         <DialogTrigger className='p-2'>
-          <FaRegTrashAlt size={24} color='red' />
+          <FaRegTrashAlt color='red' size={24} />
         </DialogTrigger>
       </Tooltip>
       <DialogContent>
@@ -32,8 +34,8 @@ export const DeletePicture = React.memo(({ pictureId, image }: DeletePictureProp
         </DialogHeader>
         <DialogClose asChild>
           <Button
+            className='mt-3 w-full'
             onClick={() => handleDeletePicture(pictureId, image)}
-            className='w-full mt-3'
             variant='destructive'
           >
             削除する

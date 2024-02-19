@@ -1,8 +1,8 @@
 'use client'
 
 import React from 'react'
+import { FaRegComment } from 'react-icons/fa'
 
-import { useMutateComment } from '../hooks/useMutateComment'
 import {
   Dialog,
   DialogContent,
@@ -11,30 +11,32 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 
-import { FaRegComment } from 'react-icons/fa'
-import { CommentsList } from './CommentsList'
+import { AuthUser } from '@/features/auth/types'
+
+import { useMutateComment } from '../hooks/useMutateComment'
+import { Comment as CommentType } from '../types'
+
 import { CommentCount } from './CommentCount'
 import { CommentForm } from './CommentForm'
+import { CommentsList } from './CommentsList'
 
 type CommentProps = {
   pictureId: string
+  comments: CommentType[]
+  user: AuthUser
 }
 
-export const Comment = React.memo(({ pictureId }: CommentProps) => {
-  const {
-    pictureComments,
-    isLoading,
-    onSubmitComment,
-    handleDeleteComment,
-    handleUpdateComment,
-    userId,
-  } = useMutateComment(pictureId)
+export const Comment = React.memo(({ pictureId, comments, user }: CommentProps) => {
+  const { isLoading, onSubmitComment, handleDeleteComment, handleUpdateComment } = useMutateComment(
+    pictureId,
+    user,
+  )
   return (
     <div>
       <Dialog>
         <DialogTrigger>
           <div className='flex gap-3'>
-            <div className='p-3 border rounded-full cursor-pointer'>
+            <div className='cursor-pointer rounded-full border p-3'>
               <FaRegComment className='text-gray-500' />
             </div>
           </div>
@@ -44,16 +46,16 @@ export const Comment = React.memo(({ pictureId }: CommentProps) => {
             <DialogTitle>コメント一覧</DialogTitle>
           </DialogHeader>
           <CommentsList
-            isLoading={isLoading}
-            comments={pictureComments}
+            comments={comments}
             handleDeleteComment={handleDeleteComment}
             handleUpdateComment={handleUpdateComment}
-            userId={userId}
+            isLoading={isLoading}
+            userId={user.id}
           />
           <CommentForm onSubmit={onSubmitComment} />
         </DialogContent>
       </Dialog>
-      <CommentCount isLoading={isLoading} commentCount={pictureComments?.length} />
+      <CommentCount commentCount={comments?.length} isLoading={isLoading} />
     </div>
   )
 })
