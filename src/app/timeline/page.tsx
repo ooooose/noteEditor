@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { TimelineLayout } from '@/features/pictures/components/Timeline'
+import TimelineLayout from '@/features/pictures/components/Timeline'
 
 function Timeline() {
   return (

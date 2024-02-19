@@ -17,10 +17,10 @@ type ThemeLayoutProps = {
 
 export const ThemeLayout = ({ id }: ThemeLayoutProps) => {
   const { theme, isError, isLoading: isThemeLoading } = useFetchThemeById(id)
-  const { comments } = useFetchComments()
-  const { likes } = useFetchLikes()
+  const { comments, isLoading: isCommentsLoading } = useFetchComments()
+  const { likes, isLoading: isLikesLoading } = useFetchLikes()
   const { user, isLoading: isUserLoading } = useFetchAuthUserByEmail()
-  const isLoading = isThemeLoading || isUserLoading
+  const isLoading = isThemeLoading || isUserLoading || isCommentsLoading || isLikesLoading
   if (isLoading)
     return (
       <div>

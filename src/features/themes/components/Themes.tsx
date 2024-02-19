@@ -36,8 +36,7 @@ export const Themes = () => {
   return (
     <div className='grid grid-cols-3 grid-rows-2 gap-x-3 gap-y-5'>
       {themes?.map((theme: ThemeType) => {
-        const picturesOfTheme =
-          pictures && pictures.filter((picture: Picture) => picture.themeId === theme.id)
+        const picturesOfTheme = pictures.filter((picture: Picture) => picture.themeId === theme.id)
         return (
           <div
             className='cursor-pointer'

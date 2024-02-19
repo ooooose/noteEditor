@@ -16,6 +16,8 @@ export const Picture = React.memo(({ src, author, frameId }: PictureProps) => {
         <Image
           alt={author}
           className='absolute z-10 mx-auto -ml-2 -mt-3 border bg-white'
+          decoding='async'
+          fetchPriority='high'
           height={150}
           priority
           quality={50}

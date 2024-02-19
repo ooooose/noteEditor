@@ -12,12 +12,12 @@ import { useFetchPictures } from '../hooks/useFetchPictures'
 
 import { Pictures } from './Pictures'
 
-export const TimelineLayout = () => {
+const TimelineLayout = () => {
   const { pictures, isLoading: isPicturesLoading, isError } = useFetchPictures()
-  const { comments } = useFetchComments()
-  const { likes } = useFetchLikes()
+  const { comments, isLoading: isCommentsLoading } = useFetchComments()
+  const { likes, isLoading: isLikesLoading } = useFetchLikes()
   const { user, isLoading: isUserLoading } = useFetchAuthUserByEmail()
-  const isLoading = isPicturesLoading || isUserLoading
+  const isLoading = isPicturesLoading || isUserLoading || isCommentsLoading || isLikesLoading
   if (isLoading)
     return (
       <div>
@@ -31,3 +31,5 @@ export const TimelineLayout = () => {
   if (isError) return <>Error loading theme</>
   return <Pictures comments={comments} likes={likes} pictures={pictures} user={user} />
 }
+
+export default TimelineLayout
