@@ -12,7 +12,13 @@ type ThemeProps = {
 
 export const Theme = ({ title, pictures }: ThemeProps) => {
   if (pictures.length === 0)
-    return <div className='mx-auto h-[150px] w-[200px] bg-gray-100'>No Image</div>
+    return (
+      <Card title={title}>
+        <div className='relative'>
+          <div className='mx-auto h-[150px] w-[200px] bg-gray-100'>No Image</div>
+        </div>
+      </Card>
+    )
   const topPicutre = pictures.reduce(
     (maxLikedPicture: PictureType, currentPicture: PictureType) => {
       return currentPicture.likes > maxLikedPicture.likes ? currentPicture : maxLikedPicture
