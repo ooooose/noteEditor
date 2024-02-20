@@ -41,7 +41,7 @@ export const Comment = React.memo(({ pictureId, comments, user }: CommentProps) 
             </div>
           </div>
         </DialogTrigger>
-        <DialogContent className='bg-white'>
+        <DialogContent>
           <DialogHeader>
             <DialogTitle>コメント一覧</DialogTitle>
           </DialogHeader>
