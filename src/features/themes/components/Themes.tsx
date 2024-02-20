@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import Script from 'next/script'
 import React from 'react'
 
@@ -15,7 +15,6 @@ import { Theme as ThemeType } from '@/features/themes/types'
 import { Theme } from './Theme'
 
 export const Themes = () => {
-  const router = useRouter()
   const { themes, isError, isLoading: isThemesLoading } = useFetchThemes()
   const { pictures, isLoading: isPicturesLoading } = useFetchPictures()
   const isLoading = isThemesLoading || isPicturesLoading
@@ -38,13 +37,9 @@ export const Themes = () => {
       {themes?.map((theme: ThemeType) => {
         const picturesOfTheme = pictures.filter((picture: Picture) => picture.themeId === theme.id)
         return (
-          <div
-            className='cursor-pointer'
-            key={theme.id}
-            onClick={() => router.push(`/themes/${theme.id}`)}
-          >
+          <Link className='cursor-pointer' href={`/themes/${theme.id}`} key={theme.id}>
             <Theme pictures={picturesOfTheme} title={theme.title} />
-          </div>
+          </Link>
         )
       })}
       <Script src={process.env.BUCKET_URL} />

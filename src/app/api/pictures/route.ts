@@ -10,7 +10,6 @@ export async function GET() {
     const pictures = await prisma.picture.findMany({
       include: {
         theme: true,
-        user: true,
       },
       orderBy: {
         createdAt: 'desc',

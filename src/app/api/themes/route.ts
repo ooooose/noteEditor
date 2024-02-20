@@ -6,11 +6,7 @@ import { prisma, main } from '@/lib/prisma'
 export async function GET() {
   try {
     await main()
-    const themes = await prisma.theme.findMany({
-      include: {
-        pictures: true,
-      },
-    })
+    const themes = await prisma.theme.findMany()
     return NextResponse.json({ message: 'Success', themes }, { status: 200 })
   } catch (err) {
     return NextResponse.json({ message: 'Error', err }, { status: 500 })
