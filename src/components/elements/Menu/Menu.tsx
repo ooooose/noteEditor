@@ -19,7 +19,7 @@ const Menu = () => {
       <DropdownMenuTrigger className='focus:outline-none'>
         <CiCirclePlus size={36} />
       </DropdownMenuTrigger>
-      <DropdownMenuContent align='end' className='w-56' side='bottom'>
+      <DropdownMenuContent align='end' className='w-56 bg-white' side='bottom'>
         <DropdownMenuLabel>画HACK Menu</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>

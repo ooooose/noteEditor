@@ -7,6 +7,7 @@ function Themes() {
   return (
     <div>
       <Head>
+        <title>画HACK</title>
         <link as='image' fetchPriority='high' href={process.env.BUCKET_URL} rel='preload' />
       </Head>
       <ThemesLayout />
