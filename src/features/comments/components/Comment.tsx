@@ -1,5 +1,6 @@
 'use client'
 
+import dynamic from 'next/dynamic'
 import React from 'react'
 import { FaRegComment } from 'react-icons/fa'
 
@@ -16,9 +17,9 @@ import { AuthUser } from '@/features/auth/types'
 import { useMutateComment } from '../hooks/useMutateComment'
 import { Comment as CommentType } from '../types'
 
-import { CommentCount } from './CommentCount'
-import { CommentForm } from './CommentForm'
-import { CommentsList } from './CommentsList'
+const DynamicCommentCount = dynamic(() => import('./CommentCount'))
+const DynamicCommentForm = dynamic(() => import('./CommentForm'))
+const DynamicCommentList = dynamic(() => import('./CommentsList'))
 
 type CommentProps = {
   pictureId: string
@@ -45,17 +46,17 @@ export const Comment = React.memo(({ pictureId, comments, user }: CommentProps) 
           <DialogHeader>
             <DialogTitle>コメント一覧</DialogTitle>
           </DialogHeader>
-          <CommentsList
+          <DynamicCommentList
             comments={comments}
             handleDeleteComment={handleDeleteComment}
             handleUpdateComment={handleUpdateComment}
             isLoading={isLoading}
             userId={user.id}
           />
-          <CommentForm onSubmit={onSubmitComment} />
+          <DynamicCommentForm onSubmit={onSubmitComment} />
         </DialogContent>
       </Dialog>
-      <CommentCount commentCount={comments?.length} isLoading={isLoading} />
+      <DynamicCommentCount commentCount={comments?.length} isLoading={isLoading} />
     </div>
   )
 })

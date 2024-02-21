@@ -18,7 +18,7 @@ type CommentFormProps = {
   onSubmit: (body: string) => Promise<void>
 }
 
-export const CommentForm = React.memo(({ onSubmit }: CommentFormProps) => {
+const CommentForm = React.memo(({ onSubmit }: CommentFormProps) => {
   const { register, handleSubmit, reset, formState } = useForm<CommentValue>({
     resolver: zodResolver(schema),
   })
@@ -44,4 +44,5 @@ export const CommentForm = React.memo(({ onSubmit }: CommentFormProps) => {
   )
 })
 
+export default CommentForm
 CommentForm.displayName = 'CommentForm'

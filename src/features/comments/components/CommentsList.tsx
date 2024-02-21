@@ -1,8 +1,9 @@
+import dynamic from 'next/dynamic'
 import React from 'react'
 
 import { Skeleton } from '@/components/ui/skeleton'
 
-import { CommentItem } from './CommentItem'
+const DynamicCommentItem = dynamic(() => import('./CommentItem'))
 
 import type { Comment } from '../types'
 
@@ -14,7 +15,7 @@ type CommentsListProps = {
   userId: string
 }
 
-export const CommentsList = React.memo(
+const CommentsList = React.memo(
   ({
     isLoading,
     comments,
@@ -33,7 +34,7 @@ export const CommentsList = React.memo(
         {comments.length !== 0 ? (
           comments.map((comment: Comment, index: number) => {
             return (
-              <CommentItem
+              <DynamicCommentItem
                 comment={comment}
                 handleDeleteComment={handleDeleteComment}
                 handleUpdateComment={handleUpdateComment}
@@ -50,4 +51,5 @@ export const CommentsList = React.memo(
   },
 )
 
+export default CommentsList
 CommentsList.displayName = 'CommentsList'

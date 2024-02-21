@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import dynamic from 'next/dynamic'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { FaCheck } from 'react-icons/fa'
@@ -12,7 +13,7 @@ import { formatDate } from '@/utils/format'
 
 import { Comment } from '../types'
 
-import { CommentMenu } from './CommentMenu'
+const DynamicCommentMenu = dynamic(() => import('./CommentMenu'))
 
 type CommentItemProps = {
   comment: Comment
@@ -29,7 +30,7 @@ type CommentValue = {
   body: string
 }
 
-export const CommentItem = React.memo(
+const CommentItem = React.memo(
   ({ comment, userId, handleDeleteComment, handleUpdateComment }: CommentItemProps) => {
     const [editedFlag, setEditedFlag] = useState(false)
     const { register, handleSubmit, formState } = useForm<CommentValue>({
@@ -85,7 +86,7 @@ export const CommentItem = React.memo(
             <div className='max-w-96 whitespace-pre-wrap break-words'>{comment.body}</div>
             {userId === comment.userId && (
               <div className='text-right'>
-                <CommentMenu
+                <DynamicCommentMenu
                   commentId={comment.id}
                   handleDeleteComment={handleDeleteComment}
                   setEditedFlag={setEditedFlag}
@@ -99,4 +100,5 @@ export const CommentItem = React.memo(
   },
 )
 
+export default CommentItem
 CommentItem.displayName = 'CommentItem'

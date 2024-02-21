@@ -7,9 +7,10 @@ type CommentCountProps = {
   isLoading: boolean
 }
 
-export const CommentCount = React.memo(({ commentCount, isLoading }: CommentCountProps) => {
+const CommentCount = React.memo(({ commentCount, isLoading }: CommentCountProps) => {
   if (isLoading) return <Skeleton className='mx-auto size-[15px]' />
   return <p className='text-center text-xs'>{commentCount}</p>
 })
 
+export default CommentCount
 CommentCount.displayName = 'CommentCount'

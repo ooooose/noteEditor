@@ -16,7 +16,7 @@ type PicutresProps = {
   user: AuthUser
 }
 
-export const Pictures = React.memo(({ pictures, comments, user, likes }: PicutresProps) => {
+const Pictures = React.memo(({ pictures, comments, user, likes }: PicutresProps) => {
   return (
     <div className='grid grid-cols-3 grid-rows-2 gap-10'>
       {pictures?.map((picture: PictureType) => {
@@ -37,4 +37,5 @@ export const Pictures = React.memo(({ pictures, comments, user, likes }: Picutre
   )
 })
 
+export default Pictures
 Pictures.displayName = 'Pictures'

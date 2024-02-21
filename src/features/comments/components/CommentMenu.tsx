@@ -15,7 +15,7 @@ type CommentMenuProps = {
   setEditedFlag: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const CommentMenu = React.memo(
+const CommentMenu = React.memo(
   ({ commentId, handleDeleteComment, setEditedFlag }: CommentMenuProps) => {
     return (
       <DropdownMenu>
@@ -47,4 +47,5 @@ export const CommentMenu = React.memo(
   },
 )
 
+export default CommentMenu
 CommentMenu.displayName = 'CommentMenu'
