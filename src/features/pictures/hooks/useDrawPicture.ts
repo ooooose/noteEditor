@@ -7,7 +7,8 @@ import { apiClient } from '@/lib/axios/api-client'
 interface IProps {
   width: number
   height: number
-  email: string
+  userId: string
+  userName: string
 }
 
 interface IRect {
@@ -19,7 +20,7 @@ interface IRect {
   bottom: number
 }
 
-export const useDrawPicture = ({ width, height, email }: IProps) => {
+export const useDrawPicture = ({ width, height, userId, userName }: IProps) => {
   const router = useRouter()
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   let mouseX: number | null = null
@@ -89,7 +90,8 @@ export const useDrawPicture = ({ width, height, email }: IProps) => {
   const generateParams = (base64: string) => {
     const pictureParams = {
       image: base64,
-      email: email,
+      userId: userId,
+      userName: userName,
       themeId: selectedId,
     }
     return pictureParams

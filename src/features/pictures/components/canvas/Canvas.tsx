@@ -1,12 +1,12 @@
 'use client'
 
-import { useSession } from 'next-auth/react'
 import React from 'react'
 
 import { Modal } from '@/components/elements'
 import { Button } from '@/components/ui/button'
 import { DialogClose } from '@/components/ui/dialog'
 
+import { useFetchAuthUserByEmail } from '@/features/auth/hooks/useFetchAuthUserByEmail'
 import { ThemeSelect } from '@/features/themes/components/ThemeSelect'
 
 import { useDrawPicture } from '../../hooks/useDrawPicture'
@@ -18,8 +18,7 @@ interface IProps {
 
 export const Canvas: React.FC<IProps> = (props) => {
   const { width, height } = props
-  const { data: session } = useSession()
-  const email = session?.user.email
+  const { user } = useFetchAuthUserByEmail()
 
   const {
     canvasRef,
@@ -33,7 +32,8 @@ export const Canvas: React.FC<IProps> = (props) => {
   } = useDrawPicture({
     width: width,
     height: height,
-    email: email ?? '',
+    userId: user.id,
+    userName: user.name,
   })
 
   return (

@@ -26,7 +26,7 @@ export async function GET() {
 // Picture作成API
 export async function POST(req: Request) {
   try {
-    const { image, email, themeId } = await req.json()
+    const { image, userId, userName, themeId } = await req.json()
     const { ACCESS_KEY_ID, SECRET_ACCESS_KEY, REGION, S3_BUCKET_NAME } = process.env
 
     const s3Client = new S3Client({
@@ -59,14 +59,11 @@ export async function POST(req: Request) {
     await s3Client.send(command)
     const imageUrl = `https://${S3_BUCKET_NAME}.s3.${REGION}.amazonaws.com/${fileName}`
     await main()
-    const user = await prisma.user.findFirst({
-      where: { email: email },
-    })
     const picture = await prisma.picture.create({
       data: {
         image: imageUrl,
-        author: user.name,
-        userId: user.id,
+        author: userName,
+        userId: userId,
         themeId: themeId,
       },
     })
