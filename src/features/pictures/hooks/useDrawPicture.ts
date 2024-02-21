@@ -95,16 +95,39 @@ export const useDrawPicture = ({ width, height, email }: IProps) => {
     return pictureParams
   }
 
-  const uploadPicture = () => {
-    const base64 = canvasRef.current?.toDataURL('image/webp') ?? ''
-    const params = generateParams(base64)
+  const uploadPicture = async () => {
     try {
-      apiClient.apiPost('/api/pictures', params).then((res) => {
-        console.log(res.data)
-        router.push(`/themes/${selectedId}`)
+      const blob = await new Promise<Blob | null>((resolve) => {
+        canvasRef.current?.toBlob(
+          (blob) => {
+            resolve(blob)
+          },
+          'image/webp',
+          0.5,
+        )
       })
+
+      if (!blob) {
+        console.error('Failed to convert canvas to blob.')
+        return
+      }
+
+      const compressedBase64 = await new Promise<string>((resolve) => {
+        const reader = new FileReader()
+        reader.onloadend = () => {
+          resolve(reader.result as string)
+        }
+        reader.readAsDataURL(blob)
+      })
+
+      const params = generateParams(compressedBase64)
+
+      const res = await apiClient.apiPost('/api/pictures', params)
+
+      console.log(res.data)
+      router.push(`/themes/${selectedId}`)
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
   }
 

@@ -14,8 +14,8 @@ export const useDeletePicture = () => {
     try {
       deletePicture(params).then((res) => {
         if (res.status === 200) {
-          toast('絵を削除しました', { position: 'top-center' })
           mutate()
+          toast('絵を削除しました', { position: 'top-center' })
         }
       })
     } catch (err) {
