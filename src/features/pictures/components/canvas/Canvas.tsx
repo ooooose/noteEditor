@@ -32,8 +32,8 @@ export const Canvas: React.FC<IProps> = (props) => {
   } = useDrawPicture({
     width: width,
     height: height,
-    userId: user.id,
-    userName: user.name,
+    userId: user?.id,
+    userName: user?.name,
   })
 
   return (

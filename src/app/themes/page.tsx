@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import React from 'react'
 
-import { ThemesLayout } from '@/features/themes/components/ThemesLayout'
+import ThemesLayout from '@/features/themes/components/ThemesLayout'
 
 function Themes() {
   return (
