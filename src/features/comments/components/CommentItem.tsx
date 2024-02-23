@@ -1,5 +1,4 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import dynamic from 'next/dynamic'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { FaCheck } from 'react-icons/fa'
@@ -13,7 +12,7 @@ import { formatDate } from '@/utils/format'
 
 import { Comment } from '../types'
 
-const DynamicCommentMenu = dynamic(() => import('./CommentMenu'))
+import CommentMenu from './CommentMenu'
 
 type CommentItemProps = {
   comment: Comment
@@ -86,7 +85,7 @@ const CommentItem = React.memo(
             <div className='max-w-96 whitespace-pre-wrap break-words'>{comment.body}</div>
             {userId === comment.userId && (
               <div className='text-right'>
-                <DynamicCommentMenu
+                <CommentMenu
                   commentId={comment.id}
                   handleDeleteComment={handleDeleteComment}
                   setEditedFlag={setEditedFlag}

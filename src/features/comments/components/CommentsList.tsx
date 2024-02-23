@@ -1,9 +1,8 @@
-import dynamic from 'next/dynamic'
 import React from 'react'
 
 import { Skeleton } from '@/components/ui/skeleton'
 
-const DynamicCommentItem = dynamic(() => import('./CommentItem'))
+import CommentItem from './CommentItem'
 
 import type { Comment } from '../types'
 
@@ -34,7 +33,7 @@ const CommentsList = React.memo(
         {comments.length !== 0 ? (
           comments.map((comment: Comment, index: number) => {
             return (
-              <DynamicCommentItem
+              <CommentItem
                 comment={comment}
                 handleDeleteComment={handleDeleteComment}
                 handleUpdateComment={handleUpdateComment}

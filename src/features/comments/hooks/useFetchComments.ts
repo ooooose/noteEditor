@@ -3,19 +3,26 @@ import useSWR from 'swr'
 import { getComments } from '../api'
 
 export const useFetchComments = () => {
-  const { data, error, isLoading, mutate } = useSWR(
-    '/api/comments',
-    () => getComments().then((result) => result.data.comments),
-    {
-      revalidateIfStale: false,
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    },
-  )
+  const fetchComments = async () => {
+    const result = await getComments()
+    return result.data.comments
+  }
+
+  const {
+    data: comments,
+    error,
+    isValidating: isLoading,
+    mutate,
+  } = useSWR('/api/comments', fetchComments, {
+    revalidateIfStale: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  })
+
   return {
-    comments: data,
-    isLoading: isLoading,
+    comments,
+    isLoading,
     isError: error,
-    mutate: mutate,
+    mutate,
   }
 }

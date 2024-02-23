@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { FaSquareXTwitter } from 'react-icons/fa6'
