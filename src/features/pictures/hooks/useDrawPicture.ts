@@ -1,6 +1,7 @@
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import { useState, useRef } from 'react'
+import { toast } from 'sonner'
 
 import { apiClient } from '@/lib/axios/api-client'
 
@@ -85,6 +86,7 @@ export const useDrawPicture = ({ width, height, userId, userName }: IProps) => {
   const Reset = () => {
     const ctx = getContext()
     ctx.clearRect(0, 0, width, height)
+    toast('リセットしました', { position: 'top-center' })
   }
 
   const generateParams = (base64: string) => {

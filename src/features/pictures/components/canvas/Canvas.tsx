@@ -35,10 +35,8 @@ export const Canvas: React.FC<IProps> = (props) => {
     userId: user?.id,
     userName: user?.name,
   })
-
   return (
     <section>
-      <ThemeSelect handleSelectChange={handleSelectChange} />
       <div className='mb-4 border'>
         <canvas
           height={`${height}px`}
@@ -51,8 +49,20 @@ export const Canvas: React.FC<IProps> = (props) => {
         />
       </div>
       <div className='flex gap-2'>
-        <Button onClick={Reset}>リセット</Button>
+        <Modal description='絵をリセットしますか？' text='リセット'>
+          <DialogClose asChild>
+            <Button onClick={Reset} variant='destructive'>
+              絵をリセットする
+            </Button>
+          </DialogClose>
+          <DialogClose asChild>
+            <Button className='bg-gray-100' variant='outline'>
+              キャンセル
+            </Button>
+          </DialogClose>
+        </Modal>
         <Modal description='絵を登録しますか？' text='登録'>
+          <ThemeSelect handleSelectChange={handleSelectChange} />
           <Button disabled={!selectedId} onClick={uploadPicture} variant='outline'>
             登録する
           </Button>
