@@ -1,7 +1,7 @@
 'use client'
 
+import { ChatBubbleIcon } from '@radix-ui/react-icons'
 import React from 'react'
-import { FaRegComment } from 'react-icons/fa'
 
 import {
   Dialog,
@@ -37,7 +37,7 @@ export const Comment = React.memo(({ pictureId, comments, user }: CommentProps) 
         <DialogTrigger>
           <div className='flex gap-3'>
             <div className='cursor-pointer rounded-full border p-3'>
-              <FaRegComment className='text-gray-500' />
+              <ChatBubbleIcon className='text-gray-500' />
             </div>
           </div>
         </DialogTrigger>

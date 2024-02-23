@@ -1,8 +1,7 @@
 'use client'
 
+import { DotsVerticalIcon, Pencil2Icon, TrashIcon } from '@radix-ui/react-icons'
 import React from 'react'
-import { BsThreeDotsVertical } from 'react-icons/bs'
-import { FaRegTrashAlt, FaEdit } from 'react-icons/fa'
 
 import {
   DropdownMenu,
@@ -22,7 +21,7 @@ const CommentMenu = React.memo(
     return (
       <DropdownMenu>
         <DropdownMenuTrigger>
-          <BsThreeDotsVertical />
+          <DotsVerticalIcon />
         </DropdownMenuTrigger>
         <DropdownMenuContent align='end' side='bottom'>
           <DropdownMenuItem
@@ -31,7 +30,7 @@ const CommentMenu = React.memo(
               setEditedFlag(true)
             }}
           >
-            <FaEdit className='mr-4' />
+            <Pencil2Icon className='mr-4 size-5' />
             Edit
           </DropdownMenuItem>
           <DropdownMenuItem
@@ -40,7 +39,7 @@ const CommentMenu = React.memo(
               void handleDeleteComment(commentId)
             }}
           >
-            <FaRegTrashAlt className='mr-4' />
+            <TrashIcon className='mr-4 size-5' />
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>

@@ -1,8 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { CheckCircledIcon, Cross2Icon } from '@radix-ui/react-icons'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { FaCheck } from 'react-icons/fa'
-import { GiCancel } from 'react-icons/gi'
 import * as z from 'zod'
 
 import { Button } from '@/components/elements/Button'
@@ -68,7 +67,7 @@ const CommentItem = React.memo(
             />
             <div className='mt-2 flex w-full justify-end gap-2'>
               <Button type='submit' variant='outline'>
-                <FaCheck />
+                <CheckCircledIcon />
               </Button>
               <Button
                 onClick={() => {
@@ -76,7 +75,7 @@ const CommentItem = React.memo(
                 }}
                 variant='outline'
               >
-                <GiCancel />
+                <Cross2Icon />
               </Button>
             </div>
           </form>

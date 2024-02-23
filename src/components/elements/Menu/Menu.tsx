@@ -1,7 +1,7 @@
 'use client'
 
+import { HamburgerMenuIcon } from '@radix-ui/react-icons'
 import Link from 'next/link'
-import { CiCirclePlus } from 'react-icons/ci'
 
 import {
   DropdownMenu,
@@ -17,7 +17,7 @@ const Menu = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className='focus:outline-none'>
-        <CiCirclePlus size={36} />
+        <HamburgerMenuIcon className='size-10' />
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end' className='w-56' side='bottom'>
         <DropdownMenuLabel>画HACK Menu</DropdownMenuLabel>
