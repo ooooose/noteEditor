@@ -127,9 +127,9 @@ export const useDrawPicture = ({ width, height, userId, userName }: IProps) => {
       const params = generateParams(compressedBase64)
 
       const res = await apiClient.apiPost('/api/pictures', params)
-
-      console.log(res.data)
-      router.push(`/themes/${selectedId}`)
+      if (res.status === 201) {
+        router.push(`/themes/${selectedId}`)
+      }
     } catch (err) {
       console.error(err)
     }

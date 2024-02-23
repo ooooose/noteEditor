@@ -3,7 +3,11 @@ import useSWR from 'swr'
 import { apiClient } from '@/lib/axios/api-client'
 
 export const useFetchThemeById = (id: string) => {
-  const { data, error, isLoading } = useSWR(
+  const {
+    data,
+    error,
+    isValidating: isLoading,
+  } = useSWR(
     `/api/themes/${id}`,
     (endpoint) => apiClient.apiGet(endpoint).then((result) => result.data?.theme),
     {
@@ -15,7 +19,7 @@ export const useFetchThemeById = (id: string) => {
 
   return {
     theme: data,
-    isLoading: isLoading,
+    isLoading,
     isError: error,
   }
 }
