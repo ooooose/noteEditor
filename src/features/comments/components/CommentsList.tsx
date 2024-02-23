@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Skeleton } from '@/components/ui/skeleton'
 
-import { CommentItem } from './CommentItem'
+import CommentItem from './CommentItem'
 
 import type { Comment } from '../types'
 
@@ -14,7 +14,7 @@ type CommentsListProps = {
   userId: string
 }
 
-export const CommentsList = React.memo(
+const CommentsList = React.memo(
   ({
     isLoading,
     comments,
@@ -50,4 +50,5 @@ export const CommentsList = React.memo(
   },
 )
 
+export default CommentsList
 CommentsList.displayName = 'CommentsList'

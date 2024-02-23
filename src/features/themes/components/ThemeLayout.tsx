@@ -7,7 +7,7 @@ import { SkeletonCard } from '@/components/elements/Skeleton/SkeletonCard'
 import { useFetchAuthUserByEmail } from '@/features/auth/hooks/useFetchAuthUserByEmail'
 import { useFetchComments } from '@/features/comments/hooks/useFetchComments'
 import { useFetchLikes } from '@/features/likes/hooks/useFetchLikes'
-import { Pictures } from '@/features/pictures/components/Pictures'
+import Pictures from '@/features/pictures/components/Pictures'
 
 import { useFetchThemeById } from '../hooks/useFetchThemeById'
 
@@ -15,12 +15,12 @@ type ThemeLayoutProps = {
   id: string
 }
 
-export const ThemeLayout = ({ id }: ThemeLayoutProps) => {
+const ThemeLayout = ({ id }: ThemeLayoutProps) => {
   const { theme, isError, isLoading: isThemeLoading } = useFetchThemeById(id)
-  const { comments } = useFetchComments()
-  const { likes } = useFetchLikes()
+  const { comments, isLoading: isCommentsLoading } = useFetchComments()
+  const { likes, isLoading: isLikesLoading } = useFetchLikes()
   const { user, isLoading: isUserLoading } = useFetchAuthUserByEmail()
-  const isLoading = isThemeLoading || isUserLoading
+  const isLoading = isThemeLoading || isUserLoading || isCommentsLoading || isLikesLoading
   if (isLoading)
     return (
       <div>
@@ -44,3 +44,5 @@ export const ThemeLayout = ({ id }: ThemeLayoutProps) => {
     </div>
   )
 }
+
+export default ThemeLayout

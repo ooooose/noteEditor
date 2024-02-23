@@ -1,13 +1,15 @@
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import { useState, useRef } from 'react'
+import { toast } from 'sonner'
 
 import { apiClient } from '@/lib/axios/api-client'
 
 interface IProps {
   width: number
   height: number
-  email: string
+  userId: string
+  userName: string
 }
 
 interface IRect {
@@ -19,7 +21,7 @@ interface IRect {
   bottom: number
 }
 
-export const useDrawPicture = ({ width, height, email }: IProps) => {
+export const useDrawPicture = ({ width, height, userId, userName }: IProps) => {
   const router = useRouter()
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   let mouseX: number | null = null
@@ -84,27 +86,52 @@ export const useDrawPicture = ({ width, height, email }: IProps) => {
   const Reset = () => {
     const ctx = getContext()
     ctx.clearRect(0, 0, width, height)
+    toast('リセットしました', { position: 'top-center' })
   }
 
   const generateParams = (base64: string) => {
     const pictureParams = {
       image: base64,
-      email: email,
+      userId: userId,
+      userName: userName,
       themeId: selectedId,
     }
     return pictureParams
   }
 
-  const uploadPicture = () => {
-    const base64 = canvasRef.current?.toDataURL('image/webp') ?? ''
-    const params = generateParams(base64)
+  const uploadPicture = async () => {
     try {
-      apiClient.apiPost('/api/pictures', params).then((res) => {
-        console.log(res.data)
-        router.push(`/themes/${selectedId}`)
+      const blob = await new Promise<Blob | null>((resolve) => {
+        canvasRef.current?.toBlob(
+          (blob) => {
+            resolve(blob)
+          },
+          'image/webp',
+          0.5,
+        )
       })
+
+      if (!blob) {
+        console.error('Failed to convert canvas to blob.')
+        return
+      }
+
+      const compressedBase64 = await new Promise<string>((resolve) => {
+        const reader = new FileReader()
+        reader.onloadend = () => {
+          resolve(reader.result as string)
+        }
+        reader.readAsDataURL(blob)
+      })
+
+      const params = generateParams(compressedBase64)
+
+      const res = await apiClient.apiPost('/api/pictures', params)
+      if (res.status === 201) {
+        router.push(`/themes/${selectedId}`)
+      }
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
   }
 

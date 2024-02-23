@@ -16,12 +16,14 @@ export const Picture = React.memo(({ src, author, frameId }: PictureProps) => {
         <Image
           alt={author}
           className='absolute z-10 mx-auto -ml-2 -mt-3 border bg-white'
-          height={150}
+          decoding='async'
+          fetchPriority='high'
+          height={100}
           priority
           quality={50}
           src={src}
           style={{ maxWidth: '110%' }}
-          width={200}
+          width={150}
         />
       </div>
     </Frames>

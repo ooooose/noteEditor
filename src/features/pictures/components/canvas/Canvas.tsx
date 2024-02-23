@@ -1,12 +1,12 @@
 'use client'
 
-import { useSession } from 'next-auth/react'
 import React from 'react'
 
 import { Modal } from '@/components/elements'
 import { Button } from '@/components/ui/button'
 import { DialogClose } from '@/components/ui/dialog'
 
+import { useFetchAuthUserByEmail } from '@/features/auth/hooks/useFetchAuthUserByEmail'
 import { ThemeSelect } from '@/features/themes/components/ThemeSelect'
 
 import { useDrawPicture } from '../../hooks/useDrawPicture'
@@ -18,8 +18,7 @@ interface IProps {
 
 export const Canvas: React.FC<IProps> = (props) => {
   const { width, height } = props
-  const { data: session } = useSession()
-  const email = session?.user.email
+  const { user } = useFetchAuthUserByEmail()
 
   const {
     canvasRef,
@@ -33,12 +32,11 @@ export const Canvas: React.FC<IProps> = (props) => {
   } = useDrawPicture({
     width: width,
     height: height,
-    email: email ?? '',
+    userId: user?.id,
+    userName: user?.name,
   })
-
   return (
     <section>
-      <ThemeSelect handleSelectChange={handleSelectChange} />
       <div className='mb-4 border'>
         <canvas
           height={`${height}px`}
@@ -51,8 +49,20 @@ export const Canvas: React.FC<IProps> = (props) => {
         />
       </div>
       <div className='flex gap-2'>
-        <Button onClick={Reset}>リセット</Button>
+        <Modal description='絵をリセットしますか？' text='リセット'>
+          <DialogClose asChild>
+            <Button onClick={Reset} variant='destructive'>
+              絵をリセットする
+            </Button>
+          </DialogClose>
+          <DialogClose asChild>
+            <Button className='bg-gray-100' variant='outline'>
+              キャンセル
+            </Button>
+          </DialogClose>
+        </Modal>
         <Modal description='絵を登録しますか？' text='登録'>
+          <ThemeSelect handleSelectChange={handleSelectChange} />
           <Button disabled={!selectedId} onClick={uploadPicture} variant='outline'>
             登録する
           </Button>

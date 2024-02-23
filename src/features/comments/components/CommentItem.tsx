@@ -1,8 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { CheckCircledIcon, Cross2Icon } from '@radix-ui/react-icons'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { FaCheck } from 'react-icons/fa'
-import { GiCancel } from 'react-icons/gi'
 import * as z from 'zod'
 
 import { Button } from '@/components/elements/Button'
@@ -12,7 +11,7 @@ import { formatDate } from '@/utils/format'
 
 import { Comment } from '../types'
 
-import { CommentMenu } from './CommentMenu'
+import CommentMenu from './CommentMenu'
 
 type CommentItemProps = {
   comment: Comment
@@ -29,7 +28,7 @@ type CommentValue = {
   body: string
 }
 
-export const CommentItem = React.memo(
+const CommentItem = React.memo(
   ({ comment, userId, handleDeleteComment, handleUpdateComment }: CommentItemProps) => {
     const [editedFlag, setEditedFlag] = useState(false)
     const { register, handleSubmit, formState } = useForm<CommentValue>({
@@ -68,7 +67,7 @@ export const CommentItem = React.memo(
             />
             <div className='mt-2 flex w-full justify-end gap-2'>
               <Button type='submit' variant='outline'>
-                <FaCheck />
+                <CheckCircledIcon />
               </Button>
               <Button
                 onClick={() => {
@@ -76,7 +75,7 @@ export const CommentItem = React.memo(
                 }}
                 variant='outline'
               >
-                <GiCancel />
+                <Cross2Icon />
               </Button>
             </div>
           </form>
@@ -99,4 +98,5 @@ export const CommentItem = React.memo(
   },
 )
 
+export default CommentItem
 CommentItem.displayName = 'CommentItem'

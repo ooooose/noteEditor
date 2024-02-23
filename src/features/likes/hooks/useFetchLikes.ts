@@ -2,20 +2,22 @@ import useSWR from 'swr'
 
 import { apiClient } from '@/lib/axios/api-client'
 
+const fetchLikes = async () => {
+  const result = await apiClient.apiGet('/api/likes')
+  return result.data?.likes
+}
+
 export const useFetchLikes = () => {
-  const { data, error, isLoading, mutate } = useSWR(
-    `/api/likes`,
-    (endpoint) => apiClient.apiGet(endpoint).then((result) => result.data?.likes),
-    {
-      revalidateIfStale: false,
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    },
-  )
+  const { data, error, isLoading, mutate } = useSWR('/api/likes', fetchLikes, {
+    revalidateIfStale: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  })
+
   return {
     likes: data,
-    isLoading: isLoading,
+    isLoading,
     isError: error,
-    mutate: mutate,
+    mutate,
   }
 }

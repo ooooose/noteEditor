@@ -3,7 +3,7 @@ import React from 'react'
 import { CreateThemeModal } from './CreateThemeModal'
 import { Themes } from './Themes'
 
-export const ThemesLayout = () => {
+const ThemesLayout = () => {
   return (
     <div>
       <div className='px-3 py-5 text-center sm:px-10'>
@@ -16,3 +16,5 @@ export const ThemesLayout = () => {
     </div>
   )
 }
+
+export default ThemesLayout

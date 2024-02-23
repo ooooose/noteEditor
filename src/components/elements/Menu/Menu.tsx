@@ -1,7 +1,7 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
-import { CiCirclePlus } from 'react-icons/ci'
+import { HamburgerMenuIcon } from '@radix-ui/react-icons'
+import Link from 'next/link'
 
 import {
   DropdownMenu,
@@ -14,28 +14,27 @@ import {
 } from '@/components/ui/dropdown-menu'
 
 const Menu = () => {
-  const router = useRouter()
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className='focus:outline-none'>
-        <CiCirclePlus size={36} />
+        <HamburgerMenuIcon className='size-10' />
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end' className='w-56' side='bottom'>
         <DropdownMenuLabel>画HACK Menu</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem
-            onClick={() => {
-              router.push('/timeline')
-            }}
-          >
-            タイムライン
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => router.push('/themes')}>
-            テーマ一覧をみる
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => router.push('/canvas')}>絵を描く</DropdownMenuItem>
-          <DropdownMenuItem onClick={() => router.push('/me')}>プロフィール</DropdownMenuItem>
+          <Link href='/timeline'>
+            <DropdownMenuItem>タイムライン</DropdownMenuItem>
+          </Link>
+          <Link href='/themes'>
+            <DropdownMenuItem>テーマ一覧をみる</DropdownMenuItem>
+          </Link>
+          <Link href='/canvas'>
+            <DropdownMenuItem>絵を描く</DropdownMenuItem>
+          </Link>
+          <Link href='/me'>
+            <DropdownMenuItem>プロフィール</DropdownMenuItem>
+          </Link>
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>

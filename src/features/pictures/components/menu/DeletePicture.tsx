@@ -1,5 +1,5 @@
+import { TrashIcon } from '@radix-ui/react-icons'
 import React from 'react'
-import { FaRegTrashAlt } from 'react-icons/fa'
 
 import { Button } from '@/components/elements/Button'
 import { Tooltip } from '@/components/elements/Tooltip/Tooltip'
@@ -25,7 +25,7 @@ export const DeletePicture = React.memo(({ pictureId, image }: DeletePictureProp
     <Dialog>
       <Tooltip content='絵を削除する'>
         <DialogTrigger className='p-2'>
-          <FaRegTrashAlt color='red' size={24} />
+          <TrashIcon className='size-6' color='red' />
         </DialogTrigger>
       </Tooltip>
       <DialogContent>

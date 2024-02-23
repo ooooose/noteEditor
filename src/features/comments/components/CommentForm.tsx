@@ -1,3 +1,5 @@
+'use client'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import React from 'react'
 import { useForm } from 'react-hook-form'
@@ -18,15 +20,15 @@ type CommentFormProps = {
   onSubmit: (body: string) => Promise<void>
 }
 
-export const CommentForm = React.memo(({ onSubmit }: CommentFormProps) => {
+const CommentForm = React.memo(({ onSubmit }: CommentFormProps) => {
   const { register, handleSubmit, reset, formState } = useForm<CommentValue>({
     resolver: zodResolver(schema),
   })
   return (
     <form
       onSubmit={handleSubmit(async (values) => {
-        await onSubmit(values.body)
         reset()
+        await onSubmit(values.body)
       })}
     >
       <Input
@@ -44,4 +46,5 @@ export const CommentForm = React.memo(({ onSubmit }: CommentFormProps) => {
   )
 })
 
+export default CommentForm
 CommentForm.displayName = 'CommentForm'

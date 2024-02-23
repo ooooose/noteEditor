@@ -2,20 +2,22 @@ import useSWR from 'swr'
 
 import { apiClient } from '@/lib/axios/api-client'
 
+const fetchThemes = async () => {
+  const result = await apiClient.apiGet('/api/themes')
+  return result.data?.themes
+}
+
 export const useFetchThemes = () => {
-  const { data, error, isLoading, mutate } = useSWR(
-    '/api/themes',
-    (endpoint) => apiClient.apiGet(endpoint).then((result) => result.data?.themes),
-    {
-      revalidateIfStale: false,
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    },
-  )
+  const { data, error, isLoading, mutate } = useSWR('/api/themes', fetchThemes, {
+    revalidateIfStale: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  })
+
   return {
     themes: data,
-    isLoading: isLoading,
+    isLoading,
     isError: error,
-    mutate: mutate,
+    mutate,
   }
 }
