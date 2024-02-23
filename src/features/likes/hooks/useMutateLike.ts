@@ -19,8 +19,10 @@ export function useMutateLike(pictureId: string, userId: string, likes: Like[]) 
 
   useEffect(() => {
     const fetchData = async () => {
-      setLikeCount(likes && likes?.length)
-      setLiked(!!(likes && likes?.find((like: Like) => like.userId == userId)))
+      if (likes) {
+        setLikeCount(likes?.length)
+        setLiked(!!likes?.find((like: Like) => like.userId == userId))
+      }
     }
     fetchData()
   }, [setLiked, setLikeCount, likes, userId, pictureId])
@@ -54,6 +56,5 @@ export function useMutateLike(pictureId: string, userId: string, likes: Like[]) 
     like,
     liked,
     likeCount,
-    mutate,
   }
 }
