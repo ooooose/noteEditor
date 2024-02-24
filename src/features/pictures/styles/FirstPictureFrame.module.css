@@ -1,16 +1,3 @@
-.outerFrame {
-  background-color: #eefbf8;
-  background-position:
-    50% 50%,
-    50% 50%;
-  background-repeat: no-repeat, repeat;
-  position: relative;
-  background-size:
-    150% 150%,
-    2em 2em;
-  height: 200px;
-}
-
 .frame {
   background-color: #fff;
   box-shadow:
@@ -20,7 +7,7 @@
   height: 6em;
   left: 100%;
   top: 100%;
-  margin: -8.875em -12.5em;
+  margin: -8.975em -12.25em;
   position: absolute;
   width: 9em;
 }

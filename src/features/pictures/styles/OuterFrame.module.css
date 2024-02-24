@@ -1,0 +1,12 @@
+.outerFrame {
+  background-color: #eefbf8;
+  background-position:
+    50% 50%,
+    50% 50%;
+  background-repeat: no-repeat, repeat;
+  position: relative;
+  background-size:
+    150% 150%,
+    2em 2em;
+  height: 200px;
+}

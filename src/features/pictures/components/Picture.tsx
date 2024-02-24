@@ -15,7 +15,7 @@ export const Picture = React.memo(({ src, author, frameId }: PictureProps) => {
       <div>
         <Image
           alt={author}
-          className='absolute z-10 mx-auto -ml-2 -mt-3 border bg-white'
+          className='absolute z-10 mx-auto border bg-white'
           decoding='async'
           fetchPriority='high'
           height={100}
@@ -23,7 +23,7 @@ export const Picture = React.memo(({ src, author, frameId }: PictureProps) => {
           quality={50}
           src={src}
           style={{ maxWidth: '110%' }}
-          width={150}
+          width={170}
         />
       </div>
     </Frames>

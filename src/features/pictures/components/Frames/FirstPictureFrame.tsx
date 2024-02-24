@@ -2,6 +2,8 @@ import React from 'react'
 
 import styles from '@/features/pictures/styles/FirstPictureFrame.module.css'
 
+import { OuterFrame } from '.'
+
 type FirstPictureFrameProps = {
   children: React.ReactNode
 }
@@ -9,9 +11,9 @@ type FirstPictureFrameProps = {
 export const FirstPictureFrame = React.memo(({ children }: FirstPictureFrameProps) => {
   return (
     <>
-      <div className={styles.outerFrame}>
+      <OuterFrame>
         <div className={styles.frame}>{children}</div>
-      </div>
+      </OuterFrame>
     </>
   )
 })
