@@ -42,9 +42,7 @@ export const PictureCard = React.memo(({ picture, comments, user, likes }: Pictu
         </div>
       </div>
       <div>
-        <div className='relative'>
-          <Picture author={picture.author} frameId={picture.frameId} src={picture.image} />
-        </div>
+        <Picture author={picture.author} frameId={picture.frameId} src={picture.image} />
         <div className='flex justify-between'>
           <div className='ml-2 mt-3'>
             {isDisplay && <PictureTheme title={picture.theme.title} />}

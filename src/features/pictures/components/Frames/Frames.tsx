@@ -11,7 +11,7 @@ export const Frames = React.memo(({ frameId, children }: FramesProps) => {
   switch (frameId) {
     case 0:
       return <FirstPictureFrame>{children}</FirstPictureFrame>
-    case 2:
+    case 1:
       return <SecondPictureFrame>{children}</SecondPictureFrame>
     default:
       return <FirstPictureFrame>{children}</FirstPictureFrame>
