@@ -26,7 +26,7 @@ type CommentProps = {
   user: AuthUser
 }
 
-export const Comment = React.memo(({ pictureId, comments, user }: CommentProps) => {
+const Comment = React.memo(({ pictureId, comments, user }: CommentProps) => {
   const { isLoading, onSubmitComment, handleDeleteComment, handleUpdateComment } = useMutateComment(
     pictureId,
     user,
@@ -60,4 +60,5 @@ export const Comment = React.memo(({ pictureId, comments, user }: CommentProps) 
   )
 })
 
+export default Comment
 Comment.displayName = 'Comment'

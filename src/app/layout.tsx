@@ -1,7 +1,7 @@
 import { Inter as FontSans } from 'next/font/google'
 import React from 'react'
-import './globals.css'
 
+import './globals.css'
 import MainLayout from '@/components/layouts/Layout/MainLayout'
 
 import NextAuthProvider from '@/lib/next-auth/NextAuthProvider'

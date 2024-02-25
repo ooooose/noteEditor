@@ -1,16 +1,14 @@
-'use client'
-
 import { HamburgerMenuIcon } from '@radix-ui/react-icons'
 import Link from 'next/link'
 
 import {
   DropdownMenu,
+  DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
 const Menu = () => {

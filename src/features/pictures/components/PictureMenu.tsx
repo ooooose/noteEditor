@@ -13,13 +13,13 @@ import {
 
 import { Picture } from '../types'
 
-import { DeletePicture } from './menu'
+import DeletePicture from './menu/DeletePicture'
 
 type PictureMenuProps = {
   picture: Picture
 }
 
-export const PictureMenu = ({ picture }: PictureMenuProps) => {
+const PictureMenu = ({ picture }: PictureMenuProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className='h-[65px] focus:outline-none'>
@@ -46,3 +46,5 @@ export const PictureMenu = ({ picture }: PictureMenuProps) => {
     </DropdownMenu>
   )
 }
+
+export default PictureMenu

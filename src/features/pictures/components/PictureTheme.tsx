@@ -8,7 +8,7 @@ type PictureThemeProps = {
   title: string
 }
 
-export const PictureTheme = ({ title }: PictureThemeProps) => {
+const PictureTheme = ({ title }: PictureThemeProps) => {
   return (
     <Modal description='この絵のテーマは...' text='テーマをみる'>
       <div className='mx-auto my-5'>
@@ -22,3 +22,5 @@ export const PictureTheme = ({ title }: PictureThemeProps) => {
     </Modal>
   )
 }
+
+export default PictureTheme
