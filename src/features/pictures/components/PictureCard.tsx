@@ -1,10 +1,8 @@
-'use client'
-
 import { usePathname } from 'next/navigation'
 import React from 'react'
 
 import { AuthUser } from '@/features/auth/types'
-import { Comment } from '@/features/comments/components/Comment'
+import Comment from '@/features/comments/components/Comment'
 import { Comment as CommentType } from '@/features/comments/types'
 import { Like } from '@/features/likes/components'
 import { useMutateLike } from '@/features/likes/hooks/useMutateLike'
@@ -14,8 +12,8 @@ import { formatDateForPicture } from '@/utils/format'
 import { Picture as PictureType } from '../types'
 
 import { Picture } from './Picture'
-import { PictureMenu } from './PictureMenu'
-import { PictureTheme } from './PictureTheme'
+import PictureMenu from './PictureMenu'
+import PictureTheme from './PictureTheme'
 
 type PictureCardProps = {
   picture: PictureType
@@ -42,9 +40,7 @@ export const PictureCard = React.memo(({ picture, comments, user, likes }: Pictu
         </div>
       </div>
       <div>
-        <div className='relative'>
-          <Picture author={picture.author} frameId={picture.frameId} src={picture.image} />
-        </div>
+        <Picture author={picture.author} frameId={picture.frameId} src={picture.image} />
         <div className='flex justify-between'>
           <div className='ml-2 mt-3'>
             {isDisplay && <PictureTheme title={picture.theme.title} />}

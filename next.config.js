@@ -19,6 +19,20 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.optimization.splitChunks = {
+        chunks: 'all',
+        cacheGroups: {
+          default: false,
+          vendors: false,
+        },
+      }
+      config.optimization.minimize = true
+    }
+
+    return config
+  },
 }
 
 module.exports = withBundleAnalyzer(nextConfig)

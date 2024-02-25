@@ -19,7 +19,7 @@ type DeletePictureProps = {
   image: string
 }
 
-export const DeletePicture = React.memo(({ pictureId, image }: DeletePictureProps) => {
+const DeletePicture = React.memo(({ pictureId, image }: DeletePictureProps) => {
   const { handleDeletePicture } = useDeletePicture()
   return (
     <Dialog>
@@ -46,4 +46,5 @@ export const DeletePicture = React.memo(({ pictureId, image }: DeletePictureProp
   )
 })
 
+export default DeletePicture
 DeletePicture.displayName = 'DeletePicture'

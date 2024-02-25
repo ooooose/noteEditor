@@ -1,0 +1,34 @@
+.frame {
+  border: solid 1.7em #eee;
+  border-bottom-color: #fff;
+  border-left-color: #eee;
+  border-radius: 2px;
+  border-right-color: #eee;
+  border-top-color: #ddd;
+  box-shadow:
+    0 0 0 0 rgba(0, 0, 0, 0.25) inset,
+    0 5px 5px 5px rgba(0, 0, 0, 0.25);
+  height: 10.25em;
+  position: absolute;
+  left: 1.75em;
+  top: 1em;
+  width: 12em;
+}
+
+.frame:before {
+  border-radius: 2px;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.25) inset;
+  z-index: 1;
+}
+
+.frame:after {
+  border-radius: 2px;
+  bottom: -1em;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.25);
+  content: '';
+  left: -1em;
+  position: absolute;
+  right: -1em;
+  top: -1em;
+  z-index: 1;
+}
