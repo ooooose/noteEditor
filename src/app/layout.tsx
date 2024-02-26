@@ -7,6 +7,8 @@ import MainLayout from '@/components/layouts/Layout/MainLayout'
 import NextAuthProvider from '@/lib/next-auth/NextAuthProvider'
 import { cn } from '@/lib/utils'
 
+import { PreloadResources } from './preload-resources'
+
 import type { Metadata } from 'next'
 
 export const fontSans = FontSans({
@@ -22,6 +24,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang='ja'>
+      <head>
+        <PreloadResources />
+      </head>
       <body className={cn('min-h-screen bg-background font-sans antialiased', fontSans.variable)}>
         <NextAuthProvider>
           <MainLayout>{children}</MainLayout>
