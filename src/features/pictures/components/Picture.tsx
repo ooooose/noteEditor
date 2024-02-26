@@ -24,7 +24,7 @@ export const Picture = React.memo(({ src, author, frameId }: PictureProps) => {
             alt={author}
             className='absolute z-10 border bg-white'
             decoding='async'
-            fetchPriority='low'
+            fetchPriority='high'
             height={120}
             priority
             quality={50}
