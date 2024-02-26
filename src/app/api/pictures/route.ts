@@ -27,13 +27,20 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const { image, userId, userName, themeId } = await req.json()
-    const { ACCESS_KEY_ID, SECRET_ACCESS_KEY, REGION, S3_BUCKET_NAME } = process.env
+    const {
+      CLOUDFLARE_ACCESS_KEY_ID,
+      CLOUDFLARE_ENDPOINT,
+      CLOUDFLARE_ACCESS_KEY,
+      REGION,
+      BUCKET_NAME,
+    } = process.env
 
     const s3Client = new S3Client({
       region: REGION,
+      endpoint: CLOUDFLARE_ENDPOINT as string,
       credentials: {
-        accessKeyId: ACCESS_KEY_ID || '',
-        secretAccessKey: SECRET_ACCESS_KEY || '',
+        accessKeyId: CLOUDFLARE_ACCESS_KEY_ID || '',
+        secretAccessKey: CLOUDFLARE_ACCESS_KEY || '',
       },
     })
     const blob = atob(image.replace(/^.*,/, ''))
@@ -42,14 +49,14 @@ export async function POST(req: Request) {
       buff[i] = blob.charCodeAt(i)
     }
 
-    const file = new File([buff.buffer], `${Date.now()}-${themeId}}`, { type: 'image/png' })
+    const file = new File([buff.buffer], `${Date.now()}-${themeId}}`, { type: 'image/webp' })
     const fileName = `${Date.now()}-${themeId}`
 
     // File オブジェクトから Buffer に変換
     const buffer = Buffer.from(await file?.arrayBuffer())
 
     const uploadParams: any = {
-      Bucket: S3_BUCKET_NAME,
+      Bucket: BUCKET_NAME,
       Key: fileName,
       Body: buffer,
       ContentType: 'image/webp',
@@ -57,7 +64,8 @@ export async function POST(req: Request) {
     }
     const command = new PutObjectCommand(uploadParams)
     await s3Client.send(command)
-    const imageUrl = `https://${S3_BUCKET_NAME}.s3.${REGION}.amazonaws.com/${fileName}`
+    const imageUrl = `${process.env.IMAGE_HOST_URL}/${fileName}`
+
     await main()
     const picture = await prisma.picture.create({
       data: {
@@ -78,19 +86,19 @@ export async function POST(req: Request) {
 export async function DELETE(req: Request) {
   try {
     const { id, image } = await req.json()
-    const { ACCESS_KEY_ID, SECRET_ACCESS_KEY, REGION, S3_BUCKET_NAME } = process.env
+    const { CLOUDFLARE_ACCESS_KEY_ID, CLOUDFLARE_ACCESS_KEY, REGION, BUCKET_NAME } = process.env
 
     const s3Client = new S3Client({
       region: REGION,
       credentials: {
-        accessKeyId: ACCESS_KEY_ID || '',
-        secretAccessKey: SECRET_ACCESS_KEY || '',
+        accessKeyId: CLOUDFLARE_ACCESS_KEY_ID || '',
+        secretAccessKey: CLOUDFLARE_ACCESS_KEY || '',
       },
     })
-    const key: string = image.split(`${S3_BUCKET_NAME}.s3.${REGION}.amazonaws.com/`)[1]
+    const key: string = image.split(`${process.env.IMAGE_HOST_URL}/`)[1]
     await s3Client.send(
       new DeleteObjectCommand({
-        Bucket: S3_BUCKET_NAME,
+        Bucket: BUCKET_NAME,
         Key: key,
       }),
     )
