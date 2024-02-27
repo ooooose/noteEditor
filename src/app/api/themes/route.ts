@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 
 import { prisma, main } from '@/lib/prisma'
 
+export const runtime = 'edge'
+
 // テーマ全取得API
 export async function GET() {
   try {

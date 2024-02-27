@@ -3,6 +3,8 @@ import { NextResponse } from 'next/server'
 import { Comment } from '@/features/comments/types'
 import { prisma, main } from '@/lib/prisma'
 
+export const runtime = 'edge'
+
 export async function GET() {
   try {
     await main()

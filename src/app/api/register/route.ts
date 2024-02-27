@@ -4,6 +4,8 @@ import { NextResponse } from 'next/server'
 
 const prisma = new PrismaClient()
 
+export const runtime = 'edge'
+
 export async function POST(request: Request) {
   const body = await request.json()
   const { name, email, password } = body.data

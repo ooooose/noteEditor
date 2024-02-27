@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 
 import { prisma, main } from '@/lib/prisma'
 
+export const runtime = 'edge'
+
 // テーマ作成API
 export async function POST(req: Request) {
   try {
