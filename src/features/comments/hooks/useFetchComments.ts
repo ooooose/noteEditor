@@ -8,7 +8,7 @@ const fetchComments = async () => {
 }
 
 export const useFetchComments = () => {
-  const { data, error, isLoading, mutate } = useSWR('/api/likes', fetchComments, {
+  const { data, error, isLoading, mutate } = useSWR('/api/comments', fetchComments, {
     revalidateIfStale: false,
     revalidateOnFocus: false,
     revalidateOnReconnect: false,

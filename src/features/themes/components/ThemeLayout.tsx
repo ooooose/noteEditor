@@ -38,9 +38,9 @@ const ThemeLayout = ({ id }: ThemeLayoutProps) => {
   return (
     <div>
       <div className='py-5 text-center'>
-        <p className='p-2'>{theme.title}</p>
+        <p className='p-2'>{theme?.title}</p>
       </div>
-      <Pictures comments={comments} likes={likes} pictures={theme.pictures} user={user} />
+      <Pictures comments={comments} likes={likes} pictures={theme?.pictures} user={user} />
     </div>
   )
 }
