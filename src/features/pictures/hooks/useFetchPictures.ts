@@ -1,6 +1,6 @@
 import useSWR from 'swr'
 
-import { apiClient } from '@/lib/axios/api-client'
+import { apiClient } from '@/lib/api/api-client'
 
 const fetchPictures = async () => {
   const result = await apiClient.apiGet('/api/pictures')

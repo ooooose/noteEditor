@@ -4,7 +4,7 @@ import { useState, useRef } from 'react'
 import { toast } from 'sonner'
 import { useSWRConfig } from 'swr'
 
-import { apiClient } from '@/lib/axios/api-client'
+import { apiClient } from '@/lib/api/api-client'
 
 interface IProps {
   width: number

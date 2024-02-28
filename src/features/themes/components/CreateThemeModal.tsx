@@ -10,7 +10,7 @@ import { Button } from '@/components/elements/Button'
 import { Form, Input } from '@/components/elements/Form'
 import { Skeleton } from '@/components/ui/skeleton'
 
-import { apiClient } from '@/lib/axios/api-client'
+import { apiClient } from '@/lib/api/api-client'
 
 import { useFetchThemes } from '../hooks/useFetchThemes'
 

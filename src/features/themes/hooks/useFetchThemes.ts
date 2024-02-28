@@ -1,6 +1,6 @@
 import useSWR from 'swr'
 
-import { apiClient } from '@/lib/axios/api-client'
+import { apiClient } from '@/lib/api/api-client'
 
 const fetchThemes = async () => {
   const result = await apiClient.apiGet('/api/themes')

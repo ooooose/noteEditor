@@ -1,4 +1,4 @@
-import { apiClient } from '@/lib/axios/api-client'
+import { apiClient } from '@/lib/api/api-client'
 
 type paramsType = {
   id: string
