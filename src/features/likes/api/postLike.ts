@@ -6,5 +6,5 @@ type paramsType = {
 }
 
 export const postLike = async (params: paramsType) => {
-  return await apiClient.apiPost('/api/likes', params).then((result) => result)
+  return await apiClient.apiPost('/api/likes', params).then((result) => result.json())
 }

@@ -22,18 +22,18 @@ export const useMutateComment = (pictureId: string, user: AuthUser) => {
   const onSubmitComment = async (body: string) => {
     const params = generateParams()
     try {
-      await postComment({
+      const res = await postComment({
         ...params,
         userName: user.name,
         body: body,
-      }).then((res) => {
-        if (res.status === 201) {
-          toast('コメントを作成しました', { position: 'top-center' })
-          mutate()
-        }
       })
+
+      if (res.status === 201) {
+        toast('コメントを作成しました', { position: 'top-center' })
+        mutate()
+      }
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
   }
 

@@ -15,7 +15,7 @@ export const useFetchPictures = () => {
   })
 
   return {
-    pictures: data,
+    pictures: data?.pictures,
     isLoading,
     isError: error,
     mutate,

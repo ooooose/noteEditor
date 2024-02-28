@@ -15,7 +15,7 @@ export const useFetchLikes = () => {
   })
 
   return {
-    likes: data,
+    likes: data?.likes,
     isLoading,
     isError: error,
     mutate,

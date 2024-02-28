@@ -1,37 +1,50 @@
-// eslint-disable-next-line import/named
-import axiosBase, { AxiosInstance, AxiosResponse } from 'axios'
-
 class ApiClient {
-  axios: AxiosInstance
+  baseURL: string
+
   constructor() {
-    this.axios = axiosBase.create({
-      baseURL: process.env.NEXT_APP_URL,
+    this.baseURL = process.env.NEXT_APP_URL ?? ''
+  }
+
+  async apiGet(url: string, query = {}) {
+    const queryParams = new URLSearchParams(query)
+    const response = await fetch(`${this.baseURL}${url}?${queryParams}`)
+    return response
+  }
+
+  async apiPost(url: string, body = {}) {
+    const response = await fetch(`${this.baseURL}${url}`, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'X-Requested-With': 'XMLHttpRequest',
-        'Access-Control-Allow-Credentials': true,
       },
-      responseType: 'json',
+      body: JSON.stringify(body),
     })
+    return response
   }
 
-  async apiGet(url: string, query = {}): Promise<AxiosResponse> {
-    return await this.axios.get(`${url}`, { ...query })
+  async apiPut(url: string, body = {}) {
+    const response = await fetch(`${this.baseURL}${url}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+      },
+      body: JSON.stringify(body),
+    })
+    return response
   }
 
-  async apiPost(url: string, body = {}): Promise<AxiosResponse> {
-    return await this.axios.post(`${url}`, body)
-  }
-
-  async apiPut(url: string, body = {}): Promise<AxiosResponse> {
-    return await this.axios.put(`${url}`, body)
-  }
-
-  async apiDelete(url: string, body = {}): Promise<AxiosResponse> {
-    const config = {
-      data: body,
-    }
-    return await this.axios.delete(`${url}`, config)
+  async apiDelete(url: string, body = {}) {
+    const response = await fetch(`${this.baseURL}${url}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+      },
+      body: JSON.stringify(body),
+    })
+    return response
   }
 }
 

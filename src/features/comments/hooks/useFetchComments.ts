@@ -9,7 +9,7 @@ export const useFetchComments = () => {
   }
 
   const {
-    data: comments,
+    data,
     error,
     isValidating: isLoading,
     mutate,
@@ -20,7 +20,7 @@ export const useFetchComments = () => {
   })
 
   return {
-    comments,
+    comments: data?.comments,
     isLoading,
     isError: error,
     mutate,

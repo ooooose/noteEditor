@@ -15,7 +15,7 @@ export const useFetchThemes = () => {
   })
 
   return {
-    themes: data,
+    themes: data?.themes,
     isLoading,
     isError: error,
     mutate,

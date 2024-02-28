@@ -20,7 +20,7 @@ export const useFetchAuthUserByEmail = () => {
   )
 
   return {
-    user: data,
+    user: data?.user,
     isLoading: isLoading,
     isError: error,
     mutate: mutate,

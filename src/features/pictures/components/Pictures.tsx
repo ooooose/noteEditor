@@ -16,7 +16,6 @@ type PicturesProps = {
 }
 
 const Pictures = React.memo(({ pictures, comments, user, likes }: PicturesProps) => {
-  console.log(pictures)
   return (
     <div className='grid grid-cols-3 grid-rows-2 gap-10'>
       {pictures?.map((picture: PictureType) => {
