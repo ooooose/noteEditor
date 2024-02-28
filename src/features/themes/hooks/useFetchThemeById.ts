@@ -9,7 +9,7 @@ export const useFetchThemeById = (id: string) => {
     isValidating: isLoading,
   } = useSWR(
     `/api/themes/${id}`,
-    (endpoint) => apiClient.apiGet(endpoint).then((result) => result.data?.theme),
+    () => apiClient.apiGet(`/api/themes/${id}`).then((result) => result.json()),
     {
       revalidateIfStale: false,
       revalidateOnFocus: false,

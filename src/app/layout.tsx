@@ -10,7 +10,7 @@ import { cn } from '@/lib/utils'
 
 import type { Metadata } from 'next'
 
-export const fontSans = FontSans({
+const fontSans = FontSans({
   subsets: ['latin'],
   variable: '--font-sans',
 })

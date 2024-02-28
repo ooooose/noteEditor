@@ -2,8 +2,6 @@ import { NextResponse } from 'next/server'
 
 import { prisma, main } from '@/lib/prisma'
 
-export const runtime = 'edge'
-
 // テーマ取得API
 export async function GET(req: Request) {
   try {
@@ -61,3 +59,5 @@ export async function DELETE(req: Request) {
     await prisma.$disconnect()
   }
 }
+
+// export const runtime = 'edge'

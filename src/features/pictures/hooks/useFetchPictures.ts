@@ -4,7 +4,7 @@ import { apiClient } from '@/lib/axios/api-client'
 
 const fetchPictures = async () => {
   const result = await apiClient.apiGet('/api/pictures')
-  return result.data?.pictures
+  return result.json()
 }
 
 export const useFetchPictures = () => {

@@ -11,7 +11,7 @@ export const useFetchAuthUserByEmail = () => {
   }
   const { data, error, isLoading, mutate } = useSWR(
     '/api/me',
-    (endpoint) => apiClient.apiPost(endpoint, params).then((result) => result.data.user),
+    () => apiClient.apiPost('/api/me', params).then((result) => result.json()),
     {
       revalidateIfStale: false,
       revalidateOnFocus: false,

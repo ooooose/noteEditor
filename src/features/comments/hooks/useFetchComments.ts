@@ -5,7 +5,7 @@ import { getComments } from '../api'
 export const useFetchComments = () => {
   const fetchComments = async () => {
     const result = await getComments()
-    return result.data.comments
+    return result.json()
   }
 
   const {

@@ -4,7 +4,7 @@ import { apiClient } from '@/lib/axios/api-client'
 
 const fetchLikes = async () => {
   const result = await apiClient.apiGet('/api/likes')
-  return result.data?.likes
+  return result.json()
 }
 
 export const useFetchLikes = () => {

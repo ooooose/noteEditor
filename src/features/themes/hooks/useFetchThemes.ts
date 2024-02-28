@@ -4,7 +4,7 @@ import { apiClient } from '@/lib/axios/api-client'
 
 const fetchThemes = async () => {
   const result = await apiClient.apiGet('/api/themes')
-  return result.data?.themes
+  return result.json()
 }
 
 export const useFetchThemes = () => {
