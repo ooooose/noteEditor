@@ -16,9 +16,6 @@ const nextConfig = {
       },
     ],
   },
-  compiler: {
-    styledComponents: true,
-  },
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.optimization.splitChunks = {
