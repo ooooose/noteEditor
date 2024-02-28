@@ -24,6 +24,8 @@ type PictureCardProps = {
 
 export const PictureCard = React.memo(({ picture, comments, user, likes }: PictureCardProps) => {
   const { like, liked, likeCount } = useMutateLike(picture.id, user.id, likes)
+  console.log(user)
+  console.log(picture.userId)
 
   const pathName = usePathname()
   const isDisplay = pathName === '/timeline'
