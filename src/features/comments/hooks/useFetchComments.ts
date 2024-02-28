@@ -1,19 +1,14 @@
 import useSWR from 'swr'
 
-import { getComments } from '../api'
+import { apiClient } from '@/lib/axios/api-client'
+
+const fetchComments = async () => {
+  const result = await apiClient.apiGet('/api/comments')
+  return result.json()
+}
 
 export const useFetchComments = () => {
-  const fetchComments = async () => {
-    const result = await getComments()
-    return result.json()
-  }
-
-  const {
-    data,
-    error,
-    isValidating: isLoading,
-    mutate,
-  } = useSWR('/api/comments', fetchComments, {
+  const { data, error, isLoading, mutate } = useSWR('/api/likes', fetchComments, {
     revalidateIfStale: false,
     revalidateOnFocus: false,
     revalidateOnReconnect: false,

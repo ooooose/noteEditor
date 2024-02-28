@@ -18,7 +18,7 @@ export const useFetchThemeById = (id: string) => {
   )
 
   return {
-    theme: data,
+    theme: data?.theme,
     isLoading,
     isError: error,
   }
