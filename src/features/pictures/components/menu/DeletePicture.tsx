@@ -2,7 +2,6 @@ import { TrashIcon } from '@radix-ui/react-icons'
 import React from 'react'
 
 import { Button } from '@/components/elements/Button'
-import { Tooltip } from '@/components/elements/Tooltip/Tooltip'
 import {
   Dialog,
   DialogContent,
@@ -23,11 +22,9 @@ const DeletePicture = React.memo(({ pictureId, image }: DeletePictureProps) => {
   const { handleDeletePicture } = useDeletePicture()
   return (
     <Dialog>
-      <Tooltip content='絵を削除する'>
-        <DialogTrigger className='p-2'>
-          <TrashIcon className='size-6' color='red' />
-        </DialogTrigger>
-      </Tooltip>
+      <DialogTrigger className='py-2'>
+        <TrashIcon className='size-6' color='red' />
+      </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>この絵を削除しますか？</DialogTitle>

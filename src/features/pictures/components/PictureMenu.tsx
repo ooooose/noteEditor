@@ -41,7 +41,11 @@ const PictureMenu = ({ picture }: PictureMenuProps) => {
             <UpdateIcon className='size-5' />
           </DropdownMenuItem>
         </Tooltip>
-        <DeletePicture image={picture.image} pictureId={picture.id} />
+        <Tooltip content='絵を削除'>
+          <DropdownMenuItem className='cursor-pointer'>
+            <DeletePicture image={picture.image} pictureId={picture.id} />
+          </DropdownMenuItem>
+        </Tooltip>
       </DropdownMenuContent>
     </DropdownMenu>
   )
