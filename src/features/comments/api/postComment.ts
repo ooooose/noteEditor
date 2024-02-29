@@ -1,4 +1,4 @@
-import { apiClient } from '@/lib/axios/api-client'
+import { apiClient } from '@/lib/api/api-client'
 
 type paramsType = {
   userId: string
@@ -8,5 +8,5 @@ type paramsType = {
 }
 
 export const postComment = async (params: paramsType) => {
-  return await apiClient.apiPost('/api/comments', params).then((result) => result)
+  return await apiClient.apiPost('/api/comments', params).then((result) => result.json())
 }

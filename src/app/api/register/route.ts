@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client/edge'
 import bcrypt from 'bcrypt'
 import { NextResponse } from 'next/server'
 
@@ -33,3 +33,5 @@ export async function POST(request: Request) {
 
   return NextResponse.json(user, { status: 201 })
 }
+
+// export const runtime = 'edge'

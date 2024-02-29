@@ -1,9 +1,9 @@
-import { NextResponse } from 'next/server'
+import { NextResponse, NextRequest } from 'next/server'
 
 import { prisma, main } from '@/lib/prisma'
 
 // テーマ作成API
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
     const { email } = await req.json()
     await main()
@@ -20,3 +20,5 @@ export async function POST(req: Request) {
     await prisma.$disconnect()
   }
 }
+
+// export const runtime = 'edge'

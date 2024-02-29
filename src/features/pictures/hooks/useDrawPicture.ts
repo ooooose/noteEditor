@@ -2,8 +2,9 @@ import { useRouter } from 'next/navigation'
 import React from 'react'
 import { useState, useRef } from 'react'
 import { toast } from 'sonner'
+import { useSWRConfig } from 'swr'
 
-import { apiClient } from '@/lib/axios/api-client'
+import { apiClient } from '@/lib/api/api-client'
 
 interface IProps {
   width: number
@@ -22,6 +23,7 @@ interface IRect {
 }
 
 export const useDrawPicture = ({ width, height, userId, userName }: IProps) => {
+  const { mutate } = useSWRConfig()
   const router = useRouter()
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   let mouseX: number | null = null
@@ -128,6 +130,8 @@ export const useDrawPicture = ({ width, height, userId, userName }: IProps) => {
 
       const res = await apiClient.apiPost('/api/pictures', params)
       if (res.status === 201) {
+        mutate('/api/pictures')
+        mutate('/api/themes')
         router.push(`/themes/${selectedId}`)
       }
     } catch (err) {

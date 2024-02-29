@@ -1,6 +1,6 @@
-import React from 'react'
-
 import ThemeLayout from '@/features/themes/components/ThemeLayout'
+
+// export const runtime = 'edge'
 
 function Theme({ params }: { params: { id: string } }) {
   return (

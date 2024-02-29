@@ -35,17 +35,11 @@ export function useMutateLike(pictureId: string, userId: string, likes: Like[]) 
     setLikeCount(newLikeCount)
     try {
       if (liked) {
-        await deleteLike(params).then((res) => {
-          if (res.status === 200) {
-            mutate('/api/likes')
-          }
-        })
+        await deleteLike(params)
+        mutate('/api/likes')
       } else {
-        await postLike(params).then((res) => {
-          if (res.status === 201) {
-            mutate('/api/likes')
-          }
-        })
+        await postLike(params)
+        mutate('/api/likes')
       }
     } catch (error) {
       console.error('Failed to update like:', error)

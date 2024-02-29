@@ -1,5 +1,3 @@
-import React from 'react'
-
 import TimelineLayout from '@/features/pictures/components/Timeline'
 
 function Timeline() {

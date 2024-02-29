@@ -19,8 +19,8 @@ const Pictures = React.memo(({ pictures, comments, user, likes }: PicturesProps)
   return (
     <div className='grid grid-cols-3 grid-rows-2 gap-10'>
       {pictures?.map((picture: PictureType) => {
-        const commentsOfPicture = comments.filter((comment) => comment.pictureId === picture.id)
-        const likesOfPicture = likes.filter((like) => like.pictureId == picture.id)
+        const commentsOfPicture = comments?.filter((comment) => comment.pictureId === picture.id)
+        const likesOfPicture = likes?.filter((like) => like.pictureId == picture.id)
         return (
           <PictureCard
             comments={commentsOfPicture}

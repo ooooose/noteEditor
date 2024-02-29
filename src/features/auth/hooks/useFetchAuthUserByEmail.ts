@@ -1,17 +1,22 @@
 import { useSession } from 'next-auth/react'
+import { useEffect } from 'react'
 import useSWR from 'swr'
 
-import { apiClient } from '@/lib/axios/api-client'
+import { apiClient } from '@/lib/api/api-client'
 
 export const useFetchAuthUserByEmail = () => {
   const { data: session } = useSession()
-  const email = session && session?.user.email
+
+  const email = session?.user?.email
+
   const params = {
     email: email,
   }
+
+  // Ensure that useSWR is called unconditionally
   const { data, error, isLoading, mutate } = useSWR(
     '/api/me',
-    (endpoint) => apiClient.apiPost(endpoint, params).then((result) => result.data.user),
+    () => apiClient.apiPost('/api/me', params).then((result) => result.json()),
     {
       revalidateIfStale: false,
       revalidateOnFocus: false,
@@ -19,8 +24,14 @@ export const useFetchAuthUserByEmail = () => {
     },
   )
 
+  useEffect(() => {
+    if (email) {
+      mutate()
+    }
+  }, [email, mutate])
+
   return {
-    user: data,
+    user: data?.user,
     isLoading: isLoading,
     isError: error,
     mutate: mutate,

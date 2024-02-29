@@ -13,7 +13,7 @@ export const Login = () => {
       <DialogClose asChild>
         <Button
           onClick={() => {
-            void signIn('google', {}, { prompt: 'login' })
+            signIn('google', {}, { prompt: 'login' })
           }}
           variant='outline'
         >

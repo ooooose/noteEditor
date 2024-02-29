@@ -26,14 +26,11 @@ export const useMutateComment = (pictureId: string, user: AuthUser) => {
         ...params,
         userName: user.name,
         body: body,
-      }).then((res) => {
-        if (res.status === 201) {
-          toast('コメントを作成しました', { position: 'top-center' })
-          mutate()
-        }
       })
+      toast('コメントを作成しました', { position: 'top-center' })
+      mutate()
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
   }
 
@@ -42,12 +39,9 @@ export const useMutateComment = (pictureId: string, user: AuthUser) => {
       id: commentId,
     }
     try {
-      await deleteComment(params).then((res) => {
-        if (res.status === 200) {
-          toast('コメントを削除しました', { position: 'top-center' })
-          mutate()
-        }
-      })
+      await deleteComment(params)
+      toast('コメントを削除しました', { position: 'top-center' })
+      mutate()
     } catch (err) {
       console.log(err)
     }

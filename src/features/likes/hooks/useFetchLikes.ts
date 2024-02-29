@@ -1,10 +1,10 @@
 import useSWR from 'swr'
 
-import { apiClient } from '@/lib/axios/api-client'
+import { apiClient } from '@/lib/api/api-client'
 
 const fetchLikes = async () => {
   const result = await apiClient.apiGet('/api/likes')
-  return result.data?.likes
+  return result.json()
 }
 
 export const useFetchLikes = () => {
@@ -15,7 +15,7 @@ export const useFetchLikes = () => {
   })
 
   return {
-    likes: data,
+    likes: data?.likes,
     isLoading,
     isError: error,
     mutate,
