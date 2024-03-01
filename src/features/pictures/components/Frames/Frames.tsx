@@ -1,13 +1,13 @@
-import React from 'react'
+import { memo, ReactNode } from 'react'
 
 import { FirstPictureFrame, SecondPictureFrame } from '.'
 
 type FramesProps = {
   frameId: number
-  children: React.ReactNode
+  children: ReactNode
 }
 
-export const Frames = React.memo(({ frameId, children }: FramesProps) => {
+export const Frames = memo(({ frameId, children }: FramesProps) => {
   switch (frameId) {
     case 0:
       return <FirstPictureFrame>{children}</FirstPictureFrame>

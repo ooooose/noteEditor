@@ -1,4 +1,5 @@
 import { UpdateIcon } from '@radix-ui/react-icons'
+import { memo } from 'react'
 
 import { Button } from '@/components/elements/Button'
 import { Tooltip } from '@/components/elements/Tooltip/Tooltip'
@@ -21,7 +22,7 @@ type SwitchPictureFrameProps = {
   author: string
 }
 
-const SwitchPictureFrame = ({ pictureId, src, author }: SwitchPictureFrameProps) => {
+const SwitchPictureFrame = memo(({ pictureId, src, author }: SwitchPictureFrameProps) => {
   const { frameId, handleSelectChange, handleUpdateFrameId } = useUpdatePicture(pictureId)
   return (
     <Dialog>
@@ -46,6 +47,7 @@ const SwitchPictureFrame = ({ pictureId, src, author }: SwitchPictureFrameProps)
       </DialogContent>
     </Dialog>
   )
-}
+})
 
 export default SwitchPictureFrame
+SwitchPictureFrame.displayName = 'SwitchPictureFrame'

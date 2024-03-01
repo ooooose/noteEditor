@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import Script from 'next/script'
-import React from 'react'
 
 import { SkeletonCard } from '@/components/elements/Skeleton/SkeletonCard'
 import { Card } from '@/components/ui/card'

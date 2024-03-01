@@ -1,5 +1,5 @@
 import { usePathname } from 'next/navigation'
-import React from 'react'
+import { memo } from 'react'
 
 import { AuthUser } from '@/features/auth/types'
 import Comment from '@/features/comments/components/Comment'
@@ -22,10 +22,8 @@ type PictureCardProps = {
   user: AuthUser
 }
 
-export const PictureCard = React.memo(({ picture, comments, user, likes }: PictureCardProps) => {
+const PictureCard = memo(({ picture, comments, user, likes }: PictureCardProps) => {
   const { like, liked, likeCount } = useMutateLike(picture.id, user.id, likes)
-  console.log(user)
-  console.log(picture.userId)
 
   const pathName = usePathname()
   const isDisplay = pathName === '/timeline'
@@ -60,4 +58,5 @@ export const PictureCard = React.memo(({ picture, comments, user, likes }: Pictu
   )
 })
 
+export default PictureCard
 PictureCard.displayName = 'PictureCard'

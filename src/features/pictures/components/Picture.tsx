@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import React from 'react'
+import { memo } from 'react'
 
 import { PreloadResources } from '@/components/Seo/PreloadResources'
 
@@ -12,7 +12,7 @@ type PictureProps = {
   frameId: number
 }
 
-export const Picture = React.memo(({ src, author, frameId }: PictureProps) => {
+export const Picture = memo(({ src, author, frameId }: PictureProps) => {
   return (
     <>
       <Head>

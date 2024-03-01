@@ -1,4 +1,4 @@
-import React from 'react'
+import { memo } from 'react'
 
 import { LikeButton } from '.'
 
@@ -8,7 +8,7 @@ type LikeProps = {
   likeCount: number
 }
 
-export const Like = React.memo(({ like, liked, likeCount }: LikeProps) => {
+export const Like = memo(({ like, liked, likeCount }: LikeProps) => {
   return (
     <div>
       <div className='flex gap-3'>

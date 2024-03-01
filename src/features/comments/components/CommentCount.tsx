@@ -1,4 +1,4 @@
-import React from 'react'
+import { memo } from 'react'
 
 import { Skeleton } from '@/components/ui/skeleton'
 
@@ -7,7 +7,7 @@ type CommentCountProps = {
   isLoading: boolean
 }
 
-const CommentCount = React.memo(({ commentCount, isLoading }: CommentCountProps) => {
+const CommentCount = memo(({ commentCount, isLoading }: CommentCountProps) => {
   if (isLoading) return <Skeleton className='mx-auto size-[15px]' />
   return <p className='text-center text-xs'>{commentCount}</p>
 })

@@ -1,12 +1,12 @@
-import React from 'react'
+import { memo, ReactNode } from 'react'
 
 import styles from '@/features/pictures/styles/OuterFrame.module.css'
 
 type OuterFrameProps = {
-  children: React.ReactNode
+  children: ReactNode
 }
 
-export const OuterFrame = React.memo(({ children }: OuterFrameProps) => {
+export const OuterFrame = memo(({ children }: OuterFrameProps) => {
   return (
     <>
       <div className={styles.outerFrame}>{children}</div>

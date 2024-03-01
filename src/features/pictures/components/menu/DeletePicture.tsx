@@ -1,5 +1,5 @@
 import { TrashIcon } from '@radix-ui/react-icons'
-import React from 'react'
+import { memo } from 'react'
 
 import { Button } from '@/components/elements/Button'
 import { Tooltip } from '@/components/elements/Tooltip/Tooltip'
@@ -19,7 +19,7 @@ type DeletePictureProps = {
   image: string
 }
 
-const DeletePicture = React.memo(({ pictureId, image }: DeletePictureProps) => {
+const DeletePicture = memo(({ pictureId, image }: DeletePictureProps) => {
   const { handleDeletePicture } = useDeletePicture()
   return (
     <Dialog>
