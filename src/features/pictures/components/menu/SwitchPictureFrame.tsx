@@ -22,7 +22,7 @@ type SwitchPictureFrameProps = {
 }
 
 const SwitchPictureFrame = ({ pictureId, src, author }: SwitchPictureFrameProps) => {
-  const { frameId, handleSelectChange } = useUpdatePicture(pictureId)
+  const { frameId, handleSelectChange, handleUpdateFrameId } = useUpdatePicture(pictureId)
   return (
     <Dialog>
       <Tooltip content='額縁を変更'>
@@ -39,7 +39,7 @@ const SwitchPictureFrame = ({ pictureId, src, author }: SwitchPictureFrameProps)
           <FrameSelect handleSelectChange={handleSelectChange} />
         </div>
         <DialogClose asChild>
-          <Button className='mt-3 w-full' variant='outline'>
+          <Button className='mt-3 w-full' onClick={handleUpdateFrameId} variant='outline'>
             登録する
           </Button>
         </DialogClose>
