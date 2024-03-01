@@ -83,6 +83,23 @@ export async function POST(req: Request) {
   }
 }
 
+export async function PUT(req: Request) {
+  try {
+    const { id, frameId } = await req.json()
+    await main()
+    const picture = await prisma.picture.update({
+      where: { id: id },
+      data: { frameId: frameId },
+    })
+    return NextResponse.json({ message: 'Success', picture }, { status: 200 })
+  } catch (err) {
+    console.log(err)
+    return NextResponse.json({ message: 'Error', err }, { status: 500 })
+  } finally {
+    await prisma.$disconnect()
+  }
+}
+
 export async function DELETE(req: Request) {
   try {
     const { id, image } = await req.json()

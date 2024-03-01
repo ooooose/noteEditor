@@ -23,7 +23,7 @@ const DeletePicture = React.memo(({ pictureId, image }: DeletePictureProps) => {
   const { handleDeletePicture } = useDeletePicture()
   return (
     <Dialog>
-      <Tooltip content='絵を削除する'>
+      <Tooltip content='絵を削除'>
         <DialogTrigger className='p-2'>
           <TrashIcon className='size-6' color='red' />
         </DialogTrigger>
