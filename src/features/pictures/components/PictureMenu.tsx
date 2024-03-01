@@ -1,6 +1,6 @@
 'use client'
 
-import { DotsVerticalIcon, TwitterLogoIcon, DownloadIcon, UpdateIcon } from '@radix-ui/react-icons'
+import { DotsVerticalIcon, TwitterLogoIcon, DownloadIcon } from '@radix-ui/react-icons'
 import React from 'react'
 
 import { Tooltip } from '@/components/elements/Tooltip/Tooltip'
@@ -14,12 +14,13 @@ import {
 import { Picture } from '../types'
 
 import DeletePicture from './menu/DeletePicture'
+import SwitchPictureFrame from './menu/SwitchPictureFrame'
 
 type PictureMenuProps = {
   picture: Picture
 }
 
-const PictureMenu = ({ picture }: PictureMenuProps) => {
+const PictureMenu = React.memo(({ picture }: PictureMenuProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className='h-[65px] focus:outline-none'>
@@ -36,19 +37,12 @@ const PictureMenu = ({ picture }: PictureMenuProps) => {
             <DownloadIcon className='size-5' />
           </DropdownMenuItem>
         </Tooltip>
-        <Tooltip content='額縁を変更'>
-          <DropdownMenuItem className='cursor-pointer'>
-            <UpdateIcon className='size-5' />
-          </DropdownMenuItem>
-        </Tooltip>
-        <Tooltip content='絵を削除'>
-          <DropdownMenuItem className='cursor-pointer'>
-            <DeletePicture image={picture.image} pictureId={picture.id} />
-          </DropdownMenuItem>
-        </Tooltip>
+        <SwitchPictureFrame author={picture.author} pictureId={picture.id} src={picture.image} />
+        <DeletePicture image={picture.image} pictureId={picture.id} />
       </DropdownMenuContent>
     </DropdownMenu>
   )
-}
+})
 
 export default PictureMenu
+PictureMenu.displayName = 'PictureMenu'
