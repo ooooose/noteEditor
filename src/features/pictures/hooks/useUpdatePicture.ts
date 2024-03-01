@@ -21,7 +21,7 @@ export const useUpdatePicture = (pictureId: string) => {
     try {
       await updateFrameId(params)
       mutate()
-      toast('絵を削除しました', { position: 'top-center' })
+      toast('額縁を変更しました', { position: 'top-center' })
     } catch (err) {
       console.log(err)
     }
