@@ -27,15 +27,17 @@ const SwitchPictureFrame = ({ pictureId, src, author }: SwitchPictureFrameProps)
     <Dialog>
       <Tooltip content='額縁を変更'>
         <DialogTrigger className='py-2'>
-          <UpdateIcon className='size-6' color='red' />
+          <UpdateIcon className='size-5' />
         </DialogTrigger>
       </Tooltip>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>フレームを変更できます</DialogTitle>
         </DialogHeader>
-        <Picture author={author} frameId={frameId} src={src} />
-        <FrameSelect handleSelectChange={handleSelectChange} />
+        <div className='mx-auto flex w-[240px] flex-col gap-4'>
+          <Picture author={author} frameId={frameId} src={src} />
+          <FrameSelect handleSelectChange={handleSelectChange} />
+        </div>
         <DialogClose asChild>
           <Button className='mt-3 w-full' variant='outline'>
             登録する
