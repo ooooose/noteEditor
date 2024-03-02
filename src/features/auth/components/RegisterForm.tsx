@@ -8,6 +8,7 @@ import * as z from 'zod'
 
 import { Button } from '@/components/elements/Button'
 import { Form, Input } from '@/components/elements/Form'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { useToast } from '@/components/ui/use-toast'
 
 const schema = z.object({
@@ -61,53 +62,58 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
   }
 
   return (
-    <div>
-      <Form<RegisterValues, typeof schema>
-        onSubmit={async (values) => {
-          await registerUser(values)
-          onSuccess()
-        }}
-        options={{
-          shouldUnregister: true,
-        }}
-        schema={schema}
-      >
-        {({ register, formState }) => (
-          <>
-            <Input
-              error={formState.errors['name']}
-              label='お名前'
-              registration={register('name')}
-              type='text'
-            />
-            <Input
-              error={formState.errors['email']}
-              label='メールアドレス'
-              registration={register('email')}
-              type='email'
-            />
-            <Input
-              error={formState.errors['password']}
-              label='パスワード'
-              registration={register('password')}
-              type='password'
-            />
-            <div>
-              <Button className='mt-6 w-full' type='submit'>
-                新規登録
-              </Button>
-            </div>
-          </>
-        )}
-      </Form>
-      <div className='mt-2 flex items-center justify-end'>
-        <div className='text-sm'>
-          ログイン画面は
-          <Link className='font-medium text-blue-600 hover:text-blue-500' href='/login'>
-            こちら
-          </Link>
+    <Card className='w-[350px]'>
+      <CardHeader>
+        <CardTitle>新規登録</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Form<RegisterValues, typeof schema>
+          onSubmit={async (values) => {
+            await registerUser(values)
+            onSuccess()
+          }}
+          options={{
+            shouldUnregister: true,
+          }}
+          schema={schema}
+        >
+          {({ register, formState }) => (
+            <>
+              <Input
+                error={formState.errors['name']}
+                label='お名前'
+                registration={register('name')}
+                type='text'
+              />
+              <Input
+                error={formState.errors['email']}
+                label='メールアドレス'
+                registration={register('email')}
+                type='email'
+              />
+              <Input
+                error={formState.errors['password']}
+                label='パスワード'
+                registration={register('password')}
+                type='password'
+              />
+              <div>
+                <Button className='mt-6 w-full' type='submit'>
+                  新規登録
+                </Button>
+              </div>
+            </>
+          )}
+        </Form>
+        <div className='mt-2 flex items-center justify-end'>
+          <div className='text-sm'>
+            ログイン画面は
+            <Link className='font-medium text-blue-600 hover:text-blue-500' href='/login'>
+              こちら
+            </Link>
+          </div>
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   )
 }
