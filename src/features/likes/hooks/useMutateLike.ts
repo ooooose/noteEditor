@@ -6,7 +6,7 @@ import { Like } from '../types'
 
 export function useMutateLike(pictureId: string, userId: string, likes: Like[]) {
   const [liked, setLiked] = useState(false)
-  const [likeCount, setLikeCount] = useState(0)
+  const [likeCount, setLikeCount] = useState(likes.length)
   const { mutate } = useSWRConfig()
 
   useEffect(() => {
@@ -26,8 +26,6 @@ export function useMutateLike(pictureId: string, userId: string, likes: Like[]) 
     }
     const newLiked = !liked
     const newLikeCount = liked ? likeCount - 1 : likeCount + 1
-    setLiked(newLiked)
-    setLikeCount(newLikeCount)
     try {
       if (liked) {
         await deleteLike(params)
@@ -39,6 +37,8 @@ export function useMutateLike(pictureId: string, userId: string, likes: Like[]) 
     } finally {
       mutate('/api/likes')
     }
+    setLiked(newLiked)
+    setLikeCount(newLikeCount)
   }, [liked, likeCount, pictureId, userId, mutate])
 
   return {
