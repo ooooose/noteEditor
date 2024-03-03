@@ -11,6 +11,8 @@ import { ThemeSelect } from '@/features/themes/components/ThemeSelect'
 
 import { useDrawPicture } from '../../hooks/useDrawPicture'
 
+import { CanvasMenu } from './CanvasMenu'
+
 interface IProps {
   width: number
   height: number
@@ -29,6 +31,7 @@ export const Canvas: React.FC<IProps> = (props) => {
     handleSelectChange,
     selectedId,
     uploadPicture,
+    setColor,
   } = useDrawPicture({
     width: width,
     height: height,
@@ -48,7 +51,7 @@ export const Canvas: React.FC<IProps> = (props) => {
           width={`${width}px`}
         />
       </div>
-      <div className='flex gap-2'>
+      <div className='float-right flex gap-2'>
         <Modal description='絵をリセットしますか？' text='リセット'>
           <DialogClose asChild>
             <Button onClick={Reset} variant='destructive'>
@@ -72,6 +75,7 @@ export const Canvas: React.FC<IProps> = (props) => {
             </Button>
           </DialogClose>
         </Modal>
+        <CanvasMenu setColor={setColor} />
       </div>
     </section>
   )
