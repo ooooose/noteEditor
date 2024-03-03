@@ -9,6 +9,7 @@ import * as z from 'zod'
 
 import { Button } from '@/components/elements/Button'
 import { Form, Input } from '@/components/elements/Form'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 
 const schema = z.object({
   email: z.string().min(1, '入力してください'),
@@ -43,43 +44,48 @@ export const LoginForm = () => {
     await loginUser(values)
   }
   return (
-    <div>
-      <Form<LoginValues, typeof schema>
-        onSubmit={async (values) => {
-          await onSubmit(values)
-        }}
-        schema={schema}
-      >
-        {({ register, formState }) => (
-          <>
-            <Input
-              error={formState.errors['email']}
-              label='メールアドレス'
-              registration={register('email')}
-              type='email'
-            />
-            <Input
-              error={formState.errors['password']}
-              label='パスワード'
-              registration={register('password')}
-              type='password'
-            />
-            <div>
-              <Button className='mt-6 w-full' isLoading={!!session} type='submit'>
-                ログイン
-              </Button>
-            </div>
-          </>
-        )}
-      </Form>
-      <div className='mt-2 flex items-center justify-end'>
-        <div className='text-sm'>
-          新規登録は
-          <Link className='font-medium text-blue-600 hover:text-blue-500' href='/register'>
-            こちら
-          </Link>
+    <Card className='w-[350px]'>
+      <CardHeader>
+        <CardTitle>ログイン</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Form<LoginValues, typeof schema>
+          onSubmit={async (values) => {
+            await onSubmit(values)
+          }}
+          schema={schema}
+        >
+          {({ register, formState }) => (
+            <>
+              <Input
+                error={formState.errors['email']}
+                label='メールアドレス'
+                registration={register('email')}
+                type='email'
+              />
+              <Input
+                error={formState.errors['password']}
+                label='パスワード'
+                registration={register('password')}
+                type='password'
+              />
+              <div>
+                <Button className='mt-6 w-full' isLoading={!!session} type='submit'>
+                  ログイン
+                </Button>
+              </div>
+            </>
+          )}
+        </Form>
+        <div className='mt-2 flex items-center justify-end'>
+          <div className='text-sm'>
+            新規登録は
+            <Link className='font-medium text-blue-600 hover:text-blue-500' href='/register'>
+              こちら
+            </Link>
+          </div>
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   )
 }

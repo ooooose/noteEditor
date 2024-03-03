@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import { memo } from 'react'
 
 import { SkeletonCard } from '@/components/elements/Skeleton/SkeletonCard'
 
@@ -15,7 +15,7 @@ type ThemeLayoutProps = {
   id: string
 }
 
-const ThemeLayout = ({ id }: ThemeLayoutProps) => {
+const ThemeLayout = memo(({ id }: ThemeLayoutProps) => {
   const { theme, isError, isLoading: isThemeLoading } = useFetchThemeById(id)
   const { comments, isLoading: isCommentsLoading } = useFetchComments()
   const { likes, isLoading: isLikesLoading } = useFetchLikes()
@@ -43,6 +43,7 @@ const ThemeLayout = ({ id }: ThemeLayoutProps) => {
       <Pictures comments={comments} likes={likes} pictures={theme?.pictures} user={user} />
     </div>
   )
-}
+})
 
 export default ThemeLayout
+ThemeLayout.displayName = 'ThemeLayout'

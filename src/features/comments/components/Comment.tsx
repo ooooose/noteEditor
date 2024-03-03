@@ -1,7 +1,7 @@
 'use client'
 
 import { ChatBubbleIcon } from '@radix-ui/react-icons'
-import React from 'react'
+import { memo } from 'react'
 
 import {
   Dialog,
@@ -26,7 +26,7 @@ type CommentProps = {
   user: AuthUser
 }
 
-const Comment = React.memo(({ pictureId, comments, user }: CommentProps) => {
+const Comment = memo(({ pictureId, comments, user }: CommentProps) => {
   const { isLoading, onSubmitComment, handleDeleteComment, handleUpdateComment } = useMutateComment(
     pictureId,
     user,

@@ -1,4 +1,4 @@
-import React from 'react'
+import { memo } from 'react'
 
 import {
   Select,
@@ -29,7 +29,7 @@ const selectObject: selectObjectType[] = [
   },
 ]
 
-export const FrameSelect = React.memo(({ handleSelectChange }: FrameSelectProps) => {
+export const FrameSelect = memo(({ handleSelectChange }: FrameSelectProps) => {
   return (
     <Select onValueChange={handleSelectChange}>
       <SelectTrigger className='w-[280px]'>

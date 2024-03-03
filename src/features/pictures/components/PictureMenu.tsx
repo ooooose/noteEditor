@@ -1,7 +1,7 @@
 'use client'
 
 import { DotsVerticalIcon, TwitterLogoIcon, DownloadIcon } from '@radix-ui/react-icons'
-import React from 'react'
+import { memo } from 'react'
 
 import { Tooltip } from '@/components/elements/Tooltip/Tooltip'
 import {
@@ -20,7 +20,7 @@ type PictureMenuProps = {
   picture: Picture
 }
 
-const PictureMenu = React.memo(({ picture }: PictureMenuProps) => {
+const PictureMenu = memo(({ picture }: PictureMenuProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className='h-[65px] focus:outline-none'>

@@ -1,4 +1,4 @@
-import React from 'react'
+import { memo } from 'react'
 
 import { Skeleton } from '@/components/ui/skeleton'
 
@@ -14,7 +14,7 @@ type CommentsListProps = {
   userId: string
 }
 
-const CommentsList = React.memo(
+const CommentsList = memo(
   ({
     isLoading,
     comments,

@@ -1,4 +1,4 @@
-import React from 'react'
+import { memo } from 'react'
 
 import { Card } from '@/components/elements/Card/Card'
 
@@ -10,7 +10,7 @@ type ThemeProps = {
   pictures: PictureType[]
 }
 
-export const Theme = ({ title, pictures }: ThemeProps) => {
+export const Theme = memo(({ title, pictures }: ThemeProps) => {
   if (pictures.length === 0)
     return (
       <Card title={title}>
@@ -32,4 +32,6 @@ export const Theme = ({ title, pictures }: ThemeProps) => {
       </div>
     </Card>
   )
-}
+})
+
+Theme.displayName = 'Theme'

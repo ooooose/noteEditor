@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { CreateThemeModal } from './CreateThemeModal'
 import { Themes } from './Themes'
 

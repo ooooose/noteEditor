@@ -1,4 +1,4 @@
-import React from 'react'
+import { memo } from 'react'
 
 import {
   Select,
@@ -17,7 +17,7 @@ type ThemeSelectProps = {
   handleSelectChange: (value: string) => void
 }
 
-export const ThemeSelect = ({ handleSelectChange }: ThemeSelectProps) => {
+export const ThemeSelect = memo(({ handleSelectChange }: ThemeSelectProps) => {
   const { themes, isLoading } = useFetchThemes()
   return (
     <Select disabled={isLoading} onValueChange={handleSelectChange}>
@@ -37,4 +37,6 @@ export const ThemeSelect = ({ handleSelectChange }: ThemeSelectProps) => {
       </SelectContent>
     </Select>
   )
-}
+})
+
+ThemeSelect.displayName = 'ThemeSelect'

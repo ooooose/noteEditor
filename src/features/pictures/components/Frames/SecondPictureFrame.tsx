@@ -1,14 +1,14 @@
-import React from 'react'
+import { memo, ReactNode } from 'react'
 
 import styles from '@/features/pictures/styles/SecondPictureFrame.module.css'
 
 import { OuterFrame } from '.'
 
 type SecondPictureFrameProps = {
-  children: React.ReactNode
+  children: ReactNode
 }
 
-export const SecondPictureFrame = React.memo(({ children }: SecondPictureFrameProps) => {
+export const SecondPictureFrame = memo(({ children }: SecondPictureFrameProps) => {
   return (
     <>
       <OuterFrame>

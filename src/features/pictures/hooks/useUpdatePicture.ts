@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { toast } from 'sonner'
 
 import { updateFrameId } from '../api'
@@ -13,7 +13,7 @@ export const useUpdatePicture = (pictureId: string) => {
   }
 
   const { mutate } = useFetchPictures()
-  const handleUpdateFrameId = async () => {
+  const handleUpdateFrameId = useCallback(async () => {
     const params = {
       id: pictureId,
       frameId: frameId,
@@ -25,7 +25,7 @@ export const useUpdatePicture = (pictureId: string) => {
     } catch (err) {
       console.log(err)
     }
-  }
+  }, [frameId, mutate, pictureId])
 
   return {
     frameId,

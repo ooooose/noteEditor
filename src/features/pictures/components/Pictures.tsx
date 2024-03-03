@@ -1,4 +1,4 @@
-import React from 'react'
+import { memo } from 'react'
 
 import { AuthUser } from '@/features/auth/types'
 import { Comment } from '@/features/comments/types'
@@ -6,7 +6,7 @@ import { Like } from '@/features/likes/types'
 
 import { Picture as PictureType } from '../types'
 
-import { PictureCard } from './PictureCard'
+import PictureCard from './PictureCard'
 
 type PicturesProps = {
   pictures: PictureType[]
@@ -15,7 +15,7 @@ type PicturesProps = {
   user: AuthUser
 }
 
-const Pictures = React.memo(({ pictures, comments, user, likes }: PicturesProps) => {
+const Pictures = memo(({ pictures, comments, user, likes }: PicturesProps) => {
   return (
     <div className='grid grid-cols-3 grid-rows-2 gap-10'>
       {pictures?.map((picture: PictureType) => {

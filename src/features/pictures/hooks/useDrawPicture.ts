@@ -1,5 +1,5 @@
 import { useRouter } from 'next/navigation'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useState, useRef } from 'react'
 import { toast } from 'sonner'
 import { useSWRConfig } from 'swr'
@@ -91,17 +91,7 @@ export const useDrawPicture = ({ width, height, userId, userName }: IProps) => {
     toast('リセットしました', { position: 'top-center' })
   }
 
-  const generateParams = (base64: string) => {
-    const pictureParams = {
-      image: base64,
-      userId: userId,
-      userName: userName,
-      themeId: selectedId,
-    }
-    return pictureParams
-  }
-
-  const uploadPicture = async () => {
+  const uploadPicture = useCallback(async () => {
     try {
       const blob = await new Promise<Blob | null>((resolve) => {
         canvasRef.current?.toBlob(
@@ -126,7 +116,12 @@ export const useDrawPicture = ({ width, height, userId, userName }: IProps) => {
         reader.readAsDataURL(blob)
       })
 
-      const params = generateParams(compressedBase64)
+      const params = {
+        image: compressedBase64,
+        userId: userId,
+        userName: userName,
+        themeId: selectedId,
+      }
 
       const res = await apiClient.apiPost('/api/pictures', params)
       if (res.status === 201) {
@@ -137,7 +132,7 @@ export const useDrawPicture = ({ width, height, userId, userName }: IProps) => {
     } catch (err) {
       console.error(err)
     }
-  }
+  }, [mutate, router, selectedId, userId, userName])
 
   return {
     canvasRef,

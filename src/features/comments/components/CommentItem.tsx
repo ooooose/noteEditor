@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CheckCircledIcon, Cross2Icon } from '@radix-ui/react-icons'
-import React, { useState } from 'react'
+import { memo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 
@@ -28,7 +28,7 @@ type CommentValue = {
   body: string
 }
 
-const CommentItem = React.memo(
+const CommentItem = memo(
   ({ comment, userId, handleDeleteComment, handleUpdateComment }: CommentItemProps) => {
     const [editedFlag, setEditedFlag] = useState(false)
     const { register, handleSubmit, formState } = useForm<CommentValue>({

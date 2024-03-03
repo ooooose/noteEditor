@@ -1,4 +1,4 @@
-import React from 'react'
+import { memo } from 'react'
 
 import { Modal } from '@/components/elements'
 import { Button } from '@/components/elements/Button'
@@ -8,7 +8,7 @@ type PictureThemeProps = {
   title: string
 }
 
-const PictureTheme = ({ title }: PictureThemeProps) => {
+const PictureTheme = memo(({ title }: PictureThemeProps) => {
   return (
     <Modal description='この絵のテーマは...' text='テーマをみる'>
       <div className='mx-auto my-5'>
@@ -21,6 +21,7 @@ const PictureTheme = ({ title }: PictureThemeProps) => {
       </DialogClose>
     </Modal>
   )
-}
+})
 
 export default PictureTheme
+PictureTheme.displayName = 'PictureTheme'
