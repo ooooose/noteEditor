@@ -41,17 +41,22 @@ const PictureCard = memo(({ picture, comments, user, likes }: PictureCardProps) 
       </div>
       <div>
         <Picture author={picture.author} frameId={picture.frameId} src={picture.image} />
-        <div className='flex justify-between'>
+        <div className='float-right flex gap-2'>
           <div className='ml-2 mt-3'>
-            {isDisplay && <PictureTheme title={picture.theme.title} />}
+            {isDisplay && (
+              <PictureTheme
+                author={picture.author}
+                frameId={picture.frameId}
+                src={picture.image}
+                title={picture.theme.title}
+              />
+            )}
           </div>
-          <div className='float-right flex gap-2'>
-            <div className='mt-3 flex gap-2'>
-              <Comment comments={comments} pictureId={picture.id} user={user} />
-              <Like like={like} likeCount={likeCount} liked={liked} />
-            </div>
-            {user.id === picture.userId && <PictureMenu picture={picture} />}
+          <div className='mt-3 flex gap-2'>
+            <Comment comments={comments} pictureId={picture.id} user={user} />
+            <Like like={like} likeCount={likeCount} liked={liked} />
           </div>
+          {user.id === picture.userId && <PictureMenu picture={picture} />}
         </div>
       </div>
     </div>

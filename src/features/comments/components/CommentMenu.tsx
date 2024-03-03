@@ -36,7 +36,7 @@ const CommentMenu = React.memo(
           <DropdownMenuItem
             className='cursor-pointer text-red-500 focus:text-red-500'
             onClick={() => {
-              void handleDeleteComment(commentId)
+              handleDeleteComment(commentId)
             }}
           >
             <TrashIcon className='mr-4 size-5' />
