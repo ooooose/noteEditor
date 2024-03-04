@@ -1,4 +1,4 @@
-import { HamburgerMenuIcon } from '@radix-ui/react-icons'
+import { PlusIcon } from '@radix-ui/react-icons'
 import Link from 'next/link'
 
 import {
@@ -15,23 +15,25 @@ const Menu = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className='focus:outline-none'>
-        <HamburgerMenuIcon className='size-10' />
+        <div className='cursor-pointer rounded-full border p-3'>
+          <PlusIcon className='size-6' />
+        </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align='end' className='w-56' side='bottom'>
+      <DropdownMenuContent align='end' className='w-56 p-3' side='bottom'>
         <DropdownMenuLabel>画HACK Menu</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <Link href='/timeline'>
-            <DropdownMenuItem>タイムライン</DropdownMenuItem>
+            <DropdownMenuItem className='cursor-pointer p-3'>タイムライン</DropdownMenuItem>
           </Link>
           <Link href='/themes'>
-            <DropdownMenuItem>テーマ一覧をみる</DropdownMenuItem>
+            <DropdownMenuItem className='cursor-pointer p-3'>テーマ一覧をみる</DropdownMenuItem>
           </Link>
           <Link href='/canvas'>
-            <DropdownMenuItem>絵を描く</DropdownMenuItem>
+            <DropdownMenuItem className='cursor-pointer p-3'>絵を描く</DropdownMenuItem>
           </Link>
           <Link href='/me'>
-            <DropdownMenuItem>プロフィール</DropdownMenuItem>
+            <DropdownMenuItem className='cursor-pointer p-3'>プロフィール</DropdownMenuItem>
           </Link>
         </DropdownMenuGroup>
       </DropdownMenuContent>

@@ -30,6 +30,7 @@ export const useDrawPicture = ({ width, height, userId, userName }: IProps) => {
   let mouseY: number | null = null
   const [selectedId, setSelectedId] = useState<string>('')
   const [color, setColor] = useState<string>('#000000')
+  const [lineWidth, setLineWidth] = useState<number>(2)
 
   const handleSelectChange = (value: string) => {
     const selectedValue = value
@@ -79,7 +80,7 @@ export const useDrawPicture = ({ width, height, userId, userName }: IProps) => {
     }
     ctx.lineTo(x, y)
     ctx.lineCap = 'round'
-    ctx.lineWidth = 2
+    ctx.lineWidth = lineWidth
     ctx.strokeStyle = color
     ctx.stroke()
     mouseX = x
@@ -145,5 +146,8 @@ export const useDrawPicture = ({ width, height, userId, userName }: IProps) => {
     selectedId,
     uploadPicture,
     setColor,
+    setLineWidth,
+    color,
+    lineWidth,
   }
 }

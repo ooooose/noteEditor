@@ -4,6 +4,7 @@ import { DotsVerticalIcon, TwitterLogoIcon, DownloadIcon } from '@radix-ui/react
 import { memo } from 'react'
 
 import { Tooltip } from '@/components/elements/Tooltip/Tooltip'
+import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -37,8 +38,20 @@ const PictureMenu = memo(({ picture }: PictureMenuProps) => {
             <DownloadIcon className='size-5' />
           </DropdownMenuItem>
         </Tooltip>
-        <SwitchPictureFrame author={picture.author} pictureId={picture.id} src={picture.image} />
-        <DeletePicture image={picture.image} pictureId={picture.id} />
+        <Tooltip content='額縁を変更'>
+          <Button className='border-none p-2' variant='outline'>
+            <SwitchPictureFrame
+              author={picture.author}
+              pictureId={picture.id}
+              src={picture.image}
+            />
+          </Button>
+        </Tooltip>
+        <Tooltip content='絵を削除'>
+          <Button className='border-none p-2' variant='outline'>
+            <DeletePicture image={picture.image} pictureId={picture.id} />
+          </Button>
+        </Tooltip>
       </DropdownMenuContent>
     </DropdownMenu>
   )

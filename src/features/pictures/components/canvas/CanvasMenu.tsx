@@ -8,19 +8,22 @@ import {
 } from '@/components/ui/dropdown-menu'
 
 import { ColorPicker } from './ColorPicker'
+import { ManageLineWidth } from './ManageLineWidth'
 
 type CanvasMenuProps = {
   setColor: React.Dispatch<React.SetStateAction<string>>
+  setLineWidth: React.Dispatch<React.SetStateAction<number>>
 }
 
-export const CanvasMenu = memo(({ setColor }: CanvasMenuProps) => {
+export const CanvasMenu = memo(({ setColor, setLineWidth }: CanvasMenuProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className='focus:outline-none'>
         <DotsVerticalIcon />
       </DropdownMenuTrigger>
-      <DropdownMenuContent align='end' className='flex p-4' side='top'>
+      <DropdownMenuContent align='end' className='flex flex-col' side='top'>
         <ColorPicker setColor={setColor} />
+        <ManageLineWidth setLineWidth={setLineWidth} />
       </DropdownMenuContent>
     </DropdownMenu>
   )

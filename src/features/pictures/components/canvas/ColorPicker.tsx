@@ -56,7 +56,7 @@ export const ColorPicker = memo(({ setColor }: ColorPickerProps) => {
     <Dialog>
       <DialogTrigger>
         <div className='flex gap-3'>
-          <div className='flex cursor-pointer'>
+          <div className='flex cursor-pointer p-4'>
             <ColorWheelIcon className='mr-2 size-6 text-gray-500' />
             ペン色の変更
           </div>
