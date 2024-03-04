@@ -2,7 +2,6 @@ import { UpdateIcon } from '@radix-ui/react-icons'
 import { memo } from 'react'
 
 import { Button } from '@/components/elements/Button'
-import { Tooltip } from '@/components/elements/Tooltip/Tooltip'
 import {
   Dialog,
   DialogContent,
@@ -26,11 +25,9 @@ const SwitchPictureFrame = memo(({ pictureId, src, author }: SwitchPictureFrameP
   const { frameId, handleSelectChange, handleUpdateFrameId } = useUpdatePicture(pictureId)
   return (
     <Dialog>
-      <Tooltip content='額縁を変更'>
-        <DialogTrigger className='py-2'>
-          <UpdateIcon className='size-5' />
-        </DialogTrigger>
-      </Tooltip>
+      <DialogTrigger className='py-2'>
+        <UpdateIcon className='size-5' />
+      </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>フレームを変更できます</DialogTitle>
