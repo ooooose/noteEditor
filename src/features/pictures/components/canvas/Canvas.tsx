@@ -33,6 +33,8 @@ export const Canvas: React.FC<IProps> = (props) => {
     uploadPicture,
     setColor,
     setLineWidth,
+    color,
+    lineWidth,
   } = useDrawPicture({
     width: width,
     height: height,
@@ -53,6 +55,9 @@ export const Canvas: React.FC<IProps> = (props) => {
         />
       </div>
       <div className='float-right flex gap-2'>
+        <div className='size-10 rounded-full text-center' style={{ backgroundColor: color }}>
+          <p className='text-sm text-white'>{lineWidth}px</p>
+        </div>
         <Modal description='絵をリセットしますか？' text='リセット'>
           <DialogClose asChild>
             <Button onClick={Reset} variant='destructive'>

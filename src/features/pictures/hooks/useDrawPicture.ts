@@ -147,5 +147,7 @@ export const useDrawPicture = ({ width, height, userId, userName }: IProps) => {
     uploadPicture,
     setColor,
     setLineWidth,
+    color,
+    lineWidth,
   }
 }
