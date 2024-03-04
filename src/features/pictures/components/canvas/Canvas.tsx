@@ -32,6 +32,7 @@ export const Canvas: React.FC<IProps> = (props) => {
     selectedId,
     uploadPicture,
     setColor,
+    setLineWidth,
   } = useDrawPicture({
     width: width,
     height: height,
@@ -75,7 +76,7 @@ export const Canvas: React.FC<IProps> = (props) => {
             </Button>
           </DialogClose>
         </Modal>
-        <CanvasMenu setColor={setColor} />
+        <CanvasMenu setColor={setColor} setLineWidth={setLineWidth} />
       </div>
     </section>
   )
