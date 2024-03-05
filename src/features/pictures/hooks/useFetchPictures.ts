@@ -2,17 +2,18 @@ import useSWR from 'swr'
 
 import { apiClient } from '@/lib/api/api-client'
 
-const fetchPictures = async () => {
-  const result = await apiClient.apiGet('/api/pictures')
-  return result.json()
-}
-
-export const useFetchPictures = () => {
-  const { data, error, isLoading, mutate } = useSWR('/api/pictures', fetchPictures, {
-    revalidateIfStale: false,
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-  })
+export const useFetchPictures = (theme: string | undefined) => {
+  const encodedTheme = theme ? encodeURIComponent(theme) : ''
+  const url = theme ? `/api/pictures?theme=${encodedTheme}` : '/api/pictures'
+  const { data, error, isLoading, mutate } = useSWR(
+    url,
+    () => apiClient.apiGet(url).then((res) => res.json()),
+    {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    },
+  )
 
   return {
     pictures: data?.pictures,

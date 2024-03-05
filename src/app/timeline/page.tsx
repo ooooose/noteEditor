@@ -1,4 +1,4 @@
-import TimelineLayout from '@/features/pictures/components/Timeline'
+import TimelineLayout from '@/features/pictures/components/TimelineLayout'
 
 function Timeline() {
   return (

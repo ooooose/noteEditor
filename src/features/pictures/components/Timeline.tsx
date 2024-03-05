@@ -1,5 +1,4 @@
-'use client'
-
+import { useSearchParams } from 'next/navigation'
 import React from 'react'
 
 import { useFetchAuthUserByEmail } from '@/features/auth/hooks/useFetchAuthUserByEmail'
@@ -11,8 +10,10 @@ import { useFetchPictures } from '../hooks/useFetchPictures'
 import LoadingPictures from './LoadingPictures'
 import Pictures from './Pictures'
 
-const TimelineLayout = () => {
-  const { pictures, isLoading: isPicturesLoading, isError } = useFetchPictures()
+const Timeline = () => {
+  const searchParams = useSearchParams()
+  const theme = (searchParams.get('theme') as string) || undefined
+  const { pictures, isLoading: isPicturesLoading, isError } = useFetchPictures(theme)
   const { comments, isLoading: isCommentsLoading } = useFetchComments()
   const { likes, isLoading: isLikesLoading } = useFetchLikes()
   const { user, isLoading: isUserLoading } = useFetchAuthUserByEmail()
@@ -22,5 +23,4 @@ const TimelineLayout = () => {
 
   return <Pictures comments={comments} likes={likes} pictures={pictures} user={user} />
 }
-
-export default TimelineLayout
+export default Timeline
