@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { Suspense } from 'react'
 
 import { CreateThemeModal } from '@/features/themes/components/CreateThemeModal'
 import Themes from '@/features/themes/components/Themes'
@@ -19,7 +19,9 @@ const TimelineLayout = () => {
       </div>
       <div>
         <Themes isLoading={isLoading} themes={themes} />
-        <Timeline />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Timeline />
+        </Suspense>
       </div>
     </div>
   )

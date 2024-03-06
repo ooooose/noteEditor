@@ -2,7 +2,7 @@ import useSWR from 'swr'
 
 import { apiClient } from '@/lib/api/api-client'
 
-export const useFetchPictures = (theme: string | undefined) => {
+export const useFetchPictures = (theme?: string) => {
   const encodedTheme = theme ? encodeURIComponent(theme) : ''
   const url = theme ? `/api/pictures?theme=${encodedTheme}` : '/api/pictures'
   const { data, error, isLoading, mutate } = useSWR(
