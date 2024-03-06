@@ -52,14 +52,13 @@ export const ColorPicker = memo(({ setColor }: ColorPickerProps) => {
   return (
     <div className='mt-4 flex gap-3'>
       {Colors.map((color) => (
-        <div
-          className={`${color.class} cursor-pointer rounded-full border p-3 text-center text-white`}
-          key={color.name}
-          onClick={() => {
-            setColor(color.color)
-          }}
-        >
-          {color.name}
+        <div key={color.name}>
+          <div
+            className={`${color.class} cursor-pointer rounded-full border p-3 text-center text-white`}
+            onClick={() => {
+              setColor(color.color)
+            }}
+          ></div>
         </div>
       ))}
     </div>

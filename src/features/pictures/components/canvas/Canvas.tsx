@@ -23,6 +23,7 @@ export const Canvas: React.FC<IProps> = (props) => {
     OnMove,
     DrawEnd,
     Reset,
+    lineWidth,
     handleSelectChange,
     selectedId,
     uploadPicture,
@@ -50,6 +51,7 @@ export const Canvas: React.FC<IProps> = (props) => {
       <CanvasMenu
         Reset={Reset}
         handleSelectChange={handleSelectChange}
+        lineWidth={lineWidth}
         selectedId={selectedId}
         setColor={setColor}
         setLineWidth={setLineWidth}

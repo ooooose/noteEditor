@@ -7,12 +7,14 @@ import { DialogClose } from '@/components/ui/dialog'
 import { ThemeSelect } from '@/features/themes/components/ThemeSelect'
 
 import { ColorPicker } from './ColorPicker'
+import { ManageLineWidth } from './ManageLineWidth'
 
 type CanvasMenuProps = {
   selectedId: string
   handleSelectChange: (value: string) => void
   uploadPicture: () => Promise<void>
   setColor: React.Dispatch<React.SetStateAction<string>>
+  lineWidth: number
   setLineWidth: React.Dispatch<React.SetStateAction<number>>
   Reset: () => void
 }
@@ -20,7 +22,8 @@ type CanvasMenuProps = {
 export const CanvasMenu = memo(
   ({
     setColor,
-    // setLineWidth,
+    lineWidth,
+    setLineWidth,
     selectedId,
     handleSelectChange,
     uploadPicture,
@@ -28,8 +31,9 @@ export const CanvasMenu = memo(
   }: CanvasMenuProps) => {
     return (
       <div className='fixed bottom-0 left-0 h-[200px] w-full bg-gray-100'>
-        <div className='ml-10'>
+        <div className='ml-10 flex gap-5'>
           <ColorPicker setColor={setColor} />
+          <ManageLineWidth lineWidth={lineWidth} setLineWidth={setLineWidth} />
         </div>
         <div className='float-right mr-10 flex gap-3'>
           <Modal description='絵をリセットしますか？' text='リセット'>
