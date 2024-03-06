@@ -53,7 +53,7 @@ export const CreateThemeModal = () => {
       description='テーマを作成することができます'
       open={open}
       setOpen={setOpen}
-      text='テーマ作成'
+      text='タグ作成'
     >
       <Form<ThemeValue, typeof schema>
         onSubmit={async (values) => {

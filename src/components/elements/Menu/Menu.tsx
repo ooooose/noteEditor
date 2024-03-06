@@ -26,9 +26,6 @@ const Menu = () => {
           <Link href='/timeline'>
             <DropdownMenuItem className='cursor-pointer p-3'>タイムライン</DropdownMenuItem>
           </Link>
-          <Link href='/themes'>
-            <DropdownMenuItem className='cursor-pointer p-3'>テーマ一覧をみる</DropdownMenuItem>
-          </Link>
           <Link href='/canvas'>
             <DropdownMenuItem className='cursor-pointer p-3'>絵を描く</DropdownMenuItem>
           </Link>

@@ -1,15 +1,26 @@
 import { S3Client, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3'
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
 import { prisma, main } from '@/lib/prisma'
 
 // Pictures全取得API
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const searchParams = req.nextUrl.searchParams
+  let theme = (searchParams.get('theme') as string) || undefined
   try {
     await main()
+    // TODO: 暫定処理。なぜか最後に'?'がついてしまう
+    if (theme) {
+      theme = theme.replace(/\?$/, '')
+    }
     const pictures = await prisma.picture.findMany({
       include: {
         theme: true,
+      },
+      where: {
+        theme: {
+          title: theme,
+        },
       },
       orderBy: {
         createdAt: 'desc',
