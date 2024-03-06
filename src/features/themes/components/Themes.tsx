@@ -1,47 +1,35 @@
-'use client'
+import { useRouter } from 'next/navigation'
 
-import Link from 'next/link'
-import Script from 'next/script'
+import { Theme } from '@/features/themes/types'
 
-import { SkeletonCard } from '@/components/elements/Skeleton/SkeletonCard'
-import { Card } from '@/components/ui/card'
+import LoadingThemes from './LoadingThemes'
 
-import { useFetchPictures } from '@/features/pictures/hooks/useFetchPictures'
-import { Picture } from '@/features/pictures/types'
-import { useFetchThemes } from '@/features/themes/hooks/useFetchThemes'
-import { Theme as ThemeType } from '@/features/themes/types'
+type ThemesProps = {
+  themes: Theme[]
+  isLoading: boolean
+}
 
-import { Theme } from './Theme'
-
-export const Themes = () => {
-  const { themes, isError, isLoading: isThemesLoading } = useFetchThemes()
-  const { pictures, isLoading: isPicturesLoading } = useFetchPictures()
-  const isLoading = isThemesLoading || isPicturesLoading
-  if (isLoading)
-    return (
-      <div className='grid grid-cols-3 grid-rows-2 gap-x-3 gap-y-5'>
-        {[...Array(6)].map((_, i) => {
-          return (
-            <Card className='w-[300px]' key={i}>
-              <SkeletonCard />
-            </Card>
-          )
-        })}
-      </div>
-    )
-  if (isError) return <div>Error loading themes</div>
+const Themes = ({ themes, isLoading }: ThemesProps) => {
+  const router = useRouter()
+  if (isLoading) return <LoadingThemes />
 
   return (
-    <div className='grid grid-cols-3 grid-rows-2 gap-x-3 gap-y-5'>
-      {themes?.map((theme: ThemeType) => {
-        const picturesOfTheme = pictures.filter((picture: Picture) => picture.themeId === theme.id)
+    <div className='flex gap-2'>
+      {themes.map((theme: Theme) => {
         return (
-          <Link className='cursor-pointer' href={`/themes/${theme.id}`} key={theme.id}>
-            <Theme pictures={picturesOfTheme} title={theme.title} />
-          </Link>
+          <div
+            className='cursor-pointer rounded-full border p-2'
+            key={theme.id}
+            onClick={() => {
+              router.push(`/timeline?theme=${theme.title}`)
+            }}
+          >
+            #{theme.title}
+          </div>
         )
       })}
-      <Script src={process.env.BUCKET_URL} />
     </div>
   )
 }
+
+export default Themes
