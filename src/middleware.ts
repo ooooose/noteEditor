@@ -8,5 +8,5 @@ export default withAuth({
 })
 
 export const config = {
-  matcher: ['/timeline', '/me', '/canvas', '/themes', '/themes/'],
+  matcher: ['/timeline', '/me', '/canvas'],
 }

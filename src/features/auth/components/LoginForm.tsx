@@ -31,7 +31,7 @@ export const LoginForm = () => {
         redirect: false,
       }).then((res: SignInResponse | undefined) => {
         if (res && res.status === 200) {
-          router.push('/themes')
+          router.push('/timeline')
           // toast('ログインしました', { position: 'top-center' })
         }
       })
