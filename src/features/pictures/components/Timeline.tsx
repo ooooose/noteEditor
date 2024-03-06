@@ -21,7 +21,7 @@ const Timeline = () => {
   const isLoading = isPicturesLoading || isUserLoading || isCommentsLoading || isLikesLoading
   if (isLoading) return <LoadingPictures />
   if (isError) return <>Error loading theme</>
-  if (pictures.length === 0) return <NoPictures />
+  if (pictures?.length === 0) return <NoPictures />
   return <Pictures comments={comments} likes={likes} pictures={pictures} user={user} />
 }
 export default Timeline
