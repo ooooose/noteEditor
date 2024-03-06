@@ -1,7 +1,4 @@
-import { ColorWheelIcon } from '@radix-ui/react-icons'
 import React, { memo } from 'react'
-
-import { Dialog, DialogContent, DialogTrigger, DialogClose } from '@/components/ui/dialog'
 
 type ColorType = {
   name: string
@@ -53,33 +50,19 @@ type ColorPickerProps = {
 
 export const ColorPicker = memo(({ setColor }: ColorPickerProps) => {
   return (
-    <Dialog>
-      <DialogTrigger>
-        <div className='flex gap-3'>
-          <div className='flex cursor-pointer p-4'>
-            <ColorWheelIcon className='mr-2 size-6 text-gray-500' />
-            ペン色の変更
-          </div>
+    <div className='mt-4 flex gap-3'>
+      {Colors.map((color) => (
+        <div
+          className={`${color.class} cursor-pointer rounded-full border p-3 text-center text-white`}
+          key={color.name}
+          onClick={() => {
+            setColor(color.color)
+          }}
+        >
+          {color.name}
         </div>
-      </DialogTrigger>
-      <DialogContent>
-        <p>ペン色を選択してください</p>
-        <div className='mt-4 grid grid-cols-4 grid-rows-2 gap-5'>
-          {Colors.map((color) => (
-            <DialogClose asChild key={color.name}>
-              <div
-                className={`${color.class} cursor-pointer rounded-full border p-3 text-center text-white`}
-                onClick={() => {
-                  setColor(color.color)
-                }}
-              >
-                {color.name}
-              </div>
-            </DialogClose>
-          ))}
-        </div>
-      </DialogContent>
-    </Dialog>
+      ))}
+    </div>
   )
 })
 
