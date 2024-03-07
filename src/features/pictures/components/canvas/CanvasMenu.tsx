@@ -17,6 +17,7 @@ type CanvasMenuProps = {
   lineWidth: number
   setLineWidth: React.Dispatch<React.SetStateAction<number>>
   Reset: () => void
+  color: string
 }
 
 export const CanvasMenu = memo(
@@ -28,11 +29,12 @@ export const CanvasMenu = memo(
     handleSelectChange,
     uploadPicture,
     Reset,
+    color,
   }: CanvasMenuProps) => {
     return (
       <div className='fixed bottom-0 left-0 h-[200px] w-full bg-gray-100'>
         <div className='ml-10 flex gap-5'>
-          <ColorPicker setColor={setColor} />
+          <ColorPicker color={color} setColor={setColor} />
           <ManageLineWidth lineWidth={lineWidth} setLineWidth={setLineWidth} />
         </div>
         <div className='float-right mr-10 flex gap-3'>

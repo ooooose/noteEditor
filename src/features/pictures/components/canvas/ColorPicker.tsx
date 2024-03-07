@@ -46,17 +46,21 @@ const Colors: ColorType[] = [
 
 type ColorPickerProps = {
   setColor: React.Dispatch<React.SetStateAction<string>>
+  color: string
 }
 
-export const ColorPicker = memo(({ setColor }: ColorPickerProps) => {
+export const ColorPicker = memo(({ setColor, color }: ColorPickerProps) => {
   return (
     <div className='mt-4 flex gap-3'>
-      {Colors.map((color) => (
-        <div key={color.name}>
+      {Colors.map((Color) => (
+        <div
+          className={Color.color === color ? 'rounded-full border border-black' : ''}
+          key={Color.name}
+        >
           <div
-            className={`${color.class} cursor-pointer rounded-full border p-3 text-center text-white`}
+            className={`${Color.class} cursor-pointer rounded-full border p-3 text-center text-white`}
             onClick={() => {
-              setColor(color.color)
+              setColor(Color.color)
             }}
           ></div>
         </div>
