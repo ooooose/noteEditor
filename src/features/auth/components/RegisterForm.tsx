@@ -44,7 +44,7 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
           redirect: false,
         }).then((res: SignInResponse | undefined) => {
           if (res && res.status === 200) {
-            router.push('/themes')
+            router.push('/timeline')
           } else if (res?.status === 401) {
             toast({
               description: 'ログインに失敗しました',

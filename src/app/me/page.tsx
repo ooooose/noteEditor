@@ -1,7 +1,13 @@
 import React from 'react'
 
+import MainLayout from '@/components/layouts/Layout/MainLayout'
+
 function Me() {
-  return <div>ユーザープロフィール画面</div>
+  return (
+    <MainLayout>
+      <div>ユーザープロフィール画面</div>
+    </MainLayout>
+  )
 }
 
 export default Me

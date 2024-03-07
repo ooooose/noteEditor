@@ -1,13 +1,17 @@
 import React from 'react'
 
-import { CanvasLayout } from '@/features/pictures/components/canvas/Layout'
+import CanvasLayout from '@/components/layouts/Layout/CanvasLayout'
 
-function Canvas() {
+import { Canvas } from '@/features/pictures/components/canvas/Canvas'
+
+function CanvasPage() {
   return (
-    <div>
-      <CanvasLayout />
-    </div>
+    <CanvasLayout>
+      <div className='mx-auto text-center'>
+        <Canvas height={450} width={550} />
+      </div>
+    </CanvasLayout>
   )
 }
 
-export default Canvas
+export default CanvasPage

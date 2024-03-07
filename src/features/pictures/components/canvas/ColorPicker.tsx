@@ -1,7 +1,5 @@
-import { ColorWheelIcon } from '@radix-ui/react-icons'
+import { EraserIcon } from '@radix-ui/react-icons'
 import React, { memo } from 'react'
-
-import { Dialog, DialogContent, DialogTrigger, DialogClose } from '@/components/ui/dialog'
 
 type ColorType = {
   name: string
@@ -45,41 +43,55 @@ const Colors: ColorType[] = [
     class: 'bg-orange-500',
     color: '#F97316',
   },
+  {
+    name: '消しゴム',
+    class: '',
+    color: '#FFFFFF',
+  },
 ]
 
 type ColorPickerProps = {
+  setLineWidth: React.Dispatch<React.SetStateAction<number>>
   setColor: React.Dispatch<React.SetStateAction<string>>
+  color: string
 }
 
-export const ColorPicker = memo(({ setColor }: ColorPickerProps) => {
+export const ColorPicker = memo(({ setLineWidth, setColor, color }: ColorPickerProps) => {
   return (
-    <Dialog>
-      <DialogTrigger>
-        <div className='flex gap-3'>
-          <div className='flex cursor-pointer p-4'>
-            <ColorWheelIcon className='mr-2 size-6 text-gray-500' />
-            ペン色の変更
-          </div>
-        </div>
-      </DialogTrigger>
-      <DialogContent>
-        <p>ペン色を選択してください</p>
-        <div className='mt-4 grid grid-cols-4 grid-rows-2 gap-5'>
-          {Colors.map((color) => (
-            <DialogClose asChild key={color.name}>
+    <div className='mx-auto mt-4 flex gap-3'>
+      {Colors.map((Color) => {
+        if (Color.name === '消しゴム')
+          return (
+            <div
+              className={Color.color === color ? 'rounded-full border border-black' : ''}
+              key={Color.name}
+            >
               <div
-                className={`${color.class} cursor-pointer rounded-full border p-3 text-center text-white`}
+                className='cursor-pointer rounded-full border p-3'
                 onClick={() => {
-                  setColor(color.color)
+                  setColor(Color.color)
+                  setLineWidth(12)
                 }}
               >
-                {color.name}
+                <EraserIcon className='size-5' />
               </div>
-            </DialogClose>
-          ))}
-        </div>
-      </DialogContent>
-    </Dialog>
+            </div>
+          )
+        return (
+          <div
+            className={Color.color === color ? 'rounded-full border-2 border-black' : ''}
+            key={Color.name}
+          >
+            <div
+              className={`${Color.class} cursor-pointer rounded-full border p-5`}
+              onClick={() => {
+                setColor(Color.color)
+              }}
+            ></div>
+          </div>
+        )
+      })}
+    </div>
   )
 })
 

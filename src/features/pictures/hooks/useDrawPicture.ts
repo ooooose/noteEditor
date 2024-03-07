@@ -129,7 +129,7 @@ export const useDrawPicture = ({ width, height, userId, userName }: IProps) => {
       if (res.status === 201) {
         mutate('/api/pictures')
         mutate('/api/themes')
-        router.push(`/themes/${selectedId}`)
+        router.push(`/timeline`)
       }
     } catch (err) {
       console.error(err)
