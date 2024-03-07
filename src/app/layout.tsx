@@ -3,7 +3,6 @@ import React from 'react'
 
 import './globals.css'
 import { PreconnectResources } from '@/components/Seo/PreconnectResources'
-import MainLayout from '@/components/layouts/Layout/MainLayout'
 
 import NextAuthProvider from '@/lib/next-auth/NextAuthProvider'
 import { cn } from '@/lib/utils'
@@ -27,9 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <PreconnectResources />
       </head>
       <body className={cn('min-h-screen bg-background font-sans antialiased', fontSans.variable)}>
-        <NextAuthProvider>
-          <MainLayout>{children}</MainLayout>
-        </NextAuthProvider>
+        <NextAuthProvider>{children}</NextAuthProvider>
       </body>
     </html>
   )
