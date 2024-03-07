@@ -8,9 +8,21 @@ type ManageLineWidthProps = {
 }
 
 export const ManageLineWidth = memo(({ lineWidth, setLineWidth }: ManageLineWidthProps) => {
-  console.log(lineWidth)
-  console.log(setLineWidth)
-  return <Slider className='w-[300px]' defaultValue={[50]} max={100} step={1} />
+  const handleWidthChange = (value: number[]) => {
+    setLineWidth(value[0])
+  }
+  return (
+    <div className='mt-4 flex items-center justify-center gap-2'>
+      <Slider
+        className='w-[300px]'
+        max={24}
+        onValueChange={handleWidthChange}
+        step={1}
+        value={[lineWidth]}
+      />
+      {lineWidth} px
+    </div>
+  )
 })
 
 ManageLineWidth.displayName = 'ManageLineWidth'
