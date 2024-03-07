@@ -51,7 +51,7 @@ type ColorPickerProps = {
 
 export const ColorPicker = memo(({ setColor, color }: ColorPickerProps) => {
   return (
-    <div className='mt-4 flex gap-3'>
+    <div className='mx-auto mt-4 flex gap-3'>
       {Colors.map((Color) => (
         <div
           className={Color.color === color ? 'rounded-full border border-black' : ''}

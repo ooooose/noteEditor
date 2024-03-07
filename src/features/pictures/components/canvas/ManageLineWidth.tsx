@@ -16,6 +16,7 @@ export const ManageLineWidth = memo(({ lineWidth, setLineWidth }: ManageLineWidt
       <Slider
         className='w-[300px]'
         max={24}
+        min={1}
         onValueChange={handleWidthChange}
         step={1}
         value={[lineWidth]}
