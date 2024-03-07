@@ -35,7 +35,7 @@ export const CanvasMenu = memo(
       <div className='fixed bottom-0 left-0 h-[200px] w-full border pt-4'>
         <div className='mx-auto w-[960px]'>
           <div className='ml-10 flex flex-col gap-5'>
-            <ColorPicker color={color} setColor={setColor} />
+            <ColorPicker color={color} setColor={setColor} setLineWidth={setLineWidth} />
             <ManageLineWidth lineWidth={lineWidth} setLineWidth={setLineWidth} />
           </div>
           <div className='float-right mr-10 flex gap-3'>
