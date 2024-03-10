@@ -7,12 +7,20 @@ import { prisma, main } from '@/lib/prisma'
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams
   let theme = (searchParams.get('theme') as string) || undefined
+  const pageIndex = searchParams.get('page') || undefined
+  const take = 3
   try {
     await main()
     // TODO: 暫定処理。なぜか最後に'?'がついてしまう
     if (theme) {
       theme = theme.replace(/\?$/, '')
     }
+    let skip: number | undefined = undefined
+    if (pageIndex) {
+      const page = parseInt(pageIndex, 10)
+      skip = take * (page - 1)
+    }
+
     const pictures = await prisma.picture.findMany({
       include: {
         theme: true,
@@ -25,7 +33,10 @@ export async function GET(req: NextRequest) {
       orderBy: {
         createdAt: 'desc',
       },
+      skip,
+      take,
     })
+
     return NextResponse.json({ pictures }, { status: 200 })
   } catch (err) {
     return NextResponse.json({ message: 'Error', err }, { status: 500 })
@@ -114,6 +125,7 @@ export async function PUT(req: Request) {
 export async function DELETE(req: Request) {
   try {
     const { id } = await req.json()
+    // TODO: 現状オブジェクトの削除ができなそうなので、一旦据え置き（今後は削除したらオブジェクトも削除したい）
     // const { CLOUDFLARE_ACCESS_KEY_ID, CLOUDFLARE_ACCESS_KEY, REGION, BUCKET_NAME } = process.env
 
     // const s3Client = new S3Client({

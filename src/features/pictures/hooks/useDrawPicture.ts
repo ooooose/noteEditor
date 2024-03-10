@@ -125,16 +125,16 @@ export const useDrawPicture = ({ width, height, userId, userName }: IProps) => {
         themeId: selectedId,
       }
 
-      const res = await apiClient.apiPost('/api/pictures', params)
-      if (res.status === 201) {
+      await apiClient.apiPost('/api/pictures', params).then(() => {
         mutate('/api/pictures')
         mutate('/api/themes')
-        router.push(`/timeline`)
-      }
+        router.push('/timeline')
+      })
     } catch (err) {
       console.error(err)
     }
-  }, [mutate, router, selectedId, userId, userName])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedId, userId, userName])
 
   return {
     canvasRef,

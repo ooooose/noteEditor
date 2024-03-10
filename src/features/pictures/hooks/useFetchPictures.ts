@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import { KeyedMutator } from 'swr'
 import useSWRInfinite from 'swr/infinite'
 
@@ -16,32 +17,23 @@ interface SWRPictureStore {
 }
 
 const API_URL = '/api/pictures'
-const LIMIT = 9
 
 export const useFetchPictures = (theme?: string): SWRPictureStore => {
   const encodedTheme = theme ? encodeURIComponent(theme) : ''
-  const params = []
+  const params: string[] = []
   if (theme) params.push(`theme=${encodedTheme}`)
-  const url = joinUrl(API_URL, params)
 
-  const getKey = (pageIndex: number, previousPageData: Picture[]) => {
+  const getKey = (pageIndex: number, previousPageData: Picture[][]) => {
     if (previousPageData && !previousPageData.length) return null
-
-    return [url, pageIndex, LIMIT]
+    params.push(`page=${pageIndex + 1}`)
+    return joinUrl(API_URL, params)
   }
 
-  const fetcher = async () => {
+  const fetcher = useCallback(async (url: string) => {
     return apiClient.apiGet(url).then((res) => res.json())
-  }
+  }, [])
 
-  const {
-    data: picturesList,
-    error,
-    isLoading,
-    mutate,
-    size,
-    setSize,
-  } = useSWRInfinite(getKey, fetcher, {
+  const { data, error, isLoading, mutate, size, setSize } = useSWRInfinite(getKey, fetcher, {
     revalidateIfStale: false,
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
@@ -51,11 +43,9 @@ export const useFetchPictures = (theme?: string): SWRPictureStore => {
     setSize(size + 1)
   }
 
-  const isLast = picturesList
-    ? picturesList.filter((list) => list.pictures.length < LIMIT).length > 0
-    : false
+  const isLast = data?.[0]?.length === 0
 
-  const pictures = picturesList ? picturesList.flatMap((list) => list.pictures) : null
+  const pictures = data ? data.flatMap((list) => list.pictures) : null
 
   return {
     pictures,
