@@ -1,7 +1,7 @@
 import { EraserIcon } from '@radix-ui/react-icons'
 import React, { memo } from 'react'
 
-import { Colors } from '@/utils/config/colors'
+import { Colors } from '@/utils/constants'
 
 type ColorPickerProps = {
   setLineWidth: React.Dispatch<React.SetStateAction<number>>
