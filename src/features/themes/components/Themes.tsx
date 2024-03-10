@@ -1,4 +1,5 @@
 import { useRouter } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 
 import { Theme } from '@/features/themes/types'
 
@@ -10,6 +11,8 @@ type ThemesProps = {
 }
 
 const Themes = ({ themes, isLoading }: ThemesProps) => {
+  const searchParams = useSearchParams()
+  const title = searchParams.get('theme')
   const router = useRouter()
   if (isLoading) return <LoadingThemes />
 
@@ -18,7 +21,11 @@ const Themes = ({ themes, isLoading }: ThemesProps) => {
       {themes.map((theme: Theme) => {
         return (
           <div
-            className='cursor-pointer rounded-full border p-2'
+            className={
+              theme.title === title
+                ? 'cursor-pointer rounded-full border-2 border-black p-2'
+                : 'cursor-pointer rounded-full border p-2'
+            }
             key={theme.id}
             onClick={() => {
               router.push(`/timeline?theme=${theme.title}`)
