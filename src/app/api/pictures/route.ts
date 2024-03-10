@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3'
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
 import { NextRequest, NextResponse } from 'next/server'
 
 import { prisma, main } from '@/lib/prisma'
@@ -113,23 +113,23 @@ export async function PUT(req: Request) {
 
 export async function DELETE(req: Request) {
   try {
-    const { id, image } = await req.json()
-    const { CLOUDFLARE_ACCESS_KEY_ID, CLOUDFLARE_ACCESS_KEY, REGION, BUCKET_NAME } = process.env
+    const { id } = await req.json()
+    // const { CLOUDFLARE_ACCESS_KEY_ID, CLOUDFLARE_ACCESS_KEY, REGION, BUCKET_NAME } = process.env
 
-    const s3Client = new S3Client({
-      region: REGION,
-      credentials: {
-        accessKeyId: CLOUDFLARE_ACCESS_KEY_ID || '',
-        secretAccessKey: CLOUDFLARE_ACCESS_KEY || '',
-      },
-    })
-    const key: string = image.split(`${process.env.IMAGE_HOST_URL}/`)[1]
-    await s3Client.send(
-      new DeleteObjectCommand({
-        Bucket: BUCKET_NAME,
-        Key: key,
-      }),
-    )
+    // const s3Client = new S3Client({
+    //   region: REGION,
+    //   credentials: {
+    //     accessKeyId: CLOUDFLARE_ACCESS_KEY_ID || '',
+    //     secretAccessKey: CLOUDFLARE_ACCESS_KEY || '',
+    //   },
+    // })
+    // const key: string = image.split(`${process.env.IMAGE_HOST_URL}/`)[1]
+    // await s3Client.send(
+    //   new DeleteObjectCommand({
+    //     Bucket: BUCKET_NAME,
+    //     Key: key,
+    //   }),
+    // )
     await main()
     const picture = await prisma.picture.delete({
       where: { id: id },
