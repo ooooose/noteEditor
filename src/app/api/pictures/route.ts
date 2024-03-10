@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
         createdAt: 'desc',
       },
     })
-    return NextResponse.json({ message: 'Success', pictures }, { status: 200 })
+    return NextResponse.json({ pictures }, { status: 200 })
   } catch (err) {
     return NextResponse.json({ message: 'Error', err }, { status: 500 })
   } finally {
