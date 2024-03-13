@@ -7,7 +7,7 @@ import { prisma, main } from '@/lib/prisma'
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams
   let theme = (searchParams.get('theme') as string) || undefined
-  const pageIndex = searchParams.get('page') || undefined
+  const pageIndex = searchParams.get('page') || '1'
   const take = 3
   try {
     await main()
@@ -15,11 +15,7 @@ export async function GET(req: NextRequest) {
     if (theme) {
       theme = theme.replace(/\?$/, '')
     }
-    let skip: number | undefined = undefined
-    if (pageIndex) {
-      const page = parseInt(pageIndex, 10)
-      skip = take * (page - 1)
-    }
+    const skip = (parseInt(pageIndex, 10) - 1) * take
 
     const pictures = await prisma.picture.findMany({
       include: {
