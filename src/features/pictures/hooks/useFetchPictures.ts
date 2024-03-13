@@ -50,7 +50,7 @@ export const useFetchPictures = (theme?: string): SWRPictureStore => {
 
   return {
     pictures: mergedData,
-    isLast: data ? data.every((page) => page.pictures.length < LIMIT) : false,
+    isLast: data ? data.filter((list) => list.pictures.length < LIMIT).length > 0 : false,
     error,
     isLoading: !data ? isValidating : false,
     mutate,
