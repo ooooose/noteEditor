@@ -45,7 +45,7 @@ const Pictures = memo(
       <div>
         {getPictures()}
         {isLast === false && (
-          <div className='mt-4 text-center'>
+          <div className='mt-16 text-center'>
             <button className='text-blue-400' onClick={loadMorePictures}>
               続きを読み込む
             </button>

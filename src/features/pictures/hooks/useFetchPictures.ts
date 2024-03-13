@@ -10,6 +10,7 @@ interface SWRPictureStore {
   pictures: Picture[] | null
   isLast: boolean
   error: Error
+  size: number
   isLoading: boolean
   mutate: KeyedMutator<Picture[][]>
   loadMorePictures: () => void
@@ -52,6 +53,7 @@ export const useFetchPictures = (theme?: string): SWRPictureStore => {
     pictures: mergedData,
     isLast: data ? data.filter((list) => list.pictures.length < LIMIT).length > 0 : false,
     error,
+    size,
     isLoading: !data ? isValidating : false,
     mutate,
     loadMorePictures,

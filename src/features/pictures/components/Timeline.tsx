@@ -18,6 +18,7 @@ const Timeline = () => {
     pictures,
     isLoading: isPicturesLoading,
     error,
+    size,
     isLast,
     loadMorePictures,
   } = useFetchPictures(theme)
@@ -28,15 +29,18 @@ const Timeline = () => {
   if (isLoading) return <LoadingPictures />
   if (error) return <>Error loading theme</>
   if (pictures?.length === 0) return <NoPictures />
+  const height = `h-[${size * 600}px]`
   return (
-    <Pictures
-      comments={comments}
-      isLast={isLast}
-      likes={likes}
-      loadMorePictures={loadMorePictures}
-      pictures={pictures}
-      user={user}
-    />
+    <div className={height}>
+      <Pictures
+        comments={comments}
+        isLast={isLast}
+        likes={likes}
+        loadMorePictures={loadMorePictures}
+        pictures={pictures}
+        user={user}
+      />
+    </div>
   )
 }
 export default Timeline

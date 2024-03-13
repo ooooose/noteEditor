@@ -14,7 +14,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
     <div className='select-none'>
       <div className='mx-auto w-full md:w-2/3'>
         <Header />
-        <div className='flex h-screen flex-col items-center justify-between'>{children}</div>
+        <div className='flex flex-col items-center justify-between'>{children}</div>
       </div>
       <Footer />
       <Toaster />

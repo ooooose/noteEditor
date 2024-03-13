@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams
   let theme = (searchParams.get('theme') as string) || undefined
   const pageIndex = searchParams.get('page') || '1'
-  const take = 3
+  const take = 6
   try {
     await main()
     let whereClause = {}
