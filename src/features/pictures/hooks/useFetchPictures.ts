@@ -15,21 +15,17 @@ interface SWRPictureStore {
   loadMorePictures: () => void
 }
 
-const API_URL = '/api/pictures'
 const LIMIT = 3
 
 export const useFetchPictures = (theme?: string): SWRPictureStore => {
-  const encodedTheme = theme ? encodeURIComponent(theme) : ''
-  const params: string[] = []
-  if (theme) params.push(`theme=${encodedTheme}`)
-
+  const API_URL = `/api/pictures?theme=${theme ?? ''}`
   const getKey = (pageIndex: number, previousPageData: Picture[][]) => {
-    if (!previousPageData) return `${API_URL}?page=1`
+    if (!previousPageData) return `${API_URL}&page=1`
 
     const lastPageIndex = previousPageData.length - 1
     if (pageIndex > lastPageIndex) return null
 
-    return `${API_URL}?page=${pageIndex + 1}`
+    return `${API_URL}&page=${pageIndex + 1}`
   }
 
   const fetcher = useCallback(async (url: string) => {

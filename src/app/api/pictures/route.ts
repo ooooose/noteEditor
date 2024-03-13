@@ -11,21 +11,23 @@ export async function GET(req: NextRequest) {
   const take = 3
   try {
     await main()
-    // TODO: 暫定処理。なぜか最後に'?'がついてしまう
+    let whereClause = {}
     if (theme) {
       theme = theme.replace(/\?$/, '')
+      whereClause = {
+        theme: {
+          title: theme,
+        },
+      }
     }
+
     const skip = (parseInt(pageIndex, 10) - 1) * take
 
     const pictures = await prisma.picture.findMany({
       include: {
         theme: true,
       },
-      where: {
-        theme: {
-          title: theme,
-        },
-      },
+      where: whereClause,
       orderBy: {
         createdAt: 'desc',
       },
