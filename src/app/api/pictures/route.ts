@@ -20,7 +20,6 @@ export async function GET(req: NextRequest) {
         },
       }
     }
-
     const skip = (parseInt(pageIndex, 10) - 1) * take
 
     const pictures = await prisma.picture.findMany({

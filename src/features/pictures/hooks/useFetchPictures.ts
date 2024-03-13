@@ -45,15 +45,14 @@ export const useFetchPictures = (theme?: string): SWRPictureStore => {
   const mergedData = useMemo(() => {
     if (!data) return []
 
-    // すべてのページを1つの配列にマージする
     return data.flatMap((page) => page.pictures)
   }, [data])
 
   return {
     pictures: mergedData,
-    isLast: data ? data.every((page) => page.length < LIMIT) : false,
+    isLast: data ? data.every((page) => page.pictures.length < LIMIT) : false,
     error,
-    isLoading: isValidating,
+    isLoading: !data ? isValidating : false,
     mutate,
     loadMorePictures,
   }
