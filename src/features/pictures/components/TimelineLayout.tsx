@@ -18,7 +18,9 @@ const TimelineLayout = () => {
         <CreateThemeModal />
       </div>
       <div>
-        <Themes isLoading={isLoading} themes={themes} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Themes isLoading={isLoading} themes={themes} />
+        </Suspense>
         <Suspense fallback={<div>Loading...</div>}>
           <Timeline />
         </Suspense>
