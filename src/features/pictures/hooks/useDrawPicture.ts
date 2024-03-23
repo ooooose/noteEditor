@@ -2,9 +2,11 @@ import { useRouter } from 'next/navigation'
 import React, { useCallback } from 'react'
 import { useState, useRef } from 'react'
 import { toast } from 'sonner'
-import { useSWRConfig } from 'swr'
 
+import { useFetchThemes } from '@/features/themes/hooks/useFetchThemes'
 import { apiClient } from '@/lib/api/api-client'
+
+import { useFetchPictures } from './useFetchPictures'
 
 interface IProps {
   width: number
@@ -23,7 +25,8 @@ interface IRect {
 }
 
 export const useDrawPicture = ({ width, height, userId, userName }: IProps) => {
-  const { mutate } = useSWRConfig()
+  const { mutate: mutatePicture } = useFetchPictures()
+  const { mutate: mutateTheme } = useFetchThemes()
   const router = useRouter()
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   let mouseX: number | null = null
@@ -125,16 +128,16 @@ export const useDrawPicture = ({ width, height, userId, userName }: IProps) => {
         themeId: selectedId,
       }
 
-      const res = await apiClient.apiPost('/api/pictures', params)
-      if (res.status === 201) {
-        mutate('/api/pictures')
-        mutate('/api/themes')
-        router.push(`/timeline`)
-      }
+      await apiClient.apiPost('/api/pictures', params).then(() => {
+        mutatePicture()
+        mutateTheme()
+        router.push('/timeline')
+      })
     } catch (err) {
       console.error(err)
     }
-  }, [mutate, router, selectedId, userId, userName])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedId, userId, userName])
 
   return {
     canvasRef,

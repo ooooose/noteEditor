@@ -8,7 +8,7 @@ function CanvasPage() {
   return (
     <CanvasLayout>
       <div className='mx-auto text-center'>
-        <Canvas height={450} width={550} />
+        <Canvas height={400} width={500} />
       </div>
     </CanvasLayout>
   )

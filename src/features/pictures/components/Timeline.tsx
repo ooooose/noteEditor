@@ -2,8 +2,6 @@ import { useSearchParams } from 'next/navigation'
 import React from 'react'
 
 import { useFetchAuthUserByEmail } from '@/features/auth/hooks/useFetchAuthUserByEmail'
-import { useFetchComments } from '@/features/comments/hooks/useFetchComments'
-import { useFetchLikes } from '@/features/likes/hooks/useFetchLikes'
 
 import { useFetchPictures } from '../hooks/useFetchPictures'
 
@@ -14,14 +12,29 @@ import Pictures from './Pictures'
 const Timeline = () => {
   const searchParams = useSearchParams()
   const theme = (searchParams.get('theme') as string) || undefined
-  const { pictures, isLoading: isPicturesLoading, isError } = useFetchPictures(theme)
-  const { comments, isLoading: isCommentsLoading } = useFetchComments()
-  const { likes, isLoading: isLikesLoading } = useFetchLikes()
+  const {
+    pictures,
+    isLoading: isPicturesLoading,
+    error,
+    size,
+    isLast,
+    loadMorePictures,
+  } = useFetchPictures(theme)
   const { user, isLoading: isUserLoading } = useFetchAuthUserByEmail()
-  const isLoading = isPicturesLoading || isUserLoading || isCommentsLoading || isLikesLoading
+  const isLoading = isPicturesLoading || isUserLoading
   if (isLoading) return <LoadingPictures />
-  if (isError) return <>Error loading theme</>
+  if (error) return <>Error loading theme</>
   if (pictures?.length === 0) return <NoPictures />
-  return <Pictures comments={comments} likes={likes} pictures={pictures} user={user} />
+  const height = `h-[${size * 600}px]`
+  return (
+    <div className={height}>
+      <Pictures
+        isLast={isLast}
+        loadMorePictures={loadMorePictures}
+        pictures={pictures}
+        user={user}
+      />
+    </div>
+  )
 }
 export default Timeline

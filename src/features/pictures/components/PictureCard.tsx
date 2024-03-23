@@ -48,7 +48,7 @@ const PictureCard = memo(({ picture, comments, user, likes }: PictureCardProps) 
                 author={picture.author}
                 frameId={picture.frameId}
                 src={picture.image}
-                title={picture.theme.title}
+                title={picture.theme?.title}
               />
             )}
           </div>
