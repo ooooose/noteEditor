@@ -1,10 +1,11 @@
 import { toast } from 'sonner'
-import { useSWRConfig } from 'swr'
 
 import { deletePicture } from '../api'
 
+import { useFetchPictures } from './useFetchPictures'
+
 export const useDeletePicture = () => {
-  const { mutate } = useSWRConfig()
+  const { mutate } = useFetchPictures()
   const handleDeletePicture = (pictureId: string, image: string) => {
     const params = {
       id: pictureId,
@@ -12,7 +13,7 @@ export const useDeletePicture = () => {
     }
     try {
       deletePicture(params).then(() => {
-        mutate('/api/pictures?theme=&page=1')
+        mutate()
         toast('絵を削除しました', { position: 'top-center' })
       })
     } catch (err) {

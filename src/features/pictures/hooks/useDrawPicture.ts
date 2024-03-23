@@ -2,9 +2,11 @@ import { useRouter } from 'next/navigation'
 import React, { useCallback } from 'react'
 import { useState, useRef } from 'react'
 import { toast } from 'sonner'
-import { useSWRConfig } from 'swr'
 
+import { useFetchThemes } from '@/features/themes/hooks/useFetchThemes'
 import { apiClient } from '@/lib/api/api-client'
+
+import { useFetchPictures } from './useFetchPictures'
 
 interface IProps {
   width: number
@@ -23,7 +25,8 @@ interface IRect {
 }
 
 export const useDrawPicture = ({ width, height, userId, userName }: IProps) => {
-  const { mutate } = useSWRConfig()
+  const { mutate: mutatePicture } = useFetchPictures()
+  const { mutate: mutateTheme } = useFetchThemes()
   const router = useRouter()
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   let mouseX: number | null = null
@@ -126,8 +129,8 @@ export const useDrawPicture = ({ width, height, userId, userName }: IProps) => {
       }
 
       await apiClient.apiPost('/api/pictures', params).then(() => {
-        mutate('/api/pictures?theme=&page=1')
-        mutate('/api/themes')
+        mutatePicture()
+        mutateTheme()
         router.push('/timeline')
       })
     } catch (err) {
