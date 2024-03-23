@@ -1,7 +1,9 @@
+import { useSearchParams } from 'next/navigation'
 import { useCallback } from 'react'
 import { toast } from 'sonner'
 
 import { AuthUser } from '@/features/auth/types'
+import { useFetchPictures } from '@/features/pictures/hooks/useFetchPictures'
 
 import { deleteComment, postComment, updateComment } from '../api'
 import { Comment } from '../types'
@@ -9,7 +11,10 @@ import { Comment } from '../types'
 import { useFetchComments } from './useFetchComments'
 
 export const useMutateComment = (pictureId: string, user: AuthUser) => {
-  const { comments, mutate, isLoading } = useFetchComments()
+  const searchParams = useSearchParams()
+  const theme = (searchParams.get('theme') as string) || undefined
+  const { comments, isLoading } = useFetchComments()
+  const { mutate } = useFetchPictures(theme)
   const pictureComments =
     comments && comments?.filter((comment: Comment) => comment.pictureId === pictureId)
 

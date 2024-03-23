@@ -25,7 +25,11 @@ export async function GET(req: NextRequest) {
       include: {
         theme: true,
         likes: true,
-        comments: true,
+        comments: {
+          orderBy: {
+            createdAt: 'desc',
+          },
+        },
       },
       where: whereClause,
       orderBy: {
