@@ -13,7 +13,6 @@ export async function GET(req: NextRequest) {
     await main()
     let whereClause = {}
     if (theme) {
-      theme = theme.replace(/\?$/, '')
       whereClause = {
         theme: {
           title: theme,
