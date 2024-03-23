@@ -1,13 +1,17 @@
+import { useSearchParams } from 'next/navigation'
 import { useState, useEffect, useCallback } from 'react'
-import { useSWRConfig } from 'swr'
+
+import { useFetchPictures } from '@/features/pictures/hooks/useFetchPictures'
 
 import { postLike, deleteLike } from '../api'
 import { Like } from '../types'
 
 export function useMutateLike(pictureId: string, userId: string, likes: Like[]) {
+  const searchParams = useSearchParams()
+  const theme = (searchParams.get('theme') as string) || undefined
   const [liked, setLiked] = useState(false)
   const [likeCount, setLikeCount] = useState(likes.length)
-  const { mutate } = useSWRConfig()
+  const { mutate } = useFetchPictures(theme)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,7 +39,7 @@ export function useMutateLike(pictureId: string, userId: string, likes: Like[]) 
     } catch (error) {
       console.error('Failed to update like:', error)
     } finally {
-      mutate('/api/likes')
+      mutate()
     }
     setLiked(newLiked)
     setLikeCount(newLikeCount)

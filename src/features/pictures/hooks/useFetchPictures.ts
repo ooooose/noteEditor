@@ -30,7 +30,6 @@ export const useFetchPictures = (theme?: string): SWRPictureStore => {
   }
 
   const fetcher = useCallback(async (url: string) => {
-    console.log(url)
     return apiClient.apiGet(url).then((res) => res.json())
   }, [])
 
