@@ -126,7 +126,7 @@ export const useDrawPicture = ({ width, height, userId, userName }: IProps) => {
       }
 
       await apiClient.apiPost('/api/pictures', params).then(() => {
-        mutate('/api/pictures')
+        mutate('/api/pictures?theme=&page=1')
         mutate('/api/themes')
         router.push('/timeline')
       })

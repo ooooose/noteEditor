@@ -12,7 +12,7 @@ export const useDeletePicture = () => {
     }
     try {
       deletePicture(params).then(() => {
-        mutate('/api/pictures')
+        mutate('/api/pictures?theme=&page=1')
         toast('絵を削除しました', { position: 'top-center' })
       })
     } catch (err) {

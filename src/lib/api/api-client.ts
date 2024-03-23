@@ -5,9 +5,8 @@ class ApiClient {
     this.baseURL = process.env.NEXT_APP_URL ?? ''
   }
 
-  async apiGet(url: string, query = {}) {
-    const queryParams = new URLSearchParams(query)
-    const response = await fetch(`${this.baseURL}${url}?${queryParams}`)
+  async apiGet(url: string) {
+    const response = await fetch(`${this.baseURL}${url}`)
     return response
   }
 

@@ -25,6 +25,8 @@ export async function GET(req: NextRequest) {
     const pictures = await prisma.picture.findMany({
       include: {
         theme: true,
+        likes: true,
+        comments: true,
       },
       where: whereClause,
       orderBy: {
