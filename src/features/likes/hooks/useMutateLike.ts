@@ -1,4 +1,3 @@
-import { useSearchParams } from 'next/navigation'
 import { useState, useEffect, useCallback } from 'react'
 
 import { useFetchPictures } from '@/features/pictures/hooks/useFetchPictures'
@@ -7,11 +6,9 @@ import { postLike, deleteLike } from '../api'
 import { Like } from '../types'
 
 export function useMutateLike(pictureId: string, userId: string, likes: Like[]) {
-  const searchParams = useSearchParams()
-  const theme = (searchParams.get('theme') as string) || undefined
   const [liked, setLiked] = useState(false)
   const [likeCount, setLikeCount] = useState(likes.length)
-  const { mutate } = useFetchPictures(theme)
+  const { mutate } = useFetchPictures()
 
   useEffect(() => {
     const fetchData = async () => {
