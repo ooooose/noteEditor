@@ -32,11 +32,17 @@ const Themes = ({ themes, isLoading }: ThemesProps) => {
     >
       <CarouselContent className='gap-2'>
         {themes.map((theme: Theme) => {
+          let arrangedTitle: string
+          if (theme.title.length > 9) {
+            arrangedTitle = theme.title.slice(0, 9) + '...'
+          } else {
+            arrangedTitle = theme.title
+          }
           return (
             <CarouselItem
               className={
                 theme.title === title
-                  ? 'cursor-pointer rounded-full border-2 border-black p-2 text-center md:basis-1/2 lg:basis-1/5'
+                  ? 'cursor-pointer rounded-full border-2 border-black p-2 text-center md:basis-1/2 lg:basis-1/4'
                   : 'cursor-pointer rounded-full border p-2 text-center md:basis-1/2 lg:basis-1/4'
               }
               key={theme.id}
@@ -44,7 +50,7 @@ const Themes = ({ themes, isLoading }: ThemesProps) => {
                 router.push(`/timeline?theme=${theme.title}`)
               }}
             >
-              #{theme.title}
+              #{arrangedTitle}
             </CarouselItem>
           )
         })}
