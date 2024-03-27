@@ -25,7 +25,7 @@ const Timeline = () => {
   if (isLoading) return <LoadingPictures />
   if (error) return <>Error loading theme</>
   if (pictures?.length === 0) return <NoPictures />
-  const height = `h-[${size * 600}px]`
+  const height = `h-[${size * 600}px] mt-5`
   return (
     <div className={height}>
       <Pictures

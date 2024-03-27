@@ -1,6 +1,14 @@
 import { useRouter } from 'next/navigation'
 import { useSearchParams } from 'next/navigation'
 
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel'
+
 import LoadingThemes from './LoadingThemes'
 
 import type { Theme } from '@/features/themes/types'
@@ -17,25 +25,39 @@ const Themes = ({ themes, isLoading }: ThemesProps) => {
   if (isLoading) return <LoadingThemes />
 
   return (
-    <div className='flex gap-2'>
-      {themes.map((theme: Theme) => {
-        return (
-          <div
-            className={
-              theme.title === title
-                ? 'cursor-pointer rounded-full border-2 border-black p-2'
-                : 'cursor-pointer rounded-full border p-2'
-            }
-            key={theme.id}
-            onClick={() => {
-              router.push(`/timeline?theme=${theme.title}`)
-            }}
-          >
-            #{theme.title}
-          </div>
-        )
-      })}
-    </div>
+    <Carousel
+      opts={{
+        align: 'start',
+      }}
+    >
+      <CarouselContent className='gap-2'>
+        {themes.map((theme: Theme) => {
+          let arrangedTitle: string
+          if (theme.title.length > 9) {
+            arrangedTitle = theme.title.slice(0, 9) + '...'
+          } else {
+            arrangedTitle = theme.title
+          }
+          return (
+            <CarouselItem
+              className={
+                theme.title === title
+                  ? 'cursor-pointer rounded-full border-2 border-black p-2 text-center md:basis-1/2 lg:basis-1/4'
+                  : 'cursor-pointer rounded-full border p-2 text-center md:basis-1/2 lg:basis-1/4'
+              }
+              key={theme.id}
+              onClick={() => {
+                router.push(`/timeline?theme=${theme.title}`)
+              }}
+            >
+              #{arrangedTitle}
+            </CarouselItem>
+          )
+        })}
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
   )
 }
 
