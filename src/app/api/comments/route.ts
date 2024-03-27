@@ -72,5 +72,3 @@ export async function DELETE(req: Request) {
     await prisma.$disconnect()
   }
 }
-
-// export const runtime = 'edge'

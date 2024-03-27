@@ -6,7 +6,13 @@ import { prisma, main } from '@/lib/prisma'
 export async function GET() {
   try {
     await main()
-    const themes = await prisma.theme.findMany()
+    const data = await prisma.theme.findMany({
+      include: {
+        pictures: true,
+      },
+    })
+    // 以下型定義は見直すべき
+    const themes = data.filter((theme: any) => theme.pictures && theme.pictures.length > 0)
     return NextResponse.json({ message: 'Success', themes }, { status: 200 })
   } catch (err) {
     return NextResponse.json({ message: 'Error', err }, { status: 500 })
@@ -37,5 +43,3 @@ export async function POST(req: Request) {
     await prisma.$disconnect()
   }
 }
-
-// export const runtime = 'edge'
