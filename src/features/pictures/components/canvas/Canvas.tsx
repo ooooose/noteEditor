@@ -30,6 +30,7 @@ export const Canvas: React.FC<IProps> = (props) => {
     uploadPicture,
     setColor,
     setLineWidth,
+    isLoading,
   } = useDrawPicture({
     width: width,
     height: height,
@@ -53,6 +54,7 @@ export const Canvas: React.FC<IProps> = (props) => {
         Reset={Reset}
         color={color}
         handleSelectChange={handleSelectChange}
+        isLoading={isLoading}
         lineWidth={lineWidth}
         setColor={setColor}
         setLineWidth={setLineWidth}

@@ -33,6 +33,7 @@ export const useDrawPicture = ({ width, height, userId, userName }: IProps) => {
   let mouseY: number | null = null
   const [title, setTitle] = useState<string>('')
   const [color, setColor] = useState<string>('#000000')
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [lineWidth, setLineWidth] = useState<number>(2)
 
   const handleSelectChange = (value: string) => {
@@ -97,6 +98,7 @@ export const useDrawPicture = ({ width, height, userId, userName }: IProps) => {
   }
 
   const uploadPicture = useCallback(async () => {
+    setIsLoading(true)
     try {
       const blob = await new Promise<Blob | null>((resolve) => {
         canvasRef.current?.toBlob(
@@ -135,6 +137,8 @@ export const useDrawPicture = ({ width, height, userId, userName }: IProps) => {
       })
     } catch (err) {
       console.error(err)
+    } finally {
+      setIsLoading(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [title, userId, userName])
@@ -152,5 +156,6 @@ export const useDrawPicture = ({ width, height, userId, userName }: IProps) => {
     setLineWidth,
     color,
     lineWidth,
+    isLoading,
   }
 }
