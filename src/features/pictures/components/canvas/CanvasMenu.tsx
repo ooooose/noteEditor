@@ -10,7 +10,7 @@ import { ColorPicker } from './ColorPicker'
 import { ManageLineWidth } from './ManageLineWidth'
 
 type CanvasMenuProps = {
-  selectedId: string
+  title: string
   handleSelectChange: (value: string) => void
   uploadPicture: () => Promise<void>
   setColor: React.Dispatch<React.SetStateAction<string>>
@@ -25,7 +25,7 @@ export const CanvasMenu = memo(
     setColor,
     lineWidth,
     setLineWidth,
-    selectedId,
+    title,
     handleSelectChange,
     uploadPicture,
     Reset,
@@ -54,7 +54,7 @@ export const CanvasMenu = memo(
               </Modal>
               <Modal description='絵を登録しますか？' text='登録'>
                 <ThemeSelect handleSelectChange={handleSelectChange} />
-                <Button disabled={!selectedId} onClick={uploadPicture} variant='outline'>
+                <Button disabled={!title} onClick={uploadPicture} variant='outline'>
                   登録する
                 </Button>
                 <DialogClose asChild>
