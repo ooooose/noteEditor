@@ -8,3 +8,8 @@ export type Theme = {
   createdAt: Date
   updatedAt: Date
 }
+
+export type ThemeOption = {
+  value: string
+  label: string
+}

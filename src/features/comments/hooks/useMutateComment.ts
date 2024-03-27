@@ -6,9 +6,10 @@ import { AuthUser } from '@/features/auth/types'
 import { useFetchPictures } from '@/features/pictures/hooks/useFetchPictures'
 
 import { deleteComment, postComment, updateComment } from '../api'
-import { Comment } from '../types'
 
 import { useFetchComments } from './useFetchComments'
+
+import type { Comment } from '../types'
 
 export const useMutateComment = (pictureId: string, user: AuthUser) => {
   const searchParams = useSearchParams()

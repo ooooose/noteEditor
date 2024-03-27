@@ -3,7 +3,8 @@ import { useState, useEffect, useCallback } from 'react'
 import { useFetchPictures } from '@/features/pictures/hooks/useFetchPictures'
 
 import { postLike, deleteLike } from '../api'
-import { Like } from '../types'
+
+import type { Like } from '../types'
 
 export function useMutateLike(pictureId: string, userId: string, likes: Like[]) {
   const [liked, setLiked] = useState(false)
