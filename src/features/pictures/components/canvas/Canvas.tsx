@@ -26,7 +26,7 @@ export const Canvas: React.FC<IProps> = (props) => {
     lineWidth,
     color,
     handleSelectChange,
-    selectedId,
+    title,
     uploadPicture,
     setColor,
     setLineWidth,
@@ -54,9 +54,9 @@ export const Canvas: React.FC<IProps> = (props) => {
         color={color}
         handleSelectChange={handleSelectChange}
         lineWidth={lineWidth}
-        selectedId={selectedId}
         setColor={setColor}
         setLineWidth={setLineWidth}
+        title={title}
         uploadPicture={uploadPicture}
       />
     </section>

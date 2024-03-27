@@ -20,5 +20,3 @@ export async function POST(req: NextRequest) {
     await prisma.$disconnect()
   }
 }
-
-// export const runtime = 'edge'

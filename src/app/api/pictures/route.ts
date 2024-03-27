@@ -25,7 +25,11 @@ export async function GET(req: NextRequest) {
       include: {
         theme: true,
         likes: true,
-        comments: true,
+        comments: {
+          orderBy: {
+            createdAt: 'desc',
+          },
+        },
       },
       where: whereClause,
       orderBy: {
@@ -46,7 +50,7 @@ export async function GET(req: NextRequest) {
 // Picture作成API
 export async function POST(req: Request) {
   try {
-    const { image, userId, userName, themeId } = await req.json()
+    const { image, userId, userName, title } = await req.json()
     const {
       CLOUDFLARE_ACCESS_KEY_ID,
       CLOUDFLARE_ENDPOINT,
@@ -69,8 +73,8 @@ export async function POST(req: Request) {
       buff[i] = blob.charCodeAt(i)
     }
 
-    const file = new File([buff.buffer], `${Date.now()}-${themeId}}`, { type: 'image/webp' })
-    const fileName = `${Date.now()}-${themeId}`
+    const file = new File([buff.buffer], `${Date.now()}-${title}}`, { type: 'image/webp' })
+    const fileName = `${Date.now()}-${title}`
 
     // File オブジェクトから Buffer に変換
     const buffer = Buffer.from(await file?.arrayBuffer())
@@ -87,12 +91,25 @@ export async function POST(req: Request) {
     const imageUrl = `${process.env.IMAGE_HOST_URL}/${fileName}`
 
     await main()
+    let theme = await prisma.theme.findUnique({
+      where: {
+        title: title,
+      },
+    })
+    if (!theme) {
+      theme = await prisma.theme.create({
+        data: {
+          title: title,
+          userId: userId,
+        },
+      })
+    }
     const picture = await prisma.picture.create({
       data: {
         image: imageUrl,
         author: userName,
         userId: userId,
-        themeId: themeId,
+        themeId: theme.id,
       },
     })
     return NextResponse.json({ message: 'Success', picture }, { status: 201 })
@@ -151,5 +168,3 @@ export async function DELETE(req: Request) {
     await prisma.$disconnect()
   }
 }
-
-// export const runtime = 'edge'

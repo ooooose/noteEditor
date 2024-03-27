@@ -9,9 +9,9 @@ import { Input } from '@/components/elements/Form'
 
 import { formatDate } from '@/utils/format'
 
-import { Comment } from '../types'
-
 import CommentMenu from './CommentMenu'
+
+import type { Comment } from '../types'
 
 type CommentItemProps = {
   comment: Comment

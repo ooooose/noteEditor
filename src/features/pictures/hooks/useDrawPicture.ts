@@ -31,13 +31,13 @@ export const useDrawPicture = ({ width, height, userId, userName }: IProps) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   let mouseX: number | null = null
   let mouseY: number | null = null
-  const [selectedId, setSelectedId] = useState<string>('')
+  const [title, setTitle] = useState<string>('')
   const [color, setColor] = useState<string>('#000000')
   const [lineWidth, setLineWidth] = useState<number>(2)
 
   const handleSelectChange = (value: string) => {
     const selectedValue = value
-    setSelectedId(selectedValue)
+    setTitle(selectedValue)
   }
 
   const getContext = (): CanvasRenderingContext2D => {
@@ -125,7 +125,7 @@ export const useDrawPicture = ({ width, height, userId, userName }: IProps) => {
         image: compressedBase64,
         userId: userId,
         userName: userName,
-        themeId: selectedId,
+        title: title,
       }
 
       await apiClient.apiPost('/api/pictures', params).then(() => {
@@ -137,7 +137,7 @@ export const useDrawPicture = ({ width, height, userId, userName }: IProps) => {
       console.error(err)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedId, userId, userName])
+  }, [title, userId, userName])
 
   return {
     canvasRef,
@@ -146,7 +146,7 @@ export const useDrawPicture = ({ width, height, userId, userName }: IProps) => {
     DrawEnd,
     Reset,
     handleSelectChange,
-    selectedId,
+    title,
     uploadPicture,
     setColor,
     setLineWidth,

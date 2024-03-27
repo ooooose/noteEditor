@@ -2,7 +2,6 @@
 
 import React, { Suspense } from 'react'
 
-import { CreateThemeModal } from '@/features/themes/components/CreateThemeModal'
 import Themes from '@/features/themes/components/Themes'
 import { useFetchThemes } from '@/features/themes/hooks/useFetchThemes'
 
@@ -14,9 +13,6 @@ const TimelineLayout = () => {
 
   return (
     <div>
-      <div className='mb-3 text-right'>
-        <CreateThemeModal />
-      </div>
       <div>
         <Suspense fallback={<div>Loading...</div>}>
           <Themes isLoading={isLoading} themes={themes} />

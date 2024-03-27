@@ -1,17 +1,14 @@
 import { memo } from 'react'
-
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-
-import { Theme } from '@/features/themes/types'
+import CreatableSelect from 'react-select/creatable'
 
 import { useFetchThemes } from '../hooks/useFetchThemes'
+
+import type { Theme } from '@/features/themes/types'
+
+type ThemeOption = {
+  value: string
+  label: string
+}
 
 type ThemeSelectProps = {
   handleSelectChange: (value: string) => void
@@ -19,23 +16,21 @@ type ThemeSelectProps = {
 
 export const ThemeSelect = memo(({ handleSelectChange }: ThemeSelectProps) => {
   const { themes, isLoading } = useFetchThemes()
+  const options: ThemeOption[] = []
+  themes?.map((theme: Theme) =>
+    options.push({
+      value: theme.title,
+      label: theme.title,
+    }),
+  )
+
   return (
-    <Select disabled={isLoading} onValueChange={handleSelectChange}>
-      <SelectTrigger className='w-[280px]'>
-        <SelectValue placeholder='テーマを選んでください' />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          {themes?.map((theme: Theme) => {
-            return (
-              <SelectItem key={theme.id} value={theme.id}>
-                {theme.title}
-              </SelectItem>
-            )
-          })}
-        </SelectGroup>
-      </SelectContent>
-    </Select>
+    <CreatableSelect
+      isClearable
+      isDisabled={isLoading}
+      onChange={(e) => handleSelectChange(e?.value ?? '')}
+      options={options}
+    />
   )
 })
 

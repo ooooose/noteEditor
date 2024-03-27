@@ -1,9 +1,9 @@
 import { useRouter } from 'next/navigation'
 import { useSearchParams } from 'next/navigation'
 
-import { Theme } from '@/features/themes/types'
-
 import LoadingThemes from './LoadingThemes'
+
+import type { Theme } from '@/features/themes/types'
 
 type ThemesProps = {
   themes: Theme[]

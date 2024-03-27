@@ -11,14 +11,14 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 
-import { AuthUser } from '@/features/auth/types'
-
 import { useMutateComment } from '../hooks/useMutateComment'
-import { Comment as CommentType } from '../types'
 
 import CommentCount from './CommentCount'
 import CommentForm from './CommentForm'
 import CommentsList from './CommentsList'
+
+import type { Comment as CommentType } from '../types'
+import type { AuthUser } from '@/features/auth/types'
 
 type CommentProps = {
   pictureId: string
