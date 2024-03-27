@@ -9,11 +9,11 @@ import { useMutateLike } from '@/features/likes/hooks/useMutateLike'
 import { Like as LikeType } from '@/features/likes/types'
 import { formatDateForPicture } from '@/utils/format'
 
-import { Picture as PictureType } from '../types'
-
 import { Picture } from './Picture'
 import PictureMenu from './PictureMenu'
 import PictureTheme from './PictureTheme'
+
+import type { Picture as PictureType } from '../types'
 
 type PictureCardProps = {
   picture: PictureType

@@ -12,10 +12,10 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-import { Picture } from '../types'
-
 import DeletePicture from './menu/DeletePicture'
 import SwitchPictureFrame from './menu/SwitchPictureFrame'
+
+import type { Picture } from '../types'
 
 type PictureMenuProps = {
   picture: Picture

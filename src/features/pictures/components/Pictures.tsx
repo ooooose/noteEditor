@@ -1,10 +1,9 @@
 import { memo } from 'react'
 
-import { AuthUser } from '@/features/auth/types'
-
-import { Picture as PictureType } from '../types'
-
 import PictureCard from './PictureCard'
+
+import type { Picture as PictureType } from '../types'
+import type { AuthUser } from '@/features/auth/types'
 
 type PicturesProps = {
   pictures: PictureType[] | null
