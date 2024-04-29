@@ -6,6 +6,8 @@ import { NoPictures } from '@/features/pictures/components/NoPictures'
 import Pictures from '@/features/pictures/components/Pictures'
 import { useFetchPictures } from '@/features/pictures/hooks/useFetchPictures'
 
+import Profile from './Profile'
+
 const UserPictures = () => {
   const {
     pictures,
@@ -24,13 +26,18 @@ const UserPictures = () => {
   if (sortedPictures?.length === 0) return <NoPictures />
   const height = `h-[${size * 600}px] mt-5`
   return (
-    <div className={height}>
-      <Pictures
-        isLast={isLast}
-        loadMorePictures={loadMorePictures}
-        pictures={sortedPictures}
-        user={user}
-      />
+    <div>
+      <div className=''>
+        <Profile user={user} />
+      </div>
+      <div className={height}>
+        <Pictures
+          isLast={isLast}
+          loadMorePictures={loadMorePictures}
+          pictures={sortedPictures}
+          user={user}
+        />
+      </div>
     </div>
   )
 }
