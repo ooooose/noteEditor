@@ -3,7 +3,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 import { useFetchAuthUserByEmail } from '@/features/auth/hooks/useFetchAuthUserByEmail'
-import { NoPictures } from '@/features/pictures/components/NoPictures'
 import Pictures from '@/features/pictures/components/Pictures'
 import { useFetchPictures } from '@/features/pictures/hooks/useFetchPictures'
 
@@ -23,11 +22,10 @@ const UserPictures = () => {
   const sortedPictures = pictures?.filter((picture) => picture.userId === user?.id) ?? null
   const isLoading = isPicturesLoading || isUserLoading
   if (error) return <>Error loading theme</>
-  if (sortedPictures?.length === 0) return <NoPictures />
   const height = `h-[${size * 600}px] mt-5`
   return (
     <div>
-      <Profile user={user} />
+      <Profile isLoading={isLoading} user={user} />
       <Tabs className='mt-5 w-[760px]' defaultValue='works'>
         <TabsList className='grid w-full grid-cols-2'>
           <TabsTrigger value='works'>Works</TabsTrigger>

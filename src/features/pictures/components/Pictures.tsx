@@ -1,6 +1,7 @@
 import { memo } from 'react'
 
 import LoadingPictures from './LoadingPictures'
+import { NoPictures } from './NoPictures'
 import PictureCard from './PictureCard'
 
 import type { Picture as PictureType } from '../types'
@@ -18,6 +19,7 @@ const Pictures = memo(
   ({ pictures, user, isLast = false, isLoading, loadMorePictures }: PicturesProps) => {
     if (!pictures) return null
     if (isLoading) return <LoadingPictures />
+    if (pictures.length === 0) return <NoPictures />
     const getPictures = () => {
       return (
         <div className='grid grid-cols-3 grid-rows-2 gap-10'>
