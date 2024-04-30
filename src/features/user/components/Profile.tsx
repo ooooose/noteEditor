@@ -22,7 +22,7 @@ const Profile = ({ user, isLoading }: ProfileProps) => {
   return (
     <div className='mx-auto flex flex-col gap-3'>
       <Dialog>
-        <DialogTrigger asChild>
+        <DialogTrigger>
           <Avatar src={user.image} />
         </DialogTrigger>
         <EditProfileModal />

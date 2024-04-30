@@ -43,7 +43,7 @@ const UserPictures = () => {
           </div>
         </TabsContent>
         <TabsContent className='w-full' value='likes'>
-          <div className={height}>絵画表示予定</div>
+          <div className='mx-auto text-center'>絵画表示予定</div>
         </TabsContent>
       </Tabs>
     </div>
