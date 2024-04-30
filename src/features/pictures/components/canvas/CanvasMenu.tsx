@@ -1,7 +1,6 @@
 import React, { memo } from 'react'
 
 import { Modal } from '@/components/elements'
-// import { Button } from '@/components/ui/button'
 import { Button } from '@/components/elements/Button'
 import { DialogClose } from '@/components/ui/dialog'
 
