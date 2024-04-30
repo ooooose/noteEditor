@@ -25,7 +25,7 @@ const Profile = ({ user, isLoading }: ProfileProps) => {
         <DialogTrigger>
           <Avatar src={user.image} />
         </DialogTrigger>
-        <EditProfileModal />
+        <EditProfileModal src={user.image} />
       </Dialog>
       <p className='pb-2 text-center'>{user?.name} さん</p>
     </div>
