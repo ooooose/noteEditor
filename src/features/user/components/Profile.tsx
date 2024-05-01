@@ -1,9 +1,7 @@
-import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import { Skeleton } from '@/components/ui/skeleton'
 
 import { AuthUser } from '@/features/auth/types'
 
-import Avatar from './Avatar'
 import EditProfileModal from './EditProfileModal'
 
 type ProfileProps = {
@@ -21,12 +19,7 @@ const Profile = ({ user, isLoading }: ProfileProps) => {
     )
   return (
     <div className='mx-auto flex flex-col gap-3'>
-      <Dialog>
-        <DialogTrigger>
-          <Avatar src={user.image} />
-        </DialogTrigger>
-        <EditProfileModal src={user.image} />
-      </Dialog>
+      <EditProfileModal src={user.image} />
       <p className='pb-2 text-center'>{user?.name} さん</p>
     </div>
   )
