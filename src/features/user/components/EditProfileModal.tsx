@@ -29,10 +29,10 @@ const EditProfileModal = ({ src }: EditProfileModalProps) => {
         <div className='grid w-full max-w-sm items-center gap-1.5'>
           <Image
             alt='avatar'
-            className='mx-auto rounded-full'
-            height={70}
+            className='mx-auto mb-5 size-[100px] rounded-full'
+            height={100}
             src={preview || avatar}
-            width={70}
+            width={100}
           />
           <Label htmlFor='image'>Avatar</Label>
           <Input
