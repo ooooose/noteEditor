@@ -1,10 +1,12 @@
 import { ChangeEvent, useState } from 'react'
 
-export const useUpdateUser = () => {
+import { AuthUser } from '@/features/auth/types'
+
+export const useUpdateUser = (user: AuthUser) => {
+  const [username, setUsername] = useState<string>(user.name)
   const [image, setImage] = useState<string>('')
   // TODO: R2にバケット追加（この前作ったものを）
   // TODO: 画像アップロード処理を実装
-  const [username, setUsername] = useState<string>('')
   const previewImage = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const file = e.target.files[0]
@@ -13,7 +15,7 @@ export const useUpdateUser = () => {
   }
 
   const resetInfo = () => {
-    setUsername('')
+    setUsername(user.name)
     setImage('')
   }
   // アップデート処理を実装

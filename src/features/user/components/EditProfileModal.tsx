@@ -15,13 +15,14 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+
+import { AuthUser } from '@/features/auth/types'
 
 import { useUpdateUser } from '../hooks/useUpdateUser'
 
@@ -33,10 +34,10 @@ const formSchema = z.object({
 })
 
 type EditProfileModalProps = {
-  src: string | undefined
+  user: AuthUser
 }
 
-const EditProfileModal = ({ src }: EditProfileModalProps) => {
+const EditProfileModal = ({ user }: EditProfileModalProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -50,8 +51,8 @@ const EditProfileModal = ({ src }: EditProfileModalProps) => {
     console.log(values)
   }
 
-  const { image, username, previewImage, resetInfo } = useUpdateUser()
-  const avatar = src ?? '/avatar.png'
+  const { image, username, setUsername, previewImage, resetInfo } = useUpdateUser(user)
+  const avatar = user.image ?? '/avatar.png'
 
   return (
     <Dialog onOpenChange={resetInfo}>
@@ -89,7 +90,6 @@ const EditProfileModal = ({ src }: EditProfileModalProps) => {
                           }}
                         />
                       </FormControl>
-                      <FormDescription>画像を選択してください</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -101,9 +101,12 @@ const EditProfileModal = ({ src }: EditProfileModalProps) => {
                     <FormItem>
                       <FormLabel>お名前</FormLabel>
                       <FormControl>
-                        <Input placeholder={username} {...field} />
+                        <Input
+                          {...field}
+                          onChange={(e) => setUsername(e.target.value)}
+                          value={username}
+                        />
                       </FormControl>
-                      <FormDescription>10文字まで設定可能です</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}

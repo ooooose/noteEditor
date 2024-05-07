@@ -19,7 +19,7 @@ const Profile = ({ user, isLoading }: ProfileProps) => {
     )
   return (
     <div className='mx-auto flex flex-col gap-3'>
-      <EditProfileModal src={user.image} />
+      <EditProfileModal user={user} />
       <p className='pb-2 text-center'>{user?.name} さん</p>
     </div>
   )
