@@ -41,13 +41,11 @@ const EditProfileModal = ({ user }: EditProfileModalProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
+      name: user.name,
     },
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     console.log(values)
   }
 
@@ -63,60 +61,58 @@ const EditProfileModal = ({ user }: EditProfileModalProps) => {
         <DialogHeader>
           <DialogDescription>プロフィールを編集</DialogDescription>
         </DialogHeader>
-        <div className='grid gap-4 py-4'>
-          <div className='grid w-full max-w-sm items-center gap-1.5'>
-            <Form {...form}>
-              <form className='space-y-8' onSubmit={form.handleSubmit(onSubmit)}>
-                <Image
-                  alt='avatar'
-                  className='mx-auto mb-5 size-[100px] rounded-full'
-                  height={100}
-                  src={image || avatar}
-                  width={100}
-                />
-                <FormField
-                  control={form.control}
-                  name='image'
-                  render={({ field: { ...fieldProps } }) => (
-                    <FormItem>
-                      <FormLabel>プロフィール画像</FormLabel>
-                      <FormControl>
-                        <Input
-                          type='file'
-                          {...fieldProps}
-                          accept='image/*'
-                          onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                            previewImage(event)
-                          }}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name='name'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>お名前</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          onChange={(e) => setUsername(e.target.value)}
-                          value={username}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button className='w-full' type='submit' variant='outline'>
-                  Submit
-                </Button>
-              </form>
-            </Form>
-          </div>
+        <div className='grid w-full max-w-sm items-center'>
+          <Form {...form}>
+            <form className='space-y-4' onSubmit={form.handleSubmit(onSubmit)}>
+              <Image
+                alt='avatar'
+                className='mx-auto mb-5 size-[100px] rounded-full'
+                height={100}
+                src={image || avatar}
+                width={100}
+              />
+              <FormField
+                control={form.control}
+                name='image'
+                render={({ field: { ...fieldProps } }) => (
+                  <FormItem>
+                    <FormLabel>プロフィール画像</FormLabel>
+                    <FormControl>
+                      <Input
+                        type='file'
+                        {...fieldProps}
+                        accept='image/*'
+                        onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                          previewImage(event)
+                        }}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='name'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>お名前</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        onChange={(e) => setUsername(e.target.value)}
+                        value={username}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button className='mt-5 w-full' type='submit' variant='outline'>
+                更新
+              </Button>
+            </form>
+          </Form>
         </div>
       </DialogContent>
     </Dialog>
