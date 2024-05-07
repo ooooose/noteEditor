@@ -6,7 +6,7 @@ import { Input as InputComponent } from '@/components/ui/input'
 import { FieldWrapper, FieldWrapperPassThroughProps } from './FieldWrapper'
 
 type InputFieldProps = FieldWrapperPassThroughProps & {
-  type?: 'text' | 'email' | 'password'
+  type?: 'text' | 'email' | 'password' | 'file'
   className?: string
   registration: Partial<UseFormRegisterReturn>
 }

@@ -1,5 +1,9 @@
+import { zodResolver } from '@hookform/resolvers/zod'
 import Image from 'next/image'
+import { useForm } from 'react-hook-form'
+import * as z from 'zod'
 
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogTrigger,
@@ -7,23 +11,49 @@ import {
   DialogDescription,
   DialogHeader,
 } from '@/components/ui/dialog'
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 
 import { useUpdateUser } from '../hooks/useUpdateUser'
 
 import Avatar from './Avatar'
+
+const formSchema = z.object({
+  name: z.string().min(1, '必須項目です'),
+  image: z.any(),
+})
 
 type EditProfileModalProps = {
   src: string | undefined
 }
 
 const EditProfileModal = ({ src }: EditProfileModalProps) => {
-  const { preview, previewImage, reset } = useUpdateUser()
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: '',
+    },
+  })
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    console.log(values)
+  }
+
+  const { image, previewImage, resetInfo } = useUpdateUser()
   const avatar = src ?? '/avatar.png'
 
   return (
-    <Dialog onOpenChange={reset}>
+    <Dialog onOpenChange={resetInfo}>
       <DialogTrigger>
         <Avatar src={avatar} />
       </DialogTrigger>
@@ -37,17 +67,50 @@ const EditProfileModal = ({ src }: EditProfileModalProps) => {
               alt='avatar'
               className='mx-auto mb-5 size-[100px] rounded-full'
               height={100}
-              src={preview || avatar}
+              src={image || avatar}
               width={100}
             />
-            <Label htmlFor='image'>Avatar</Label>
-            <Input
-              id='image'
-              onChange={(e) => {
-                previewImage(e)
-              }}
-              type='file'
-            />
+            <Form {...form}>
+              <form className='space-y-8' onSubmit={form.handleSubmit(onSubmit)}>
+                <FormField
+                  control={form.control}
+                  name='name'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>お名前</FormLabel>
+                      <FormControl>
+                        <Input placeholder='shadcn' {...field} />
+                      </FormControl>
+                      <FormDescription>This is your public display name.</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name='image'
+                  render={({ field: { onChange, ...fieldProps } }) => (
+                    <FormItem>
+                      <FormLabel>プロフィール画像</FormLabel>
+                      <FormControl>
+                        <Input
+                          type='file'
+                          {...fieldProps}
+                          accept='image/*'
+                          onChange={(event) => {
+                            onChange(event.target.files && event.target.files)
+                            previewImage(event)
+                          }}
+                        />
+                      </FormControl>
+                      <FormDescription>Select Your Profile Picture</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button type='submit'>Submit</Button>
+              </form>
+            </Form>
           </div>
         </div>
       </DialogContent>
