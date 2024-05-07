@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import Image from 'next/image'
+import { ChangeEvent } from 'react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 
@@ -63,28 +64,14 @@ const EditProfileModal = ({ src }: EditProfileModalProps) => {
         </DialogHeader>
         <div className='grid gap-4 py-4'>
           <div className='grid w-full max-w-sm items-center gap-1.5'>
-            <Image
-              alt='avatar'
-              className='mx-auto mb-5 size-[100px] rounded-full'
-              height={100}
-              src={image || avatar}
-              width={100}
-            />
             <Form {...form}>
               <form className='space-y-8' onSubmit={form.handleSubmit(onSubmit)}>
-                <FormField
-                  control={form.control}
-                  name='name'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>お名前</FormLabel>
-                      <FormControl>
-                        <Input placeholder='shadcn' {...field} />
-                      </FormControl>
-                      <FormDescription>This is your public display name.</FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+                <Image
+                  alt='avatar'
+                  className='mx-auto mb-5 size-[100px] rounded-full'
+                  height={100}
+                  src={image || avatar}
+                  width={100}
                 />
                 <FormField
                   control={form.control}
@@ -97,18 +84,34 @@ const EditProfileModal = ({ src }: EditProfileModalProps) => {
                           type='file'
                           {...fieldProps}
                           accept='image/*'
-                          onChange={(event) => {
+                          onChange={(event: ChangeEvent<HTMLInputElement>) => {
                             onChange(event.target.files && event.target.files)
                             previewImage(event)
                           }}
                         />
                       </FormControl>
-                      <FormDescription>Select Your Profile Picture</FormDescription>
+                      <FormDescription>画像を選択してください</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                <Button type='submit'>Submit</Button>
+                <FormField
+                  control={form.control}
+                  name='name'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>お名前</FormLabel>
+                      <FormControl>
+                        <Input placeholder='おーせ' {...field} />
+                      </FormControl>
+                      <FormDescription>30文字まで設定可能です</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button className='w-full' type='submit' variant='outline'>
+                  Submit
+                </Button>
               </form>
             </Form>
           </div>
