@@ -50,7 +50,7 @@ const EditProfileModal = ({ src }: EditProfileModalProps) => {
     console.log(values)
   }
 
-  const { image, previewImage, resetInfo } = useUpdateUser()
+  const { image, username, previewImage, resetInfo } = useUpdateUser()
   const avatar = src ?? '/avatar.png'
 
   return (
@@ -76,7 +76,7 @@ const EditProfileModal = ({ src }: EditProfileModalProps) => {
                 <FormField
                   control={form.control}
                   name='image'
-                  render={({ field: { onChange, ...fieldProps } }) => (
+                  render={({ field: { ...fieldProps } }) => (
                     <FormItem>
                       <FormLabel>プロフィール画像</FormLabel>
                       <FormControl>
@@ -85,7 +85,6 @@ const EditProfileModal = ({ src }: EditProfileModalProps) => {
                           {...fieldProps}
                           accept='image/*'
                           onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                            onChange(event.target.files && event.target.files)
                             previewImage(event)
                           }}
                         />
@@ -102,9 +101,9 @@ const EditProfileModal = ({ src }: EditProfileModalProps) => {
                     <FormItem>
                       <FormLabel>お名前</FormLabel>
                       <FormControl>
-                        <Input placeholder='おーせ' {...field} />
+                        <Input placeholder={username} {...field} />
                       </FormControl>
-                      <FormDescription>30文字まで設定可能です</FormDescription>
+                      <FormDescription>10文字まで設定可能です</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
