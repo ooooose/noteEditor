@@ -29,18 +29,21 @@ import { useUpdateUser } from '../hooks/useUpdateUser'
 import Avatar from './Avatar'
 
 const formSchema = z.object({
-  name: z.string().min(1, '必須項目です'),
-  image: z.any(),
+  name: z.string().min(1, '必須項目です').max(30, '最大文字数を超過しています'),
+  image: z.custom<File>().transform((file) => file),
 })
 
 type EditProfileModalProps = {
   user: AuthUser
+  image?: File
 }
 
 const EditProfileModal = ({ user }: EditProfileModalProps) => {
+  const { image, previewImage, resetInfo } = useUpdateUser(user)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      image: undefined,
       name: user.name,
     },
   })
@@ -49,7 +52,6 @@ const EditProfileModal = ({ user }: EditProfileModalProps) => {
     console.log(values)
   }
 
-  const { image, username, setUsername, previewImage, resetInfo } = useUpdateUser(user)
   const avatar = user.image ?? '/avatar.png'
 
   return (
@@ -74,17 +76,17 @@ const EditProfileModal = ({ user }: EditProfileModalProps) => {
               <FormField
                 control={form.control}
                 name='image'
-                render={({ field: { ...fieldProps } }) => (
+                render={() => (
                   <FormItem>
                     <FormLabel>プロフィール画像</FormLabel>
                     <FormControl>
                       <Input
-                        type='file'
-                        {...fieldProps}
+                        {...form.register('image')}
                         accept='image/*'
                         onChange={(event: ChangeEvent<HTMLInputElement>) => {
                           previewImage(event)
                         }}
+                        type='file'
                       />
                     </FormControl>
                     <FormMessage />
@@ -98,11 +100,7 @@ const EditProfileModal = ({ user }: EditProfileModalProps) => {
                   <FormItem>
                     <FormLabel>お名前</FormLabel>
                     <FormControl>
-                      <Input
-                        {...field}
-                        onChange={(e) => setUsername(e.target.value)}
-                        value={username}
-                      />
+                      <Input {...form.register('name')} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
