@@ -1,6 +1,9 @@
 import { ChangeEvent, useState } from 'react'
+import { toast } from 'sonner'
 
 import { AuthUser } from '@/features/auth/types'
+
+import { updateUser } from '../api/updateUser'
 
 export const useUpdateUser = (user: AuthUser) => {
   const [username, setUsername] = useState<string>(user.name)
@@ -19,6 +22,20 @@ export const useUpdateUser = (user: AuthUser) => {
     setImage('')
   }
   // アップデート処理を実装
+  const onUpdate = async (body: any) => {
+    const params = {
+      id: user.id,
+      name: body.name,
+      image: body.image ?? undefined,
+    }
+
+    try {
+      await updateUser(params)
+      toast('プロフィールを更新しました', { position: 'top-center' })
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
   return {
     image,
@@ -26,5 +43,6 @@ export const useUpdateUser = (user: AuthUser) => {
     setUsername,
     previewImage,
     resetInfo,
+    onUpdate,
   }
 }
