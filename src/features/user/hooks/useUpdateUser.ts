@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from 'react'
 import { toast } from 'sonner'
 
+import { useFetchAuthUserByEmail } from '@/features/auth/hooks/useFetchAuthUserByEmail'
 import { AuthUser } from '@/features/auth/types'
 
 import { updateUser } from '../api/updateUser'
@@ -8,8 +9,8 @@ import { updateUser } from '../api/updateUser'
 export const useUpdateUser = (user: AuthUser) => {
   const [username, setUsername] = useState<string>(user.name)
   const [image, setImage] = useState<string>('')
-  // TODO: R2にバケット追加（この前作ったものを）
-  // TODO: 画像アップロード処理を実装
+  const { mutate } = useFetchAuthUserByEmail()
+
   const previewImage = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const file = e.target.files[0]
@@ -31,6 +32,7 @@ export const useUpdateUser = (user: AuthUser) => {
 
     try {
       await updateUser(params)
+      mutate()
       toast('プロフィールを更新しました', { position: 'top-center' })
     } catch (err) {
       console.error(err)
