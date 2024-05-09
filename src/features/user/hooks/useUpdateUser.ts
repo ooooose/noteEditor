@@ -9,7 +9,7 @@ import { updateUser } from '../api/updateUser'
 export const useUpdateUser = (user: AuthUser) => {
   const [username, setUsername] = useState<string>(user.name)
   const [image, setImage] = useState<string>('')
-  const { mutate } = useFetchAuthUserByEmail()
+  const { isLoading, mutate } = useFetchAuthUserByEmail()
 
   const previewImage = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -23,11 +23,11 @@ export const useUpdateUser = (user: AuthUser) => {
     setImage('')
   }
   // アップデート処理を実装
-  const onUpdate = async (body: any) => {
+  const onUpdate = async (body: { name: string; image: File }) => {
     const params = {
       id: user.id,
       name: body.name,
-      image: body.image ?? undefined,
+      image: body.image,
     }
 
     try {
@@ -46,5 +46,6 @@ export const useUpdateUser = (user: AuthUser) => {
     previewImage,
     resetInfo,
     onUpdate,
+    isLoading,
   }
 }

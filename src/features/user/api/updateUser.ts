@@ -3,7 +3,7 @@ import { apiClient } from '@/lib/api/api-client'
 type paramsType = {
   id: string
   name: string
-  image: string
+  image: File
 }
 
 export const updateUser = async (params: paramsType) => {

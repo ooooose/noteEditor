@@ -4,13 +4,14 @@ import { ChangeEvent } from 'react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/elements/Button'
 import {
   Dialog,
   DialogTrigger,
   DialogContent,
   DialogDescription,
   DialogHeader,
+  DialogClose,
 } from '@/components/ui/dialog'
 import {
   Form,
@@ -39,7 +40,7 @@ type EditProfileModalProps = {
 }
 
 const EditProfileModal = ({ user }: EditProfileModalProps) => {
-  const { image, previewImage, resetInfo } = useUpdateUser(user)
+  const { image, previewImage, resetInfo, onUpdate, isLoading } = useUpdateUser(user)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -49,7 +50,7 @@ const EditProfileModal = ({ user }: EditProfileModalProps) => {
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
+    onUpdate(values)
   }
 
   const avatar = user.image ?? '/avatar.png'
@@ -106,9 +107,16 @@ const EditProfileModal = ({ user }: EditProfileModalProps) => {
                   </FormItem>
                 )}
               />
-              <Button className='mt-5 w-full' type='submit' variant='outline'>
-                更新
-              </Button>
+              <DialogClose asChild>
+                <Button
+                  className='mt-5 w-full'
+                  disabled={isLoading}
+                  isLoading={isLoading}
+                  type='submit'
+                >
+                  更新
+                </Button>
+              </DialogClose>
             </form>
           </Form>
         </div>

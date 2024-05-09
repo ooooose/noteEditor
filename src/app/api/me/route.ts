@@ -34,7 +34,7 @@ export async function PUT(req: Request) {
 
   try {
     await main()
-    if (image) {
+    if (image[0]) {
       const s3Client = new S3Client({
         region: REGION,
         endpoint: AVATAR_CLOUDFLARE_ENDPOINT as string,
@@ -43,15 +43,15 @@ export async function PUT(req: Request) {
           secretAccessKey: CLOUDFLARE_ACCESS_KEY || '',
         },
       })
-
+      console.log(image)
       const fileName = `${Date.now()}-${id}`
-      const buffer = Buffer.from(await image?.arrayBuffer())
+      const buffer = Buffer.from(await image.arrayBuffer())
 
       const uploadImage: any = {
         Bucket: AVATAR_BUCKET_NAME,
         key: fileName,
         Body: buffer,
-        ContentType: 'image/webp',
+        ContentType: image.type,
         ACL: 'public-read',
       }
 
