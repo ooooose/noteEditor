@@ -1,11 +1,5 @@
 import { apiClient } from '@/lib/api/api-client'
 
-type paramsType = {
-  id: string
-  name: string
-  image: File
-}
-
-export const updateUser = async (params: paramsType) => {
+export const updateUser = async (params: FormData) => {
   return await apiClient.apiPut('/api/me', params).then((result) => result.json())
 }

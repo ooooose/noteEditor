@@ -24,14 +24,16 @@ export const useUpdateUser = (user: AuthUser) => {
   }
   // アップデート処理を実装
   const onUpdate = async (body: { name: string; image: File }) => {
-    const params = {
-      id: user.id,
-      name: body.name,
-      image: body.image,
-    }
+    const formData = new FormData()
 
+    formData.append('id', user.id)
+    formData.append('name', body.name)
+    formData.append('image', body.image)
+    console.log(body)
+    // formDataに何も格納されていない（）
+    console.log(formData)
     try {
-      await updateUser(params)
+      await updateUser(formData)
       mutate()
       toast('プロフィールを更新しました', { position: 'top-center' })
     } catch (err) {

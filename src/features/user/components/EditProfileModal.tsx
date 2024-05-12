@@ -31,12 +31,11 @@ import Avatar from './Avatar'
 
 const formSchema = z.object({
   name: z.string().min(1, '必須項目です').max(30, '最大文字数を超過しています'),
-  image: z.custom<File>().transform((file) => file),
+  image: z.custom<FileList>().transform((file) => file[0]),
 })
 
 type EditProfileModalProps = {
   user: AuthUser
-  image?: File
 }
 
 const EditProfileModal = ({ user }: EditProfileModalProps) => {
@@ -50,6 +49,7 @@ const EditProfileModal = ({ user }: EditProfileModalProps) => {
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values)
     onUpdate(values)
   }
 

@@ -34,7 +34,7 @@ export async function PUT(req: Request) {
 
   try {
     await main()
-    if (image[0]) {
+    if (image) {
       const s3Client = new S3Client({
         region: REGION,
         endpoint: AVATAR_CLOUDFLARE_ENDPOINT as string,
