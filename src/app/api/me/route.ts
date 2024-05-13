@@ -3,6 +3,13 @@ import { NextResponse, NextRequest } from 'next/server'
 
 import { prisma, main } from '@/lib/prisma'
 
+// リクエストの自動パースをOFFにする
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+}
+
 export async function POST(req: NextRequest) {
   try {
     const { email } = await req.json()
@@ -22,7 +29,11 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PUT(req: Request) {
-  const { id, name, image } = await req.json()
+  const formData = await req.formData()
+  console.log(formData)
+  const id = formData.get('id') as string
+  const name = formData.get('name') as string
+  const image = formData.get('image') as File
 
   const {
     CLOUDFLARE_ACCESS_KEY_ID,
