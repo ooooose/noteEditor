@@ -15,8 +15,8 @@ export const useFetchAuthUserByEmail = () => {
 
   // Ensure that useSWR is called unconditionally
   const { data, error, isLoading, mutate } = useSWR(
-    '/api/me',
-    () => apiClient.apiPost('/api/me', params).then((result) => result.json()),
+    '/api/users',
+    () => apiClient.apiPost('/api/users', params).then((result) => result.json()),
     {
       revalidateIfStale: false,
       revalidateOnFocus: false,
