@@ -11,24 +11,6 @@ export const config = {
 }
 
 export async function POST(req: NextRequest) {
-  try {
-    const { email } = await req.json()
-    await main()
-    const user = await prisma.user.findFirst({
-      where: { email: email },
-      include: {
-        likes: true,
-      },
-    })
-    return NextResponse.json({ message: 'Success', user }, { status: 200 })
-  } catch (err) {
-    return NextResponse.json({ message: 'Error', err }, { status: 500 })
-  } finally {
-    await prisma.$disconnect()
-  }
-}
-
-export async function PUT(req: Request) {
   const formData = await req.formData()
   console.log(formData)
   const id = formData.get('id') as string
@@ -54,13 +36,13 @@ export async function PUT(req: Request) {
           secretAccessKey: CLOUDFLARE_ACCESS_KEY || '',
         },
       })
-      console.log(image)
-      const fileName = `${Date.now()}-${id}`
+
+      const fileName = `${Date.now()}-${id}-${name}`
       const buffer = Buffer.from(await image.arrayBuffer())
 
       const uploadImage: any = {
         Bucket: AVATAR_BUCKET_NAME,
-        key: fileName,
+        Key: fileName,
         Body: buffer,
         ContentType: image.type,
         ACL: 'public-read',
