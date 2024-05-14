@@ -22,6 +22,17 @@ class ApiClient {
     return response
   }
 
+  async apiPostFormData(url: string, body: FormData) {
+    const response = await fetch(`${this.baseURL}${url}`, {
+      method: 'POST',
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+      },
+      body: body,
+    })
+    return response
+  }
+
   async apiPut(url: string, body = {}) {
     const response = await fetch(`${this.baseURL}${url}`, {
       method: 'PUT',
