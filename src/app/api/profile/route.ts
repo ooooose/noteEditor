@@ -3,19 +3,11 @@ import { NextResponse, NextRequest } from 'next/server'
 
 import { prisma, main } from '@/lib/prisma'
 
-// リクエストの自動パースをOFFにする
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-}
-
 export async function POST(req: NextRequest) {
   const formData = await req.formData()
-  console.log(formData)
   const id = formData.get('id') as string
   const name = formData.get('name') as string
-  const image = formData.get('image') as File
+  const image = formData.get('image') as File | null
 
   const {
     CLOUDFLARE_ACCESS_KEY_ID,
@@ -27,7 +19,7 @@ export async function POST(req: NextRequest) {
 
   try {
     await main()
-    if (image) {
+    if (image && image instanceof File) {
       const s3Client = new S3Client({
         region: REGION,
         endpoint: AVATAR_CLOUDFLARE_ENDPOINT as string,
@@ -50,7 +42,7 @@ export async function POST(req: NextRequest) {
 
       const command = new PutObjectCommand(uploadImage)
       await s3Client.send(command)
-      const imageUrl = `${process.env.IMAGE_HOST_URL}/${fileName}`
+      const imageUrl = `${process.env.AVATAR_HOST_URL}/${fileName}`
 
       const user = await prisma.user.update({
         where: {
