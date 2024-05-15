@@ -1,3 +1,4 @@
+import type { AuthUser } from '@/features/auth/types'
 import type { Comment } from '@/features/comments/types'
 import type { Like } from '@/features/likes/types'
 import type { Theme } from '@/features/themes/types'
@@ -12,5 +13,6 @@ export type Picture = {
   createdAt: Date
   theme: Theme
   likes: Like[]
+  user: AuthUser
   comments: Comment[]
 }

@@ -24,7 +24,6 @@ type PictureCardProps = {
 
 const PictureCard = memo(({ picture, comments, user, likes }: PictureCardProps) => {
   const { like, liked, likeCount } = useMutateLike(picture.id, user.id, likes)
-
   const pathName = usePathname()
   const isDisplay = pathName === '/timeline'
   return (
@@ -32,7 +31,7 @@ const PictureCard = memo(({ picture, comments, user, likes }: PictureCardProps) 
       <div className='py-3'>
         <div className='mx-3 flex justify-between'>
           <p>
-            <span className='font-bold'>{picture.author}</span>さん
+            <span className='font-bold'>{picture.user.name}</span>さん
           </p>
           <p className='text-sm font-semibold opacity-50'>
             {formatDateForPicture(picture.createdAt)}
@@ -40,12 +39,12 @@ const PictureCard = memo(({ picture, comments, user, likes }: PictureCardProps) 
         </div>
       </div>
       <div>
-        <Picture author={picture.author} frameId={picture.frameId} src={picture.image} />
+        <Picture author={picture.user.name} frameId={picture.frameId} src={picture.image} />
         <div className='float-right flex gap-2'>
           <div className='ml-2 mt-3'>
             {isDisplay && (
               <PictureTheme
-                author={picture.author}
+                author={picture.user.name}
                 frameId={picture.frameId}
                 src={picture.image}
                 title={picture.theme?.title}
