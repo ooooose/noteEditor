@@ -11,10 +11,10 @@ const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(({ src }: AvatarPro
     <div ref={ref}>
       <Image
         alt='avatar'
-        className='mx-auto cursor-pointer rounded-full hover:opacity-80'
-        height={70}
+        className='mx-auto size-[100px] cursor-pointer rounded-full hover:opacity-80'
+        height={100}
         src={avatar}
-        width={70}
+        width={100}
       />
     </div>
   )
