@@ -12,6 +12,10 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: process.env.AVATAR_BUCKET_URL,
+      },
+      {
+        protocol: 'https',
         hostname: process.env.GOOGLE_URL,
       },
     ],

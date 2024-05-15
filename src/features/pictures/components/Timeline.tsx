@@ -30,6 +30,7 @@ const Timeline = () => {
     <div className={height}>
       <Pictures
         isLast={isLast}
+        isLoading={isLoading}
         loadMorePictures={loadMorePictures}
         pictures={pictures}
         user={user}

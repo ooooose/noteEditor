@@ -2,7 +2,6 @@ import { NextResponse, NextRequest } from 'next/server'
 
 import { prisma, main } from '@/lib/prisma'
 
-// テーマ作成API
 export async function POST(req: NextRequest) {
   try {
     const { email } = await req.json()
