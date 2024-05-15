@@ -35,5 +35,6 @@ export const useFetchAuthUserByEmail = () => {
     isLoading: isLoading,
     isError: error,
     mutate: mutate,
+    session,
   }
 }
