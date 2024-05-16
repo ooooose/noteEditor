@@ -13,8 +13,9 @@ const Footer = () => {
             <div className='mt-10'>
               <Image
                 alt='logo'
-                className='mb-3 size-auto'
+                className='mb-3 h-auto w-[150px]'
                 height={100}
+                priority
                 src='/TopLogo.png'
                 width={150}
               />
