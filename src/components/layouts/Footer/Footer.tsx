@@ -11,7 +11,13 @@ const Footer = () => {
         <div className='flex items-center justify-between px-4 pb-12'>
           <div className='flex flex-col gap-4'>
             <div className='mt-10'>
-              <Image alt='logo' className='mb-3' height={100} src='/TopLogo.png' width={150} />
+              <Image
+                alt='logo'
+                className='mb-3 size-auto'
+                height={100}
+                src='/TopLogo.png'
+                width={150}
+              />
               <p>テーマに沿って絵を描くアプリ</p>
             </div>
             <AuthButton />

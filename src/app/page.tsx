@@ -10,7 +10,7 @@ export default function Home() {
           <div className='my-20'>
             <Image
               alt='Top Image'
-              className='h-auto w-[200px]'
+              className='h-[200px] w-auto'
               height={100}
               src='/TopImage.png'
               width={100}

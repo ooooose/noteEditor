@@ -25,10 +25,10 @@ export const AuthButton = () => {
         <div className='flex items-end gap-4'>
           <Image
             alt='avatar'
-            className='rounded-full'
-            height={70}
+            className='h-auto w-[80px] rounded-full'
+            height={100}
             src={user.image ?? '/avatar.png'}
-            width={70}
+            width={100}
           />
           <p className='pb-2'>{user.name} さん</p>
         </div>

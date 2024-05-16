@@ -9,7 +9,7 @@ const Header = () => {
     <div className='sticky top-0 z-20 flex items-center justify-between bg-white/80 px-3 pb-4 pt-8 text-4xl sm:px-10'>
       <div className='font-medium'>
         <Link href='/'>
-          <Image alt='logo' height={100} src='/TopLogo.png' width={150} />
+          <Image alt='logo' className='size-auto' height={100} src='/TopLogo.png' width={150} />
         </Link>
       </div>
       <Menu />
