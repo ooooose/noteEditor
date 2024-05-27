@@ -4,11 +4,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 import { useFetchAuthUserByEmail } from '@/features/auth/hooks/useFetchAuthUserByEmail'
 import Pictures from '@/features/pictures/components/Pictures'
-import { useFetchPictures } from '@/features/pictures/hooks/useFetchPictures'
+
+import { useFetchUserPictures } from '../hooks/useFetchUserPictures'
 
 import Profile from './Profile'
 
 const UserPictures = () => {
+  const { user, isLoading: isUserLoading } = useFetchAuthUserByEmail()
   const {
     pictures,
     isLoading: isPicturesLoading,
@@ -16,10 +18,8 @@ const UserPictures = () => {
     size,
     isLast,
     loadMorePictures,
-  } = useFetchPictures()
-  const { user, isLoading: isUserLoading } = useFetchAuthUserByEmail()
+  } = useFetchUserPictures(user?.id)
 
-  const sortedPictures = pictures?.filter((picture) => picture.userId === user?.id) ?? null
   const isLoading = isPicturesLoading || isUserLoading
   if (error) return <>Error loading theme</>
   const height = `h-[${size * 600}px] mt-5`
@@ -37,7 +37,7 @@ const UserPictures = () => {
               isLast={isLast}
               isLoading={isLoading}
               loadMorePictures={loadMorePictures}
-              pictures={sortedPictures}
+              pictures={pictures}
               user={user}
             />
           </div>
