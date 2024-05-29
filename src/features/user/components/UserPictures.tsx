@@ -7,6 +7,7 @@ import Pictures from '@/features/pictures/components/Pictures'
 
 import { useFetchUserPictures } from '../hooks/useFetchUserPictures'
 
+import LikedPictures from './LikedPictures'
 import Profile from './Profile'
 
 const UserPictures = () => {
@@ -43,7 +44,7 @@ const UserPictures = () => {
           </div>
         </TabsContent>
         <TabsContent className='w-full' value='likes'>
-          <div className='mx-auto text-center'>絵画表示予定</div>
+          <LikedPictures user={user} />
         </TabsContent>
       </Tabs>
     </div>
