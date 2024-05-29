@@ -1,17 +1,16 @@
-'use client'
+import { memo } from 'react'
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-
-import { useFetchAuthUserByEmail } from '@/features/auth/hooks/useFetchAuthUserByEmail'
 import Pictures from '@/features/pictures/components/Pictures'
 
 import { useFetchUserPictures } from '../hooks/useFetchUserPictures'
 
-import LikedPictures from './LikedPictures'
-import Profile from './Profile'
+import type { AuthUser } from '@/features/auth/types'
 
-const UserPictures = () => {
-  const { user, isLoading: isUserLoading } = useFetchAuthUserByEmail()
+type LikedPicturesProps = {
+  user: AuthUser
+}
+
+const UserPictures = memo(({ user }: LikedPicturesProps) => {
   const {
     pictures,
     isLoading: isPicturesLoading,
@@ -21,33 +20,21 @@ const UserPictures = () => {
     loadMorePictures,
   } = useFetchUserPictures(user?.id)
 
-  const isLoading = isPicturesLoading || isUserLoading
+  const isLoading = isPicturesLoading
   if (error) return <>Error loading theme</>
   const height = `h-[${size * 600}px] mt-5`
   return (
-    <div>
-      <Profile isLoading={isLoading} user={user} />
-      <Tabs className='mt-5 w-[760px]' defaultValue='works'>
-        <TabsList className='grid w-full grid-cols-2'>
-          <TabsTrigger value='works'>Works</TabsTrigger>
-          <TabsTrigger value='likes'>Likes</TabsTrigger>
-        </TabsList>
-        <TabsContent value='works'>
-          <div className={height}>
-            <Pictures
-              isLast={isLast}
-              isLoading={isLoading}
-              loadMorePictures={loadMorePictures}
-              pictures={pictures}
-              user={user}
-            />
-          </div>
-        </TabsContent>
-        <TabsContent className='w-full' value='likes'>
-          <LikedPictures user={user} />
-        </TabsContent>
-      </Tabs>
+    <div className={height}>
+      <Pictures
+        isLast={isLast}
+        isLoading={isLoading}
+        loadMorePictures={loadMorePictures}
+        pictures={pictures}
+        user={user}
+      />
     </div>
   )
-}
+})
+
 export default UserPictures
+UserPictures.displayName = 'UserPictures'
