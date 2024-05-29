@@ -2,12 +2,12 @@ import React from 'react'
 
 import MainLayout from '@/components/layouts/Layout/MainLayout'
 
-import UserPictures from '@/features/user/components/UserPictures'
+import User from '@/features/user/components/User'
 
 function Me() {
   return (
     <MainLayout>
-      <UserPictures />
+      <User />
     </MainLayout>
   )
 }

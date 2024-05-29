@@ -30,7 +30,7 @@ const CommentsList = memo(
       )
     return (
       <ul aria-label='comments' className='flex h-60 flex-col space-y-3 overflow-y-auto'>
-        {comments.length !== 0 ? (
+        {comments && comments.length !== 0 ? (
           comments.map((comment: Comment, index: number) => {
             return (
               <CommentItem

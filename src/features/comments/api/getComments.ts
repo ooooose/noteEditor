@@ -1,5 +1,5 @@
 import { apiClient } from '@/lib/api/api-client'
 
-export const getComments = () => {
-  return apiClient.apiGet('/api/comments')
+export const getComments = async (url: string) => {
+  return apiClient.apiGet(url).then((res) => res.json())
 }

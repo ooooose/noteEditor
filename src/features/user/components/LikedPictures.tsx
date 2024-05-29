@@ -2,7 +2,7 @@ import { memo } from 'react'
 
 import Pictures from '@/features/pictures/components/Pictures'
 
-import { useFetchUserPictures } from '../hooks/useFetchUserPictures'
+import { useFetchUserLikedPictures } from '../hooks/useFetchUserLikedPictures'
 
 import type { AuthUser } from '@/features/auth/types'
 
@@ -10,7 +10,7 @@ type LikedPicturesProps = {
   user: AuthUser
 }
 
-const UserPictures = memo(({ user }: LikedPicturesProps) => {
+const LikedPictures = memo(({ user }: LikedPicturesProps) => {
   const {
     pictures,
     isLoading: isPicturesLoading,
@@ -18,7 +18,7 @@ const UserPictures = memo(({ user }: LikedPicturesProps) => {
     size,
     isLast,
     loadMorePictures,
-  } = useFetchUserPictures(user?.id)
+  } = useFetchUserLikedPictures(user.id)
 
   const isLoading = isPicturesLoading
   if (error) return <>Error loading theme</>
@@ -36,5 +36,5 @@ const UserPictures = memo(({ user }: LikedPicturesProps) => {
   )
 })
 
-export default UserPictures
-UserPictures.displayName = 'UserPictures'
+export default LikedPictures
+LikedPictures.displayName = 'LikedPictures'
