@@ -1,19 +1,14 @@
-import { useSearchParams } from 'next/navigation'
 import { useCallback } from 'react'
 import { toast } from 'sonner'
 
 import { AuthUser } from '@/features/auth/types'
-import { useFetchPictures } from '@/features/pictures/hooks/useFetchPictures'
 
 import { deleteComment, postComment, updateComment } from '../api'
 
 import { useFetchComments } from './useFetchComments'
 
 export const useMutateComment = (pictureId: string, user: AuthUser) => {
-  const searchParams = useSearchParams()
-  const theme = (searchParams.get('theme') as string) || undefined
-  const { comments, isLoading } = useFetchComments(pictureId)
-  const { mutate } = useFetchPictures(theme)
+  const { comments, isLoading, mutate } = useFetchComments(pictureId)
 
   const onSubmitComment = useCallback(
     async (body: string) => {
