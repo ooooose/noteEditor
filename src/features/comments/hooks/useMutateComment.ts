@@ -9,15 +9,11 @@ import { deleteComment, postComment, updateComment } from '../api'
 
 import { useFetchComments } from './useFetchComments'
 
-import type { Comment } from '../types'
-
 export const useMutateComment = (pictureId: string, user: AuthUser) => {
   const searchParams = useSearchParams()
   const theme = (searchParams.get('theme') as string) || undefined
-  const { comments, isLoading } = useFetchComments()
+  const { comments, isLoading } = useFetchComments(pictureId)
   const { mutate } = useFetchPictures(theme)
-  const pictureComments =
-    comments && comments?.filter((comment: Comment) => comment.pictureId === pictureId)
 
   const onSubmitComment = useCallback(
     async (body: string) => {
@@ -75,7 +71,7 @@ export const useMutateComment = (pictureId: string, user: AuthUser) => {
 
   return {
     isLoading,
-    pictureComments,
+    comments,
     onSubmitComment,
     handleDeleteComment,
     handleUpdateComment,

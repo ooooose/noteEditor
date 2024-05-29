@@ -1,14 +1,10 @@
 import useSWR from 'swr'
 
-import { apiClient } from '@/lib/api/api-client'
+import { getComments } from '../api'
 
-const fetchComments = async () => {
-  const result = await apiClient.apiGet('/api/comments')
-  return result.json()
-}
-
-export const useFetchComments = () => {
-  const { data, error, isLoading, mutate } = useSWR('/api/comments', fetchComments, {
+export const useFetchComments = (pictureId: string) => {
+  const url = `/api/comments/${pictureId}`
+  const { data, error, isLoading, mutate } = useSWR(url, (url) => getComments(url), {
     revalidateIfStale: false,
     revalidateOnFocus: false,
     revalidateOnReconnect: false,

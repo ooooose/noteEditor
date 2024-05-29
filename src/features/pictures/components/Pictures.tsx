@@ -25,13 +25,7 @@ const Pictures = memo(
         <div className='grid grid-cols-3 grid-rows-2 gap-10'>
           {pictures?.map((picture: PictureType) => {
             return (
-              <PictureCard
-                comments={picture.comments}
-                key={picture.id}
-                likes={picture.likes}
-                picture={picture}
-                user={user}
-              />
+              <PictureCard key={picture.id} likes={picture.likes} picture={picture} user={user} />
             )
           })}
         </div>

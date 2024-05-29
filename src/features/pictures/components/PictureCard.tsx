@@ -3,7 +3,6 @@ import { memo } from 'react'
 
 import { AuthUser } from '@/features/auth/types'
 import Comment from '@/features/comments/components/Comment'
-import { Comment as CommentType } from '@/features/comments/types'
 import { Like } from '@/features/likes/components'
 import { useMutateLike } from '@/features/likes/hooks/useMutateLike'
 import { Like as LikeType } from '@/features/likes/types'
@@ -17,12 +16,11 @@ import type { Picture as PictureType } from '../types'
 
 type PictureCardProps = {
   picture: PictureType
-  comments: CommentType[]
   likes: LikeType[]
   user: AuthUser
 }
 
-const PictureCard = memo(({ picture, comments, user, likes }: PictureCardProps) => {
+const PictureCard = memo(({ picture, user, likes }: PictureCardProps) => {
   const { like, liked, likeCount } = useMutateLike(picture.id, user.id, likes)
   const pathName = usePathname()
   const isDisplay = pathName === '/timeline'
@@ -52,7 +50,7 @@ const PictureCard = memo(({ picture, comments, user, likes }: PictureCardProps) 
             )}
           </div>
           <div className='mt-3 flex gap-2'>
-            <Comment comments={comments} pictureId={picture.id} user={user} />
+            <Comment pictureId={picture.id} user={user} />
             <Like like={like} likeCount={likeCount} liked={liked} />
           </div>
           {user.id === picture.userId && <PictureMenu picture={picture} />}
