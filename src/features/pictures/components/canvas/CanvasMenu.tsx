@@ -8,6 +8,7 @@ import { ThemeSelect } from '@/features/themes/components/ThemeSelect'
 
 import { ColorPicker } from './ColorPicker'
 import { ManageLineWidth } from './ManageLineWidth'
+import { ThemeDescription } from './ThemeDescription'
 
 type CanvasMenuProps = {
   title: string
@@ -45,6 +46,7 @@ export const CanvasMenu = memo(
               <ThemeSelect handleSelectChange={handleSelectChange} />
             </div>
             <div className='mt-10 flex justify-end gap-3'>
+              <ThemeDescription />
               <Modal description='絵をリセットしますか？' text='リセット'>
                 <DialogClose asChild>
                   <Button onClick={Reset} variant='destructive'>
