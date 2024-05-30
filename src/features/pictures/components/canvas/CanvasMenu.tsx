@@ -34,14 +34,14 @@ export const CanvasMenu = memo(
     isLoading,
   }: CanvasMenuProps) => {
     return (
-      <div className='fixed bottom-0 left-0 h-[150px] w-full border pt-4'>
-        <div className='mx-auto w-[960px]'>
+      <div className='h-[150px] w-full pt-4 text-left'>
+        <div className='ml-5'>
           <div className='mb-3 ml-10 flex'>
             <ColorPicker color={color} setColor={setColor} setLineWidth={setLineWidth} />
           </div>
-          <div className='flex justify-center gap-3'>
+          <div className='mt-10'>
             <ManageLineWidth lineWidth={lineWidth} setLineWidth={setLineWidth} />
-            <div className='flex gap-3'>
+            <div className='mt-10 flex justify-end gap-3'>
               <Modal description='絵をリセットしますか？' text='リセット'>
                 <DialogClose asChild>
                   <Button onClick={Reset} variant='destructive'>
