@@ -21,8 +21,9 @@ export const ThemeSelect = memo(({ handleSelectChange }: ThemeSelectProps) => {
   useEffect(() => {
     if (randomTheme) {
       setSelectedOption({ value: randomTheme.title, label: randomTheme.title })
+      handleSelectChange(randomTheme.title)
     }
-  }, [randomTheme])
+  }, [randomTheme, handleSelectChange])
 
   const options: ThemeOption[] =
     themes?.map((theme: Theme) => ({
