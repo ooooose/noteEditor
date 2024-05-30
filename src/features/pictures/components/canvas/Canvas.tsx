@@ -38,7 +38,7 @@ export const Canvas: React.FC<IProps> = (props) => {
     userName: user?.name,
   })
   return (
-    <section>
+    <section className='mt-10 flex'>
       <div className='mb-4 border'>
         <canvas
           height={`${height}px`}
