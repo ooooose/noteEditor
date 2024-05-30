@@ -35,12 +35,15 @@ export const CanvasMenu = memo(
   }: CanvasMenuProps) => {
     return (
       <div className='h-[150px] w-full pt-4 text-left'>
-        <div className='ml-5'>
+        <div className='mx-5'>
           <div className='mb-3 ml-10 flex'>
             <ColorPicker color={color} setColor={setColor} setLineWidth={setLineWidth} />
           </div>
-          <div className='mt-10'>
+          <div className='mx-10 mt-10'>
             <ManageLineWidth lineWidth={lineWidth} setLineWidth={setLineWidth} />
+            <div className='mt-10'>
+              <ThemeSelect handleSelectChange={handleSelectChange} />
+            </div>
             <div className='mt-10 flex justify-end gap-3'>
               <Modal description='絵をリセットしますか？' text='リセット'>
                 <DialogClose asChild>
@@ -55,7 +58,7 @@ export const CanvasMenu = memo(
                 </DialogClose>
               </Modal>
               <Modal description='絵を登録しますか？' text='登録'>
-                <ThemeSelect handleSelectChange={handleSelectChange} />
+                {!title && <small className='text-red-500'>テーマを入力してください</small>}
                 <Button
                   disabled={!title || isLoading}
                   isLoading={isLoading}
