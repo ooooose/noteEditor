@@ -11,9 +11,11 @@ export async function GET() {
         pictures: true,
       },
     })
-    // 以下型定義は見直すべき
+
     const themes = data.filter((theme: any) => theme.pictures && theme.pictures.length > 0)
-    return NextResponse.json({ message: 'Success', themes }, { status: 200 })
+
+    const randomTheme = themes[Math.floor(Math.random() * themes.length)]
+    return NextResponse.json({ message: 'Success', themes, randomTheme }, { status: 200 })
   } catch (err) {
     return NextResponse.json({ message: 'Error', err }, { status: 500 })
   } finally {
