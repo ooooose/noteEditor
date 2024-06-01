@@ -3,6 +3,11 @@ import { NextResponse, NextRequest } from 'next/server'
 
 import { prisma, main } from '@/lib/prisma'
 
+async function fileToBuffer(file: File): Promise<Buffer> {
+  const arrayBuffer = await file.arrayBuffer()
+  return Buffer.from(arrayBuffer)
+}
+
 export async function POST(req: NextRequest) {
   const formData = await req.formData()
   const id = formData.get('id') as string
@@ -30,7 +35,7 @@ export async function POST(req: NextRequest) {
       })
 
       const fileName = `${Date.now()}-${id}-${name}`
-      const buffer = Buffer.from(await image.arrayBuffer())
+      const buffer = await fileToBuffer(image)
 
       const uploadImage: any = {
         Bucket: AVATAR_BUCKET_NAME,
