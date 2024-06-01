@@ -1,18 +1,32 @@
+import { Buffer } from 'buffer'
+
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
 import { NextResponse, NextRequest } from 'next/server'
 
 import { prisma, main } from '@/lib/prisma'
 
-async function fileToBuffer(file: File): Promise<Buffer> {
-  const arrayBuffer = await file.arrayBuffer()
-  return Buffer.from(arrayBuffer)
+// Helper function to convert file to buffer
+async function streamToBuffer(stream: ReadableStream): Promise<Buffer> {
+  const chunks: Uint8Array[] = []
+  const reader = stream.getReader()
+
+  let done = false
+  while (!done) {
+    const { value, done: doneReading } = await reader.read()
+    if (value) {
+      chunks.push(value)
+    }
+    done = doneReading
+  }
+
+  return Buffer.concat(chunks)
 }
 
 export async function POST(req: NextRequest) {
   const formData = await req.formData()
   const id = formData.get('id') as string
   const name = formData.get('name') as string
-  const image = formData.get('image') as File | null
+  const image = formData.get('image') as Blob | null
 
   const {
     CLOUDFLARE_ACCESS_KEY_ID,
@@ -24,7 +38,7 @@ export async function POST(req: NextRequest) {
 
   try {
     await main()
-    if (image && image instanceof File) {
+    if (image) {
       const s3Client = new S3Client({
         region: REGION,
         endpoint: AVATAR_CLOUDFLARE_ENDPOINT as string,
@@ -35,7 +49,7 @@ export async function POST(req: NextRequest) {
       })
 
       const fileName = `${Date.now()}-${id}-${name}`
-      const buffer = await fileToBuffer(image)
+      const buffer = await streamToBuffer(image.stream())
 
       const uploadImage: any = {
         Bucket: AVATAR_BUCKET_NAME,
@@ -72,7 +86,10 @@ export async function POST(req: NextRequest) {
     }
   } catch (err) {
     console.error('POST Error:', err)
-    return NextResponse.json({ message: 'Error', err }, { status: 500 })
+    return NextResponse.json(
+      { message: 'Error', error: err.message, stack: err.stack },
+      { status: 500 },
+    )
   } finally {
     await prisma.$disconnect()
   }
