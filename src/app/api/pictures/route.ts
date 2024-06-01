@@ -74,11 +74,9 @@ export async function POST(req: Request) {
       buff[i] = blob.charCodeAt(i)
     }
 
-    const file = new File([buff.buffer], `${Date.now()}-${title}}`, { type: 'image/webp' })
-    const fileName = `${Date.now()}-${title}`
+    const buffer = Buffer.from(image.replace(/^.*,/, ''), 'base64')
 
-    // File オブジェクトから Buffer に変換
-    const buffer = Buffer.from(await file?.arrayBuffer())
+    const fileName = `${Date.now()}-${title}`
 
     const uploadParams: any = {
       Bucket: BUCKET_NAME,
@@ -115,7 +113,7 @@ export async function POST(req: Request) {
     })
     return NextResponse.json({ message: 'Success', picture }, { status: 201 })
   } catch (err) {
-    console.error('GET Error:', err)
+    console.error('Upload Error:', err)
     return NextResponse.json({ message: 'Error', err }, { status: 500 })
   } finally {
     await prisma.$disconnect()
