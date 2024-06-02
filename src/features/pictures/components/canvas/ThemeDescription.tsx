@@ -1,3 +1,4 @@
+import { Button } from '@/components/elements/Button'
 import {
   Dialog,
   DialogContent,
@@ -5,6 +6,7 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogDescription,
+  DialogClose,
 } from '@/components/ui/dialog'
 
 export const ThemeDescription = () => {
@@ -19,11 +21,16 @@ export const ThemeDescription = () => {
         <DialogHeader>
           <DialogTitle>テーマとは？</DialogTitle>
         </DialogHeader>
-        <DialogDescription>
+        <DialogDescription className='mb-5'>
           設定されたテーマに沿って絵を書いてみましょう！
           <br />
           ランダムに設定されますが、選択し直すことも作成することも可能です！
         </DialogDescription>
+        <DialogClose asChild>
+          <Button className='bg-gray-100' variant='outline'>
+            閉じる
+          </Button>
+        </DialogClose>
       </DialogContent>
     </Dialog>
   )
