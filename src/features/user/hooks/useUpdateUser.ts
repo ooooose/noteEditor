@@ -18,10 +18,6 @@ export const useUpdateUser = (user: AuthUser) => {
     }
   }
 
-  const resetInfo = () => {
-    setUsername(user.name)
-    setImage('')
-  }
   // アップデート処理を実装
   const onUpdate = async (body: { name: string; image: File }) => {
     try {
@@ -44,7 +40,6 @@ export const useUpdateUser = (user: AuthUser) => {
     username,
     setUsername,
     previewImage,
-    resetInfo,
     onUpdate,
     isLoading,
   }

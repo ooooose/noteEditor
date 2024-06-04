@@ -39,7 +39,7 @@ type EditProfileModalProps = {
 }
 
 const EditProfileModal = ({ user }: EditProfileModalProps) => {
-  const { image, previewImage, resetInfo, onUpdate, isLoading } = useUpdateUser(user)
+  const { image, previewImage, onUpdate, isLoading } = useUpdateUser(user)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -55,7 +55,7 @@ const EditProfileModal = ({ user }: EditProfileModalProps) => {
   const avatar = user.image ?? '/avatar.png'
 
   return (
-    <Dialog onOpenChange={resetInfo}>
+    <Dialog onOpenChange={() => form.reset()}>
       <DialogTrigger>
         <Avatar src={avatar} />
       </DialogTrigger>
@@ -106,16 +106,23 @@ const EditProfileModal = ({ user }: EditProfileModalProps) => {
                   </FormItem>
                 )}
               />
-              <DialogClose asChild>
-                <Button
-                  className='mt-5 w-full'
-                  disabled={isLoading}
-                  isLoading={isLoading}
-                  type='submit'
-                >
-                  更新
-                </Button>
-              </DialogClose>
+              <div className='mt-5'>
+                <DialogClose asChild>
+                  <Button
+                    className='mt-5 w-full'
+                    disabled={isLoading}
+                    isLoading={isLoading}
+                    type='submit'
+                  >
+                    更新
+                  </Button>
+                </DialogClose>
+                <DialogClose asChild>
+                  <Button className='mt-2 w-full' onClick={() => form.reset()} variant='outline'>
+                    キャンセル
+                  </Button>
+                </DialogClose>
+              </div>
             </form>
           </Form>
         </div>
