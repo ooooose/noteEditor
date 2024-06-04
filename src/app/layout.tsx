@@ -15,8 +15,18 @@ const fontSans = FontSans({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_APP_URL ?? ''),
   title: '画HACK',
   description: 'あなただけの絵を描くアプリ',
+  openGraph: {
+    title: '画HACK',
+    description: 'あなただけの絵を描くアプリ',
+  },
+  twitter: {
+    title: '画HACK',
+    description: 'あなただけの絵を描くアプリ',
+    card: 'summary_large_image',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
