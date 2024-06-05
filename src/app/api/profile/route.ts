@@ -5,7 +5,6 @@ import { NextResponse, NextRequest } from 'next/server'
 
 import { prisma, main } from '@/lib/prisma'
 
-// Helper function to convert file to buffer
 async function streamToBuffer(stream: ReadableStream): Promise<Buffer> {
   const chunks: Uint8Array[] = []
   const reader = stream.getReader()
