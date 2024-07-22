@@ -21,11 +21,12 @@ export const CONSTANTS = {
 
   // エラーメッセージ
   ERROR_MESSAGES: {
-    INVALID_INPUT: 'Invalid input data',
-    FILE_TOO_LARGE: 'File size exceeds the limit',
-    UNSUPPORTED_FILE_TYPE: 'Unsupported file type',
-    NOT_FOUND: 'Resource not found',
-    UNAUTHORIZED: 'Unauthorized access',
+    INVALID_INPUT: '無効な入力です',
+    FILE_TOO_LARGE: 'ファイルサイズが超過しています',
+    UNSUPPORTED_FILE_TYPE: 'サポートされていないファイル形式です',
+    NOT_FOUND: 'お探しの情報が見つかりません',
+    UNAUTHORIZED: '認証が失敗しました',
+    INTERNAL_SERVER_ERROR: 'サーバーエラーが発生しました',
   },
 
   DEFAULT_THEME: 'default',
