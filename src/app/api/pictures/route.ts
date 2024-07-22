@@ -2,47 +2,37 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
 import { NextRequest, NextResponse } from 'next/server'
 
 import { prisma, main } from '@/lib/prisma'
+import { CONSTANTS } from '@/utils/constants'
+import { logger } from '@/utils/logger'
 
 // Pictures全取得API
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams
-  let theme = (searchParams.get('theme') as string) ?? undefined
-  const pageIndex = searchParams.get('page') || '1'
-  const take = 6
+  const theme = searchParams.get('theme') as string | undefined
+  const pageIndex = parseInt(searchParams.get('page') || '1', 10)
+
   try {
     await main()
-    let whereClause = {}
-    if (theme) {
-      whereClause = {
-        theme: {
-          title: theme,
-        },
-      }
-    }
-    const skip = (parseInt(pageIndex, 10) - 1) * take
+    const whereClause = theme ? { theme: { title: theme } } : {}
+    const skip = (pageIndex - 1) * CONSTANTS.PICTURES_PER_PAGE
 
     const pictures = await prisma.picture.findMany({
       include: {
         theme: true,
         user: true,
         likes: true,
-        comments: {
-          orderBy: {
-            createdAt: 'desc',
-          },
-        },
+        comments: { orderBy: { createdAt: 'desc' } },
       },
       where: whereClause,
-      orderBy: {
-        createdAt: 'desc',
-      },
+      orderBy: { createdAt: 'desc' },
       skip,
-      take,
+      take: CONSTANTS.PICTURES_PER_PAGE,
     })
 
     return NextResponse.json({ pictures }, { status: 200 })
   } catch (err) {
-    return NextResponse.json({ message: 'Error', err }, { status: 500 })
+    logger.error('Error fetching pictures:', err)
+    return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 })
   } finally {
     await prisma.$disconnect()
   }
