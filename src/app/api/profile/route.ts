@@ -9,10 +9,7 @@ export async function POST(req: NextRequest) {
   const id = formData.get('id') as string
   const name = formData.get('name') as string
   const image = formData.get('image') as Blob | null
-
-  if (!id || !name) {
-    return NextResponse.json({ message: CONSTANTS.ERROR_MESSAGES.INVALID_INPUT }, { status: 400 })
-  }
+  console.log(image)
 
   try {
     let imageUrl: string | undefined
@@ -35,9 +32,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: 'Success', user }, { status: 200 })
   } catch (err) {
     console.error(CONSTANTS.ERROR_MESSAGES.INTERNAL_SERVER_ERROR, err)
-    if (err instanceof Error) {
-      return NextResponse.json({ message: err.message }, { status: 400 })
-    }
     return NextResponse.json(
       { message: CONSTANTS.ERROR_MESSAGES.INTERNAL_SERVER_ERROR },
       { status: 500 },

@@ -1,8 +1,5 @@
-import { zodResolver } from '@hookform/resolvers/zod'
 import Image from 'next/image'
 import { ChangeEvent } from 'react'
-import { useForm } from 'react-hook-form'
-import * as z from 'zod'
 
 import { Button } from '@/components/elements/Button'
 import {
@@ -29,33 +26,21 @@ import { useUpdateUser } from '../hooks/useUpdateUser'
 
 import Avatar from './Avatar'
 
-const formSchema = z.object({
-  name: z.string().min(1, '必須項目です').max(30, '最大文字数を超過しています'),
-  image: z.custom<FileList>().transform((file) => file[0]),
-})
-
 type EditProfileModalProps = {
   user: AuthUser
 }
 
 const EditProfileModal = ({ user }: EditProfileModalProps) => {
-  const { image, previewImage, onUpdate, isLoading } = useUpdateUser(user)
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      image: undefined,
-      name: user.name,
-    },
-  })
-
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    onUpdate(values)
-  }
-
+  const { image, setImage, previewImage, isLoading, form, onSubmit } = useUpdateUser(user)
   const avatar = user.image ?? '/avatar.png'
 
   return (
-    <Dialog onOpenChange={() => form.reset()}>
+    <Dialog
+      onOpenChange={() => {
+        form.reset()
+        setImage('')
+      }}
+    >
       <DialogTrigger>
         <Avatar src={avatar} />
       </DialogTrigger>
@@ -76,15 +61,19 @@ const EditProfileModal = ({ user }: EditProfileModalProps) => {
               <FormField
                 control={form.control}
                 name='image'
-                render={() => (
+                render={({ field }) => (
                   <FormItem>
                     <FormLabel>プロフィール画像</FormLabel>
                     <FormControl>
                       <Input
-                        {...form.register('image')}
                         accept='image/*'
                         onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                          previewImage(event)
+                          const file = event.target.files?.[0]
+                          console.log(file)
+                          if (file) {
+                            field.onChange(file)
+                            previewImage(event)
+                          }
                         }}
                         type='file'
                       />
@@ -118,7 +107,14 @@ const EditProfileModal = ({ user }: EditProfileModalProps) => {
                   </Button>
                 </DialogClose>
                 <DialogClose asChild>
-                  <Button className='mt-2 w-full' onClick={() => form.reset()} variant='outline'>
+                  <Button
+                    className='mt-2 w-full'
+                    onClick={() => {
+                      setImage('')
+                      form.reset()
+                    }}
+                    variant='outline'
+                  >
                     キャンセル
                   </Button>
                 </DialogClose>
