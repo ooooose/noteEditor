@@ -40,3 +40,6 @@ firebaseSecretKey.json
 
 # VSCode
 .vscode
+
+# Logs
+logs/

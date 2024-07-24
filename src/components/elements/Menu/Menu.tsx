@@ -1,5 +1,7 @@
+'use client'
+
 import { PlusIcon } from '@radix-ui/react-icons'
-import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 import {
   DropdownMenu,
@@ -12,6 +14,11 @@ import {
 } from '@/components/ui/dropdown-menu'
 
 const Menu = () => {
+  const router = useRouter()
+
+  const handleNavigation = (path: string) => {
+    router.push(path)
+  }
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className='focus:outline-none'>
@@ -23,15 +30,21 @@ const Menu = () => {
         <DropdownMenuLabel>画HACK Menu</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <Link href='/timeline'>
-            <DropdownMenuItem className='cursor-pointer p-3'>タイムライン</DropdownMenuItem>
-          </Link>
-          <Link href='/canvas'>
-            <DropdownMenuItem className='cursor-pointer p-3'>絵を描く</DropdownMenuItem>
-          </Link>
-          <Link href='/me'>
-            <DropdownMenuItem className='cursor-pointer p-3'>プロフィール</DropdownMenuItem>
-          </Link>
+          <DropdownMenuItem
+            className='cursor-pointer p-3'
+            onClick={() => handleNavigation('/timeline')}
+          >
+            タイムライン
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className='cursor-pointer p-3'
+            onClick={() => handleNavigation('/canvas')}
+          >
+            絵を描く
+          </DropdownMenuItem>
+          <DropdownMenuItem className='cursor-pointer p-3' onClick={() => handleNavigation('/me')}>
+            プロフィール
+          </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>

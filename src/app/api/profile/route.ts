@@ -1,91 +1,47 @@
-import { Buffer } from 'buffer'
-
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
 import { NextResponse, NextRequest } from 'next/server'
 
 import { prisma, main } from '@/lib/prisma'
-
-async function streamToBuffer(stream: ReadableStream): Promise<Buffer> {
-  const chunks: Uint8Array[] = []
-  const reader = stream.getReader()
-
-  let done = false
-  while (!done) {
-    const { value, done: doneReading } = await reader.read()
-    if (value) {
-      chunks.push(value)
-    }
-    done = doneReading
-  }
-
-  return Buffer.concat(chunks)
-}
+import { CONSTANTS } from '@/utils/constants'
+import { uploadFile } from '@/utils/upload'
 
 export async function POST(req: NextRequest) {
   const formData = await req.formData()
   const id = formData.get('id') as string
   const name = formData.get('name') as string
-  const image = formData.get('image') as Blob | null
-
-  const {
-    CLOUDFLARE_ACCESS_KEY_ID,
-    AVATAR_CLOUDFLARE_ENDPOINT,
-    CLOUDFLARE_ACCESS_KEY,
-    REGION,
-    AVATAR_BUCKET_NAME,
-  } = process.env
+  const image = formData.get('image') as File | null
 
   try {
     await main()
-    if (image) {
-      const s3Client = new S3Client({
-        region: REGION,
-        endpoint: AVATAR_CLOUDFLARE_ENDPOINT as string,
-        credentials: {
-          accessKeyId: CLOUDFLARE_ACCESS_KEY_ID || '',
-          secretAccessKey: CLOUDFLARE_ACCESS_KEY || '',
-        },
-      })
 
-      const fileName = `${Date.now()}-${id}-${name}`
-      const buffer = await streamToBuffer(image.stream())
+    let imageUrl: string | undefined
 
-      const uploadImage: any = {
-        Bucket: AVATAR_BUCKET_NAME,
-        Key: fileName,
-        Body: buffer,
-        ContentType: image.type,
-        ACL: 'public-read',
+    if (image && image instanceof File) {
+      if (image.size > CONSTANTS.MAX_FILE_SIZE) {
+        throw new Error(CONSTANTS.ERROR_MESSAGES.FILE_TOO_LARGE)
       }
 
-      const command = new PutObjectCommand(uploadImage)
-      await s3Client.send(command)
-      const imageUrl = `${process.env.AVATAR_HOST_URL}/${fileName}`
+      const fileType = image.type.split('/')[1]
+      const arrayBuffer = await image.arrayBuffer()
+      const blob = new Blob([arrayBuffer], { type: image.type })
 
-      const user = await prisma.user.update({
-        where: {
-          id: id,
-        },
-        data: {
-          name: name,
-          image: imageUrl,
-        },
-      })
-      return NextResponse.json({ message: 'Success', user }, { status: 200 })
-    } else {
-      const user = await prisma.user.update({
-        where: {
-          id: id,
-        },
-        data: {
-          name: name,
-        },
-      })
-      return NextResponse.json({ message: 'Success', user }, { status: 200 })
+      imageUrl = await uploadFile(blob, id, name, fileType)
     }
+
+    const user = await prisma.user.update({
+      where: { id },
+      data: {
+        name: name,
+        ...(imageUrl && { image: imageUrl }),
+      },
+    })
+
+    return NextResponse.json({ message: 'Success', user }, { status: 200 })
   } catch (err) {
-    console.error('POST Error:', err)
-    return NextResponse.json({ message: 'Error', err }, { status: 500 })
+    console.error(CONSTANTS.ERROR_MESSAGES.INTERNAL_SERVER_ERROR, err)
+    return NextResponse.json(
+      { message: CONSTANTS.ERROR_MESSAGES.INTERNAL_SERVER_ERROR },
+      { status: 500 },
+    )
   } finally {
     await prisma.$disconnect()
   }
