@@ -61,19 +61,15 @@ const EditProfileModal = ({ user }: EditProfileModalProps) => {
               <FormField
                 control={form.control}
                 name='image'
-                render={({ field }) => (
+                render={() => (
                   <FormItem>
                     <FormLabel>プロフィール画像</FormLabel>
                     <FormControl>
                       <Input
+                        {...form.register('image')}
                         accept='image/*'
                         onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                          const file = event.target.files?.[0]
-                          console.log(file)
-                          if (file) {
-                            field.onChange(file)
-                            previewImage(event)
-                          }
+                          previewImage(event)
                         }}
                         type='file'
                       />

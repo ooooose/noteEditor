@@ -11,7 +11,7 @@ import { updateUser } from '../api/updateUser'
 
 const formSchema = z.object({
   name: z.string().min(1, '必須項目です').max(30, '最大文字数を超過しています'),
-  image: z.instanceof(File).optional(),
+  image: z.any().optional(),
 })
 
 export const useUpdateUser = (user: AuthUser) => {
@@ -27,10 +27,9 @@ export const useUpdateUser = (user: AuthUser) => {
   })
 
   const previewImage = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
+    if (e.target.files) {
       const file = e.target.files[0]
-      setImage(URL.createObjectURL(file))
-      form.setValue('image', file)
+      setImage(window.URL.createObjectURL(file))
     }
   }
 
@@ -40,10 +39,7 @@ export const useUpdateUser = (user: AuthUser) => {
 
       formData.append('id', user.id)
       formData.append('name', values.name)
-      console.log(values)
-      if (values.image instanceof File) {
-        formData.append('image', values.image)
-      }
+      formData.append('image', values.image)
 
       await updateUser(formData)
       mutate()
