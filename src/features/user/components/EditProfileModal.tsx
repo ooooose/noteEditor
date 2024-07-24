@@ -37,7 +37,6 @@ const EditProfileModal = ({ user }: EditProfileModalProps) => {
   return (
     <Dialog
       onOpenChange={() => {
-        form.reset()
         setImage('')
       }}
     >
@@ -106,8 +105,8 @@ const EditProfileModal = ({ user }: EditProfileModalProps) => {
                   <Button
                     className='mt-2 w-full'
                     onClick={() => {
-                      setImage('')
                       form.reset()
+                      setImage('')
                     }}
                     variant='outline'
                   >

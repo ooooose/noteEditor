@@ -39,7 +39,7 @@ export const useUpdateUser = (user: AuthUser) => {
 
       formData.append('id', user.id)
       formData.append('name', values.name)
-      formData.append('image', values.image)
+      formData.append('image', values.image[0])
 
       await updateUser(formData)
       mutate()
