@@ -1,5 +1,7 @@
 import { memo } from 'react'
 
+import { Button } from '@/components/elements/Button'
+
 import LoadingPictures from './LoadingPictures'
 import { NoPictures } from './NoPictures'
 import PictureCard from './PictureCard'
@@ -36,9 +38,9 @@ const Pictures = memo(
         {getPictures()}
         {isLast === false && (
           <div className='mt-16 text-center'>
-            <button className='text-blue-400' onClick={loadMorePictures}>
+            <Button className='px-16' onClick={loadMorePictures} size='sm' variant='outline'>
               続きを読み込む
-            </button>
+            </Button>
           </div>
         )}
       </div>
