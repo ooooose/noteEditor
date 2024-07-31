@@ -2,17 +2,17 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
 import { NextRequest, NextResponse } from 'next/server'
 
 import { prisma, main } from '@/lib/prisma'
-import { CONSTANTS } from '@/utils/constants'
 import { logger } from '@/utils/logger'
 
 // Pictures全取得API
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams
   const pageIndex = searchParams.get('page') || '1'
+  const take = 6
 
   try {
     await main()
-    const skip = (parseInt(pageIndex, 10) - 1) * CONSTANTS.PICTURES_PER_PAGE
+    const skip = (parseInt(pageIndex, 10) - 1) * take
 
     const pictures = await prisma.picture.findMany({
       include: {
@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
       },
       orderBy: { createdAt: 'desc' },
       skip,
-      take: CONSTANTS.PICTURES_PER_PAGE,
+      take,
     })
 
     return NextResponse.json({ pictures }, { status: 200 })
