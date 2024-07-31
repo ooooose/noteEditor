@@ -2,7 +2,6 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
 import { NextRequest, NextResponse } from 'next/server'
 
 import { prisma, main } from '@/lib/prisma'
-import { logger } from '@/utils/logger'
 
 // Pictures全取得API
 export async function GET(req: NextRequest) {
@@ -28,7 +27,6 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ pictures }, { status: 200 })
   } catch (err) {
-    logger.error('Error fetching pictures:', err)
     return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 })
   } finally {
     await prisma.$disconnect()
