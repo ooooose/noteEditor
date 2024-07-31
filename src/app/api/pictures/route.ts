@@ -8,11 +8,11 @@ import { logger } from '@/utils/logger'
 // Pictures全取得API
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams
-  const pageIndex = parseInt(searchParams.get('page') || '1', 10)
+  const pageIndex = searchParams.get('page') || '1'
 
   try {
     await main()
-    const skip = (pageIndex - 1) * CONSTANTS.PICTURES_PER_PAGE
+    const skip = (parseInt(pageIndex, 10) - 1) * CONSTANTS.PICTURES_PER_PAGE
 
     const pictures = await prisma.picture.findMany({
       include: {
