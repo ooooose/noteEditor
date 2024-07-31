@@ -18,15 +18,15 @@ interface SWRPictureStore {
 
 const LIMIT = 3
 
-export const useFetchPictures = (theme?: string): SWRPictureStore => {
-  const API_URL = `/api/pictures?theme=${theme ?? ''}`
+export const useFetchPictures = (): SWRPictureStore => {
+  const API_URL = '/api/pictures'
   const getKey = (pageIndex: number, previousPageData: Picture[][]) => {
-    if (!previousPageData) return `${API_URL}&page=1`
+    if (!previousPageData) return `${API_URL}?page=1`
 
     const lastPageIndex = previousPageData.length - 1
     if (pageIndex > lastPageIndex) return null
 
-    return `${API_URL}&page=${pageIndex + 1}`
+    return `${API_URL}?page=${pageIndex + 1}`
   }
 
   const fetcher = useCallback(async (url: string) => {

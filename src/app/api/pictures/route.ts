@@ -8,12 +8,10 @@ import { logger } from '@/utils/logger'
 // Pictures全取得API
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams
-  const theme = searchParams.get('theme') as string | undefined
   const pageIndex = parseInt(searchParams.get('page') || '1', 10)
 
   try {
     await main()
-    const whereClause = theme ? { theme: { title: theme } } : {}
     const skip = (pageIndex - 1) * CONSTANTS.PICTURES_PER_PAGE
 
     const pictures = await prisma.picture.findMany({
@@ -23,7 +21,6 @@ export async function GET(req: NextRequest) {
         likes: true,
         comments: { orderBy: { createdAt: 'desc' } },
       },
-      where: whereClause,
       orderBy: { createdAt: 'desc' },
       skip,
       take: CONSTANTS.PICTURES_PER_PAGE,
