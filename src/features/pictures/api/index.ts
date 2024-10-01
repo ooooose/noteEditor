@@ -1,2 +1,2 @@
 export * from './deletePicture'
-export * from './updatePicture'
+export * from './update-picture'

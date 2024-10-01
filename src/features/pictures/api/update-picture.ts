@@ -6,5 +6,5 @@ type paramsType = {
 }
 
 export const updateFrameId = async (params: paramsType) => {
-  return await apiClient.apiPut('/api/pictures', params).then((result) => result.json())
+  return await apiClient.put('/api/pictures', params).then((result) => result.json())
 }
