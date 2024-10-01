@@ -1,60 +1,69 @@
+import { getSession } from 'next-auth/react'
+
 class ApiClient {
   baseURL: string
 
   constructor() {
-    this.baseURL = process.env.NEXT_APP_URL ?? ''
+    this.baseURL = process.env.NEXT_PUBLIC_API_URL ?? ''
   }
 
-  async apiGet(url: string) {
-    const response = await fetch(`${this.baseURL}${url}`)
-    return response
+  private async getHeaders(additionalHeaders: HeadersInit = {}): Promise<HeadersInit> {
+    const session = await getSession()
+    return {
+      'Content-Type': 'application/json',
+      'X-Requested-With': 'XMLHttpRequest',
+      Authorization: `Bearer ${session?.user.accessToken}`,
+      ...additionalHeaders,
+    }
   }
 
-  async apiPost(url: string, body = {}) {
-    const response = await fetch(`${this.baseURL}${url}`, {
+  private async request(url: string, options: RequestInit) {
+    try {
+      const headers = await this.getHeaders(options.headers as HeadersInit)
+      const response = await fetch(`${this.baseURL}${url}`, {
+        ...options,
+        headers,
+      })
+      if (!response.ok) {
+        const error = await response.json()
+        throw new Error(error.message || 'Something went wrong')
+      }
+      return response.json()
+    } catch (error) {
+      console.error('API request failed', error)
+      throw error
+    }
+  }
+
+  async get(url: string, headers: HeadersInit = {}) {
+    return this.request(url, {
+      method: 'GET',
+      headers,
+    })
+  }
+
+  async post(url: string, body = {}, headers: HeadersInit = {}) {
+    return this.request(url, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest',
-      },
+      headers,
       body: JSON.stringify(body),
     })
-    return response
   }
 
-  async apiPostFormData(url: string, body: FormData) {
-    const response = await fetch(`${this.baseURL}${url}`, {
-      method: 'POST',
-      headers: {
-        'X-Requested-With': 'XMLHttpRequest',
-      },
-      body: body,
-    })
-    return response
-  }
-
-  async apiPut(url: string, body = {}) {
-    const response = await fetch(`${this.baseURL}${url}`, {
+  async put(url: string, body = {}, headers: HeadersInit = {}) {
+    return this.request(url, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest',
-      },
+      headers,
       body: JSON.stringify(body),
     })
-    return response
   }
 
-  async apiDelete(url: string, body = {}) {
-    const response = await fetch(`${this.baseURL}${url}`, {
+  async delete(url: string, body = {}, headers: HeadersInit = {}) {
+    return this.request(url, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest',
-      },
+      headers,
       body: JSON.stringify(body),
     })
-    return response
   }
 }
 
