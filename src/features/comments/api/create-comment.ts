@@ -31,10 +31,11 @@ export const createComment = async (params: CreateCommentInput): Promise<Comment
 }
 
 type UsePostCommentOptions = {
+  pictureId: number
   mutationConfig?: MutationConfig<typeof createComment>
 }
 
-export const useCreateComment = ({ mutationConfig }: UsePostCommentOptions) => {
+export const useCreateComment = ({ pictureId, mutationConfig }: UsePostCommentOptions) => {
   const queryClient = useQueryClient()
 
   const { onSuccess, ...restConfig } = mutationConfig || {}
@@ -42,7 +43,7 @@ export const useCreateComment = ({ mutationConfig }: UsePostCommentOptions) => {
   return useMutation({
     onSuccess: (data, ...args) => {
       queryClient.invalidateQueries({
-        queryKey: getCommentsQueryOptions().queryKey,
+        queryKey: getCommentsQueryOptions(pictureId).queryKey,
       })
       onSuccess?.(data, ...args)
     },
