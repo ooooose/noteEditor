@@ -1,7 +1,10 @@
+import { User } from '@/features/user/types'
+
 import type { Entity } from '@/types/api'
 
 export type Comment = Entity<{
-  pictureId: string
-  userId: string
+  pictureId: number
+  userId: number
   body: string
+  user: User
 }>

@@ -1,6 +1,6 @@
 export type BaseEntity = {
   id: number
-  createdAt: string
+  createdAt: Date
 }
 
 export type Entity<T> = {

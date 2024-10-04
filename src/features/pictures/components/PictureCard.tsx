@@ -1,7 +1,6 @@
 import { usePathname } from 'next/navigation'
 import { memo } from 'react'
 
-import { AuthUser } from '@/features/auth/types'
 import Comment from '@/features/comments/components/Comment'
 import { Like } from '@/features/likes/components'
 import { useMutateLike } from '@/features/likes/hooks/useMutateLike'
@@ -13,11 +12,12 @@ import PictureMenu from './PictureMenu'
 import PictureTheme from './PictureTheme'
 
 import type { Picture as PictureType } from '../types'
+import type { User } from '@/features/user/types'
 
 type PictureCardProps = {
   picture: PictureType
   likes: LikeType[]
-  user: AuthUser
+  user: User
 }
 
 const PictureCard = memo(({ picture, user, likes }: PictureCardProps) => {
