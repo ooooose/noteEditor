@@ -11,7 +11,6 @@ import { useCreatePicture } from '../api/create-picture'
 interface IProps {
   width: number
   height: number
-  userId: number
 }
 
 interface IRect {
@@ -23,7 +22,7 @@ interface IRect {
   bottom: number
 }
 
-export const useDrawPicture = ({ width, height, userId }: IProps) => {
+export const useDrawPicture = ({ width, height }: IProps) => {
   const router = useRouter()
   const uuid = generateUUID()
   const createPictureMutation = useCreatePicture({
@@ -140,9 +139,8 @@ export const useDrawPicture = ({ width, height, userId }: IProps) => {
       }
       await middleApiClient.apiPost('/api/pictures', params)
       createPictureMutation.mutate({
-        image: imageUrl,
+        imageUrl: imageUrl,
         themeId: 1, // TODO: 仮の値なので修正すること。
-        userId: userId,
         uid: uuid,
       })
       router.push('/timeline')
@@ -152,7 +150,7 @@ export const useDrawPicture = ({ width, height, userId }: IProps) => {
       setIsLoading(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [title, userId])
+  }, [title])
 
   return {
     canvasRef,

@@ -4,7 +4,8 @@ import React from 'react'
 import './globals.css'
 import { PreconnectResources } from '@/components/Seo/PreconnectResources'
 
-import NextAuthProvider from '@/lib/next-auth/NextAuthProvider'
+import NextAuthProvider from '@/lib/next-auth/next-auth-provider'
+import { ReactQueryClientProvider } from '@/lib/react-query/react-query-client-provider'
 import { cn } from '@/lib/utils'
 
 import type { Metadata } from 'next'
@@ -36,7 +37,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <PreconnectResources />
       </head>
       <body className={cn('min-h-screen bg-background font-sans antialiased', fontSans.variable)}>
-        <NextAuthProvider>{children}</NextAuthProvider>
+        <NextAuthProvider>
+          <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
+        </NextAuthProvider>
       </body>
     </html>
   )

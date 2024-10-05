@@ -15,9 +15,8 @@ const deserializerOptions: DeserializerOptions = {
 }
 
 type CreatePictureParams = {
-  image: string
+  imageUrl: string
   themeId: number
-  userId: number
   uid: string
 }
 

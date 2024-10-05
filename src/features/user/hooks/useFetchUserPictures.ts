@@ -30,7 +30,7 @@ export const useFetchUserPictures = (id: string): SWRPictureStore => {
   }
 
   const fetcher = useCallback(async (url: string) => {
-    return apiClient.apiGet(url).then((res) => res.json())
+    return apiClient.get(url).then((res) => res.json())
   }, [])
 
   const { data, error, isValidating, mutate, size, setSize } = useSWRInfinite(getKey, fetcher, {

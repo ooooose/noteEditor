@@ -2,7 +2,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 import { AuthUser } from '@/features/auth/types'
 
-import EditProfileModal from './EditProfileModal'
+// import EditProfileModal from './EditProfileModal'
 
 type ProfileProps = {
   user: AuthUser
@@ -19,7 +19,7 @@ const Profile = ({ user, isLoading }: ProfileProps) => {
     )
   return (
     <div className='mx-auto flex flex-col gap-3'>
-      <EditProfileModal user={user} />
+      {/* <EditProfileModal user={user} /> */}
       <p className='pb-2 text-center'>{user?.name} さん</p>
     </div>
   )
