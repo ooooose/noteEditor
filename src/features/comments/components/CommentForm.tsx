@@ -3,46 +3,72 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import * as z from 'zod'
+import { toast } from 'sonner'
 
 import { Button } from '@/components/elements/Button'
-import { Input } from '@/components/elements/Form'
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 
-const schema = z.object({
-  body: z.string().min(1, '入力してください'),
-})
+import { createCommentInputSchema, useCreateComment } from '@/features/comments/api/create-comment'
 
-type CommentValue = {
-  body: string
-}
+import type { CreateCommentInput } from '@/features/comments/api'
+import type { SubmitHandler } from 'react-hook-form'
 
 type CommentFormProps = {
-  onSubmit: (body: string) => Promise<void>
+  pictureId: number
 }
 
-const CommentForm = React.memo(({ onSubmit }: CommentFormProps) => {
-  const { register, handleSubmit, reset, formState } = useForm<CommentValue>({
-    resolver: zodResolver(schema),
+const CommentForm = React.memo(({ pictureId }: CommentFormProps) => {
+  const createCommentMutation = useCreateComment({
+    pictureId: pictureId,
+    mutationConfig: {
+      onSuccess: () => {
+        toast.success('コメントを登録しました')
+      },
+      onError: () => {
+        toast.error('コメントの登録に失敗しました')
+      },
+    },
   })
+
+  const form = useForm<CreateCommentInput>({
+    resolver: zodResolver(createCommentInputSchema),
+    defaultValues: {
+      body: '',
+    },
+  })
+
+  const onSubmit: SubmitHandler<CreateCommentInput> = (values) => {
+    createCommentMutation.mutate({
+      body: values.body,
+    })
+  }
   return (
-    <form
-      onSubmit={handleSubmit(async (values) => {
-        reset()
-        await onSubmit(values.body)
-      })}
-    >
-      <Input
-        error={formState.errors['body']}
-        label='コメント'
-        registration={register('body')}
-        type='text'
-      />
-      <div>
-        <Button className='mt-3 w-full' type='submit' variant='outline'>
-          投稿
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <FormField
+          control={form.control}
+          name='body'
+          render={({ field, fieldState }) => (
+            <FormItem>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage>{fieldState.error?.message}</FormMessage>
+            </FormItem>
+          )}
+        />
+        <Button
+          className='float-right mt-4'
+          disabled={createCommentMutation.isLoading}
+          isLoading={createCommentMutation.isLoading}
+          type='submit'
+          variant='default'
+        >
+          登録する
         </Button>
-      </div>
-    </form>
+      </form>
+    </Form>
   )
 })
 

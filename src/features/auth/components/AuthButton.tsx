@@ -1,41 +1,32 @@
 'use client'
 
-import Image from 'next/image'
-import React from 'react'
+import { signIn, signOut, useSession } from 'next-auth/react'
 
+import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 
-import { useFetchAuthUserByEmail } from '../hooks/useFetchAuthUserByEmail'
+const AuthButton = () => {
+  const { data: session, status } = useSession()
+  const loading = status === 'loading'
 
-import { Login } from './Login'
-import { Logout } from './Logout'
-
-export const AuthButton = () => {
-  const { user, isLoading, session } = useFetchAuthUserByEmail()
-  if (isLoading) {
-    return (
-      <main className='flex flex-col items-center justify-between'>
-        <Skeleton className='h-[40px] w-[240px]' />
-      </main>
-    )
-  }
-  if (session) {
-    return (
-      <>
-        <div className='flex items-end gap-4'>
-          <Image
-            alt='avatar'
-            className='size-[80px] rounded-full'
-            height={80}
-            src={user.image ?? '/avatar.png'}
-            width={80}
-          />
-          <p className='pb-2'>{user.name} さん</p>
+  return (
+    <div>
+      {loading ? (
+        <Skeleton className='h-[50px] w-[100px]' />
+      ) : session ? (
+        <div className='flex h-full items-center justify-center gap-2'>
+          <p className='text-center'>{session.user?.name} さん</p>
+          <Button onClick={() => signOut()} variant='outline'>
+            ログアウト
+          </Button>
         </div>
-        <Logout />
-      </>
-    )
-  }
-
-  return <Login />
+      ) : (
+        <Button onClick={() => signIn('google', {})} variant='outline'>
+          Google認証ボタン
+        </Button>
+      )}
+    </div>
+  )
 }
+
+export default AuthButton

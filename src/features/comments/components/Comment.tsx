@@ -11,22 +11,23 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 
-import { useMutateComment } from '../hooks/useMutateComment'
+import { User } from '@/features/user/types'
+
+import { useComments } from '../api'
 
 import CommentCount from './CommentCount'
 import CommentForm from './CommentForm'
 import CommentsList from './CommentsList'
 
-import type { AuthUser } from '@/features/auth/types'
-
 type CommentProps = {
-  pictureId: string
-  user: AuthUser
+  pictureId: number
+  user: User
 }
 
 const Comment = memo(({ pictureId, user }: CommentProps) => {
-  const { isLoading, onSubmitComment, handleDeleteComment, comments, handleUpdateComment } =
-    useMutateComment(pictureId, user)
+  const commentsQuery = useComments({ pictureId })
+  if (commentsQuery.isLoading) return <div>コメントを取得中...</div>
+  if (commentsQuery.isError) return <div>コメントの取得に失敗しました</div>
   return (
     <div>
       <Dialog>
@@ -42,16 +43,17 @@ const Comment = memo(({ pictureId, user }: CommentProps) => {
             <DialogTitle>コメント一覧</DialogTitle>
           </DialogHeader>
           <CommentsList
-            comments={comments}
-            handleDeleteComment={handleDeleteComment}
-            handleUpdateComment={handleUpdateComment}
-            isLoading={isLoading}
+            comments={commentsQuery?.data}
+            isLoading={commentsQuery.isLoading}
             userId={user.id}
           />
-          <CommentForm onSubmit={onSubmitComment} />
+          <CommentForm pictureId={pictureId} />
         </DialogContent>
       </Dialog>
-      <CommentCount commentCount={comments?.length} isLoading={isLoading} />
+      <CommentCount
+        commentCount={commentsQuery?.data?.length}
+        isLoading={commentsQuery.isLoading}
+      />
     </div>
   )
 })

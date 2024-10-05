@@ -1,18 +1,15 @@
-import type { AuthUser } from '@/features/auth/types'
 import type { Comment } from '@/features/comments/types'
 import type { Like } from '@/features/likes/types'
 import type { Theme } from '@/features/themes/types'
+import type { User } from '@/features/user/types'
+import type { Entity } from '@/types/api'
 
-export type Picture = {
-  id: string
+export type Picture = Entity<{
   image: string
-  author: string
   frameId: number
   userId: string
-  themeId: string
-  createdAt: Date
   theme: Theme
   likes: Like[]
-  user: AuthUser
+  user: User
   comments: Comment[]
-}
+}>
