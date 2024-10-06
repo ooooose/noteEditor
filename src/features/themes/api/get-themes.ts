@@ -13,9 +13,9 @@ const deserializerOptions: DeserializerOptions = {
 
 export const getThemes = async (): Promise<Theme[]> => {
   try {
-    const result = await apiClient.get('/themes')
+    const response = await apiClient.get('api/v1/themes')
     const deserialize = new Deserializer(deserializerOptions)
-    const themes = deserialize.deserialize(result.data)
+    const themes = deserialize.deserialize(response)
     return themes
   } catch (error) {
     console.error(error)

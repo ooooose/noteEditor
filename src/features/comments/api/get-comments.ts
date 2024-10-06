@@ -16,7 +16,7 @@ export const getComments = async (pictureId: number): Promise<Comment[]> => {
   try {
     const response = await apiClient.get(`/api/v1/pictures/${pictureId}/comments`)
     const deserializer = new Deserializer(deserializerOptions)
-    const comments: Comment[] = await deserializer.deserialize(response.json())
+    const comments: Comment[] = await deserializer.deserialize(response)
     return comments
   } catch (error) {
     console.error('コメント一覧の取得に失敗しました:', error)

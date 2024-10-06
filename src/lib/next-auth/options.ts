@@ -60,7 +60,7 @@ export const options: NextAuthOptions = {
       }
     },
     async redirect() {
-      return '/diaries'
+      return '/timeline'
     },
     async jwt({ token, account, user }) {
       if (account && user) {
