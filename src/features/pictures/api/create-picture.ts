@@ -15,9 +15,8 @@ const deserializerOptions: DeserializerOptions = {
 }
 
 type CreatePictureParams = {
-  imageUrl: string
-  themeId: number
-  uid: string
+  image_url: string
+  title: string
 }
 
 export const createPicture = async (params: CreatePictureParams) => {

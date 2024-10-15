@@ -33,6 +33,7 @@ export const ThemeSelect = memo(({ handleSelectChange }: ThemeSelectProps) => {
 
   return (
     <CreatableSelect
+      instanceId='theme-select-instance-id'
       isClearable
       isDisabled={isLoading}
       onChange={(e) => {

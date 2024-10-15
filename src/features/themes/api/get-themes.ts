@@ -13,7 +13,7 @@ const deserializerOptions: DeserializerOptions = {
 
 export const getThemes = async (): Promise<Theme[]> => {
   try {
-    const response = await apiClient.get('api/v1/themes')
+    const response = await apiClient.get('/api/v1/themes')
     const deserialize = new Deserializer(deserializerOptions)
     const themes = deserialize.deserialize(response)
     return themes

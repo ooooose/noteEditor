@@ -4,7 +4,6 @@ import { useState, useRef } from 'react'
 import { toast } from 'sonner'
 
 import { middleApiClient } from '@/lib/api/middle-api-client'
-import { generateUUID } from '@/lib/uuid'
 
 import { useCreatePicture } from '../api/create-picture'
 
@@ -24,7 +23,6 @@ interface IRect {
 
 export const useDrawPicture = ({ width, height }: IProps) => {
   const router = useRouter()
-  const uuid = generateUUID()
   const createPictureMutation = useCreatePicture({
     mutationConfig: {
       onSuccess: async () => {
@@ -139,9 +137,8 @@ export const useDrawPicture = ({ width, height }: IProps) => {
       }
       await middleApiClient.apiPost('/api/pictures', params)
       createPictureMutation.mutate({
-        imageUrl: imageUrl,
-        themeId: 1, // TODO: 仮の値なので修正すること。
-        uid: uuid,
+        image_url: imageUrl,
+        title: title,
       })
       router.push('/timeline')
     } catch (err) {
@@ -149,8 +146,7 @@ export const useDrawPicture = ({ width, height }: IProps) => {
     } finally {
       setIsLoading(false)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [title])
+  }, [title, createPictureMutation, router])
 
   return {
     canvasRef,
