@@ -25,13 +25,13 @@ const PictureCard = memo(({ picture }: PictureCardProps) => {
         </div>
       </div>
       <div>
-        <Picture author={picture.user.name} frameId={picture.frameId} src={picture.image} />
+        <Picture author={picture.user.name} frameId={picture.frameId} src={picture.imageUrl} />
         <div className='float-right flex gap-2'>
           <div className='ml-2 mt-3'>
             <PictureTheme
               author={picture.user.name}
               frameId={picture.frameId}
-              src={picture.image}
+              src={picture.imageUrl}
               title={picture.theme?.title}
             />
           </div>

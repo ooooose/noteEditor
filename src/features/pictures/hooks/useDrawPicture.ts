@@ -130,7 +130,7 @@ export const useDrawPicture = ({ width, height }: IProps) => {
       })
 
       const fileName = `${Date.now()}-${title}`
-      const imageUrl = `${process.env.IMAGE_HOST_URL}/${fileName}`
+      const imageUrl = `${process.env.NEXT_PUBLIC_IMAGE_HOST_URL}/${fileName}`
       const params = {
         image: compressedBase64,
         fileName: fileName,
