@@ -6,15 +6,15 @@ import { getLikesQueryOptions } from './get-likes'
 
 import type { MutationConfig } from '@/lib/react-query/react-query'
 
-export const deleteLike = async ({ likeId }: { likeId: number }) => {
-  return await apiClient.delete(`/api/likes/${likeId}`)
+export const deleteLike = async ({ picture_uid }: { picture_uid: string }) => {
+  return await apiClient.delete(`/api/v1/likes/${picture_uid}`)
 }
 
 type UseDeleteLikeOptions = {
   mutationConfig?: MutationConfig<typeof deleteLike>
 }
 
-export const UseDeleteLike = ({ mutationConfig }: UseDeleteLikeOptions) => {
+export const useDeleteLike = ({ mutationConfig }: UseDeleteLikeOptions) => {
   const queryClient = useQueryClient()
 
   const { onSuccess, ...restConfig } = mutationConfig || {}

@@ -7,7 +7,8 @@ import type { Entity } from '@/types/api'
 export type Picture = Entity<{
   imageUrl: string
   frameId: number
-  userId: string
+  uid: string
+  userId: number
   theme: Theme
   likes: Like[]
   user: User

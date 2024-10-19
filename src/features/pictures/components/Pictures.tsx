@@ -18,7 +18,7 @@ const Pictures = memo(({ pictures, isLoading }: PicturesProps) => {
     return (
       <div className='grid grid-cols-3 grid-rows-2 gap-10'>
         {pictures?.map((picture: PictureType) => {
-          return <PictureCard key={picture.id} picture={picture} />
+          return <PictureCard key={picture.id} likes={picture.likes} picture={picture} />
         })}
       </div>
     )
