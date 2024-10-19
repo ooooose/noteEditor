@@ -7,27 +7,27 @@ import { getCommentsQueryOptions } from './get-comments'
 import type { MutationConfig } from '@/lib/react-query/react-query'
 
 export const deleteComment = async ({
-  pictureId,
+  pictureUid,
   commentId,
 }: {
-  pictureId: number
+  pictureUid: string
   commentId: number
 }) => {
-  return await apiClient.delete(`/api/v1/${pictureId}/comments/${commentId}`)
+  return await apiClient.delete(`/api/v1/${pictureUid}/comments/${commentId}`)
 }
 
 type UseDeleteCommentOptions = {
-  pictureId: number
+  pictureUid: string
   mutationConfig?: MutationConfig<typeof deleteComment>
 }
 
-export const useDeleteComment = ({ pictureId, mutationConfig }: UseDeleteCommentOptions) => {
+export const useDeleteComment = ({ pictureUid, mutationConfig }: UseDeleteCommentOptions) => {
   const queryClient = useQueryClient()
   const { onSuccess, ...restConfig } = mutationConfig || {}
 
   return useMutation({
     onSuccess: (...args) => {
-      queryClient.invalidateQueries(getCommentsQueryOptions(pictureId).queryKey)
+      queryClient.invalidateQueries(getCommentsQueryOptions(pictureUid).queryKey)
       onSuccess?.(...args)
     },
     ...restConfig,

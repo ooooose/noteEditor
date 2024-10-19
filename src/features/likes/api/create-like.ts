@@ -7,7 +7,7 @@ import { getLikesQueryOptions } from './get-likes'
 import type { MutationConfig } from '@/lib/react-query/react-query'
 
 export const createLike = async (paramas: { picture_uid: string }) => {
-  await apiClient.post('/api/v1/likes', paramas)
+  return await apiClient.post('/api/v1/likes', paramas)
 }
 
 type UseCreateLikeOptions = {
