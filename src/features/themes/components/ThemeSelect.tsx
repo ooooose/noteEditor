@@ -1,4 +1,4 @@
-import { memo, useState, useEffect } from 'react'
+import { memo, useState } from 'react'
 import CreatableSelect from 'react-select/creatable'
 
 import { useFetchThemes } from '../hooks/useFetchThemes'
@@ -15,15 +15,15 @@ type ThemeSelectProps = {
 }
 
 export const ThemeSelect = memo(({ handleSelectChange }: ThemeSelectProps) => {
-  const { themes, randomTheme, isLoading } = useFetchThemes()
+  const { themes, isLoading } = useFetchThemes()
   const [selectedOption, setSelectedOption] = useState<ThemeOption | null>(null)
 
-  useEffect(() => {
-    if (randomTheme) {
-      setSelectedOption({ value: randomTheme.title, label: randomTheme.title })
-      handleSelectChange(randomTheme.title)
-    }
-  }, [randomTheme, handleSelectChange])
+  // useEffect(() => {
+  //   if (randomTheme) {
+  //     setSelectedOption({ value: randomTheme.title, label: randomTheme.title })
+  //     handleSelectChange(randomTheme.title)
+  //   }
+  // }, [randomTheme, handleSelectChange])
 
   const options: ThemeOption[] =
     themes?.map((theme: Theme) => ({
@@ -33,6 +33,7 @@ export const ThemeSelect = memo(({ handleSelectChange }: ThemeSelectProps) => {
 
   return (
     <CreatableSelect
+      instanceId='theme-select-instance-id'
       isClearable
       isDisabled={isLoading}
       onChange={(e) => {

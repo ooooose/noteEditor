@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
-import { AuthButton } from '@/features/auth/components/AuthButton'
+import AuthButton from '@/features/auth/components/AuthButton'
 
 const Footer = () => {
   return (

@@ -2,8 +2,6 @@
 
 import React from 'react'
 
-import { useFetchAuthUserByEmail } from '@/features/auth/hooks/useFetchAuthUserByEmail'
-
 import { useDrawPicture } from '../../hooks/useDrawPicture'
 
 import { CanvasMenu } from './CanvasMenu'
@@ -15,7 +13,6 @@ interface IProps {
 
 export const Canvas: React.FC<IProps> = (props) => {
   const { width, height } = props
-  const { user } = useFetchAuthUserByEmail()
 
   const {
     canvasRef,
@@ -34,8 +31,6 @@ export const Canvas: React.FC<IProps> = (props) => {
   } = useDrawPicture({
     width: width,
     height: height,
-    userId: user?.id,
-    userName: user?.name,
   })
   return (
     <section className='mt-10 flex'>

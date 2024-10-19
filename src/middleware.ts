@@ -18,7 +18,7 @@ export default async function middleware(req: NextRequestWithAuth, ev: any) {
   // 認証ミドルウェアの設定
   const authMiddleware = withAuth({
     pages: {
-      signIn: '/login',
+      signIn: '/',
     },
   })
 

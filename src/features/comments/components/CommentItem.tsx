@@ -1,102 +1,82 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { CheckCircledIcon, Cross2Icon } from '@radix-ui/react-icons'
-import { memo, useState } from 'react'
-import { useForm } from 'react-hook-form'
-import * as z from 'zod'
-
-import { Button } from '@/components/elements/Button'
-import { Input } from '@/components/elements/Form'
+import { memo, useCallback, useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 
 import { formatDate } from '@/utils/format'
 
+import { UpdateCommentInput, updateCommentInputSchema, useUpdateComment } from '../api'
+
 import CommentMenu from './CommentMenu'
+import { EditComment } from './EditComment'
 
 import type { Comment } from '../types'
 
 type CommentItemProps = {
   comment: Comment
-  userId: string
-  handleDeleteComment: (commentId: number) => Promise<void>
-  handleUpdateComment: (commentId: number, body: string) => Promise<void>
+  userId: number
 }
 
-const schema = z.object({
-  body: z.string().min(1, '入力してください'),
-})
-
-type CommentValue = {
-  body: string
-}
-
-const CommentItem = memo(
-  ({ comment, userId, handleDeleteComment, handleUpdateComment }: CommentItemProps) => {
-    const [editedFlag, setEditedFlag] = useState(false)
-    const { register, handleSubmit, formState } = useForm<CommentValue>({
-      mode: 'onChange',
-      defaultValues: {
-        body: comment.body,
+const CommentItem = memo(({ comment, userId }: CommentItemProps) => {
+  const [editedFlag, setEditedFlag] = useState(false)
+  const updateCommentMutation = useUpdateComment({
+    pictureId: comment.pictureId,
+    mutationConfig: {
+      onSuccess: () => {
+        toast.success('コメントを更新しました')
+        setEditedFlag(false)
       },
-      resolver: zodResolver(schema),
-    })
-    return (
-      <li
-        aria-label={`comment-${comment.body}-${comment.id}`}
-        className='w-full bg-white p-4 shadow-sm'
-      >
-        <div className='mb-2 flex justify-between'>
-          <span className='font-bold'>{comment.commenterName}</span>
-          <div className='flex flex-col'>
-            <span className='text-xs font-semibold opacity-50'>
-              {formatDate(comment.createdAt)}
-            </span>
-          </div>
+      onError: () => {
+        toast.error('コメントの更新に失敗しました')
+      },
+    },
+  })
+
+  const form = useForm<UpdateCommentInput>({
+    resolver: zodResolver(updateCommentInputSchema),
+    mode: 'onSubmit',
+  })
+
+  const onSubmit = useCallback<SubmitHandler<UpdateCommentInput>>(
+    (values) => {
+      updateCommentMutation.mutate({
+        commentId: comment.id,
+        data: { body: values.body },
+      })
+    },
+    [updateCommentMutation, comment.id],
+  )
+
+  return (
+    <li
+      aria-label={`comment-${comment.body}-${comment.id}`}
+      className='w-full bg-white p-4 shadow-sm'
+    >
+      <div className='mb-2 flex justify-between'>
+        <span className='font-bold'>{comment.user.name}</span>
+        <div className='flex flex-col'>
+          <span className='text-xs font-semibold opacity-50'>{formatDate(comment.createdAt)}</span>
         </div>
-        {editedFlag ? (
-          <form
-            className='flex flex-col'
-            onSubmit={handleSubmit(async (values) => {
-              await handleUpdateComment(comment.id, values.body)
-              setEditedFlag(false)
-            })}
-          >
-            <Input
-              className='w-full'
-              error={formState.errors['body']}
-              registration={register('body')}
-              type='text'
-            />
-            <div className='mt-2 flex w-full justify-end gap-2'>
-              <Button type='submit' variant='outline'>
-                <CheckCircledIcon />
-              </Button>
-              <Button
-                onClick={() => {
-                  setEditedFlag(false)
-                }}
-                variant='outline'
-              >
-                <Cross2Icon />
-              </Button>
+      </div>
+      {editedFlag ? (
+        <EditComment form={form} onSubmit={onSubmit} setEditedFlag={setEditedFlag} />
+      ) : (
+        <div className='flex justify-between'>
+          <div className='max-w-96 whitespace-pre-wrap break-words'>{comment.body}</div>
+          {userId === comment.userId && (
+            <div className='text-right'>
+              <CommentMenu
+                commentId={comment.id}
+                pictureId={comment.pictureId}
+                setEditedFlag={setEditedFlag}
+              />
             </div>
-          </form>
-        ) : (
-          <div className='flex justify-between'>
-            <div className='max-w-96 whitespace-pre-wrap break-words'>{comment.body}</div>
-            {userId === comment.userId && (
-              <div className='text-right'>
-                <CommentMenu
-                  commentId={comment.id}
-                  handleDeleteComment={handleDeleteComment}
-                  setEditedFlag={setEditedFlag}
-                />
-              </div>
-            )}
-          </div>
-        )}
-      </li>
-    )
-  },
-)
+          )}
+        </div>
+      )}
+    </li>
+  )
+})
 
 export default CommentItem
 CommentItem.displayName = 'CommentItem'
