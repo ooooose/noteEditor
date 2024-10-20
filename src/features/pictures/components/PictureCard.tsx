@@ -1,5 +1,6 @@
 import { memo } from 'react'
 
+import Comment from '@/features/comments/components/Comment'
 import { Like } from '@/features/likes/components'
 import { useMutateLike } from '@/features/likes/hooks/useMutateLike'
 import { Like as LikeType } from '@/features/likes/types'
@@ -42,6 +43,7 @@ const PictureCard = memo(({ picture, likes }: PictureCardProps) => {
           </div>
           <div className='mt-3 flex gap-2'>
             <Like like={like} likeCount={likeCount} liked={liked} />
+            <Comment pictureId={picture.id} user={picture.user} />
           </div>
         </div>
       </div>

@@ -12,9 +12,9 @@ const deserializerOptions: DeserializerOptions = {
   keyForAttribute: 'camelCase',
 }
 
-export const getComments = async (pictureUid: string): Promise<Comment[]> => {
+export const getComments = async (pictureId: number): Promise<Comment[]> => {
   try {
-    const response = await apiClient.get(`/api/v1/pictures/${pictureUid}/comments`)
+    const response = await apiClient.get(`/api/v1/pictures/${pictureId}/comments`)
     const deserializer = new Deserializer(deserializerOptions)
     const comments: Comment[] = await deserializer.deserialize(response)
     return comments
@@ -24,21 +24,21 @@ export const getComments = async (pictureUid: string): Promise<Comment[]> => {
   }
 }
 
-export const getCommentsQueryOptions = (pictureUid: string): UseQueryOptions<Comment[], Error> => {
+export const getCommentsQueryOptions = (pictureId: number): UseQueryOptions<Comment[], Error> => {
   return {
-    queryKey: ['comments'],
-    queryFn: () => getComments(pictureUid),
+    queryKey: ['comments', pictureId],
+    queryFn: () => getComments(pictureId),
   }
 }
 
 type UseCommentsOptions = {
-  pictureUid: string
+  pictureId: number
   queryConfig?: QueryConfig<typeof getComments>
 }
 
-export const useComments = ({ pictureUid, queryConfig }: UseCommentsOptions) => {
+export const useComments = ({ pictureId, queryConfig }: UseCommentsOptions) => {
   return useQuery<Comment[], Error>({
-    ...getCommentsQueryOptions(pictureUid),
+    ...getCommentsQueryOptions(pictureId),
     ...queryConfig,
   })
 }

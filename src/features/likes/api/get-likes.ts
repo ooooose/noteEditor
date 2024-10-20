@@ -16,7 +16,7 @@ export const getLikes = async (): Promise<Like[]> => {
   try {
     const response = await apiClient.get('/api/v1/likes')
     const deserializer = new Deserializer(deserializerOptions)
-    const likes: Like[] = await deserializer.deserialize(response.json())
+    const likes: Like[] = await deserializer.deserialize(response)
     return likes
   } catch (error) {
     console.error('いいね一覧の取得に失敗しました:', error)

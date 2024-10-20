@@ -1,51 +1,39 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Deserializer } from 'jsonapi-serializer'
 import { z } from 'zod'
 
 import { apiClient } from '@/lib/api/api-client'
-import { generateUUID } from '@/lib/uuid'
 
 import { getCommentsQueryOptions } from './get-comments'
 
-import type { Comment } from '../types'
 import type { MutationConfig } from '@/lib/react-query/react-query'
-import type { DeserializerOptions } from 'jsonapi-serializer'
 
 export const createCommentInputSchema = z.object({
+  picture_id: z.number(),
   body: z.string().min(1, '入力必須です').max(200, '200文字以内で入力してください'),
 })
 
-const deserializerOptions: DeserializerOptions = {
-  keyForAttribute: 'camelCase',
-}
-
 export type CreateCommentInput = z.infer<typeof createCommentInputSchema>
 
-export const createComment = async (params: CreateCommentInput): Promise<Comment> => {
-  const uuid = generateUUID()
-  const paramsWithUUID = { ...params, id: uuid }
-  const response = await apiClient.post('/api/v1/comments', paramsWithUUID)
-  const deserializer = new Deserializer(deserializerOptions)
-  const comment = await deserializer.deserialize(response.json())
-  return comment
+export const createComment = async (params: CreateCommentInput) => {
+  return await apiClient.post(`/api/v1/pictures/${params.picture_id}/comments`, params)
 }
 
-type UsePostCommentOptions = {
-  pictureId: number
+type UseCreateCommentOptions = {
+  picture_id: number
   mutationConfig?: MutationConfig<typeof createComment>
 }
 
-export const useCreateComment = ({ pictureId, mutationConfig }: UsePostCommentOptions) => {
+export const useCreateComment = ({ picture_id, mutationConfig }: UseCreateCommentOptions) => {
   const queryClient = useQueryClient()
 
   const { onSuccess, ...restConfig } = mutationConfig || {}
 
   return useMutation({
-    onSuccess: (data, ...args) => {
+    onSuccess: (...args) => {
       queryClient.invalidateQueries({
-        queryKey: getCommentsQueryOptions(pictureId).queryKey,
+        queryKey: getCommentsQueryOptions(picture_id).queryKey,
       })
-      onSuccess?.(data, ...args)
+      onSuccess?.(...args)
     },
     ...restConfig,
     mutationFn: createComment,

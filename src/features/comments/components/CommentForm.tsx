@@ -5,7 +5,7 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
-import { Button } from '@/components/elements/Button'
+import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 
@@ -20,7 +20,7 @@ type CommentFormProps = {
 
 const CommentForm = React.memo(({ pictureId }: CommentFormProps) => {
   const createCommentMutation = useCreateComment({
-    pictureId: pictureId,
+    picture_id: pictureId,
     mutationConfig: {
       onSuccess: () => {
         toast.success('コメントを登録しました')
@@ -34,15 +34,18 @@ const CommentForm = React.memo(({ pictureId }: CommentFormProps) => {
   const form = useForm<CreateCommentInput>({
     resolver: zodResolver(createCommentInputSchema),
     defaultValues: {
+      picture_id: Number(pictureId),
       body: '',
     },
   })
 
   const onSubmit: SubmitHandler<CreateCommentInput> = (values) => {
     createCommentMutation.mutate({
+      picture_id: pictureId,
       body: values.body,
     })
   }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -58,14 +61,8 @@ const CommentForm = React.memo(({ pictureId }: CommentFormProps) => {
             </FormItem>
           )}
         />
-        <Button
-          className='float-right mt-4'
-          disabled={createCommentMutation.isLoading}
-          isLoading={createCommentMutation.isLoading}
-          type='submit'
-          variant='default'
-        >
-          登録する
+        <Button className='float-right mt-4' type='submit' variant='default'>
+          投稿
         </Button>
       </form>
     </Form>
