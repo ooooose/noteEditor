@@ -24,6 +24,7 @@ const CommentForm = React.memo(({ pictureId }: CommentFormProps) => {
     mutationConfig: {
       onSuccess: () => {
         toast.success('コメントを登録しました')
+        form.reset({ body: '' })
       },
       onError: () => {
         toast.error('コメントの登録に失敗しました')

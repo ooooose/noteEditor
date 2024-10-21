@@ -9,7 +9,7 @@ import type { Comment } from '../types'
 type CommentsListProps = {
   isLoading: boolean
   comments: Comment[]
-  userId: number
+  userId: number | undefined
 }
 
 const CommentsList = memo(({ isLoading, comments, userId }: CommentsListProps) => {

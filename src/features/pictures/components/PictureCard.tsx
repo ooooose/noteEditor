@@ -4,6 +4,7 @@ import Comment from '@/features/comments/components/Comment'
 import { Like } from '@/features/likes/components'
 import { useMutateLike } from '@/features/likes/hooks/useMutateLike'
 import { Like as LikeType } from '@/features/likes/types'
+import { User } from '@/features/user/types'
 import { formatDateForPicture } from '@/utils/format'
 
 import { Picture as PictureType } from '../types'
@@ -14,9 +15,10 @@ import PictureTheme from './PictureTheme'
 type PictureCardProps = {
   picture: PictureType
   likes: LikeType[]
+  user: User | undefined
 }
 
-const PictureCard = memo(({ picture, likes }: PictureCardProps) => {
+const PictureCard = memo(({ picture, likes, user }: PictureCardProps) => {
   const { like, liked, likeCount } = useMutateLike(picture.uid, picture.userId, likes)
   return (
     <div className='h-[300px] w-[250px]'>
@@ -43,7 +45,7 @@ const PictureCard = memo(({ picture, likes }: PictureCardProps) => {
           </div>
           <div className='mt-3 flex gap-2'>
             <Like like={like} likeCount={likeCount} liked={liked} />
-            <Comment pictureId={picture.id} user={picture.user} />
+            <Comment pictureId={picture.id} user={user} />
           </div>
         </div>
       </div>

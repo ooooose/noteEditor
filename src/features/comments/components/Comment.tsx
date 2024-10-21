@@ -21,7 +21,7 @@ import CommentsList from './CommentsList'
 
 type CommentProps = {
   pictureId: number
-  user: User
+  user: User | undefined
 }
 
 const Comment = memo(({ pictureId, user }: CommentProps) => {
@@ -45,7 +45,7 @@ const Comment = memo(({ pictureId, user }: CommentProps) => {
           <CommentsList
             comments={commentsQuery?.data}
             isLoading={commentsQuery.isLoading}
-            userId={user.id}
+            userId={user?.id}
           />
           <CommentForm pictureId={pictureId} />
         </DialogContent>

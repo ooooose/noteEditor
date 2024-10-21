@@ -14,7 +14,7 @@ import type { Comment } from '../types'
 
 type CommentItemProps = {
   comment: Comment
-  userId: number
+  userId: number | undefined
 }
 
 const CommentItem = memo(({ comment, userId }: CommentItemProps) => {
