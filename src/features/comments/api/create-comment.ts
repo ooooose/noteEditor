@@ -14,8 +14,8 @@ export const createCommentInputSchema = z.object({
 
 export type CreateCommentInput = z.infer<typeof createCommentInputSchema>
 
-export const createComment = async (params: CreateCommentInput) => {
-  return await apiClient.post(`/api/v1/pictures/${params.picture_id}/comments`, params)
+export const createComment = (params: CreateCommentInput) => {
+  return apiClient.post(`/api/v1/pictures/${params.picture_id}/comments`, params)
 }
 
 type UseCreateCommentOptions = {

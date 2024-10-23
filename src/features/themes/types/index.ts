@@ -3,7 +3,7 @@ import type { Entity } from '@/types/api'
 
 export type Theme = Entity<{
   title: string
-  userId: string
+  userId: number
   pictures: Picture[]
 }>
 

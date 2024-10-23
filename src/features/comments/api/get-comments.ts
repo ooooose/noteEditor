@@ -12,7 +12,7 @@ const deserializerOptions: DeserializerOptions = {
   keyForAttribute: 'camelCase',
 }
 
-export const getComments = async (pictureId: number): Promise<Comment[]> => {
+export const getComments = async ({ pictureId }: { pictureId: number }): Promise<Comment[]> => {
   try {
     const response = await apiClient.get(`/api/v1/pictures/${pictureId}/comments`)
     const deserializer = new Deserializer(deserializerOptions)
@@ -26,8 +26,8 @@ export const getComments = async (pictureId: number): Promise<Comment[]> => {
 
 export const getCommentsQueryOptions = (pictureId: number): UseQueryOptions<Comment[], Error> => {
   return {
-    queryKey: ['comments', pictureId],
-    queryFn: () => getComments(pictureId),
+    queryKey: ['comments', Number(pictureId)],
+    queryFn: () => getComments({ pictureId }),
   }
 }
 

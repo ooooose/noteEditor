@@ -14,7 +14,7 @@ type DeleteCommentProps = {
 
 export const DeleteComment = memo(({ commentId, pictureId }: DeleteCommentProps) => {
   const deleteCommentMutation = useDeleteComment({
-    pictureId,
+    pictureId: pictureId,
     mutationConfig: {
       onSuccess: () => {
         toast.success('コメントを削除しました')
@@ -27,7 +27,7 @@ export const DeleteComment = memo(({ commentId, pictureId }: DeleteCommentProps)
 
   return (
     <ConfirmationDialog
-      body='本当に日記を削除してよろしいですか？'
+      body='本当に削除してよろしいですか？'
       confirmButton={
         <Button
           isLoading={deleteCommentMutation.isLoading}
@@ -45,7 +45,7 @@ export const DeleteComment = memo(({ commentId, pictureId }: DeleteCommentProps)
       }
       icon='danger'
       isDone={deleteCommentMutation.isSuccess}
-      title='日記を削除します'
+      title='コメントを削除します'
       triggerButton={
         <div className='cursor-pointer text-red-500'>
           <TrashIcon className='mr-4 size-5' />
