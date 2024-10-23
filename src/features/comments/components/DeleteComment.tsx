@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button'
 import { ConfirmationDialog } from '@/components/ui/confirmation-dialog'
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu'
 
+import { useDisclosure } from '@/hooks/use-disclosure'
+
 import { useDeleteComment } from '../api'
 
 type DeleteCommentProps = {
@@ -14,8 +16,9 @@ type DeleteCommentProps = {
 }
 
 export const DeleteComment = memo(({ commentId, pictureId }: DeleteCommentProps) => {
+  const { open } = useDisclosure()
   const deleteCommentMutation = useDeleteComment({
-    pictureId: pictureId,
+    pictureId,
     mutationConfig: {
       onSuccess: () => {
         toast.success('コメントを削除しました')
@@ -41,14 +44,20 @@ export const DeleteComment = memo(({ commentId, pictureId }: DeleteCommentProps)
           type='button'
           variant='destructive'
         >
-          Delete
+          削除
         </Button>
       }
       icon='danger'
       isDone={deleteCommentMutation.isSuccess}
       title='日記を削除します'
       triggerButton={
-        <DropdownMenuItem className='cursor-pointer  text-red-500 focus:text-red-500'>
+        <DropdownMenuItem
+          className='cursor-pointer  text-red-500 focus:text-red-500'
+          onSelect={(e) => {
+            e.preventDefault()
+            open()
+          }}
+        >
           <TrashIcon className='mr-4 size-5' />
           Delete
         </DropdownMenuItem>

@@ -63,7 +63,7 @@ const CommentItem = memo(({ comment, userId }: CommentItemProps) => {
       ) : (
         <div className='flex justify-between'>
           <div className='max-w-96 whitespace-pre-wrap break-words'>{comment.body}</div>
-          {userId === comment.userId && (
+          {Number(userId) === comment.userId && (
             <div className='text-right'>
               <CommentMenu
                 commentId={comment.id}
