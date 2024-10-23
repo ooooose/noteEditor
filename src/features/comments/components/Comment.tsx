@@ -10,6 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import { Skeleton } from '@/components/ui/skeleton'
 
 import { User } from '@/features/user/types'
 
@@ -26,8 +27,15 @@ type CommentProps = {
 
 const Comment = memo(({ pictureId, user }: CommentProps) => {
   const commentsQuery = useComments({ pictureId })
-  if (commentsQuery.isLoading) return <div>コメントを取得中...</div>
-  if (commentsQuery.isError) return <div>コメントの取得に失敗しました</div>
+  if (commentsQuery.isLoading) return <Skeleton className='size-[50px] rounded-full' />
+  if (commentsQuery.isError)
+    return (
+      <div className='flex gap-3'>
+        <div className='rounded-full border p-3 text-red-500'>
+          <ChatBubbleIcon className='text-red-500' />
+        </div>
+      </div>
+    )
   return (
     <div>
       <Dialog>
