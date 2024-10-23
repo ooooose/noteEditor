@@ -1,14 +1,8 @@
-import { zodResolver } from '@hookform/resolvers/zod'
-import { memo, useCallback, useState } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { toast } from 'sonner'
+import { memo } from 'react'
 
 import { formatDate } from '@/utils/format'
 
-import { UpdateCommentInput, updateCommentInputSchema, useUpdateComment } from '../api'
-
-import CommentMenu from './CommentMenu'
-import { EditComment } from './EditComment'
+import { DeleteComment } from './DeleteComment'
 
 import type { Comment } from '../types'
 
@@ -18,35 +12,6 @@ type CommentItemProps = {
 }
 
 const CommentItem = memo(({ comment, userId }: CommentItemProps) => {
-  const [editedFlag, setEditedFlag] = useState(false)
-  const updateCommentMutation = useUpdateComment({
-    pictureId: comment.pictureId,
-    mutationConfig: {
-      onSuccess: () => {
-        toast.success('コメントを更新しました')
-        setEditedFlag(false)
-      },
-      onError: () => {
-        toast.error('コメントの更新に失敗しました')
-      },
-    },
-  })
-
-  const form = useForm<UpdateCommentInput>({
-    resolver: zodResolver(updateCommentInputSchema),
-    mode: 'onSubmit',
-  })
-
-  const onSubmit = useCallback<SubmitHandler<UpdateCommentInput>>(
-    (values) => {
-      updateCommentMutation.mutate({
-        commentId: comment.id,
-        data: { body: values.body },
-      })
-    },
-    [updateCommentMutation, comment.id],
-  )
-
   return (
     <li
       aria-label={`comment-${comment.body}-${comment.id}`}
@@ -58,22 +23,14 @@ const CommentItem = memo(({ comment, userId }: CommentItemProps) => {
           <span className='text-xs font-semibold opacity-50'>{formatDate(comment.createdAt)}</span>
         </div>
       </div>
-      {editedFlag ? (
-        <EditComment form={form} onSubmit={onSubmit} setEditedFlag={setEditedFlag} />
-      ) : (
-        <div className='flex justify-between'>
-          <div className='max-w-96 whitespace-pre-wrap break-words'>{comment.body}</div>
-          {Number(userId) === comment.userId && (
-            <div className='text-right'>
-              <CommentMenu
-                commentId={comment.id}
-                pictureId={comment.pictureId}
-                setEditedFlag={setEditedFlag}
-              />
-            </div>
-          )}
-        </div>
-      )}
+      <div className='flex justify-between'>
+        <div className='max-w-96 whitespace-pre-wrap break-words'>{comment.body}</div>
+        {Number(userId) === comment.userId && (
+          <div className='text-right'>
+            <DeleteComment commentId={comment.id} pictureId={comment.pictureId} />
+          </div>
+        )}
+      </div>
     </li>
   )
 })
