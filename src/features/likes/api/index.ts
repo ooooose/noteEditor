@@ -1,3 +1,3 @@
-export * from './deleteLike'
-export * from './postLike'
-export * from './getLikes'
+export * from './delete-like'
+export * from './create-like'
+export * from './get-likes'

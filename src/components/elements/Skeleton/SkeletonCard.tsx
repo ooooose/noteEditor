@@ -9,6 +9,15 @@ export const SkeletonCard = () => {
         </div>
         <Skeleton className='mx-auto h-[150px] w-[200px]' />
       </div>
+      <div className='float-right flex gap-2'>
+        <div className='ml-2 mt-3'>
+          <Skeleton className='size-[50px] rounded-full' />
+        </div>
+        <div className='mt-3 flex gap-2'>
+          <Skeleton className='size-[50px] rounded-full' />
+          <Skeleton className='size-[50px] rounded-full' />
+        </div>
+      </div>
     </div>
   )
 }

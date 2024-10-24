@@ -1,29 +1,25 @@
-import { usePathname } from 'next/navigation'
 import { memo } from 'react'
 
-import { AuthUser } from '@/features/auth/types'
 import Comment from '@/features/comments/components/Comment'
 import { Like } from '@/features/likes/components'
 import { useMutateLike } from '@/features/likes/hooks/useMutateLike'
 import { Like as LikeType } from '@/features/likes/types'
+import { User } from '@/features/user/types'
 import { formatDateForPicture } from '@/utils/format'
 
-import { Picture } from './Picture'
-import PictureMenu from './PictureMenu'
-import PictureTheme from './PictureTheme'
+import { Picture as PictureType } from '../types'
 
-import type { Picture as PictureType } from '../types'
+import { Picture } from './Picture'
+import PictureTheme from './PictureTheme'
 
 type PictureCardProps = {
   picture: PictureType
   likes: LikeType[]
-  user: AuthUser
+  user: User | undefined
 }
 
-const PictureCard = memo(({ picture, user, likes }: PictureCardProps) => {
-  const { like, liked, likeCount } = useMutateLike(picture.id, user.id, likes)
-  const pathName = usePathname()
-  const isDisplay = pathName === '/timeline'
+const PictureCard = memo(({ picture, likes, user }: PictureCardProps) => {
+  const { like, liked, likeCount } = useMutateLike(picture.uid, picture.userId, likes)
   return (
     <div className='h-[300px] w-[250px]'>
       <div className='py-3'>
@@ -37,23 +33,20 @@ const PictureCard = memo(({ picture, user, likes }: PictureCardProps) => {
         </div>
       </div>
       <div>
-        <Picture author={picture.user.name} frameId={picture.frameId} src={picture.image} />
+        <Picture author={picture.user.name} frameId={picture.frameId} src={picture.imageUrl} />
         <div className='float-right flex gap-2'>
           <div className='ml-2 mt-3'>
-            {isDisplay && (
-              <PictureTheme
-                author={picture.user.name}
-                frameId={picture.frameId}
-                src={picture.image}
-                title={picture.theme?.title}
-              />
-            )}
+            <PictureTheme
+              author={picture.user.name}
+              frameId={picture.frameId}
+              src={picture.imageUrl}
+              title={picture.theme?.title}
+            />
           </div>
           <div className='mt-3 flex gap-2'>
-            <Comment pictureId={picture.id} user={user} />
             <Like like={like} likeCount={likeCount} liked={liked} />
+            <Comment pictureId={picture.id} user={user} />
           </div>
-          {user.id === picture.userId && <PictureMenu picture={picture} />}
         </div>
       </div>
     </div>

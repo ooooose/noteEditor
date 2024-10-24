@@ -1,40 +1,40 @@
-import { useSession } from 'next-auth/react'
-import { useEffect } from 'react'
-import useSWR from 'swr'
+// import { useSession } from 'next-auth/react'
+// import { useEffect } from 'react'
+// import useSWR from 'swr'
 
-import { apiClient } from '@/lib/api/api-client'
+// import { apiClient } from '@/lib/api/api-client'
 
-export const useFetchAuthUserByEmail = () => {
-  const { data: session } = useSession()
+// export const useFetchAuthUserByEmail = () => {
+//   const { data: session } = useSession()
 
-  const email = session?.user?.email
+//   const email = session?.user?.email
 
-  const params = {
-    email: email,
-  }
+//   const params = {
+//     email: email,
+//   }
 
-  // Ensure that useSWR is called unconditionally
-  const { data, error, isLoading, mutate } = useSWR(
-    '/api/users',
-    () => apiClient.apiPost('/api/users', params).then((result) => result.json()),
-    {
-      revalidateIfStale: false,
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    },
-  )
+//   // Ensure that useSWR is called unconditionally
+//   const { data, error, isLoading, mutate } = useSWR(
+//     '/api/users',
+//     () => apiClient.apiPost('/api/users', params).then((result) => result.json()),
+//     {
+//       revalidateIfStale: false,
+//       revalidateOnFocus: false,
+//       revalidateOnReconnect: false,
+//     },
+//   )
 
-  useEffect(() => {
-    if (email) {
-      mutate()
-    }
-  }, [email, mutate])
+//   useEffect(() => {
+//     if (email) {
+//       mutate()
+//     }
+//   }, [email, mutate])
 
-  return {
-    user: data?.user,
-    isLoading: isLoading,
-    isError: error,
-    mutate: mutate,
-    session,
-  }
-}
+//   return {
+//     user: data?.user,
+//     isLoading: isLoading,
+//     isError: error,
+//     mutate: mutate,
+//     session,
+//   }
+// }

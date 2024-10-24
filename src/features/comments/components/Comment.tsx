@@ -10,23 +10,32 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import { Skeleton } from '@/components/ui/skeleton'
 
-import { useMutateComment } from '../hooks/useMutateComment'
+import { User } from '@/features/user/types'
+
+import { useComments } from '../api'
 
 import CommentCount from './CommentCount'
 import CommentForm from './CommentForm'
 import CommentsList from './CommentsList'
 
-import type { AuthUser } from '@/features/auth/types'
-
 type CommentProps = {
-  pictureId: string
-  user: AuthUser
+  pictureId: number
+  user: User | undefined
 }
 
 const Comment = memo(({ pictureId, user }: CommentProps) => {
-  const { isLoading, onSubmitComment, handleDeleteComment, comments, handleUpdateComment } =
-    useMutateComment(pictureId, user)
+  const commentsQuery = useComments({ pictureId })
+  if (commentsQuery.isLoading) return <Skeleton className='size-[50px] rounded-full' />
+  if (commentsQuery.isError)
+    return (
+      <div className='flex gap-3'>
+        <div className='rounded-full border p-3 text-red-500'>
+          <ChatBubbleIcon className='text-red-500' />
+        </div>
+      </div>
+    )
   return (
     <div>
       <Dialog>
@@ -42,16 +51,17 @@ const Comment = memo(({ pictureId, user }: CommentProps) => {
             <DialogTitle>コメント一覧</DialogTitle>
           </DialogHeader>
           <CommentsList
-            comments={comments}
-            handleDeleteComment={handleDeleteComment}
-            handleUpdateComment={handleUpdateComment}
-            isLoading={isLoading}
-            userId={user.id}
+            comments={commentsQuery?.data}
+            isLoading={commentsQuery.isLoading}
+            userId={user?.id}
           />
-          <CommentForm onSubmit={onSubmitComment} />
+          <CommentForm pictureId={pictureId} />
         </DialogContent>
       </Dialog>
-      <CommentCount commentCount={comments?.length} isLoading={isLoading} />
+      <CommentCount
+        commentCount={commentsQuery?.data?.length}
+        isLoading={commentsQuery.isLoading}
+      />
     </div>
   )
 })

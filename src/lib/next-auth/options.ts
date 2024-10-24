@@ -1,73 +1,77 @@
-import { PrismaAdapter } from '@auth/prisma-adapter'
-import bcrypt from 'bcrypt'
-import { NextAuthOptions } from 'next-auth'
-import CredentialsProvider from 'next-auth/providers/credentials'
 import GoogleProvider from 'next-auth/providers/google'
 
-import { prisma } from '../prisma'
+import type { NextAuthOptions } from 'next-auth'
 
-import type { Adapter } from 'next-auth/adapters'
-
-type ClientType = {
-  clientId: string
-  clientSecret: string
-}
+const apiUrl = process.env.NEXT_PUBLIC_API_URL
 
 export const options: NextAuthOptions = {
-  debug: false,
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    } as ClientType),
-    CredentialsProvider({
-      name: 'credentials',
-      credentials: {
-        email: { label: 'Email', type: 'email' },
-        password: { label: 'Password', type: 'password' },
-      },
-      // @ts-ignore
-      async authorize(credentials) {
-        if (!credentials?.email || !credentials.password) {
-          return null
-        }
-
-        const user = await prisma.user.findUnique({
-          where: {
-            email: credentials.email,
-          },
-        })
-        if (!user) {
-          return null
-        }
-        const passwordsMatch = await bcrypt.compare(credentials.password, user.hashedPassword ?? '')
-
-        if (!passwordsMatch) {
-          return null
-        }
-        return user
-      },
+      clientId: process.env.GOOGLE_CLIENT_ID ?? '',
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
     }),
   ],
-  adapter: PrismaAdapter(prisma) as Adapter,
   session: {
     strategy: 'jwt',
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+    signIn: '/',
+  },
   callbacks: {
-    // @ts-ignore
-    async jwt({ token, user }) {
-      return { ...token, ...user }
+    async signIn({ user, account }) {
+      const provider = account?.provider
+      const name = user?.name
+      const email = user?.email
+      const image = user?.image
+
+      if (!provider || !name || !email) {
+        console.error('認証情報の取得に失敗しました')
+        return false
+      }
+
+      try {
+        const response = await fetch(`${apiUrl}/auth/${provider}/callback`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            user: {
+              name,
+              email,
+              image,
+            },
+          }),
+        })
+
+        if (response.ok) {
+          const data = await response.json()
+          user.userId = data.user.id
+          user.accessToken = data.accessToken
+          return true
+        } else {
+          console.error(`Error: ${response.status} ${response.statusText}`)
+          return false
+        }
+      } catch (error) {
+        console.error(`Fetch error: ${error}`)
+        return false
+      }
+    },
+    async redirect() {
+      return '/timeline'
+    },
+    async jwt({ token, account, user }) {
+      if (account && user) {
+        token.userId = user.userId
+        token.accessToken = user.accessToken
+      }
+      return token
     },
     async session({ session, token }) {
-      session.user.emailVerified = token.emailVerified
-      session.user.uid = token.uid
-      return {
-        ...session,
-        user: {
-          ...session.user,
-        },
-      }
+      session.user = token
+      return session
     },
   },
 }
