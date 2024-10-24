@@ -10,7 +10,7 @@ import type { Picture as PictureType } from '../types'
 
 type PicturesProps = {
   pictures: PictureType[] | null
-  isLoading: boolean
+  isLoading?: boolean
 }
 
 const Pictures = memo(({ pictures, isLoading }: PicturesProps) => {

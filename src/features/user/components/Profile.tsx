@@ -1,11 +1,9 @@
 import { Skeleton } from '@/components/ui/skeleton'
 
-import { AuthUser } from '@/features/auth/types'
-
-// import EditProfileModal from './EditProfileModal'
+import type { User } from '../types'
 
 type ProfileProps = {
-  user: AuthUser
+  user: User | undefined
   isLoading: boolean
 }
 

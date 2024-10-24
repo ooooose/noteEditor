@@ -1,3 +1,5 @@
+import { Picture } from '@/features/pictures/types'
+
 import type { Entity } from '@/types/api'
 
 export type User = Entity<{
@@ -5,4 +7,6 @@ export type User = Entity<{
   name: string
   email: string
   image: string
+  pictures: Picture[]
+  likedPictures: Picture[]
 }>
