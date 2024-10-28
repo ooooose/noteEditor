@@ -32,7 +32,7 @@ import Avatar from './Avatar'
 import type { UpdateProfileInput } from '../api'
 
 type EditProfileModalProps = {
-  user: User
+  user: User | undefined
 }
 
 const EditProfileModal = ({ user }: EditProfileModalProps) => {
@@ -46,7 +46,7 @@ const EditProfileModal = ({ user }: EditProfileModalProps) => {
       },
     },
   })
-  const [image, setImage] = useState<string>(user.image || '')
+  const [image, setImage] = useState<string>(user?.image || '')
 
   const previewImage = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -58,7 +58,7 @@ const EditProfileModal = ({ user }: EditProfileModalProps) => {
   const form = useForm<UpdateProfileInput>({
     resolver: zodResolver(updateProfileInputSchema),
     defaultValues: {
-      name: user.name,
+      name: user?.name,
       image: undefined,
     },
   })
@@ -72,7 +72,7 @@ const EditProfileModal = ({ user }: EditProfileModalProps) => {
     })
   }
 
-  const avatar = user.image ?? '/avatar.png'
+  const avatar = user?.image ?? '/avatar.png'
 
   return (
     <Dialog

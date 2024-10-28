@@ -1,6 +1,6 @@
-import Image from 'next/image'
-
 import { Skeleton } from '@/components/ui/skeleton'
+
+import EditProfileModal from './EditProfileModal'
 
 import type { User } from '../types'
 
@@ -19,13 +19,7 @@ const Profile = ({ user, isLoading }: ProfileProps) => {
     )
   return (
     <div className='mx-auto flex flex-col gap-3'>
-      <Image
-        alt='avatar'
-        className='mx-auto mb-5 size-[100px] rounded-full'
-        height={100}
-        src={user?.image ?? '/avatar.png'}
-        width={100}
-      />
+      <EditProfileModal user={user} />
       <p className='pb-2 text-center'>{user?.name} さん</p>
     </div>
   )
