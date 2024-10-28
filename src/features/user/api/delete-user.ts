@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { apiClient } from '@/lib/api/api-client'
 import { MutationConfig } from '@/lib/react-query/react-query'
 
-import { getUserQueryOptions } from './get-user'
+import { getProfileQueryOptions } from './get-profile'
 
 export const deleteUser = ({ userUid }: { userUid: string }): Promise<void> => {
   return apiClient.delete(`/api/v1/users/${userUid}`)
@@ -21,7 +21,7 @@ export const useDeleteUser = ({ mutationConfig }: UseDeleteUserOptions = {}) => 
   return useMutation({
     onSuccess: (...args) => {
       queryClient.invalidateQueries({
-        queryKey: getUserQueryOptions().queryKey,
+        queryKey: getProfileQueryOptions().queryKey,
       })
       onSuccess?.(...args)
     },

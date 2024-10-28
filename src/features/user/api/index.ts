@@ -1,3 +1,3 @@
-export * from './get-user'
-export * from './update-user'
+export * from './get-profile'
+export * from './update-profile'
 export * from './delete-user'

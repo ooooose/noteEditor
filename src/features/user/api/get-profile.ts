@@ -12,7 +12,7 @@ const deserializerOptions: DeserializerOptions = {
   keyForAttribute: 'camelCase',
 }
 
-export const getUser = async (): Promise<User> => {
+export const getProfile = async (): Promise<User> => {
   try {
     const response = await apiClient.get('/api/v1/users/me')
     const deserializer = new Deserializer(deserializerOptions)
@@ -24,20 +24,20 @@ export const getUser = async (): Promise<User> => {
   }
 }
 
-export const getUserQueryOptions = (): UseQueryOptions<User, Error> => {
+export const getProfileQueryOptions = (): UseQueryOptions<User, Error> => {
   return {
     queryKey: ['currentUser'],
-    queryFn: () => getUser(),
+    queryFn: () => getProfile(),
   }
 }
 
-type UseUserOptions = {
-  queryConfig?: QueryConfig<typeof getUser>
+type UseProfileOptions = {
+  queryConfig?: QueryConfig<typeof getProfile>
 }
 
-export const useUser = ({ queryConfig }: UseUserOptions) => {
+export const useProfile = ({ queryConfig }: UseProfileOptions) => {
   return useQuery<User, Error>({
-    ...getUserQueryOptions(),
+    ...getProfileQueryOptions(),
     ...queryConfig,
   })
 }

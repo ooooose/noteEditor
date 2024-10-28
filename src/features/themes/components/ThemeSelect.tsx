@@ -18,13 +18,6 @@ export const ThemeSelect = memo(({ handleSelectChange }: ThemeSelectProps) => {
   const { themes, isLoading } = useFetchThemes()
   const [selectedOption, setSelectedOption] = useState<ThemeOption | null>(null)
 
-  // useEffect(() => {
-  //   if (randomTheme) {
-  //     setSelectedOption({ value: randomTheme.title, label: randomTheme.title })
-  //     handleSelectChange(randomTheme.title)
-  //   }
-  // }, [randomTheme, handleSelectChange])
-
   const options: ThemeOption[] =
     themes?.map((theme: Theme) => ({
       value: theme.title,

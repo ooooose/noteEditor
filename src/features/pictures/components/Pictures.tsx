@@ -1,6 +1,6 @@
 import { memo } from 'react'
 
-import { useUser } from '@/features/user/api'
+import { useProfile } from '@/features/user/api'
 
 import LoadingPictures from './LoadingPictures'
 import { NoPictures } from './NoPictures'
@@ -14,7 +14,7 @@ type PicturesProps = {
 }
 
 const Pictures = memo(({ pictures, isLoading }: PicturesProps) => {
-  const currentUserQuery = useUser({})
+  const useProfileQuery = useProfile({})
   if (isLoading) return <LoadingPictures />
   if (pictures?.length === 0) return <NoPictures />
   const getPictures = () => {
@@ -26,7 +26,7 @@ const Pictures = memo(({ pictures, isLoading }: PicturesProps) => {
               key={picture.id}
               likes={picture.likes}
               picture={picture}
-              user={currentUserQuery.data}
+              user={useProfileQuery.data}
             />
           )
         })}
