@@ -4,7 +4,7 @@ import { useCreateLike, useDeleteLike } from '../api'
 
 import type { Like } from '../types'
 
-export function useMutateLike(pictureUid: string, userId: number, likes: Like[]) {
+export function useMutateLike(pictureUid: string, userId: number, likes: Like[], userUid?: string) {
   const [liked, setLiked] = useState<boolean>(false)
   const [likeCount, setLikeCount] = useState<number>(likes.length)
 
@@ -19,6 +19,7 @@ export function useMutateLike(pictureUid: string, userId: number, likes: Like[])
   }, [setLiked, setLikeCount, likes, userId])
 
   const createLikeMutation = useCreateLike({
+    userUid: userUid,
     mutationConfig: {
       onError: (error) => {
         console.error('Failed to update like:', error)
@@ -27,6 +28,7 @@ export function useMutateLike(pictureUid: string, userId: number, likes: Like[])
   })
 
   const deleteLikeMutation = useDeleteLike({
+    userUid: userUid,
     mutationConfig: {
       onError: (error) => {
         console.error('Failed to update like:', error)
