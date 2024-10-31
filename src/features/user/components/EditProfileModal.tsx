@@ -125,7 +125,7 @@ const EditProfileModal = ({ user }: EditProfileModalProps) => {
                         accept='image/*'
                         onChange={(e) => {
                           handleImagePreview(e)
-                          field.onChange(e.target.files?.[0]) // Manually pass file to field
+                          field.onChange(e.target.files?.[0])
                         }}
                         type='file'
                       />
