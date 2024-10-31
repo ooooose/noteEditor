@@ -1,9 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import Image from 'next/image'
-import { useState } from 'react'
-import { ChangeEvent } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { useState, ChangeEvent } from 'react'
+import { SubmitHandler, useForm, Controller } from 'react-hook-form'
 import { toast } from 'sonner'
+import { z } from 'zod'
 
 import { Button } from '@/components/elements/Button'
 import {
@@ -24,36 +24,40 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 
-import { useUpdateProfile, updateProfileInputSchema } from '../api'
+import { middleApiClient } from '@/lib/api/middle-api-client'
+
+import { useUpdateProfile } from '../api'
 import { User } from '../types'
 
 import Avatar from './Avatar'
-
-import type { UpdateProfileInput } from '../api'
 
 type EditProfileModalProps = {
   user: User | undefined
 }
 
 const EditProfileModal = ({ user }: EditProfileModalProps) => {
+  const [imagePreview, setImagePreview] = useState<string>(user?.image || '')
+
   const updateProfileMutation = useUpdateProfile({
     mutationConfig: {
-      onSuccess: () => {
-        toast.success('プロフィールを更新しました')
-      },
-      onError: () => {
-        toast.error('プロフィールの更新に失敗しました')
-      },
+      onSuccess: () => toast.success('プロフィールを更新しました'),
+      onError: () => toast.error('プロフィールの更新に失敗しました'),
     },
   })
-  const [image, setImage] = useState<string>(user?.image || '')
 
-  const previewImage = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const file = e.target.files[0]
-      setImage(window.URL.createObjectURL(file))
-    }
+  type UpdateProfileInput = {
+    name: string
+    image?: File
   }
+
+  const updateProfileInputSchema = z.object({
+    name: z
+      .string()
+      .min(1, '入力必須です')
+      .max(40, '名前は40文字以内で入力してください')
+      .optional(),
+    image: z.any().optional(),
+  })
 
   const form = useForm<UpdateProfileInput>({
     resolver: zodResolver(updateProfileInputSchema),
@@ -63,25 +67,38 @@ const EditProfileModal = ({ user }: EditProfileModalProps) => {
     },
   })
 
-  const onSubmit: SubmitHandler<UpdateProfileInput> = (values) => {
+  const handleImagePreview = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) setImagePreview(URL.createObjectURL(file))
+  }
+
+  const onSubmit: SubmitHandler<UpdateProfileInput> = async (values) => {
+    let imageUrl = user?.image
+
+    if (values.image && values.image instanceof File) {
+      const formData = new FormData()
+      formData.append('id', user?.uid ?? '')
+      formData.append('name', values.name || '')
+      formData.append('image', values.image)
+
+      const response = await middleApiClient.apiPostFormData('/api/profile', formData)
+      const data = await response.json()
+      imageUrl = data.imageUrl
+    }
     updateProfileMutation.mutate({
       data: {
         name: values.name,
-        image: values.image,
+        image: imageUrl,
       },
     })
   }
 
-  const avatar = user?.image ?? '/avatar.png'
+  const avatarSrc = user?.image || '/avatar.png'
 
   return (
-    <Dialog
-      onOpenChange={() => {
-        setImage('')
-      }}
-    >
+    <Dialog onOpenChange={() => setImagePreview('')}>
       <DialogTrigger>
-        <Avatar src={avatar} />
+        <Avatar src={avatarSrc} />
       </DialogTrigger>
       <DialogContent className='sm:max-w-[425px]'>
         <DialogHeader>
@@ -94,21 +111,21 @@ const EditProfileModal = ({ user }: EditProfileModalProps) => {
                 alt='avatar'
                 className='mx-auto mb-5 size-[100px] rounded-full'
                 height={100}
-                src={image || avatar}
+                src={imagePreview || avatarSrc}
                 width={100}
               />
-              <FormField
+              <Controller
                 control={form.control}
                 name='image'
-                render={() => (
+                render={({ field }) => (
                   <FormItem>
                     <FormLabel>プロフィール画像</FormLabel>
                     <FormControl>
                       <Input
-                        {...form.register('image')}
                         accept='image/*'
-                        onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                          previewImage(event)
+                        onChange={(e) => {
+                          handleImagePreview(e)
+                          field.onChange(e.target.files?.[0]) // Manually pass file to field
                         }}
                         type='file'
                       />
@@ -145,7 +162,7 @@ const EditProfileModal = ({ user }: EditProfileModalProps) => {
                     className='mt-2 w-full'
                     onClick={() => {
                       form.reset()
-                      setImage('')
+                      setImagePreview('')
                     }}
                     variant='outline'
                   >
