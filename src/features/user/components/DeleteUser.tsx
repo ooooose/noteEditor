@@ -8,7 +8,7 @@ import { ConfirmationDialog } from '@/components/ui/confirmation-dialog'
 import { useDeleteUser } from '../api'
 
 type DeleteUserProps = {
-  userUid: string
+  userUid: string | undefined
 }
 
 export const DeleteUser = ({ userUid }: DeleteUserProps) => {
@@ -32,7 +32,7 @@ export const DeleteUser = ({ userUid }: DeleteUserProps) => {
       confirmButton={
         <Button
           isLoading={deleteUserMutation.isLoading}
-          onClick={() => deleteUserMutation.mutate({ userUid: userUid })}
+          onClick={() => deleteUserMutation.mutate({ userUid: userUid ?? '' })}
           type='button'
           variant='destructive'
         >
