@@ -4,7 +4,7 @@ export const CONSTANTS = {
   MAX_PAGE_SIZE: 100,
 
   // アップロード関連
-  MAX_FILE_SIZE: 5 * 1024 * 1024,
+  MAX_FILE_SIZE: 10 * 1024 * 1024,
   ALLOWED_FILE_TYPES: ['image/jpeg', 'image/png', 'image/webp'],
 
   // S3関連

@@ -7,7 +7,7 @@ import { NoPictures } from './NoPictures'
 import Pictures from './Pictures'
 
 const Timeline = () => {
-  const picturesQuery = usePictures()
+  const picturesQuery = usePictures({})
   if (picturesQuery.isLoading) return <LoadingPictures />
   if (picturesQuery.error) return <>Error loading pictures</>
   if (picturesQuery.data?.length === 0) return <NoPictures />

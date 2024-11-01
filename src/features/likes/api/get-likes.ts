@@ -3,8 +3,8 @@ import { Deserializer } from 'jsonapi-serializer'
 
 import { apiClient } from '@/lib/api/api-client'
 
+import type { Like } from '../types'
 import type { QueryConfig } from '@/lib/react-query/react-query'
-import type { Like } from '@prisma/client'
 import type { UseQueryOptions } from '@tanstack/react-query'
 import type { DeserializerOptions } from 'jsonapi-serializer'
 

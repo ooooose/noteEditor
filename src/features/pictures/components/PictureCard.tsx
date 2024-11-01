@@ -19,7 +19,7 @@ type PictureCardProps = {
 }
 
 const PictureCard = memo(({ picture, likes, user }: PictureCardProps) => {
-  const { like, liked, likeCount } = useMutateLike(picture.uid, picture.userId, likes)
+  const { like, liked, likeCount } = useMutateLike(picture.uid, picture.userId, likes, user?.uid)
   return (
     <div className='h-[300px] w-[250px]'>
       <div className='py-3'>

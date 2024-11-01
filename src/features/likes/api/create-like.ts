@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
+import { getUserLikedPicturesQueryOptions, getUserPicturesQueryOptions } from '@/features/user/api'
 import { apiClient } from '@/lib/api/api-client'
 
 import { getLikesQueryOptions } from './get-likes'
@@ -11,19 +12,23 @@ export const createLike = async (paramas: { picture_uid: string }) => {
 }
 
 type UseCreateLikeOptions = {
+  userUid?: string
   mutationConfig?: MutationConfig<typeof createLike>
 }
 
-export const useCreateLike = ({ mutationConfig }: UseCreateLikeOptions) => {
+export const useCreateLike = ({ userUid = undefined, mutationConfig }: UseCreateLikeOptions) => {
   const queryClient = useQueryClient()
 
   const { onSuccess, ...restConfig } = mutationConfig || {}
 
   return useMutation({
     onSuccess: (...args) => {
-      queryClient.invalidateQueries({
-        queryKey: getLikesQueryOptions().queryKey,
-      })
+      queryClient.invalidateQueries(getLikesQueryOptions().queryKey)
+      if (userUid) {
+        queryClient.invalidateQueries(getUserLikedPicturesQueryOptions(userUid).queryKey)
+        queryClient.invalidateQueries(getUserPicturesQueryOptions(userUid).queryKey)
+      }
+
       onSuccess?.(...args)
     },
     ...restConfig,

@@ -7,12 +7,7 @@
 // import { useFetchAuthUserByEmail } from '@/features/auth/hooks/useFetchAuthUserByEmail'
 // import { AuthUser } from '@/features/auth/types'
 
-// import { updateUser } from '../api/updateUser'
-
-// const formSchema = z.object({
-//   name: z.string().min(1, '必須項目です').max(30, '最大文字数を超過しています'),
-//   image: z.any().optional(),
-// })
+// import { useUpdateProfile } from '../api'
 
 // export const useUpdateUser = (user: AuthUser) => {
 //   const [image, setImage] = useState<string>(user.image || '')

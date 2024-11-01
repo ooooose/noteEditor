@@ -19,6 +19,7 @@ const Menu = () => {
   const handleNavigation = (path: string) => {
     router.push(path)
   }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className='focus:outline-none'>
@@ -44,6 +45,12 @@ const Menu = () => {
           </DropdownMenuItem>
           <DropdownMenuItem className='cursor-pointer p-3' onClick={() => handleNavigation('/me')}>
             プロフィール
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className='cursor-pointer p-3'
+            onClick={() => handleNavigation('/settings')}
+          >
+            アカウント設定
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>
