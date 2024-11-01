@@ -15,7 +15,7 @@ type PicturesProps = {
 
 const Pictures = memo(({ pictures, isLoading }: PicturesProps) => {
   const useProfileQuery = useProfile({})
-  if (isLoading) return <LoadingPictures />
+  if (isLoading || useProfileQuery.isLoading) return <LoadingPictures />
   if (pictures?.length === 0) return <NoPictures />
   const getPictures = () => {
     return (
