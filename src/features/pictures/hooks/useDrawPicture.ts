@@ -3,16 +3,13 @@ import React, { useCallback } from 'react'
 import { useState, useRef } from 'react'
 import { toast } from 'sonner'
 
-import { useFetchThemes } from '@/features/themes/hooks/useFetchThemes'
-import { apiClient } from '@/lib/api/api-client'
+import { middleApiClient } from '@/lib/api/middle-api-client'
 
-import { useFetchPictures } from './useFetchPictures'
+import { useCreatePicture } from '../api/create-picture'
 
 interface IProps {
   width: number
   height: number
-  userId: string
-  userName: string
 }
 
 interface IRect {
@@ -24,10 +21,19 @@ interface IRect {
   bottom: number
 }
 
-export const useDrawPicture = ({ width, height, userId, userName }: IProps) => {
-  const { mutate: mutatePicture } = useFetchPictures()
-  const { mutate: mutateTheme } = useFetchThemes()
+export const useDrawPicture = ({ width, height }: IProps) => {
   const router = useRouter()
+  const createPictureMutation = useCreatePicture({
+    mutationConfig: {
+      onSuccess: async () => {
+        toast('画像を投稿しました', { position: 'top-center' })
+        router.push('/timeline')
+      },
+      onError: () => {
+        toast('画像の投稿に失敗しました', { position: 'top-center' })
+      },
+    },
+  })
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   let mouseX: number | null = null
   let mouseY: number | null = null
@@ -123,25 +129,24 @@ export const useDrawPicture = ({ width, height, userId, userName }: IProps) => {
         reader.readAsDataURL(blob)
       })
 
+      const fileName = `${Date.now()}-${title}`
+      const imageUrl = `${process.env.NEXT_PUBLIC_IMAGE_HOST_URL}/${fileName}`
       const params = {
         image: compressedBase64,
-        userId: userId,
-        userName: userName,
-        title: title,
+        fileName: fileName,
       }
-
-      await apiClient.apiPost('/api/pictures', params).then(() => {
-        mutatePicture()
-        mutateTheme()
-        router.push('/timeline')
+      await middleApiClient.apiPost('/api/pictures', params)
+      createPictureMutation.mutate({
+        image_url: imageUrl,
+        title: title,
       })
+      router.push('/timeline')
     } catch (err) {
       console.error(err)
     } finally {
       setIsLoading(false)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [title, userId, userName])
+  }, [title, createPictureMutation, router])
 
   return {
     canvasRef,

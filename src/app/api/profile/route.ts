@@ -1,6 +1,5 @@
 import { NextResponse, NextRequest } from 'next/server'
 
-import { prisma, main } from '@/lib/prisma'
 import { CONSTANTS } from '@/utils/constants'
 import { uploadFile } from '@/utils/upload'
 
@@ -11,8 +10,6 @@ export async function POST(req: NextRequest) {
   const image = formData.get('image') as File | null
 
   try {
-    await main()
-
     let imageUrl: string | undefined
 
     if (image && image instanceof File) {
@@ -27,22 +24,12 @@ export async function POST(req: NextRequest) {
       imageUrl = await uploadFile(blob, id, name, fileType)
     }
 
-    const user = await prisma.user.update({
-      where: { id },
-      data: {
-        name: name,
-        ...(imageUrl && { image: imageUrl }),
-      },
-    })
-
-    return NextResponse.json({ message: 'Success', user }, { status: 200 })
+    return NextResponse.json({ message: 'Success', imageUrl }, { status: 200 })
   } catch (err) {
     console.error(CONSTANTS.ERROR_MESSAGES.INTERNAL_SERVER_ERROR, err)
     return NextResponse.json(
       { message: CONSTANTS.ERROR_MESSAGES.INTERNAL_SERVER_ERROR },
       { status: 500 },
     )
-  } finally {
-    await prisma.$disconnect()
   }
 }

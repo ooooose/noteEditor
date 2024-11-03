@@ -2,32 +2,43 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
-import { useFetchAuthUserByEmail } from '@/features/auth/hooks/useFetchAuthUserByEmail'
 import LoadingPictures from '@/features/pictures/components/LoadingPictures'
+
+import { useProfile, useUserPictures, useUserLikedPictures } from '../api'
 
 import LikedPictures from './LikedPictures'
 import Profile from './Profile'
 import UserPictures from './UserPictures'
 
 const User = () => {
-  const { user, isError, isLoading: isUserLoading } = useFetchAuthUserByEmail()
+  const useProfilequery = useProfile({})
+  const useUserPicturesQuery = useUserPictures({ userUid: useProfilequery.data?.uid ?? '' })
+  const useUserLikedPicturesQuery = useUserLikedPictures({
+    userUid: useProfilequery.data?.uid ?? '',
+  })
 
-  const isLoading = isUserLoading
-
-  if (isError) return <>Error loading theme</>
+  if (useProfilequery.isError) return <>Error loading</>
   return (
     <div>
-      <Profile isLoading={isLoading} user={user} />
+      <Profile isLoading={useProfilequery.isLoading} user={useProfilequery?.data} />
       <Tabs className='mt-5 w-[760px]' defaultValue='works'>
         <TabsList className='grid w-full grid-cols-2'>
           <TabsTrigger value='works'>Works</TabsTrigger>
           <TabsTrigger value='likes'>Likes</TabsTrigger>
         </TabsList>
         <TabsContent value='works'>
-          {isLoading ? <LoadingPictures /> : <UserPictures user={user} />}
+          {useUserPicturesQuery.isLoading ? (
+            <LoadingPictures />
+          ) : (
+            <UserPictures pictures={useUserPicturesQuery.data ?? []} />
+          )}
         </TabsContent>
         <TabsContent className='w-full' value='likes'>
-          <LikedPictures user={user} />
+          {useUserLikedPicturesQuery.isLoading ? (
+            <LoadingPictures />
+          ) : (
+            <LikedPictures likedPictures={useUserLikedPicturesQuery.data ?? []} />
+          )}
         </TabsContent>
       </Tabs>
     </div>

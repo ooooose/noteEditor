@@ -1,13 +1,11 @@
-import { Picture } from '@/features/pictures/types'
+import type { Picture } from '@/features/pictures/types'
+import type { Entity } from '@/types/api'
 
-export type Theme = {
-  id: string
+export type Theme = Entity<{
   title: string
-  userId: string
+  userId: number
   pictures: Picture[]
-  createdAt: Date
-  updatedAt: Date
-}
+}>
 
 export type ThemeOption = {
   value: string

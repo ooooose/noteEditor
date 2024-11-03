@@ -1,15 +1,12 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 
-import { useFetchPictures } from '@/features/pictures/hooks/useFetchPictures'
-
-import { postLike, deleteLike } from '../api'
+import { useCreateLike, useDeleteLike } from '../api'
 
 import type { Like } from '../types'
 
-export function useMutateLike(pictureId: string, userId: string, likes: Like[]) {
-  const [liked, setLiked] = useState(false)
-  const [likeCount, setLikeCount] = useState(likes.length)
-  const { mutate } = useFetchPictures()
+export function useMutateLike(pictureUid: string, userId: number, likes: Like[], userUid?: string) {
+  const [liked, setLiked] = useState<boolean>(false)
+  const [likeCount, setLikeCount] = useState<number>(likes.length)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,29 +16,45 @@ export function useMutateLike(pictureId: string, userId: string, likes: Like[]) 
       }
     }
     fetchData()
-  }, [setLiked, setLikeCount, likes, userId, pictureId])
+  }, [setLiked, setLikeCount, likes, userId])
+
+  const createLikeMutation = useCreateLike({
+    userUid: userUid,
+    mutationConfig: {
+      onError: (error) => {
+        console.error('Failed to update like:', error)
+      },
+    },
+  })
+
+  const deleteLikeMutation = useDeleteLike({
+    userUid: userUid,
+    mutationConfig: {
+      onError: (error) => {
+        console.error('Failed to update like:', error)
+      },
+    },
+  })
 
   const like = useCallback(async () => {
-    const params = {
-      userId: userId,
-      pictureId: pictureId,
-    }
     const newLiked = !liked
     const newLikeCount = liked ? likeCount - 1 : likeCount + 1
     try {
       if (liked) {
-        await deleteLike(params)
+        deleteLikeMutation.mutate({
+          picture_uid: pictureUid,
+        })
       } else {
-        await postLike(params)
+        createLikeMutation.mutate({
+          picture_uid: pictureUid,
+        })
       }
     } catch (error) {
       console.error('Failed to update like:', error)
-    } finally {
-      mutate()
     }
     setLiked(newLiked)
     setLikeCount(newLikeCount)
-  }, [liked, likeCount, pictureId, userId, mutate])
+  }, [pictureUid, liked, likeCount, deleteLikeMutation, createLikeMutation])
 
   return {
     like,
