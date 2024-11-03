@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 import { useSession } from 'next-auth/react'
 import React from 'react'
@@ -9,7 +11,7 @@ import AuthButton from '@/features/auth/components/AuthButton'
 const Header = () => {
   const { status } = useSession()
   return (
-    <header className='bg-white/50 backdrop-blur-sm'>
+    <header className='mx-auto w-3/4 bg-white/50 backdrop-blur-sm'>
       <div className='container flex h-20 items-center justify-between'>
         <div className='flex items-center gap-2'>
           <Link href='/'>

@@ -1,10 +1,9 @@
 'use client'
 
-import { Brush, Palette, Sparkles, Users } from 'lucide-react'
+import { Palette, Sparkles, Users } from 'lucide-react'
 import Image from 'next/image'
 
 import MainLayout from '@/components/layouts/Layout/MainLayout'
-import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 
 export default function Home() {
@@ -14,7 +13,7 @@ export default function Home() {
         <main className='flex w-[700px] flex-col items-center justify-between'>
           <div className='grid gap-12'>
             <section className='mt-8 grid gap-6 text-center'>
-              <h1 className='my-10 text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl'>
+              <h1 className='my-10 grid gap-3 text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl'>
                 みんなで描こう
                 <br />
                 <span className='bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent'>
@@ -26,12 +25,6 @@ export default function Home() {
                 <br />
                 あなたの想像力が、新しい世界を作り出します。
               </p>
-              <div className='flex justify-center gap-4'>
-                <Button className='gap-2' size='lg'>
-                  <Brush className='size-4' />
-                  登録して始める
-                </Button>
-              </div>
             </section>
 
             <section className='mx-auto w-full max-w-2xl overflow-hidden rounded-xl border-8 border-amber-800 bg-amber-100 p-4 shadow-2xl'>
@@ -45,7 +38,7 @@ export default function Home() {
                 width={400}
               />
               <div className='mx-auto w-2/3 rounded-md bg-white/80 p-4 backdrop-blur-sm'>
-                <h2 className='text-lg font-semibold'>テーマ: 「夏の思い出」</h2>
+                <h2 className='text-lg font-semibold'>今月のテーマ: 「夏の思い出」</h2>
                 <p className='text-sm text-gray-600'>あなたの夏の思い出を描いてみましょう！</p>
               </div>
             </section>
@@ -106,14 +99,6 @@ export default function Home() {
                   </p>
                 </Card>
               </div>
-            </section>
-
-            <section className='rounded-2xl bg-gradient-to-r from-pink-100 to-purple-100 p-8 text-center'>
-              <h2 className='text-2xl font-bold'>今すぐ始めよう！</h2>
-              <p className='mt-2 text-gray-600'>画HACKで、あなたの創造性を解き放とう。</p>
-              <Button className='mt-4' size='lg'>
-                無料で登録する
-              </Button>
             </section>
           </div>
         </main>
