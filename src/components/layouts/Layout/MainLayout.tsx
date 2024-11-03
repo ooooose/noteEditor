@@ -12,7 +12,7 @@ type MainLayoutProps = {
 const MainLayout = ({ children }: MainLayoutProps) => {
   return (
     <div className='select-none'>
-      <div className='mx-auto w-full md:w-2/3'>
+      <div className='mx-auto w-full md:w-3/4'>
         <Header />
         <div className='flex flex-col items-center justify-between'>{children}</div>
       </div>
