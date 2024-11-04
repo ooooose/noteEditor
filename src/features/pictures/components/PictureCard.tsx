@@ -26,7 +26,7 @@ type PictureCardProps = {
 const PictureCard = memo(({ picture, likes, user }: PictureCardProps) => {
   const { like, liked, likeCount } = useMutateLike(picture.uid, picture.userId, likes, user?.uid)
   return (
-    <div className='size-[300px]'>
+    <div className='w-[300px]'>
       <Card
         className='group overflow-hidden bg-white/50 transition-shadow hover:shadow-lg'
         key={picture.id}
@@ -34,9 +34,9 @@ const PictureCard = memo(({ picture, likes, user }: PictureCardProps) => {
         <div className='p-4'>
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-3'>
-              <Avatar className='size-10 rounded-lg border shadow-sm'>
-                <AvatarImage src={picture.user.image} />
-                <AvatarFallback>{picture.user.image}</AvatarFallback>
+              <Avatar className='size-10 rounded-lg shadow-sm'>
+                <AvatarImage className='rounded-full' src={picture.user.image} />
+                <AvatarFallback>A</AvatarFallback>
               </Avatar>
               <div>
                 <div className='text-sm font-semibold'>{picture.user.name}さん</div>
