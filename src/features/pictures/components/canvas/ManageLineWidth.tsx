@@ -12,7 +12,8 @@ export const ManageLineWidth = memo(({ lineWidth, setLineWidth }: ManageLineWidt
     setLineWidth(value[0])
   }
   return (
-    <div className='mt-4 flex items-center justify-center gap-2'>
+    <div className='items-center justify-center'>
+      <p className='mb-3'>線の太さ: {lineWidth} px</p>
       <Slider
         className='w-[300px]'
         max={24}
@@ -21,7 +22,6 @@ export const ManageLineWidth = memo(({ lineWidth, setLineWidth }: ManageLineWidt
         step={1}
         value={[lineWidth]}
       />
-      {lineWidth} px
     </div>
   )
 })
