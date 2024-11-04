@@ -111,6 +111,7 @@ const EditProfileModal = ({ user }: EditProfileModalProps) => {
                 alt='avatar'
                 className='mx-auto mb-5 size-[100px] rounded-full'
                 height={100}
+                priority
                 src={imagePreview || avatarSrc}
                 width={100}
               />

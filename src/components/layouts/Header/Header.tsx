@@ -1,26 +1,37 @@
-import Image from 'next/image'
+'use client'
+
 import Link from 'next/link'
+import { useSession } from 'next-auth/react'
 import React from 'react'
 
 import Menu from '@/components/elements/Menu/Menu'
 
+import AuthButton from '@/features/auth/components/AuthButton'
+
 const Header = () => {
+  const { status } = useSession()
   return (
-    <div className='sticky top-0 z-20 flex items-center justify-between bg-white/80 px-3 pb-4 pt-8 text-4xl sm:px-10'>
-      <div className='font-medium'>
-        <Link href='/'>
-          <Image
-            alt='logo'
-            className='h-auto w-[150px]'
-            height={100}
-            priority
-            src='/TopLogo.png'
-            width={150}
-          />
-        </Link>
+    <header className='mx-auto w-3/4 bg-white/50 backdrop-blur-sm'>
+      <div className='container flex h-20 items-center justify-between'>
+        <div className='flex items-center gap-2'>
+          <Link href='/'>
+            <span className='text-4xl font-bold'>
+              <span className='text-red-500'>画</span>
+              <span className='text-gray-900'>H</span>
+              <span className='text-yellow-500'>A</span>
+              <span className='text-green-500'>C</span>
+              <span className='text-blue-500'>K</span>
+            </span>
+          </Link>
+        </div>
+        <nav className='flex gap-4'>
+          {/* <Button variant="ghost">
+            <Link href="/" className='h-full'>アプリについて</Link>
+          </Button> */}
+          {status === 'authenticated' ? <Menu /> : <AuthButton />}
+        </nav>
       </div>
-      <Menu />
-    </div>
+    </header>
   )
 }
 

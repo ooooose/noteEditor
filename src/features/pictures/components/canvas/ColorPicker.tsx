@@ -1,4 +1,5 @@
-import { EraserIcon } from '@radix-ui/react-icons'
+import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@radix-ui/react-tooltip'
+import { Eraser } from 'lucide-react'
 import React, { memo } from 'react'
 
 import { Colors } from '@/utils/constants'
@@ -11,39 +12,44 @@ type ColorPickerProps = {
 
 export const ColorPicker = memo(({ setLineWidth, setColor, color }: ColorPickerProps) => {
   return (
-    <div className='mx-auto mt-4 flex gap-3'>
-      {Colors.map((Color) => {
-        if (Color.name === '消しゴム')
-          return (
-            <div
-              className={Color.color === color ? 'rounded-full border border-black' : ''}
-              key={Color.name}
-            >
-              <div
-                className='cursor-pointer rounded-full border p-3'
+    <div className='flex flex-col gap-4'>
+      <p>色選択</p>
+      <div className='grid grid-cols-6 gap-2'>
+        <TooltipProvider>
+          {Colors.map((c, i) => (
+            <Tooltip key={i}>
+              <TooltipTrigger asChild>
+                <button
+                  className={`size-8 rounded-full ${color === c.color ? 'ring-2 ring-offset-2' : ''}`}
+                  onClick={() => setColor(c.color)}
+                  style={{ backgroundColor: c.color }}
+                />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{c.name}</p>
+              </TooltipContent>
+            </Tooltip>
+          ))}
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                className={`flex size-8 items-center justify-center rounded-full border bg-white ${
+                  color === '#FFFFFF' ? 'ring-2 ring-offset-2' : ''
+                }`}
                 onClick={() => {
-                  setColor(Color.color)
+                  setColor('#FFFFFF')
                   setLineWidth(12)
                 }}
               >
-                <EraserIcon className='size-5' />
-              </div>
-            </div>
-          )
-        return (
-          <div
-            className={Color.color === color ? 'rounded-full border-2 border-black' : ''}
-            key={Color.name}
-          >
-            <div
-              className={`${Color.class} cursor-pointer rounded-full border p-5`}
-              onClick={() => {
-                setColor(Color.color)
-              }}
-            ></div>
-          </div>
-        )
-      })}
+                <Eraser className='size-4' />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>消しゴム</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      </div>
     </div>
   )
 })

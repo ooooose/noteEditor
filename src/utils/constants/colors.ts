@@ -41,8 +41,23 @@ export const Colors: ColorType[] = [
     color: '#F97316',
   },
   {
-    name: '消しゴム',
-    class: '',
-    color: '#FFFFFF',
+    name: 'ピンク',
+    class: 'bg-pink-500',
+    color: '#EC4899',
+  },
+  {
+    name: '茶',
+    class: 'bg-brown-500',
+    color: '#A52A2A',
+  },
+  {
+    name: '灰',
+    class: 'bg-gray-500',
+    color: '#6B7280',
+  },
+  {
+    name: 'シアン',
+    class: 'bg-cyan-500',
+    color: '#06B6D4',
   },
 ]
