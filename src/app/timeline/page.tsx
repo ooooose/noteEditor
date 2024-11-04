@@ -5,9 +5,7 @@ import TimelineLayout from '@/features/pictures/components/TimelineLayout'
 function Timeline() {
   return (
     <MainLayout>
-      <div className='mt-5'>
-        <TimelineLayout />
-      </div>
+      <TimelineLayout />
     </MainLayout>
   )
 }

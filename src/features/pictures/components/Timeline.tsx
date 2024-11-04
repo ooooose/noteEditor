@@ -12,7 +12,7 @@ const Timeline = () => {
   if (picturesQuery.error) return <>Error loading pictures</>
   if (picturesQuery.data?.length === 0) return <NoPictures />
   return (
-    <div className='mt-5 h-[600px]'>
+    <div className='mt-10'>
       <Pictures isLoading={picturesQuery.isLoading} pictures={picturesQuery.data} />
     </div>
   )
