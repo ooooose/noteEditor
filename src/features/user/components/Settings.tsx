@@ -73,7 +73,7 @@ export default function Settings() {
               <CardContent className='space-y-6'>
                 <div className='flex items-center gap-4'>
                   <Avatar className='size-20'>
-                    <AvatarImage src='/placeholder.svg' />
+                    <AvatarImage src={useProfileQuery.data?.image} />
                     <AvatarFallback>UN</AvatarFallback>
                   </Avatar>
                   <Button className='gap-2' size='sm' variant='outline'>
