@@ -1,4 +1,9 @@
+import { AvatarImage, AvatarFallback, Avatar } from '@radix-ui/react-avatar'
+import { Share2 } from 'lucide-react'
 import { memo } from 'react'
+
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
 
 import Comment from '@/features/comments/components/Comment'
 import { Like } from '@/features/likes/components'
@@ -21,34 +26,54 @@ type PictureCardProps = {
 const PictureCard = memo(({ picture, likes, user }: PictureCardProps) => {
   const { like, liked, likeCount } = useMutateLike(picture.uid, picture.userId, likes, user?.uid)
   return (
-    <div className='h-[300px] w-[250px]'>
-      <div className='py-3'>
-        <div className='mx-3 flex justify-between'>
-          <p>
-            <span className='font-bold'>{picture.user.name}</span>さん
-          </p>
-          <p className='text-sm font-semibold opacity-50'>
-            {formatDateForPicture(picture.createdAt)}
-          </p>
-        </div>
-      </div>
-      <div>
-        <Picture author={picture.user.name} frameId={picture.frameId} src={picture.imageUrl} />
-        <div className='float-right flex gap-2'>
-          <div className='ml-2 mt-3'>
-            <PictureTheme
-              author={picture.user.name}
-              frameId={picture.frameId}
-              src={picture.imageUrl}
-              title={picture.theme?.title}
-            />
-          </div>
-          <div className='mt-3 flex gap-2'>
-            <Like like={like} likeCount={likeCount} liked={liked} />
-            <Comment pictureId={picture.id} user={user} />
+    <div className='size-[300px]'>
+      <Card
+        className='group overflow-hidden bg-white/50 transition-shadow hover:shadow-lg'
+        key={picture.id}
+      >
+        <div className='p-4'>
+          <div className='flex items-center justify-between'>
+            <div className='flex items-center gap-3'>
+              <Avatar className='size-10 rounded-lg border shadow-sm'>
+                <AvatarImage src={picture.user.image} />
+                <AvatarFallback>{picture.user.image}</AvatarFallback>
+              </Avatar>
+              <div>
+                <div className='text-sm font-semibold'>{picture.user.name}さん</div>
+                <p className='text-xs text-gray-500'>{formatDateForPicture(picture.createdAt)}</p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+        <div className='mx-4'>
+          <div className='overflow-hidden'>
+            <div className='bg-white px-4 pb-4'>
+              <Picture
+                author={picture.user.name}
+                frameId={picture.frameId}
+                src={picture.imageUrl}
+              />
+            </div>
+          </div>
+        </div>
+        <div className='border-t bg-white p-4'>
+          <div className='flex items-center justify-between'>
+            <div className='flex gap-1'>
+              <PictureTheme
+                author={picture.user.name}
+                frameId={picture.frameId}
+                src={picture.imageUrl}
+                title={picture.theme?.title}
+              />
+              <Like like={like} likeCount={likeCount} liked={liked} />
+              <Comment pictureId={picture.id} user={user} />
+            </div>
+            <Button className='size-9 rounded-full' size='icon' variant='ghost'>
+              <Share2 className='size-5' />
+            </Button>
+          </div>
+        </div>
+      </Card>
     </div>
   )
 })
