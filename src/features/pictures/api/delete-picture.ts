@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { apiClient } from '@/lib/api/api-client'
 
-import { getPicturesQueryOptions } from './get-pictures'
+import { getInfinitePicturesQueryOptions } from './get-pictures'
 
 import type { MutationConfig } from '@/lib/react-query/react-query'
 
@@ -22,7 +22,7 @@ export const UseDeletePicture = ({ mutationConfig }: UseDeletePictureOptions = {
   return useMutation({
     onSuccess: (data, ...args) => {
       queryClient.invalidateQueries({
-        queryKey: getPicturesQueryOptions().queryKey,
+        queryKey: getInfinitePicturesQueryOptions().queryKey,
       })
       onSuccess?.(data, ...args)
     },

@@ -1,19 +1,32 @@
 import React from 'react'
 
-import { usePictures } from '../api/get-pictures'
+import { Button } from '@/components/ui/button'
+import { Spinner } from '@/components/ui/spinner'
+
+import { useInfiniitePictures } from '../api/get-pictures'
 
 import LoadingPictures from './LoadingPictures'
 import { NoPictures } from './NoPictures'
 import Pictures from './Pictures'
 
 const Timeline = () => {
-  const picturesQuery = usePictures({})
+  const picturesQuery = useInfiniitePictures()
+
   if (picturesQuery.isLoading) return <LoadingPictures />
-  if (picturesQuery.error) return <>Error loading pictures</>
-  if (picturesQuery.data?.length === 0) return <NoPictures />
+
+  const pictures = picturesQuery.data?.pages.flatMap((page) => page.data)
+
+  if (!pictures?.length) return <NoPictures />
   return (
     <div className='mt-10'>
-      <Pictures isLoading={picturesQuery.isLoading} pictures={picturesQuery.data} />
+      <Pictures isLoading={picturesQuery.isLoading} pictures={pictures} />
+      {picturesQuery.hasNextPage && (
+        <div className='flex items-center justify-center py-4'>
+          <Button onClick={() => picturesQuery.fetchNextPage()}>
+            {picturesQuery.isFetchingNextPage ? <Spinner /> : 'さらに読み込む'}
+          </Button>
+        </div>
+      )}
     </div>
   )
 }

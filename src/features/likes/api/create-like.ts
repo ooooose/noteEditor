@@ -23,10 +23,12 @@ export const useCreateLike = ({ userUid = undefined, mutationConfig }: UseCreate
 
   return useMutation({
     onSuccess: (...args) => {
-      queryClient.invalidateQueries(getLikesQueryOptions().queryKey)
+      queryClient.invalidateQueries({ queryKey: getLikesQueryOptions().queryKey })
       if (userUid) {
-        queryClient.invalidateQueries(getUserLikedPicturesQueryOptions(userUid).queryKey)
-        queryClient.invalidateQueries(getUserPicturesQueryOptions(userUid).queryKey)
+        queryClient.invalidateQueries({
+          queryKey: getUserLikedPicturesQueryOptions(userUid).queryKey,
+        })
+        queryClient.invalidateQueries({ queryKey: getUserPicturesQueryOptions(userUid).queryKey })
       }
 
       onSuccess?.(...args)
