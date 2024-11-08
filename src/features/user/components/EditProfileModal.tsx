@@ -151,8 +151,8 @@ const EditProfileModal = ({ user }: EditProfileModalProps) => {
                 <DialogClose asChild>
                   <Button
                     className='mt-5 w-full'
-                    disabled={updateProfileMutation.isLoading}
-                    isLoading={updateProfileMutation.isLoading}
+                    disabled={updateProfileMutation.isPending}
+                    isLoading={updateProfileMutation.isPending}
                     type='submit'
                   >
                     更新
