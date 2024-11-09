@@ -18,8 +18,8 @@ const Timeline = () => {
     <div className='mt-10'>
       <Pictures isLoading={picturesQuery.isLoading} pictures={pictures} />
       {picturesQuery.hasNextPage && (
-        <div className='flex items-center justify-center py-4'>
-          <Button onClick={() => picturesQuery.fetchNextPage()}>
+        <div className='flex items-center justify-center py-8'>
+          <Button onClick={() => picturesQuery.fetchNextPage()} variant='outline'>
             {picturesQuery.isFetchingNextPage ? <Spinner /> : 'さらに読み込む'}
           </Button>
         </div>
