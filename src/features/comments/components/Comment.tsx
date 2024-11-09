@@ -51,7 +51,7 @@ const Comment = memo(({ pictureId, user }: CommentProps) => {
             <DialogTitle>コメント一覧</DialogTitle>
           </DialogHeader>
           <CommentsList
-            comments={commentsQuery?.data}
+            comments={commentsQuery?.data ?? []}
             isLoading={commentsQuery.isLoading}
             userId={user?.id}
           />
