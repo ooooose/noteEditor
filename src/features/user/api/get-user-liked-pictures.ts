@@ -32,7 +32,7 @@ export const getUserLikedPictures = async ({
 
 export const getInfiniteUserLikedPicturesQueryOptions = (userUid: string) => {
   return infiniteQueryOptions({
-    queryKey: ['pictures'],
+    queryKey: ['user-liked-pictures', userUid],
     queryFn: ({ pageParam = 1 }) => {
       return getUserLikedPictures({ userUid: userUid, page: pageParam as number })
     },

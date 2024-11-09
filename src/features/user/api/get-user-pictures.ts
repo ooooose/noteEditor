@@ -32,7 +32,7 @@ export const getUserPictures = async ({
 
 export const getInfiniteUserPicturesQueryOptions = (userUid: string) => {
   return infiniteQueryOptions({
-    queryKey: ['pictures'],
+    queryKey: ['user-pictures', userUid],
     queryFn: ({ pageParam = 1 }) => {
       return getUserPictures({ userUid: userUid, page: pageParam as number })
     },
