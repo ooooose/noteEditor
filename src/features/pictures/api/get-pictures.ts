@@ -22,7 +22,7 @@ export const getPictures = async ({
     })
     const deserializer = new Deserializer(deserializerOptions)
     const pictures = await deserializer.deserialize(response.pictures)
-    return pictures
+    return { data: pictures, meta: response.pagy }
   } catch (error) {
     console.error('画像一覧の取得に失敗しました:', error)
     throw error

@@ -11,11 +11,8 @@ import Pictures from './Pictures'
 
 const Timeline = () => {
   const picturesQuery = useInfiniitePictures()
-
   if (picturesQuery.isLoading) return <LoadingPictures />
-
   const pictures = picturesQuery.data?.pages.flatMap((page) => page.data)
-
   if (!pictures?.length) return <NoPictures />
   return (
     <div className='mt-10'>
