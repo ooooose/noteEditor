@@ -1,6 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { getUserLikedPicturesQueryOptions, getUserPicturesQueryOptions } from '@/features/user/api'
+import {
+  getInfiniteUserLikedPicturesQueryOptions,
+  getInfiniteUserPicturesQueryOptions,
+} from '@/features/user/api'
 import { apiClient } from '@/lib/api/api-client'
 
 import { getLikesQueryOptions } from './get-likes'
@@ -23,10 +26,14 @@ export const useDeleteLike = ({ userUid = undefined, mutationConfig }: UseDelete
 
   return useMutation({
     onSuccess: (...args) => {
-      queryClient.invalidateQueries(getLikesQueryOptions().queryKey)
+      queryClient.invalidateQueries({ queryKey: getLikesQueryOptions().queryKey })
       if (userUid) {
-        queryClient.invalidateQueries(getUserLikedPicturesQueryOptions(userUid).queryKey)
-        queryClient.invalidateQueries(getUserPicturesQueryOptions(userUid).queryKey)
+        queryClient.invalidateQueries({
+          queryKey: getInfiniteUserLikedPicturesQueryOptions(userUid).queryKey,
+        })
+        queryClient.invalidateQueries({
+          queryKey: getInfiniteUserPicturesQueryOptions(userUid).queryKey,
+        })
       }
       onSuccess?.(...args)
     },

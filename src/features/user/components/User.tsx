@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 import LoadingPictures from '@/features/pictures/components/LoadingPictures'
 
-import { useProfile, useUserPictures, useUserLikedPictures } from '../api'
+import { useProfile } from '../api'
 
 import LikedPictures from './LikedPictures'
 import Profile from './Profile'
@@ -12,10 +12,6 @@ import UserPictures from './UserPictures'
 
 const User = () => {
   const useProfilequery = useProfile({})
-  const useUserPicturesQuery = useUserPictures({ userUid: useProfilequery.data?.uid ?? '' })
-  const useUserLikedPicturesQuery = useUserLikedPictures({
-    userUid: useProfilequery.data?.uid ?? '',
-  })
 
   if (useProfilequery.isError) return <>Error loading</>
   return (
@@ -27,17 +23,17 @@ const User = () => {
           <TabsTrigger value='likes'>Likes</TabsTrigger>
         </TabsList>
         <TabsContent className='mt-5' value='works'>
-          {useUserPicturesQuery.isLoading ? (
+          {useProfilequery.isLoading ? (
             <LoadingPictures />
           ) : (
-            <UserPictures pictures={useUserPicturesQuery.data ?? []} />
+            <UserPictures userUid={useProfilequery.data?.uid ?? ''} />
           )}
         </TabsContent>
         <TabsContent className='mt-5 w-full' value='likes'>
-          {useUserLikedPicturesQuery.isLoading ? (
+          {useProfilequery.isLoading ? (
             <LoadingPictures />
           ) : (
-            <LikedPictures likedPictures={useUserLikedPicturesQuery.data ?? []} />
+            <LikedPictures userUid={useProfilequery.data?.uid ?? ''} />
           )}
         </TabsContent>
       </Tabs>

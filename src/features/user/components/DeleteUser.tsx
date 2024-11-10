@@ -31,7 +31,7 @@ export const DeleteUser = ({ userUid }: DeleteUserProps) => {
       body='退会処理をすると全てのデータが消失します。よろしいですか？'
       confirmButton={
         <Button
-          isLoading={deleteUserMutation.isLoading}
+          isLoading={deleteUserMutation.isPending}
           onClick={() => deleteUserMutation.mutate({ userUid: userUid ?? '' })}
           type='button'
           variant='destructive'

@@ -3,7 +3,7 @@ import { memo } from 'react'
 import { Skeleton } from '@/components/ui/skeleton'
 
 type CommentCountProps = {
-  commentCount: number
+  commentCount: number | undefined
   isLoading: boolean
 }
 

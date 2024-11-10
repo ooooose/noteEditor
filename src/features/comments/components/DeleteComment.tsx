@@ -30,7 +30,7 @@ export const DeleteComment = memo(({ commentId, pictureId }: DeleteCommentProps)
       body='本当に削除してよろしいですか？'
       confirmButton={
         <Button
-          isLoading={deleteCommentMutation.isLoading}
+          isLoading={deleteCommentMutation.isPending}
           onClick={() =>
             deleteCommentMutation.mutate({
               pictureId: pictureId,
