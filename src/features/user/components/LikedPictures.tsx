@@ -3,6 +3,7 @@ import { memo } from 'react'
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
 
+import { NoLikedPictures } from '@/features/likes/components/NoLikedPicrtures'
 import LoadingPictures from '@/features/pictures/components/LoadingPictures'
 import Pictures from '@/features/pictures/components/Pictures'
 
@@ -21,7 +22,11 @@ const LikedPictures = memo(({ userUid }: LikedPicturesProps) => {
   if (useUserLikedPicturesQuery.isLoading) return <LoadingPictures />
   return (
     <div className='mt-10'>
-      <Pictures pictures={userLikedPictures ?? []} />
+      {userLikedPictures?.length === 0 ? (
+        <NoLikedPictures />
+      ) : (
+        <Pictures pictures={userLikedPictures ?? []} />
+      )}
       {useUserLikedPicturesQuery.hasNextPage && (
         <div className='flex items-center justify-center py-8'>
           <Button onClick={() => useUserLikedPicturesQuery.fetchNextPage()} variant='outline'>

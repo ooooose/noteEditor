@@ -1,3 +1,4 @@
+import { MessageCircle } from 'lucide-react'
 import { memo } from 'react'
 
 import { Skeleton } from '@/components/ui/skeleton'
@@ -32,7 +33,15 @@ const CommentsList = memo(({ isLoading, comments, userId }: CommentsListProps) =
           )
         })
       ) : (
-        <div>コメントはありません。</div>
+        <div className='flex flex-col items-center justify-center py-10'>
+          <div className='flex size-20 items-center justify-center rounded-full bg-blue-50'>
+            <MessageCircle className='size-10 text-blue-500' />
+          </div>
+          <div className='mt-3 space-y-2 text-center'>
+            <p className='text-xl font-medium text-gray-900'>まだコメントはありません</p>
+            <p className='text-sm text-gray-500'>最初のコメントを投稿してみましょう！</p>
+          </div>
+        </div>
       )}
     </ul>
   )
