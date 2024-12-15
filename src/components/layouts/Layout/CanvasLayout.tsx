@@ -11,7 +11,7 @@ type CanvasLayoutProps = {
 const CanvasLayout = ({ children }: CanvasLayoutProps) => {
   return (
     <div className='select-none'>
-      <div className='mx-auto h-screen md:w-2/3'>
+      <div className='mx-auto h-screen'>
         <Header />
         <div className='flex flex-col items-center justify-between'>{children}</div>
       </div>
