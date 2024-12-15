@@ -4,7 +4,12 @@ import { useCreateLike, useDeleteLike } from '../api'
 
 import type { Like } from '../types'
 
-export function useMutateLike(pictureUid: string, userId: number, likes: Like[], userUid?: string) {
+export function useMutateLike(
+  pictureUid: string,
+  userId: number | undefined,
+  likes: Like[],
+  userUid?: string,
+) {
   const [liked, setLiked] = useState<boolean>(false)
   const [likeCount, setLikeCount] = useState<number>(likes.length)
 
