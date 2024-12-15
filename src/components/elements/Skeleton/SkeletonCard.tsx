@@ -1,23 +1,39 @@
+import { Card } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 
 export const SkeletonCard = () => {
   return (
-    <div className='mx-auto h-[320px] w-[250px]'>
-      <div className='flex flex-col space-y-3 text-center'>
-        <div className='mb-3 mt-5'>
-          <Skeleton className='ml-4 h-[30px] w-[120px]' />
+    <div className='w-[300px]'>
+      <Card className='group overflow-hidden bg-white/50 transition-shadow hover:shadow-lg'>
+        <div className='p-4'>
+          <div className='flex items-center justify-between'>
+            <div className='flex items-center gap-3'>
+              <Skeleton className='size-10 rounded-full' />
+              <div className='space-y-2'>
+                <Skeleton className='h-4 w-[120px]' />
+                <Skeleton className='h-3 w-[100px]' />
+              </div>
+            </div>
+          </div>
         </div>
-        <Skeleton className='mx-auto h-[150px] w-[200px]' />
-      </div>
-      <div className='float-right flex gap-2'>
-        <div className='ml-2 mt-3'>
-          <Skeleton className='size-[50px] rounded-full' />
+        <div className='mx-4 mb-2'>
+          <div className='overflow-hidden'>
+            <div className='bg-white p-4'>
+              <Skeleton className='aspect-[4/3] w-full' />
+            </div>
+          </div>
         </div>
-        <div className='mt-3 flex gap-2'>
-          <Skeleton className='size-[50px] rounded-full' />
-          <Skeleton className='size-[50px] rounded-full' />
+        <div className='border-t bg-white p-4'>
+          <div className='flex items-center justify-between pb-2'>
+            <div className='flex gap-1'>
+              <Skeleton className='size-12 rounded-full' />
+              <Skeleton className='size-12 rounded-full' />
+              <Skeleton className='size-12 rounded-full' />
+            </div>
+            <Skeleton className='size-8' />
+          </div>
         </div>
-      </div>
+      </Card>
     </div>
   )
 }
