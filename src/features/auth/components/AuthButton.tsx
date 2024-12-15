@@ -1,9 +1,10 @@
 'use client'
 
-import { signIn, signOut, useSession } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
 
-import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
+
+import { Login, Logout } from '.'
 
 const AuthButton = () => {
   const { data: session, status } = useSession()
@@ -16,14 +17,10 @@ const AuthButton = () => {
       ) : session ? (
         <div className='flex h-full items-center justify-center gap-2'>
           <p className='text-center'>{session.user?.name} さん</p>
-          <Button onClick={() => signOut()} variant='outline'>
-            ログアウト
-          </Button>
+          <Logout />
         </div>
       ) : (
-        <Button onClick={() => signIn('google', {})} variant='outline'>
-          Google認証ボタン
-        </Button>
+        <Login />
       )}
     </div>
   )

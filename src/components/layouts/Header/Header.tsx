@@ -6,8 +6,6 @@ import React from 'react'
 
 import Menu from '@/components/elements/Menu/Menu'
 
-import AuthButton from '@/features/auth/components/AuthButton'
-
 const Header = () => {
   const { status } = useSession()
   return (
@@ -24,12 +22,7 @@ const Header = () => {
             </span>
           </Link>
         </div>
-        <nav className='flex gap-4'>
-          {/* <Button variant="ghost">
-            <Link href="/" className='h-full'>アプリについて</Link>
-          </Button> */}
-          {status === 'authenticated' ? <Menu /> : <AuthButton />}
-        </nav>
+        <nav className='flex gap-4'>{status === 'authenticated' && <Menu />}</nav>
       </div>
     </header>
   )
