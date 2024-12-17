@@ -3,14 +3,17 @@
 import { AvatarImage, AvatarFallback, Avatar } from '@radix-ui/react-avatar'
 import { Palette, Sparkles, Users } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
+import { useSession } from 'next-auth/react'
 
 import MainLayout from '@/components/layouts/Layout/MainLayout'
 import { Card } from '@/components/ui/card'
 
 export default function Home() {
+  const { status } = useSession()
   return (
     <MainLayout>
-      <main className='flex w-[700px] flex-col items-center justify-between'>
+      <main className='flex w-[900px] flex-col items-center justify-between'>
         <div className='grid gap-12'>
           <section className='mt-8 grid gap-6 text-center'>
             <h1 className='my-10 grid gap-3 text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl'>
@@ -28,8 +31,8 @@ export default function Home() {
           </section>
           <section className='grid gap-8'>
             <h2 className='text-center text-3xl font-bold'>みんなの作品ギャラリー</h2>
-            <div className='grid gap-8 sm:grid-cols-1 lg:grid-cols-2'>
-              {[1, 2, 3, 4].map((i) => (
+            <div className='grid gap-8 sm:grid-cols-1 lg:grid-cols-3'>
+              {[1, 2, 3, 4, 5, 6].map((i) => (
                 <Card
                   className='group overflow-hidden bg-white/50 transition-shadow hover:shadow-lg'
                   key={i}
@@ -65,6 +68,53 @@ export default function Home() {
               ))}
             </div>
           </section>
+          <section>
+            {status === 'authenticated' ? (
+              <div className='flex items-center justify-center'>
+                <Link className='text-blue-500' href='/timeline'>
+                  作品をもっと見る →
+                </Link>
+              </div>
+            ) : (
+              <div>
+                <p className='text-center text-gray-500'>
+                  作品をもっと見るには、ログインしてください。
+                </p>
+                <div className='flex items-center justify-center'>
+                  <Link className='text-blue-500' href='/auth/signin'>
+                    ログインする
+                  </Link>
+                </div>
+              </div>
+            )}
+          </section>
+          <section className='grid gap-8'>
+            <h2 className='text-center text-3xl font-bold'>いいねが多いユーザー</h2>
+            <div className='grid gap-8 sm:grid-cols-1 lg:grid-cols-3'>
+              {[1, 2, 3].map((i) => (
+                <div
+                  className='group overflow-hidden bg-white/50 transition-shadow hover:shadow-lg'
+                  key={i}
+                >
+                  <div className='p-4'>
+                    <h3>第{i}位</h3>
+                    <div className='flex items-center justify-between'>
+                      <div className='flex items-center gap-3'>
+                        <Avatar className='size-20 rounded-lg shadow-sm'>
+                          <AvatarImage className='rounded-full' src='/avatar.png' />
+                          <AvatarFallback>A</AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <div className='text-sm font-semibold'>Aさん</div>
+                          <p className='text-xs text-gray-500'>10いいね</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
 
           <section className='grid gap-8'>
             <h2 className='text-center text-3xl font-bold'>画HACKの特徴</h2>
@@ -93,6 +143,14 @@ export default function Home() {
                   毎日描くことで、自分の成長を実感しよう。新しいスキルが身につくはず。
                 </p>
               </Card>
+            </div>
+          </section>
+          <section>
+            <h2 className='text-center text-3xl font-bold'>早速始めましょう！</h2>
+            <div className='flex items-center justify-center'>
+              <Link className='text-blue-500' href='/timeline'>
+                はじめる
+              </Link>
             </div>
           </section>
         </div>
