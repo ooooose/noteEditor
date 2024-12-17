@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { useSession } from 'next-auth/react'
 
 import MainLayout from '@/components/layouts/Layout/MainLayout'
+import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import {
   Dialog,
@@ -111,24 +112,15 @@ export default function Home() {
             <h2 className='text-center text-3xl font-bold'>いいねが多いユーザー</h2>
             <div className='grid gap-8 sm:grid-cols-1 lg:grid-cols-3'>
               {[1, 2, 3].map((i) => (
-                <div
-                  className='group overflow-hidden bg-white/50 transition-shadow hover:shadow-lg'
-                  key={i}
-                >
-                  <div className='p-4'>
-                    <h3>第{i}位</h3>
-                    <div className='flex items-center justify-between'>
-                      <div className='flex items-center gap-3'>
-                        <Avatar className='size-20 rounded-lg shadow-sm'>
-                          <AvatarImage className='rounded-full' src='/avatar.png' />
-                          <AvatarFallback>A</AvatarFallback>
-                        </Avatar>
-                        <div>
-                          <div className='text-sm font-semibold'>Aさん</div>
-                          <p className='text-xs text-gray-500'>10いいね</p>
-                        </div>
-                      </div>
-                    </div>
+                <div className='flex flex-col items-center p-4 text-center' key={i}>
+                  <h3 className='text-2xl font-semibold'>第{i}位</h3>
+                  <Avatar className='my-2 rounded-full'>
+                    <AvatarImage className='size-24 rounded-full' src='/avatar.png' />
+                    <AvatarFallback>A</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <div className='text-xl'>Aさん</div>
+                    <p className='text-sm text-gray-500'>10 いいね</p>
                   </div>
                 </div>
               ))}
@@ -167,9 +159,24 @@ export default function Home() {
           <section>
             <h2 className='text-center text-3xl font-bold'>早速始めましょう！</h2>
             <div className='flex items-center justify-center'>
-              <Link className='text-blue-500' href='/timeline'>
-                はじめる
-              </Link>
+              <Dialog>
+                <DialogTrigger className='cursor-pointer text-blue-500'>
+                  <Button>ログインしてはじめる</Button>
+                </DialogTrigger>
+                <DialogContent className='text-center sm:max-w-[425px]'>
+                  <DialogHeader>
+                    <h2 className='text-xl font-bold'>ログイン</h2>
+                  </DialogHeader>
+                  <DialogDescription>
+                    <p className='mb-4'>
+                      利用規約・プライバシーポリシーに同意の上、
+                      <br />
+                      ログインしてください。
+                    </p>
+                    <Login />
+                  </DialogDescription>
+                </DialogContent>
+              </Dialog>
             </div>
           </section>
         </div>
