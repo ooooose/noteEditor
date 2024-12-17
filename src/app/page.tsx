@@ -1,13 +1,10 @@
 'use client'
 
-import { AvatarImage, AvatarFallback, Avatar } from '@radix-ui/react-avatar'
 import { Palette, Sparkles, Users } from 'lucide-react'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useSession } from 'next-auth/react'
 
 import MainLayout from '@/components/layouts/Layout/MainLayout'
-import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import {
   Dialog,
@@ -18,6 +15,8 @@ import {
 } from '@/components/ui/dialog'
 
 import { Login } from '@/features/auth/components'
+import { TopPictures } from '@/features/top/components/top-pictures'
+import { TopUsers } from '@/features/top/components/top-users'
 
 export default function Home() {
   const { status } = useSession()
@@ -41,42 +40,7 @@ export default function Home() {
           </section>
           <section className='grid gap-8'>
             <h2 className='text-center text-3xl font-bold'>みんなの作品ギャラリー</h2>
-            <div className='grid gap-8 sm:grid-cols-1 lg:grid-cols-3'>
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <Card
-                  className='group overflow-hidden bg-white/50 transition-shadow hover:shadow-lg'
-                  key={i}
-                >
-                  <div className='p-4'>
-                    <div className='flex items-center justify-between'>
-                      <div className='flex items-center gap-3'>
-                        <Avatar className='size-10 rounded-lg shadow-sm'>
-                          <AvatarImage className='rounded-full' src='/avatar.png' />
-                          <AvatarFallback>A</AvatarFallback>
-                        </Avatar>
-                        <div>
-                          <div className='text-sm font-semibold'>Aさん</div>
-                          <p className='text-xs text-gray-500'>11/12</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className='mx-4'>
-                    <div className='overflow-hidden'>
-                      <div className='bg-white px-4 pb-4'>
-                        <Image
-                          alt='Picture'
-                          className='rounded-lg'
-                          height={200}
-                          src='/TopImage.png'
-                          width={300}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </Card>
-              ))}
-            </div>
+            <TopPictures />
           </section>
           <section>
             {status === 'authenticated' ? (
@@ -110,21 +74,7 @@ export default function Home() {
           </section>
           <section className='grid gap-8'>
             <h2 className='text-center text-3xl font-bold'>いいねが多いユーザー</h2>
-            <div className='grid gap-8 sm:grid-cols-1 lg:grid-cols-3'>
-              {[1, 2, 3].map((i) => (
-                <div className='flex flex-col items-center p-4 text-center' key={i}>
-                  <h3 className='text-2xl font-semibold'>第{i}位</h3>
-                  <Avatar className='my-2 rounded-full'>
-                    <AvatarImage className='size-24 rounded-full' src='/avatar.png' />
-                    <AvatarFallback>A</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <div className='text-xl'>Aさん</div>
-                    <p className='text-sm text-gray-500'>10 いいね</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <TopUsers />
           </section>
 
           <section className='grid gap-8'>
@@ -135,7 +85,7 @@ export default function Home() {
                 <Palette className='size-12 text-pink-500' />
                 <h3 className='mt-4 text-xl font-bold'>テーマで描く</h3>
                 <p className='mt-2 text-gray-500'>
-                  日替わりのテーマに沿って、自由に絵を描こう。想像力の限界に挑戦しよう。
+                  テーマに沿って絵を描きましょう。 新たにテーマを設定することもできます。
                 </p>
               </Card>
               <Card className='group relative overflow-hidden p-6 transition-all hover:-translate-y-1 hover:shadow-lg'>
@@ -149,9 +99,9 @@ export default function Home() {
               <Card className='group relative overflow-hidden p-6 transition-all hover:-translate-y-1 hover:shadow-lg'>
                 <div className='absolute inset-0 bg-gradient-to-r from-blue-500/10 to-green-500/10 opacity-0 transition-opacity group-hover:opacity-100' />
                 <Sparkles className='size-12 text-blue-500' />
-                <h3 className='mt-4 text-xl font-bold'>成長する喜び</h3>
+                <h3 className='mt-4 text-xl font-bold'>描く喜び</h3>
                 <p className='mt-2 text-gray-500'>
-                  毎日描くことで、自分の成長を実感しよう。新しいスキルが身につくはず。
+                  毎日描くことで、自分の創造力が高まります。楽しみながら描いてみましょう。
                 </p>
               </Card>
             </div>
@@ -161,7 +111,7 @@ export default function Home() {
             <div className='flex items-center justify-center'>
               <Dialog>
                 <DialogTrigger className='cursor-pointer text-blue-500'>
-                  <Button>ログインしてはじめる</Button>
+                  ログインしてはじめる
                 </DialogTrigger>
                 <DialogContent className='text-center sm:max-w-[425px]'>
                   <DialogHeader>
