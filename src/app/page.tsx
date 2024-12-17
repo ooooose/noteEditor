@@ -8,6 +8,15 @@ import { useSession } from 'next-auth/react'
 
 import MainLayout from '@/components/layouts/Layout/MainLayout'
 import { Card } from '@/components/ui/card'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+
+import { Login } from '@/features/auth/components'
 
 export default function Home() {
   const { status } = useSession()
@@ -76,15 +85,25 @@ export default function Home() {
                 </Link>
               </div>
             ) : (
-              <div>
-                <p className='text-center text-gray-500'>
-                  作品をもっと見るには、ログインしてください。
-                </p>
-                <div className='flex items-center justify-center'>
-                  <Link className='text-blue-500' href='/auth/signin'>
-                    ログインする
-                  </Link>
-                </div>
+              <div className='flex items-center justify-center'>
+                <Dialog>
+                  <DialogTrigger className='cursor-pointer text-blue-500'>
+                    作品をもっと見る →
+                  </DialogTrigger>
+                  <DialogContent className='text-center sm:max-w-[425px]'>
+                    <DialogHeader>
+                      <h2 className='text-xl font-bold'>ログインが必要です</h2>
+                    </DialogHeader>
+                    <DialogDescription>
+                      <p className='mb-4'>
+                        利用規約・プライバシーポリシーに同意の上、
+                        <br />
+                        ログインしてください。
+                      </p>
+                      <Login />
+                    </DialogDescription>
+                  </DialogContent>
+                </Dialog>
               </div>
             )}
           </section>
