@@ -26,7 +26,7 @@ export const getTopUsers = async (): Promise<User[]> => {
 
 export const getTopUsersQueryOptions = (): UseQueryOptions<User[], Error> => {
   return {
-    queryKey: ['topPictures'],
+    queryKey: ['topUsers'],
     queryFn: getTopUsers,
   }
 }

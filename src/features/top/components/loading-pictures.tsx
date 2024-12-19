@@ -22,7 +22,7 @@ export const LoadingPictures = () => {
                 </div>
                 <div className='mx-4 mb-2'>
                   <div className='overflow-hidden'>
-                    <div className='bg-white p-4'>
+                    <div className='mb-4 bg-white p-4'>
                       <Skeleton className='aspect-[4/3] w-full' />
                     </div>
                   </div>

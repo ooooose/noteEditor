@@ -106,7 +106,7 @@ export default function Home() {
               </Card>
             </div>
           </section>
-          <section>
+          {/* <section>
             <h2 className='text-center text-3xl font-bold'>早速始めましょう！</h2>
             <div className='flex items-center justify-center'>
               <Dialog>
@@ -128,7 +128,7 @@ export default function Home() {
                 </DialogContent>
               </Dialog>
             </div>
-          </section>
+          </section> */}
         </div>
       </main>
     </MainLayout>
