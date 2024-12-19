@@ -9,7 +9,6 @@ import { LoadingUsers } from './loading-users'
 export const TopUsers = () => {
   const useTopUsersQuery = useTopUsers({})
   if (useTopUsersQuery.isLoading) return <LoadingUsers />
-  console.log(useTopUsersQuery.data)
   return (
     <div className='grid gap-8 sm:grid-cols-1 lg:grid-cols-3'>
       {useTopUsersQuery.data?.map((user, i) => (
