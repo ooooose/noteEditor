@@ -1,10 +1,18 @@
+'use client'
+
+import { useTopPictures } from '../api'
+
+import { LoadingPictures } from './loading-pictures'
 import { TopPicture } from './top-picture'
 
 export const TopPictures = () => {
+  const useTopPicturesQuery = useTopPictures({})
+  if (useTopPicturesQuery.isLoading) return <LoadingPictures />
+
   return (
     <div className='grid gap-8 sm:grid-cols-1 lg:grid-cols-3'>
-      {[1, 2, 3, 4, 5, 6].map((i) => (
-        <TopPicture key={i} />
+      {useTopPicturesQuery.data?.map((picture) => (
+        <TopPicture key={picture.id} picture={picture} />
       ))}
     </div>
   )
