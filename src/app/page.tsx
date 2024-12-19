@@ -73,7 +73,7 @@ export default function Home() {
             )}
           </section>
           <section className='grid gap-8'>
-            <h2 className='text-center text-3xl font-bold'>いいねが多いユーザー</h2>
+            <h2 className='text-center text-3xl font-bold'>トップクリエイター</h2>
             <TopUsers />
           </section>
 
