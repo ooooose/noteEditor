@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 
 import { TermsOfService, PrivacyPolicy } from '@/components/layouts/Terms'
 
@@ -10,10 +10,13 @@ export function TabContent() {
   const searchParams = useSearchParams()
   const [activeTab, setActiveTab] = useState(0)
 
-  const tabs = [
-    { title: '利用規約', content: <TermsOfService />, query: 'terms' },
-    { title: 'プライバシーポリシー', content: <PrivacyPolicy />, query: 'privacy' },
-  ]
+  const tabs = useMemo(
+    () => [
+      { title: '利用規約', content: <TermsOfService />, query: 'terms' },
+      { title: 'プライバシーポリシー', content: <PrivacyPolicy />, query: 'privacy' },
+    ],
+    [],
+  )
 
   const handleTabChange = (index: number) => {
     setActiveTab(index)
@@ -25,7 +28,7 @@ export function TabContent() {
     const query = searchParams.get('tab')
     const index = tabs.findIndex((tab) => tab.query === query)
     setActiveTab(index)
-  }, [searchParams])
+  }, [searchParams, tabs])
 
   return (
     <div className='w-[700px] py-8'>
