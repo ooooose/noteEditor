@@ -27,7 +27,7 @@ const Footer = () => {
           </div>
           <div className='flex flex-col gap-y-3 pt-7'>
             <Link href='/'>アプリについて</Link>
-            <Link href='/terms'>規約とポリシー</Link>
+            <Link href='/terms?tab=terms'>規約とポリシー</Link>
           </div>
         </div>
         <p className='mb-2 mt-10 text-center'>
