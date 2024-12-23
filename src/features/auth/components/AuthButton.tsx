@@ -13,7 +13,7 @@ const AuthButton = () => {
   return (
     <div>
       {loading ? (
-        <Skeleton className='h-[50px] w-[100px]' />
+        <Skeleton className='h-[36px] w-[140px]' />
       ) : session ? (
         <div className='flex h-full items-center justify-center gap-2'>
           <p className='text-center'>{session.user?.name} さん</p>
