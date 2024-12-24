@@ -1,6 +1,6 @@
 'use client'
 
-import { Bell, Camera, Key, Lock, Palette, User } from 'lucide-react'
+import { Camera, Key, Lock, Palette, User } from 'lucide-react'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
@@ -23,19 +23,18 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-// import { Separator } from "@/components/ui/separator"
-// import { Switch } from "@/components/ui/switch"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 import { useProfile } from '../api'
 
 import { DeleteUser } from './DeleteUser'
+import { LoadingSettings } from './LoadingSettings'
 
 export default function Settings() {
   const useProfileQuery = useProfile({})
-  if (useProfileQuery.isLoading) return <div>Loading...</div>
+  if (useProfileQuery.isLoading) return <LoadingSettings />
   return (
-    <main className='container py-6'>
+    <main className='container h-[600px] py-6'>
       <div className='mx-auto max-w-4xl space-y-6'>
         <div className='flex items-center justify-between'>
           <div>
@@ -53,10 +52,6 @@ export default function Settings() {
             <TabsTrigger className='gap-2' value='account'>
               <Key className='size-4' />
               アカウント
-            </TabsTrigger>
-            <TabsTrigger className='gap-2' value='notifications'>
-              <Bell className='size-4' />
-              通知
             </TabsTrigger>
             <TabsTrigger className='gap-2' value='appearance'>
               <Palette className='size-4' />
@@ -76,19 +71,14 @@ export default function Settings() {
                     <AvatarImage src={useProfileQuery.data?.image} />
                     <AvatarFallback>UN</AvatarFallback>
                   </Avatar>
-                  <Button className='gap-2' size='sm' variant='outline'>
-                    <Camera className='size-4' />
+                  <Button icon={<Camera />} variant='outline'>
                     画像を変更
                   </Button>
                 </div>
                 <div className='grid gap-4'>
-                  <div className='grid gap-2'>
-                    <Label htmlFor='name'>表示名</Label>
+                  <div className='grid w-64 gap-2'>
+                    <Label htmlFor='name'>お名前</Label>
                     <Input id='name' placeholder='合瀬雄記' />
-                  </div>
-                  <div className='grid gap-2'>
-                    <Label htmlFor='bio'>自己紹介</Label>
-                    <Input id='bio' placeholder='あなたについて教えてください' />
                   </div>
                 </div>
               </CardContent>
@@ -121,42 +111,6 @@ export default function Settings() {
                     </DialogFooter>
                   </DialogContent>
                 </Dialog>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent className='space-y-4' value='notifications'>
-            <Card>
-              <CardHeader>
-                <CardTitle>通知設定</CardTitle>
-                <CardDescription>通知の受け取り方を設定します</CardDescription>
-              </CardHeader>
-              <CardContent className='space-y-4'>
-                <div className='flex items-center justify-between space-x-4'>
-                  <div className='flex-1 space-y-1'>
-                    <div className='flex items-center gap-2'>
-                      <Bell className='size-4' />
-                      <Label htmlFor='notifications'>プッシュ通知</Label>
-                    </div>
-                    <p className='text-sm text-gray-500'>
-                      新しいいいねやコメントの通知を受け取ります
-                    </p>
-                  </div>
-                  {/* <Switch id="notifications" /> */}
-                </div>
-                {/* <Separator />
-                <div className="flex items-center justify-between space-x-4">
-                  <div className="flex-1 space-y-1">
-                    <div className="flex items-center gap-2">
-                      <Mail className="h-4 w-4" />
-                      <Label htmlFor="emails">メール通知</Label>
-                    </div>
-                    <p className="text-sm text-gray-500">
-                      重要なお知らせをメールで受け取ります
-                    </p>
-                  </div>
-                  <Switch id="emails" />
-                </div> */}
               </CardContent>
             </Card>
           </TabsContent>
