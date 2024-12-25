@@ -1,17 +1,9 @@
 'use client'
 
-import { Camera, Key, Lock, Palette, User } from 'lucide-react'
+import { Key, Lock, Palette, User } from 'lucide-react'
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import {
   Dialog,
   DialogContent,
@@ -21,18 +13,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 import { useProfile } from '../api'
 
 import { DeleteUser } from './DeleteUser'
-import { LoadingSettings } from './LoadingSettings'
+import { EditUserForm } from './EditUserForm'
+import { LoadingUserForm } from './LoadingUserForm'
 
 export default function Settings() {
   const useProfileQuery = useProfile({})
-  if (useProfileQuery.isLoading) return <LoadingSettings />
   return (
     <main className='container h-[600px] py-6'>
       <div className='mx-auto max-w-4xl space-y-6'>
@@ -60,32 +51,11 @@ export default function Settings() {
           </TabsList>
 
           <TabsContent className='space-y-4' value='profile'>
-            <Card>
-              <CardHeader>
-                <CardTitle>プロフィール</CardTitle>
-                <CardDescription>プロフィール情報を管理します</CardDescription>
-              </CardHeader>
-              <CardContent className='space-y-6'>
-                <div className='flex items-center gap-4'>
-                  <Avatar className='size-20'>
-                    <AvatarImage src={useProfileQuery.data?.image} />
-                    <AvatarFallback>UN</AvatarFallback>
-                  </Avatar>
-                  <Button icon={<Camera />} variant='outline'>
-                    画像を変更
-                  </Button>
-                </div>
-                <div className='grid gap-4'>
-                  <div className='grid w-64 gap-2'>
-                    <Label htmlFor='name'>お名前</Label>
-                    <Input id='name' placeholder='合瀬雄記' />
-                  </div>
-                </div>
-              </CardContent>
-              <CardFooter>
-                <Button>変更を保存</Button>
-              </CardFooter>
-            </Card>
+            {useProfileQuery.isLoading ? (
+              <LoadingUserForm />
+            ) : (
+              <EditUserForm user={useProfileQuery.data} />
+            )}
           </TabsContent>
 
           <TabsContent className='space-y-4' value='account'>
