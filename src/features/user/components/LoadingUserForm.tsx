@@ -22,8 +22,8 @@ export const LoadingUserForm = () => {
           <Skeleton className='h-8 w-24' />
         </div>
         <div className='grid gap-4'>
-          <div className='grid w-64 gap-2'>
-            <Skeleton className='h-6 w-12' />
+          <div className='grid w-64 gap-1'>
+            <Skeleton className='h-5 w-12' />
             <Skeleton className='h-10 w-full' />
           </div>
         </div>

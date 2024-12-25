@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Camera } from 'lucide-react'
 import Image from 'next/image'
-import { useState, ChangeEvent } from 'react'
+import { useState, ChangeEvent, useRef } from 'react'
 import { SubmitHandler, useForm, Controller } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -36,6 +36,7 @@ type EditProfileModalProps = {
 }
 
 export const EditUserForm = ({ user }: EditProfileModalProps) => {
+  const inputRef = useRef<HTMLInputElement | null>(null)
   const [imagePreview, setImagePreview] = useState<string>(user?.image || '')
 
   const updateProfileMutation = useUpdateProfile({
@@ -120,22 +121,25 @@ export const EditUserForm = ({ user }: EditProfileModalProps) => {
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        <div>
-                          <label className='cursor-pointer' htmlFor='file-upload'>
-                            <Button icon={<Camera />} type='button' variant='outline'>
-                              画像を変更
-                            </Button>
-                          </label>
+                        <div className='relative'>
                           <Input
                             accept='image/*'
                             className='hidden'
-                            id='file-upload'
                             onChange={(e) => {
                               handleImagePreview(e)
                               field.onChange(e.target.files?.[0])
                             }}
+                            ref={inputRef} // useRef を使う
                             type='file'
                           />
+                          <Button
+                            icon={<Camera />}
+                            onClick={() => inputRef.current?.click()}
+                            type='button'
+                            variant='outline'
+                          >
+                            画像を変更
+                          </Button>
                         </div>
                       </FormControl>
                       <FormMessage />
