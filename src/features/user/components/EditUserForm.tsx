@@ -129,7 +129,7 @@ export const EditUserForm = ({ user }: EditProfileModalProps) => {
                               handleImagePreview(e)
                               field.onChange(e.target.files?.[0])
                             }}
-                            ref={inputRef} // useRef を使う
+                            ref={inputRef}
                             type='file'
                           />
                           <Button
