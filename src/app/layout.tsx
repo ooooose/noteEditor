@@ -1,4 +1,4 @@
-import { Inter as FontSans } from 'next/font/google'
+import { Work_Sans } from 'next/font/google'
 import React from 'react'
 
 import './globals.css'
@@ -10,9 +10,10 @@ import { cn } from '@/lib/utils'
 
 import type { Metadata } from 'next'
 
-const fontSans = FontSans({
+const workSans = Work_Sans({
   subsets: ['latin'],
-  variable: '--font-sans',
+  variable: '--work-sans',
+  display: 'swap',
 })
 
 export const metadata: Metadata = {
@@ -36,7 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <PreconnectResources />
       </head>
-      <body className={cn('min-h-screen bg-background font-sans antialiased', fontSans.variable)}>
+      <body className={cn('min-h-screen bg-background font-sans antialiased', workSans.variable)}>
         <NextAuthProvider>
           <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
         </NextAuthProvider>

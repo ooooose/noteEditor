@@ -17,7 +17,7 @@ export const TopPicture = ({ picture }: TopPictureProps) => {
         <div className='flex items-center justify-between'>
           <div className='flex items-center gap-3'>
             <Avatar className='size-10 rounded-full shadow-sm'>
-              <AvatarImage className='rounded-full' src={picture.user.image} />
+              <AvatarImage className='size-10 rounded-full' src={picture.user.image} />
               <AvatarFallback>A</AvatarFallback>
             </Avatar>
             <div>

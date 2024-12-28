@@ -34,8 +34,8 @@ const PictureCard = memo(({ picture, likes, user }: PictureCardProps) => {
         <div className='p-4'>
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-3'>
-              <Avatar className='size-10 rounded-lg shadow-sm'>
-                <AvatarImage className='rounded-full' src={picture.user.image} />
+              <Avatar className='size-10 rounded-full shadow-sm'>
+                <AvatarImage className='size-10 rounded-full ' src={picture.user.image} />
                 <AvatarFallback>A</AvatarFallback>
               </Avatar>
               <div>
