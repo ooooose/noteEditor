@@ -1,6 +1,6 @@
 'use client'
 
-import { Key, Lock, Palette, User } from 'lucide-react'
+import { Key, User } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -13,7 +13,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { Label } from '@/components/ui/label'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 import { useProfile } from '../api'
@@ -43,10 +42,6 @@ export default function Settings() {
             <TabsTrigger className='gap-2' value='account'>
               <Key className='size-4' />
               アカウント
-            </TabsTrigger>
-            <TabsTrigger className='gap-2' value='appearance'>
-              <Palette className='size-4' />
-              外観
             </TabsTrigger>
           </TabsList>
 
@@ -81,27 +76,6 @@ export default function Settings() {
                     </DialogFooter>
                   </DialogContent>
                 </Dialog>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent className='space-y-4' value='appearance'>
-            <Card>
-              <CardHeader>
-                <CardTitle>外観設定</CardTitle>
-                <CardDescription>アプリの見た目をカスタマイズします</CardDescription>
-              </CardHeader>
-              <CardContent className='space-y-4'>
-                <div className='flex items-center justify-between space-x-4'>
-                  <div className='flex-1 space-y-1'>
-                    <div className='flex items-center gap-2'>
-                      <Lock className='size-4' />
-                      <Label htmlFor='private'>ダークモード</Label>
-                    </div>
-                    <p className='text-sm text-gray-500'>暗めの配色に切り替えます</p>
-                  </div>
-                  {/* <Switch id="private" /> */}
-                </div>
               </CardContent>
             </Card>
           </TabsContent>
