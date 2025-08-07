@@ -13,6 +13,7 @@ import { formatDateForPicture } from '@/utils/format'
 import { Picture as PictureType } from '../types'
 
 import { Picture } from './Picture'
+import PictureMenu from './PictureMenu'
 import PictureTheme from './PictureTheme'
 
 type PictureCardProps = {
@@ -66,6 +67,7 @@ const PictureCard = memo(({ picture, likes, user }: PictureCardProps) => {
               <Like like={like} likeCount={likeCount} liked={liked} />
               <Comment pictureId={picture.id} user={user} />
             </div>
+            {picture.userId == user?.id && <PictureMenu picture={picture} />}
           </div>
         </div>
       </Card>

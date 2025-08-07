@@ -16,8 +16,8 @@ export const getProfile = async (): Promise<User> => {
   try {
     const response = await apiClient.get('/api/v1/users/me')
     const deserializer = new Deserializer(deserializerOptions)
-    const diary = await deserializer.deserialize(response)
-    return diary
+    const user = await deserializer.deserialize(response)
+    return user
   } catch (error) {
     console.error('ログインユーザーの取得に失敗しました:', error)
     throw error
