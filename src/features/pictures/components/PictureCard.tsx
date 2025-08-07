@@ -1,8 +1,6 @@
 import { AvatarImage, AvatarFallback, Avatar } from '@radix-ui/react-avatar'
-import { Share2 } from 'lucide-react'
 import { memo } from 'react'
 
-import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 
 import Comment from '@/features/comments/components/Comment'
@@ -68,9 +66,6 @@ const PictureCard = memo(({ picture, likes, user }: PictureCardProps) => {
               <Like like={like} likeCount={likeCount} liked={liked} />
               <Comment pictureId={picture.id} user={user} />
             </div>
-            <Button className='size-9 rounded-full' size='icon' variant='ghost'>
-              <Share2 className='size-5' />
-            </Button>
           </div>
         </div>
       </Card>
