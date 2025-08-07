@@ -30,7 +30,6 @@ export const SkeletonCard = () => {
               <Skeleton className='size-12 rounded-full' />
               <Skeleton className='size-12 rounded-full' />
             </div>
-            <Skeleton className='size-8' />
           </div>
         </div>
       </Card>
