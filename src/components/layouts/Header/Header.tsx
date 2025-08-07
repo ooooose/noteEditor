@@ -10,8 +10,8 @@ const Header = () => {
   const { status } = useSession()
   return (
     <header className='mx-auto w-2/3 bg-white/50 backdrop-blur-sm'>
-      <div className='container flex h-20 items-center justify-between'>
-        <div className='flex items-center gap-2'>
+      <div className='container flex h-20 items-center md:justify-between'>
+        <div className='flex items-center gap-2 '>
           <Link href='/'>
             <span className='text-4xl font-bold'>
               <span className='text-red-500'>画</span>
