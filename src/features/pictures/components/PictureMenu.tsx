@@ -32,9 +32,7 @@ const PictureMenu = memo(({ picture }: PictureMenuProps) => {
             <DeletePicture pictureId={picture.id} />
           </Button>
         </Tooltip>
-      </DropdownMenuContent>
-      <DropdownMenuContent align='end' className='flex' side='bottom'>
-        <Tooltip content='絵を削除'>
+        <Tooltip content='フレームを変更'>
           <Button className='border-none p-2' variant='outline'>
             <SwitchPictureFrame
               author={picture.user.name}
