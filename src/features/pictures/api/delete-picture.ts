@@ -14,7 +14,7 @@ type UseDeletePictureOptions = {
   mutationConfig?: MutationConfig<typeof deletePicture>
 }
 
-export const UseDeletePicture = ({ mutationConfig }: UseDeletePictureOptions = {}) => {
+export const useDeletePicture = ({ mutationConfig }: UseDeletePictureOptions = {}) => {
   const queryClient = useQueryClient()
 
   const { onSuccess, ...restConfig } = mutationConfig || {}
