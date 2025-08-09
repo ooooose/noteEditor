@@ -11,8 +11,10 @@ type SwitchPictureFrameProps = {
 export const useSwitchPictureFrame = ({ picture }: SwitchPictureFrameProps) => {
   const [frameId, setFrameId] = useState<number>(picture.frameId)
 
-  const handleUpdateFrameId = () => {
-    setFrameId(picture.frameId)
+  const handleUpdateFrameId = (frameId: string) => {
+    // NOTE: SelectのonChangeに設定するvalueがstringで定義されているので一旦stringで受けてnumberにキャスト
+    // https://github.com/shadcn-ui/ui/issues/772
+    setFrameId(Number(frameId))
   }
 
   const updatePictureMutation = useUpdatePicture({
