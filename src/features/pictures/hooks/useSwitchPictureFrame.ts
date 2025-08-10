@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { toast } from 'sonner'
 
-import { useUpdatePicture } from '../api'
+import { useSwitchFrame } from '../api'
 import { Picture } from '../types'
 
 type SwitchPictureFrameProps = {
@@ -17,16 +17,20 @@ export const useSwitchPictureFrame = ({ picture }: SwitchPictureFrameProps) => {
     setFrameId(Number(frameId))
   }
 
-  const updatePictureMutation = useUpdatePicture({
+  const switchPictureFrameMutation = useSwitchFrame({
     mutationConfig: {
-      onSuccess: () => toast.success('フレームを変更しました'),
-      onError: () => toast.error('フレームの変更に失敗しました'),
+      onSuccess: () => {
+        toast.success('フレームを変更しました')
+      },
+      onError: () => {
+        toast.error('フレームの変更に失敗しました')
+      },
     },
   })
 
   return {
     frameId,
     handleUpdateFrameId,
-    updatePictureMutation,
+    switchPictureFrameMutation,
   }
 }

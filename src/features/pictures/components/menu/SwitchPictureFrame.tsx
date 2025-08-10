@@ -23,7 +23,7 @@ type SwitchPictureFrameProps = {
 }
 
 const SwitchPictureFrame = memo(({ picture, src, author }: SwitchPictureFrameProps) => {
-  const { frameId, handleUpdateFrameId, updatePictureMutation } = useSwitchPictureFrame({
+  const { frameId, handleUpdateFrameId, switchPictureFrameMutation } = useSwitchPictureFrame({
     picture: picture,
   })
   return (
@@ -42,7 +42,7 @@ const SwitchPictureFrame = memo(({ picture, src, author }: SwitchPictureFramePro
         <DialogClose asChild>
           <Button
             className='mt-3 w-full'
-            onClick={() => updatePictureMutation.mutate({ id: picture.id, frameId: frameId })}
+            onClick={() => switchPictureFrameMutation.mutate({ id: picture.id, frameId: frameId })}
             variant='outline'
           >
             登録する
