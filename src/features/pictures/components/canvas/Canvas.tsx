@@ -60,7 +60,7 @@ export const Canvas: React.FC<IProps> = (props) => {
               width={`${width}px`}
             />
           </div>
-          <div className='w-86 flex flex-col gap-4'>
+          <div className='w-85 flex flex-col gap-4'>
             <CanvasMenu
               color={color}
               handleSelectChange={handleSelectChange}
