@@ -42,7 +42,7 @@ const SwitchPictureFrame = memo(({ picture, src, author }: SwitchPictureFramePro
         <DialogClose asChild>
           <Button
             className='mt-3 w-full'
-            onClick={() => switchPictureFrameMutation.mutate({ id: picture.id, frameId: frameId })}
+            onClick={() => switchPictureFrameMutation.mutate({ id: picture.id, frame_id: frameId })}
             variant='outline'
           >
             登録する

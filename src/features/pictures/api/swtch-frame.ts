@@ -7,11 +7,11 @@ import { getInfinitePicturesQueryOptions } from './get-pictures'
 
 type SwitchFrameParams = {
   id: number
-  frameId: number
+  frame_id: number
 }
 
-export const switchFrame = ({ id, frameId }: SwitchFrameParams) => {
-  return apiClient.put(`/api/v1/pictures/${id}/switch-frame`, { frameId })
+export const switchFrame = ({ id, frame_id }: SwitchFrameParams) => {
+  return apiClient.put(`/api/v1/pictures/${id}/switch_frame`, { frame_id })
 }
 
 type UseSwitchFrameOptions = {
