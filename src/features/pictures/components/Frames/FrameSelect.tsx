@@ -32,7 +32,7 @@ const selectObject: selectObjectType[] = [
 
 export const FrameSelect = memo(({ frameId, handleSelectChange }: FrameSelectProps) => {
   return (
-    <Select className='w-auto' onValueChange={handleSelectChange} value={frameId.toString()}>
+    <Select onValueChange={handleSelectChange} value={frameId.toString()}>
       <SelectTrigger>
         <SelectValue placeholder='フレームを選択してください' />
       </SelectTrigger>
