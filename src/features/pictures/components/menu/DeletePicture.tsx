@@ -16,10 +16,12 @@ import { useDeletePicture } from '../../api'
 
 type DeletePictureProps = {
   pictureId: number
+  userUid: string
 }
 
-const DeletePicture = memo(({ pictureId }: DeletePictureProps) => {
+const DeletePicture = memo(({ pictureId, userUid }: DeletePictureProps) => {
   const deletePictureMutation = useDeletePicture({
+    userUid: userUid,
     mutationConfig: {
       onSuccess: () => {
         toast.success('絵を削除しました')
