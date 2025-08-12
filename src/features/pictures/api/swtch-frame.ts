@@ -1,5 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
+import {
+  getInfiniteUserLikedPicturesQueryOptions,
+  getInfiniteUserPicturesQueryOptions,
+} from '@/features/user/api'
 import { apiClient } from '@/lib/api/api-client'
 import { MutationConfig } from '@/lib/react-query/react-query'
 
@@ -15,10 +19,11 @@ export const switchFrame = ({ id, frame_id }: SwitchFrameParams) => {
 }
 
 type UseSwitchFrameOptions = {
+  userUid?: string
   mutationConfig?: MutationConfig<typeof switchFrame>
 }
 
-export const useSwitchFrame = ({ mutationConfig }: UseSwitchFrameOptions = {}) => {
+export const useSwitchFrame = ({ userUid, mutationConfig }: UseSwitchFrameOptions = {}) => {
   const queryClient = useQueryClient()
 
   const { onSuccess, ...restConfig } = mutationConfig || {}
@@ -28,6 +33,14 @@ export const useSwitchFrame = ({ mutationConfig }: UseSwitchFrameOptions = {}) =
       queryClient.invalidateQueries({
         queryKey: getInfinitePicturesQueryOptions().queryKey,
       })
+      if (userUid) {
+        queryClient.invalidateQueries({
+          queryKey: getInfiniteUserLikedPicturesQueryOptions(userUid).queryKey,
+        })
+        queryClient.invalidateQueries({
+          queryKey: getInfiniteUserPicturesQueryOptions(userUid).queryKey,
+        })
+      }
       onSuccess?.(data, ...args)
     },
     ...restConfig,

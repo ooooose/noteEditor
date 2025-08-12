@@ -20,11 +20,13 @@ type SwitchPictureFrameProps = {
   picture: PictureType
   src: string
   author: string
+  userUid: string
 }
 
-const SwitchPictureFrame = memo(({ picture, src, author }: SwitchPictureFrameProps) => {
+const SwitchPictureFrame = memo(({ picture, src, author, userUid }: SwitchPictureFrameProps) => {
   const { frameId, handleUpdateFrameId, switchPictureFrameMutation } = useSwitchPictureFrame({
     picture: picture,
+    userUid: userUid,
   })
   return (
     <Dialog>
@@ -37,7 +39,7 @@ const SwitchPictureFrame = memo(({ picture, src, author }: SwitchPictureFramePro
         </DialogHeader>
         <div className='mx-auto flex w-[240px] flex-col gap-4'>
           <Picture author={author} frameId={frameId} src={src} />
-          <FrameSelect handleSelectChange={handleUpdateFrameId} />
+          <FrameSelect frameId={frameId} handleSelectChange={handleUpdateFrameId} />
         </div>
         <DialogClose asChild>
           <Button
