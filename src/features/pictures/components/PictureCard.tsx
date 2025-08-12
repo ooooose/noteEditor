@@ -67,7 +67,7 @@ const PictureCard = memo(({ picture, likes, user }: PictureCardProps) => {
               <Like like={like} likeCount={likeCount} liked={liked} />
               <Comment pictureId={picture.id} user={user} />
             </div>
-            {picture.userId == user?.id && <PictureMenu picture={picture} />}
+            {picture.userId == user?.id && <PictureMenu picture={picture} userUid={user.uid} />}
           </div>
         </div>
       </Card>

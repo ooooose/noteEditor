@@ -6,9 +6,10 @@ import { Picture } from '../types'
 
 type SwitchPictureFrameProps = {
   picture: Picture
+  userUid: string | undefined
 }
 
-export const useSwitchPictureFrame = ({ picture }: SwitchPictureFrameProps) => {
+export const useSwitchPictureFrame = ({ picture, userUid }: SwitchPictureFrameProps) => {
   const [frameId, setFrameId] = useState<number>(picture.frameId)
 
   const handleUpdateFrameId = (frameId: string) => {
@@ -18,6 +19,7 @@ export const useSwitchPictureFrame = ({ picture }: SwitchPictureFrameProps) => {
   }
 
   const switchPictureFrameMutation = useSwitchFrame({
+    userUid: userUid,
     mutationConfig: {
       onSuccess: () => {
         toast.success('フレームを変更しました')

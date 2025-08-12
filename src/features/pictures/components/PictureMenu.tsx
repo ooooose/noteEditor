@@ -18,9 +18,10 @@ import type { Picture } from '../types'
 
 type PictureMenuProps = {
   picture: Picture
+  userUid: string
 }
 
-const PictureMenu = memo(({ picture }: PictureMenuProps) => {
+const PictureMenu = memo(({ picture, userUid }: PictureMenuProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className='h-[65px] focus:outline-none'>
@@ -38,6 +39,7 @@ const PictureMenu = memo(({ picture }: PictureMenuProps) => {
               author={picture.user.name}
               picture={picture}
               src={picture.imageUrl}
+              userUid={userUid}
             />
           </Button>
         </Tooltip>

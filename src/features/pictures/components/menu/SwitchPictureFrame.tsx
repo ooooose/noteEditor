@@ -20,11 +20,13 @@ type SwitchPictureFrameProps = {
   picture: PictureType
   src: string
   author: string
+  userUid: string
 }
 
-const SwitchPictureFrame = memo(({ picture, src, author }: SwitchPictureFrameProps) => {
+const SwitchPictureFrame = memo(({ picture, src, author, userUid }: SwitchPictureFrameProps) => {
   const { frameId, handleUpdateFrameId, switchPictureFrameMutation } = useSwitchPictureFrame({
     picture: picture,
+    userUid: userUid,
   })
   return (
     <Dialog>
