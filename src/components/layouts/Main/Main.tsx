@@ -2,7 +2,9 @@
 import { Palette, Sparkles, Users } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 import { useSession } from 'next-auth/react'
+import { useState, useEffect } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -16,11 +18,26 @@ import {
 import { Skeleton } from '@/components/ui/skeleton'
 
 import { Login } from '@/features/auth/components'
+import { getPicture } from '@/features/pictures/api'
+import QuizModal from '@/features/pictures/components/QuizModal'
 import { TopPictures } from '@/features/top/components/top-pictures'
 import { TopUsers } from '@/features/top/components/top-users'
 
+import type { Picture } from '@/features/pictures/types'
+
 const Main = () => {
+  const searchParams = useSearchParams()
+  const pictureId = searchParams.get('pictureId')
+  const [picture, setPicture] = useState<Picture | null>(null)
+
+  useEffect(() => {
+    if (pictureId) {
+      getPicture({ pictureId }).then(setPicture)
+    }
+  }, [pictureId])
+
   const { status } = useSession()
+
   return (
     <main className='flex flex-col items-center justify-between'>
       <div className='grid gap-12'>
@@ -153,6 +170,15 @@ const Main = () => {
           </Card>
         </section>
       </div>
+      {picture && (
+        <QuizModal
+          author={picture.user.name}
+          frameId={picture.frameId}
+          isOpen={true}
+          src={picture.imageUrl}
+          title={picture.theme?.title}
+        />
+      )}
     </main>
   )
 }
