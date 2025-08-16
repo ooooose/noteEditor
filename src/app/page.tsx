@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { useSearchParams } from 'next/navigation'
 
 import MainLayout from '@/components/layouts/Layout/MainLayout'
 import Main from '@/components/layouts/Main/Main'
@@ -25,9 +26,11 @@ export function generateMetadata({ searchParams }: Props): Metadata {
 }
 
 export default function Home() {
+  const searchParams = useSearchParams()
+  const pictureId = searchParams.get('pictureId')
   return (
     <MainLayout>
-      <Main />
+      <Main pictureId={pictureId} />
     </MainLayout>
   )
 }
