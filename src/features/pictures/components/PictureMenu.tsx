@@ -12,14 +12,16 @@ import {
 } from '@/components/ui/dropdown-menu'
 
 import DeletePicture from './menu/DeletePicture'
+import SwitchPictureFrame from './menu/SwitchPictureFrame'
 
 import type { Picture } from '../types'
 
 type PictureMenuProps = {
   picture: Picture
+  userUid: string
 }
 
-const PictureMenu = memo(({ picture }: PictureMenuProps) => {
+const PictureMenu = memo(({ picture, userUid }: PictureMenuProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className='h-[65px] focus:outline-none'>
@@ -28,7 +30,17 @@ const PictureMenu = memo(({ picture }: PictureMenuProps) => {
       <DropdownMenuContent align='end' className='flex' side='bottom'>
         <Tooltip content='絵を削除'>
           <Button className='border-none p-2' variant='outline'>
-            <DeletePicture pictureId={picture.id} />
+            <DeletePicture pictureId={picture.id} userUid={userUid} />
+          </Button>
+        </Tooltip>
+        <Tooltip content='フレームを変更'>
+          <Button className='border-none p-2' variant='outline'>
+            <SwitchPictureFrame
+              author={picture.user.name}
+              picture={picture}
+              src={picture.imageUrl}
+              userUid={userUid}
+            />
           </Button>
         </Tooltip>
       </DropdownMenuContent>

@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/select'
 
 type FrameSelectProps = {
+  frameId: number
   handleSelectChange: (value: string) => void
 }
 
@@ -29,10 +30,10 @@ const selectObject: selectObjectType[] = [
   },
 ]
 
-export const FrameSelect = memo(({ handleSelectChange }: FrameSelectProps) => {
+export const FrameSelect = memo(({ frameId, handleSelectChange }: FrameSelectProps) => {
   return (
-    <Select onValueChange={handleSelectChange}>
-      <SelectTrigger className='w-[280px]'>
+    <Select onValueChange={handleSelectChange} value={frameId.toString()}>
+      <SelectTrigger>
         <SelectValue placeholder='フレームを選択してください' />
       </SelectTrigger>
       <SelectContent>

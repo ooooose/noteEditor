@@ -5,21 +5,25 @@ import {
   getInfiniteUserPicturesQueryOptions,
 } from '@/features/user/api'
 import { apiClient } from '@/lib/api/api-client'
+import { MutationConfig } from '@/lib/react-query/react-query'
 
 import { getInfinitePicturesQueryOptions } from './get-pictures'
 
-import type { MutationConfig } from '@/lib/react-query/react-query'
-
-export const deletePicture = async ({ pictureId }: { pictureId: number }) => {
-  return await apiClient.delete(`/api/v1/pictures/${pictureId}`).then((result) => result)
+type SwitchFrameParams = {
+  id: number
+  frame_id: number
 }
 
-type UseDeletePictureOptions = {
+export const switchFrame = ({ id, frame_id }: SwitchFrameParams) => {
+  return apiClient.put(`/api/v1/pictures/${id}/switch_frame`, { frame_id })
+}
+
+type UseSwitchFrameOptions = {
   userUid?: string
-  mutationConfig?: MutationConfig<typeof deletePicture>
+  mutationConfig?: MutationConfig<typeof switchFrame>
 }
 
-export const useDeletePicture = ({ userUid, mutationConfig }: UseDeletePictureOptions = {}) => {
+export const useSwitchFrame = ({ userUid, mutationConfig }: UseSwitchFrameOptions = {}) => {
   const queryClient = useQueryClient()
 
   const { onSuccess, ...restConfig } = mutationConfig || {}
@@ -37,10 +41,9 @@ export const useDeletePicture = ({ userUid, mutationConfig }: UseDeletePictureOp
           queryKey: getInfiniteUserPicturesQueryOptions(userUid).queryKey,
         })
       }
-
       onSuccess?.(data, ...args)
     },
     ...restConfig,
-    mutationFn: deletePicture,
+    mutationFn: switchFrame,
   })
 }
