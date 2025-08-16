@@ -28,7 +28,7 @@ export function generateMetadata({ searchParams }: Props): Metadata {
 export default function Home() {
   return (
     <MainLayout>
-      <Suspense fallback={null}>
+      <Suspense>
         <Main />
       </Suspense>
     </MainLayout>
