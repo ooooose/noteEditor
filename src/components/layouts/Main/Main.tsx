@@ -2,6 +2,7 @@
 import { Palette, Sparkles, Users } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { useState, useEffect } from 'react'
 
@@ -24,11 +25,9 @@ import { TopUsers } from '@/features/top/components/top-users'
 
 import type { Picture } from '@/features/pictures/types'
 
-type MainProps = {
-  pictureId: string | null
-}
-
-const Main = ({ pictureId }: MainProps) => {
+const Main = () => {
+  const searchParams = useSearchParams()
+  const pictureId = searchParams.get('pictureId')
   const [picture, setPicture] = useState<Picture | null>(null)
 
   useEffect(() => {
