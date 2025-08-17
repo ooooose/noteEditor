@@ -29,10 +29,14 @@ const Main = () => {
   const searchParams = useSearchParams()
   const pictureId = searchParams.get('pictureId')
   const [picture, setPicture] = useState<Picture | null>(null)
+  const [isModalOpan, setIsModalOpen] = useState<boolean>(false)
 
   useEffect(() => {
     if (pictureId) {
-      getPicture({ pictureId }).then(setPicture)
+      getPicture({ pictureId }).then((res) => {
+        setPicture(res)
+        setIsModalOpen(true)
+      })
     }
   }, [pictureId])
 
@@ -174,7 +178,7 @@ const Main = () => {
         <QuizModal
           author={picture.user.name}
           frameId={picture.frameId}
-          isOpen={true}
+          isOpen={isModalOpan}
           src={picture.imageUrl}
           title={picture.theme?.title}
         />
