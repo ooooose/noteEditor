@@ -2,7 +2,7 @@ class ApiClient {
   baseURL: string
 
   constructor() {
-    this.baseURL = process.env.NEXT_APP_URL ?? ''
+    this.baseURL = process.env.NEXT_PUBLIC_APP_URL ?? ''
   }
 
   async apiGet(url: string) {
