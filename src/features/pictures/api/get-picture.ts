@@ -13,7 +13,8 @@ export const getPicture = async ({ pictureId }: { pictureId: string }): Promise<
   try {
     const response = await apiClient.get(`api/v1/pictures/${pictureId}`)
     const deserializer = new Deserializer(deserializerOptions)
-    return deserializer.deserialize(response.data)
+    const picture = await deserializer.deserialize(response)
+    return picture
   } catch (error) {
     console.error('絵の取得に失敗しました:', error)
     throw error
