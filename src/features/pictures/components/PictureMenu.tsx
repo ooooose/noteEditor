@@ -11,8 +11,11 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
+import { baseURL } from '@/lib/constants/env'
+
 import DeletePicture from './menu/DeletePicture'
 import SwitchPictureFrame from './menu/SwitchPictureFrame'
+import XShareButton from './menu/XShareButton'
 
 import type { Picture } from '../types'
 
@@ -22,6 +25,7 @@ type PictureMenuProps = {
 }
 
 const PictureMenu = memo(({ picture, userUid }: PictureMenuProps) => {
+  const url = `${baseURL}?${picture.id}`
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className='h-[65px] focus:outline-none'>
@@ -41,6 +45,11 @@ const PictureMenu = memo(({ picture, userUid }: PictureMenuProps) => {
               src={picture.imageUrl}
               userUid={userUid}
             />
+          </Button>
+        </Tooltip>
+        <Tooltip content='Xに共有'>
+          <Button className='border-none p-2' variant='outline'>
+            <XShareButton url={url} />
           </Button>
         </Tooltip>
       </DropdownMenuContent>
