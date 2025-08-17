@@ -25,7 +25,7 @@ type PictureMenuProps = {
 }
 
 const PictureMenu = memo(({ picture, userUid }: PictureMenuProps) => {
-  const url = `${baseURL}?${picture.id}`
+  const url = `${baseURL}?${picture.uid}`
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className='h-[65px] focus:outline-none'>
