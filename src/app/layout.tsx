@@ -4,6 +4,7 @@ import React from 'react'
 import './globals.css'
 import { PreconnectResources } from '@/components/Seo/PreconnectResources'
 
+import { baseURL } from '@/lib/constants/env'
 import NextAuthProvider from '@/lib/next-auth/next-auth-provider'
 import { ReactQueryClientProvider } from '@/lib/react-query/react-query-client-provider'
 import { cn } from '@/lib/utils'
@@ -17,7 +18,7 @@ const workSans = Work_Sans({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_APP_URL ?? ''),
+  metadataBase: new URL(baseURL ?? ''),
   title: '画HACK',
   description: 'あなただけの絵を描くアプリ',
   openGraph: {

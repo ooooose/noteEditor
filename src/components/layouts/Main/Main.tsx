@@ -2,7 +2,7 @@
 import { Palette, Sparkles, Users } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { useState, useEffect } from 'react'
 
@@ -22,19 +22,30 @@ import { getPicture } from '@/features/pictures/api'
 import QuizModal from '@/features/pictures/components/QuizModal'
 import { TopPictures } from '@/features/top/components/top-pictures'
 import { TopUsers } from '@/features/top/components/top-users'
+import { baseURL } from '@/lib/constants/env'
 
 import type { Picture } from '@/features/pictures/types'
 
 const Main = () => {
+  const router = useRouter()
   const searchParams = useSearchParams()
   const pictureId = searchParams.get('pictureId')
   const [picture, setPicture] = useState<Picture | null>(null)
+  const [isModalOpan, setIsModalOpen] = useState<boolean>(false)
 
   useEffect(() => {
     if (pictureId) {
-      getPicture({ pictureId }).then(setPicture)
+      getPicture({ pictureId }).then((res) => {
+        setPicture(res)
+        setIsModalOpen(true)
+      })
     }
   }, [pictureId])
+
+  const onOpenChange = () => {
+    router.replace(baseURL)
+    setIsModalOpen(false)
+  }
 
   const { status } = useSession()
 
@@ -174,7 +185,8 @@ const Main = () => {
         <QuizModal
           author={picture.user.name}
           frameId={picture.frameId}
-          isOpen={true}
+          isOpen={isModalOpan}
+          onOpenChange={onOpenChange}
           src={picture.imageUrl}
           title={picture.theme?.title}
         />

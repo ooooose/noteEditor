@@ -13,7 +13,7 @@ type Props = {
 export function generateMetadata({ searchParams }: Props): Metadata {
   const pictureId = searchParams?.pictureId
   return {
-    metadataBase: new URL(`https://gahack.net?pictureId=${pictureId}`),
+    metadataBase: new URL(`${baseURL}?pictureId=${pictureId}`),
     title: '画HACK',
     description: 'あなたらしい絵を描くアプリ',
     twitter: {

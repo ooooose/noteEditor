@@ -1,8 +1,13 @@
-import { DialogContent, DialogTitle, DialogClose, Dialog } from '@radix-ui/react-dialog'
 import { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
-import { DialogHeader } from '@/components/ui/dialog'
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
 
 import { Picture } from './Picture'
 
@@ -12,12 +17,13 @@ type QuizModalProps = {
   frameId: number
   author: string
   isOpen: boolean
+  onOpenChange: (open: boolean) => void
 }
 
-const QuizModal = ({ title, src, frameId, author, isOpen }: QuizModalProps) => {
+const QuizModal = ({ title, src, frameId, author, isOpen, onOpenChange }: QuizModalProps) => {
   const [isDisplary, setIsDisplay] = useState<boolean>(false)
   return (
-    <Dialog open={isOpen}>
+    <Dialog onOpenChange={onOpenChange} open={isOpen}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>この絵のテーマはなんでしょう？</DialogTitle>
