@@ -33,7 +33,7 @@ export async function POST(req: Request) {
       Bucket: BUCKET_NAME,
       Key: fileName,
       Body: buffer,
-      ContentType: 'image/webp',
+      ContentType: 'image/png',
       ACL: 'public-read',
     }
     const command = new PutObjectCommand(uploadParams)

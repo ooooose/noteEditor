@@ -1,29 +1,27 @@
-import { Deserializer } from 'jsonapi-serializer'
+/* eslint-disable @next/next/no-img-element */
 import { ImageResponse } from 'next/og'
-
-import { Picture as PictureComponent } from '@/features/pictures/components/Picture'
-import { Picture } from '@/features/pictures/types'
-import { apiClient } from '@/lib/api/api-client'
-
-import type { DeserializerOptions } from 'jsonapi-serializer'
 
 export const runtime = 'edge'
 
-const deserializerOptions: DeserializerOptions = {
-  keyForAttribute: 'camelCase',
-}
-
 export async function GET(req: Request) {
+  const baseURL = process.env.NEXT_PUBLIC_API_URL ?? ''
   const { searchParams } = new URL(req.url)
-  const pictureUid = searchParams.get('pictureId')
-  if (!pictureUid) {
+  const pictureId = searchParams.get('pictureId')
+  if (!pictureId) {
     return new Response('pictureId is required', { status: 400 })
   }
 
   try {
-    const response = await apiClient.get(`/api/v1/pictures/${pictureUid}`)
-    const deserializer = new Deserializer(deserializerOptions)
-    const picture: Picture = await deserializer.deserialize(response)
+    const res = await fetch(`${baseURL}/api/v1/pictures/${pictureId}`, {
+      headers: { Accept: 'application/json' },
+    })
+    const data = await res.json()
+
+    // 画像URLとaltの取得
+    const imageUrl = data.data.attributes.image_url
+    // テーマタイトルが必要なら、別途APIで取得する必要があります（idしかない場合は空文字でOK）
+    const alt = 'OGP'
+
     return new ImageResponse(
       (
         <div
@@ -33,14 +31,9 @@ export async function GET(req: Request) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            background: '#fff',
           }}
         >
-          <PictureComponent
-            author={picture.user.name}
-            frameId={picture.frameId}
-            src={picture.imageUrl}
-          />
+          <img alt={alt} height={400} src={imageUrl} style={{ objectFit: 'contain' }} width={600} />
         </div>
       ),
       {
