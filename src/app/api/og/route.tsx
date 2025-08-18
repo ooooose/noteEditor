@@ -17,9 +17,7 @@ export async function GET(req: Request) {
     })
     const data = await res.json()
 
-    // 画像URLとaltの取得
     const imageUrl = data.data.attributes.image_url
-    // テーマタイトルが必要なら、別途APIで取得する必要があります（idしかない場合は空文字でOK）
     const alt = 'OGP'
 
     return new ImageResponse(
