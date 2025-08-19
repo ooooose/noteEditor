@@ -30,16 +30,18 @@ export async function GET(req: Request) {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            background: '#f7f3ea',
+            background: 'linear-gradient(180deg, #f8f5ef 0%, #f3ede4 100%)',
+            position: 'relative',
           }}
         >
           <h3
             style={{
               fontSize: 56,
               fontWeight: 'bold',
-              marginBottom: 32,
+              marginBottom: 48,
               display: 'flex',
-              gap: 4,
+              gap: 2,
+              textShadow: '0 2px 6px rgba(0,0,0,0.15)',
             }}
           >
             <span style={{ color: '#ef4444' }}>画</span>
@@ -51,32 +53,45 @@ export async function GET(req: Request) {
           <div
             style={{
               position: 'relative',
-              padding: 32,
+              padding: 24,
               background: '#fff5e5',
-              border: '16px solid #3B1F0F',
+              border: '20px solid #3B1F0F',
               boxShadow:
-                'inset 0 0 8px hsla(0,0%,0%,0.18), 0 8px 24px 0 hsla(0,0%,0%,0.18), 0 2px 8px 0 hsla(0,0%,0%,0.12)',
+                'inset 0 0 12px rgba(0,0,0,0.15), 0 12px 36px rgba(0,0,0,0.25), 0 4px 12px rgba(0,0,0,0.15)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               marginBottom: 24,
-              minWidth: 600,
-              minHeight: 400,
+              minWidth: 500,
+              minHeight: 340,
+              borderRadius: 4,
             }}
           >
             <img
               alt={alt}
-              height={300}
+              height={260}
               src={imageUrl}
               style={{
                 objectFit: 'contain',
-                boxShadow: '0 4px 16px 0 rgba(0,0,0,0.13)',
+                boxShadow: '0 6px 18px rgba(0,0,0,0.2)',
                 background: '#fff',
                 display: 'block',
+                borderRadius: 2,
               }}
-              width={500}
+              width={420}
             />
           </div>
+          <div
+            style={{
+              position: 'absolute',
+              bottom: 60,
+              width: '50%',
+              height: '40px',
+              background: 'rgba(0,0,0,0.08)',
+              filter: 'blur(20px)',
+              borderRadius: '50%',
+            }}
+          />
         </div>
       ),
       {
