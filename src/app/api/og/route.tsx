@@ -30,7 +30,7 @@ export async function GET(req: Request) {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            background: '#fff',
+            background: '#f7f3ea',
           }}
         >
           <h3
