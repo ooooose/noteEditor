@@ -27,10 +27,12 @@ export async function GET(req: Request) {
             width: '1200px',
             height: '630px',
             display: 'flex',
+            flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
           }}
         >
+          <h3 style={{ fontSize: 48, marginBottom: 32 }}>画HACK</h3>
           <img alt={alt} height={400} src={imageUrl} style={{ objectFit: 'contain' }} width={600} />
         </div>
       ),
