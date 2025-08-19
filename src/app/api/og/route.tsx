@@ -1,10 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import { ImageResponse } from 'next/og'
 
+import { baseURL } from '@/lib/constants/env'
+
 export const runtime = 'edge'
 
 export async function GET(req: Request) {
-  const baseURL = process.env.NEXT_PUBLIC_API_URL ?? ''
+  const apiURL = process.env.NEXT_PUBLIC_API_URL ?? ''
   const { searchParams } = new URL(req.url)
   const pictureId = searchParams.get('pictureId')
   if (!pictureId) {
@@ -12,7 +14,7 @@ export async function GET(req: Request) {
   }
 
   try {
-    const res = await fetch(`${baseURL}/api/v1/pictures/${pictureId}`, {
+    const res = await fetch(`${apiURL}/api/v1/pictures/${pictureId}`, {
       headers: { Accept: 'application/json' },
     })
     const data = await res.json()
@@ -30,7 +32,10 @@ export async function GET(req: Request) {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            background: 'linear-gradient(180deg, #f8f5ef 0%, #f3ede4 100%)',
+            background: `url(${baseURL}/background.png)`,
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
             position: 'relative',
           }}
         >
