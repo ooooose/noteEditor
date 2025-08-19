@@ -41,7 +41,32 @@ export async function GET(req: Request) {
             <span style={{ color: '#22c55e' }}>C</span>
             <span style={{ color: '#3b82f6' }}>K</span>
           </h3>
-          <img alt={alt} height={400} src={imageUrl} style={{ objectFit: 'contain' }} width={600} />
+          <div
+            style={{
+              padding: 24,
+              background: '#f5f3ef',
+              border: '8px solid #d1bfa3',
+              borderRadius: 32,
+              boxShadow: '0 8px 32px 0 rgba(0,0,0,0.25), 0 2px 8px 0 rgba(0,0,0,0.15)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: 24,
+            }}
+          >
+            <img
+              alt={alt}
+              height={300}
+              src={imageUrl}
+              style={{
+                objectFit: 'contain',
+                borderRadius: 16,
+                boxShadow: '0 4px 16px 0 rgba(0,0,0,0.15)',
+                background: '#fff',
+              }}
+              width={500}
+            />
+          </div>
         </div>
       ),
       {
