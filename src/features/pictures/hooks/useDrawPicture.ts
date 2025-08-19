@@ -111,7 +111,7 @@ export const useDrawPicture = ({ width, height }: IProps) => {
           (blob) => {
             resolve(blob)
           },
-          'image/webp',
+          'image/png',
           0.5,
         )
       })

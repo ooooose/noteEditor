@@ -1,29 +1,27 @@
-import { Deserializer } from 'jsonapi-serializer'
+/* eslint-disable @next/next/no-img-element */
 import { ImageResponse } from 'next/og'
 
-import { Picture as PictureComponent } from '@/features/pictures/components/Picture'
-import { Picture } from '@/features/pictures/types'
-import { apiClient } from '@/lib/api/api-client'
-
-import type { DeserializerOptions } from 'jsonapi-serializer'
+import { baseURL } from '@/lib/constants/env'
 
 export const runtime = 'edge'
 
-const deserializerOptions: DeserializerOptions = {
-  keyForAttribute: 'camelCase',
-}
-
 export async function GET(req: Request) {
+  const apiURL = process.env.NEXT_PUBLIC_API_URL ?? ''
   const { searchParams } = new URL(req.url)
-  const pictureUid = searchParams.get('pictureId')
-  if (!pictureUid) {
+  const pictureId = searchParams.get('pictureId')
+  if (!pictureId) {
     return new Response('pictureId is required', { status: 400 })
   }
 
   try {
-    const response = await apiClient.get(`/api/v1/pictures/${pictureUid}`)
-    const deserializer = new Deserializer(deserializerOptions)
-    const picture: Picture = await deserializer.deserialize(response)
+    const res = await fetch(`${apiURL}/api/v1/pictures/${pictureId}`, {
+      headers: { Accept: 'application/json' },
+    })
+    const data = await res.json()
+
+    const imageUrl = data.data.attributes.image_url
+    const alt = 'OGP'
+
     return new ImageResponse(
       (
         <div
@@ -31,15 +29,73 @@ export async function GET(req: Request) {
             width: '1200px',
             height: '630px',
             display: 'flex',
+            flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            background: '#fff',
+            background: `url(${baseURL}/background.png)`,
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            position: 'relative',
           }}
         >
-          <PictureComponent
-            author={picture.user.name}
-            frameId={picture.frameId}
-            src={picture.imageUrl}
+          <h3
+            style={{
+              fontSize: 72,
+              fontWeight: 'bold',
+              marginBottom: 24,
+              display: 'flex',
+              gap: 2,
+              textShadow: '0 2px 6px rgba(0,0,0,0.15)',
+            }}
+          >
+            <span style={{ color: '#ef4444' }}>画</span>
+            <span style={{ color: '#111827' }}>H</span>
+            <span style={{ color: '#f59e42' }}>A</span>
+            <span style={{ color: '#22c55e' }}>C</span>
+            <span style={{ color: '#3b82f6' }}>K</span>
+          </h3>
+          <div
+            style={{
+              position: 'relative',
+              padding: 24,
+              background: '#fff5e5',
+              border: '20px solid #3B1F0F',
+              boxShadow:
+                'inset 0 0 12px rgba(0,0,0,0.15), 0 12px 36px rgba(0,0,0,0.25), 0 4px 12px rgba(0,0,0,0.15)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: 24,
+              minWidth: 500,
+              minHeight: 340,
+              borderRadius: 4,
+            }}
+          >
+            <img
+              alt={alt}
+              height={260}
+              src={imageUrl}
+              style={{
+                objectFit: 'contain',
+                boxShadow: '0 6px 18px rgba(0,0,0,0.2)',
+                background: '#fff',
+                display: 'block',
+                borderRadius: 2,
+              }}
+              width={420}
+            />
+          </div>
+          <div
+            style={{
+              position: 'absolute',
+              bottom: 60,
+              width: '50%',
+              height: '40px',
+              background: 'rgba(0,0,0,0.08)',
+              filter: 'blur(20px)',
+              borderRadius: '50%',
+            }}
           />
         </div>
       ),
