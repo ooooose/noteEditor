@@ -32,7 +32,15 @@ export async function GET(req: Request) {
             justifyContent: 'center',
           }}
         >
-          <h3 style={{ fontSize: 48, marginBottom: 32 }}>画HACK</h3>
+          <h3
+            style={{ fontSize: 56, fontWeight: 'bold', marginBottom: 32, display: 'flex', gap: 4 }}
+          >
+            <span style={{ color: '#ef4444' }}>画</span>
+            <span style={{ color: '#111827' }}>H</span>
+            <span style={{ color: '#f59e42' }}>A</span>
+            <span style={{ color: '#22c55e' }}>C</span>
+            <span style={{ color: '#3b82f6' }}>K</span>
+          </h3>
           <img alt={alt} height={400} src={imageUrl} style={{ objectFit: 'contain' }} width={600} />
         </div>
       ),
