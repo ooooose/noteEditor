@@ -30,10 +30,17 @@ export async function GET(req: Request) {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
+            background: '#fff',
           }}
         >
           <h3
-            style={{ fontSize: 56, fontWeight: 'bold', marginBottom: 32, display: 'flex', gap: 4 }}
+            style={{
+              fontSize: 56,
+              fontWeight: 'bold',
+              marginBottom: 32,
+              display: 'flex',
+              gap: 4,
+            }}
           >
             <span style={{ color: '#ef4444' }}>画</span>
             <span style={{ color: '#111827' }}>H</span>
@@ -43,15 +50,18 @@ export async function GET(req: Request) {
           </h3>
           <div
             style={{
-              padding: 24,
-              background: '#f5f3ef',
-              border: '8px solid #d1bfa3',
-              borderRadius: 32,
-              boxShadow: '0 8px 32px 0 rgba(0,0,0,0.25), 0 2px 8px 0 rgba(0,0,0,0.15)',
+              position: 'relative',
+              padding: 32,
+              background: '#fff5e5',
+              border: '16px solid #3B1F0F',
+              boxShadow:
+                'inset 0 0 8px hsla(0,0%,0%,0.18), 0 8px 24px 0 hsla(0,0%,0%,0.18), 0 2px 8px 0 hsla(0,0%,0%,0.12)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               marginBottom: 24,
+              minWidth: 600,
+              minHeight: 400,
             }}
           >
             <img
@@ -60,9 +70,9 @@ export async function GET(req: Request) {
               src={imageUrl}
               style={{
                 objectFit: 'contain',
-                borderRadius: 16,
-                boxShadow: '0 4px 16px 0 rgba(0,0,0,0.15)',
+                boxShadow: '0 4px 16px 0 rgba(0,0,0,0.13)',
                 background: '#fff',
+                display: 'block',
               }}
               width={500}
             />
