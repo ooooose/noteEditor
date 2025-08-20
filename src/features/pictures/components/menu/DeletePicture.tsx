@@ -33,7 +33,7 @@ const DeletePicture = memo(({ pictureId, userUid }: DeletePictureProps) => {
   })
   return (
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger className='p-2'>
         <TrashIcon className='size-6' color='red' />
       </DialogTrigger>
       <DialogContent>

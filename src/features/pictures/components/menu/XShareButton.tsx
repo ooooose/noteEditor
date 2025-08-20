@@ -10,7 +10,7 @@ const XShareButton = ({ url }: XShareButtonProps) => {
   _url.searchParams.set('hashtags', '画HACK')
   _url.searchParams.set('url', url)
   return (
-    <a href={_url.toString()} rel='noopener noreferrer' target='_blank'>
+    <a className='p-2' href={_url.toString()} rel='noopener noreferrer' target='_blank'>
       <TwitterLogoIcon className='size-5' />
     </a>
   )
