@@ -30,7 +30,7 @@ const SwitchPictureFrame = memo(({ picture, src, author, userUid }: SwitchPictur
   })
   return (
     <Dialog>
-      <DialogTrigger className='py-2'>
+      <DialogTrigger className='p-2'>
         <UpdateIcon className='size-5' />
       </DialogTrigger>
       <DialogContent>
