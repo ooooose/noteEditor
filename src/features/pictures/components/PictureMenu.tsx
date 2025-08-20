@@ -4,7 +4,6 @@ import { DotsVerticalIcon } from '@radix-ui/react-icons'
 import { memo } from 'react'
 
 import { Tooltip } from '@/components/elements/Tooltip/Tooltip'
-import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -33,24 +32,18 @@ const PictureMenu = memo(({ picture, userUid }: PictureMenuProps) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end' className='flex' side='bottom'>
         <Tooltip content='絵を削除'>
-          <Button className='border-none p-2' variant='outline'>
-            <DeletePicture pictureId={picture.id} userUid={userUid} />
-          </Button>
+          <DeletePicture pictureId={picture.id} userUid={userUid} />
         </Tooltip>
         <Tooltip content='フレームを変更'>
-          <Button className='border-none p-2' variant='outline'>
-            <SwitchPictureFrame
-              author={picture.user.name}
-              picture={picture}
-              src={picture.imageUrl}
-              userUid={userUid}
-            />
-          </Button>
+          <SwitchPictureFrame
+            author={picture.user.name}
+            picture={picture}
+            src={picture.imageUrl}
+            userUid={userUid}
+          />
         </Tooltip>
         <Tooltip content='Xに共有'>
-          <Button className='border-none p-2' variant='outline'>
-            <XShareButton url={url} />
-          </Button>
+          <XShareButton url={url} />
         </Tooltip>
       </DropdownMenuContent>
     </DropdownMenu>
