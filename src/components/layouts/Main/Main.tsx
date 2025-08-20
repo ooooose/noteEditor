@@ -21,7 +21,6 @@ import { Login } from '@/features/auth/components'
 import { getPicture } from '@/features/pictures/api'
 import QuizModal from '@/features/pictures/components/QuizModal'
 import { TopPictures } from '@/features/top/components/top-pictures'
-import { TopUsers } from '@/features/top/components/top-users'
 import { baseURL } from '@/lib/constants/env'
 
 import type { Picture } from '@/features/pictures/types'
@@ -97,10 +96,6 @@ const Main = () => {
               </Dialog>
             </div>
           )}
-        </section>
-        <section className='grid w-[900px] gap-8'>
-          <h2 className='text-center text-3xl font-bold'>トップクリエイター</h2>
-          <TopUsers />
         </section>
 
         <section className='grid w-[900px] gap-8'>
