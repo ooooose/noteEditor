@@ -9,7 +9,7 @@ import Menu from '@/components/elements/Menu/Menu'
 const Header = () => {
   const { status } = useSession()
   return (
-    <header className='mx-auto w-2/3 bg-white/50 backdrop-blur-sm'>
+    <header className='mx-auto bg-white/50 backdrop-blur-sm md:w-2/3'>
       <div className='container flex h-20 items-center md:justify-between'>
         <div className='flex items-center gap-2 '>
           <Link href='/'>
@@ -22,7 +22,7 @@ const Header = () => {
             </span>
           </Link>
         </div>
-        <nav className='flex gap-4'>{status === 'authenticated' && <Menu />}</nav>
+        <nav className='hidden gap-4 md:flex'>{status === 'authenticated' && <Menu />}</nav>
       </div>
     </header>
   )
