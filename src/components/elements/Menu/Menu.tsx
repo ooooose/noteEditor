@@ -34,7 +34,7 @@ const Menu = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className='focus:outline-none'>
-        <div className='cursor-pointer rounded-full border p-3'>
+        <div className='rounded-full border bg-white p-3 shadow'>
           <PlusIcon className='size-6' />
         </div>
       </DropdownMenuTrigger>
