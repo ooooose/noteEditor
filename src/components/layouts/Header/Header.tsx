@@ -1,13 +1,11 @@
 'use client'
 
 import Link from 'next/link'
-import { useSession } from 'next-auth/react'
 import React from 'react'
 
 import Menu from '@/components/elements/Menu/Menu'
 
 const Header = () => {
-  const { status } = useSession()
   return (
     <header className='mx-auto bg-white/50 backdrop-blur-sm md:w-2/3'>
       <div className='container flex h-20 items-center md:justify-between'>
@@ -22,7 +20,9 @@ const Header = () => {
             </span>
           </Link>
         </div>
-        <nav className='hidden gap-4 md:flex'>{status === 'authenticated' && <Menu />}</nav>
+        <nav className='hidden gap-4 md:flex'>
+          <Menu />
+        </nav>
       </div>
     </header>
   )
