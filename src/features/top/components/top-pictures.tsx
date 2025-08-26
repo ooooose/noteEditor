@@ -10,7 +10,7 @@ export const TopPictures = () => {
   if (useTopPicturesQuery.isLoading) return <LoadingPictures />
 
   return (
-    <div className='grid gap-8 sm:grid-cols-1 lg:grid-cols-3'>
+    <div className='flex flex-col items-center gap-8 px-4 sm:grid sm:grid-cols-1 lg:grid-cols-3'>
       {useTopPicturesQuery.data?.map((picture) => (
         <TopPicture key={picture.id} picture={picture} />
       ))}
