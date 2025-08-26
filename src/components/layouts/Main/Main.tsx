@@ -129,12 +129,22 @@ const Main = () => {
         </section>
         <section className='mx-auto mt-8 w-full max-w-[600px]'>
           <Card className='flex flex-col justify-between p-4 text-center sm:flex-row sm:p-8'>
-            <div>
-              <p className='text-left'>
-                あなただけの絵を描いて <br />
-                アプリの中に飾りましょう！
-              </p>
-              <div className='mt-8 flex items-start'>
+            <Image
+              alt='サンプル画像'
+              className='size-auto'
+              height={240}
+              priority
+              src='/firstTopIcon.png'
+              width={240}
+            />
+            <div className='mt-6 flex w-full flex-col items-end md:ml-8 md:mt-0 md:w-auto'>
+              <div className='flex flex-1 flex-col justify-center'>
+                <p className='text-center md:text-left'>
+                  あなただけの絵を描いて <br />
+                  アプリの中に飾りましょう！
+                </p>
+              </div>
+              <div className='mt-4 flex w-full justify-end'>
                 {status === 'loading' ? (
                   <Skeleton className='h-[38px] w-[140px]' />
                 ) : status === 'authenticated' ? (
@@ -162,16 +172,6 @@ const Main = () => {
                   </Dialog>
                 )}
               </div>
-            </div>
-            <div>
-              <Image
-                alt='サンプル画像'
-                className='size-auto'
-                height={240}
-                priority
-                src='/firstTopIcon.png'
-                width={240}
-              />
             </div>
           </Card>
         </section>
