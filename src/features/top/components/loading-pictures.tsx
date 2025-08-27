@@ -21,10 +21,10 @@ export const LoadingPictures = () => {
                 </div>
               </div>
             </div>
-            <div className='mx-4 mb-2'>
+            <div className='mx-1 md:mx-4 md:mb-2'>
               <div className='overflow-hidden'>
-                <div className='mb-4 bg-white p-4'>
-                  <Skeleton className='aspect-[4/3] w-full' />
+                <div className='mb-4 flex justify-center bg-white pb-4 md:justify-start md:p-4'>
+                  <Skeleton className='aspect-[4/3] w-4/5 md:w-full' />
                 </div>
               </div>
             </div>
