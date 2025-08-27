@@ -49,9 +49,9 @@ const Main = () => {
   const { status } = useSession()
 
   return (
-    <main className='flex flex-col items-center justify-between'>
-      <div className='grid gap-12'>
-        <section className='my-8 grid w-[900px] gap-6 text-center'>
+    <main className='flex flex-col items-center justify-between px-4'>
+      <div className='mx-auto grid w-full max-w-[900px] gap-12'>
+        <section className='mx-auto my-8 grid w-full max-w-[900px] gap-6 text-center'>
           <h1 className='my-10 grid gap-3 text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl'>
             <span className='bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent'>
               エモい絵、描こうよ！
@@ -63,7 +63,7 @@ const Main = () => {
             描いた絵は額縁で飾ることができます。
           </p>
         </section>
-        <section className='grid w-[900px] gap-8'>
+        <section className='mx-auto grid w-full max-w-[900px] gap-8'>
           <h2 className='text-center text-3xl font-bold'>みんなの作品ギャラリー</h2>
           <TopPictures />
         </section>
@@ -98,10 +98,10 @@ const Main = () => {
           )}
         </section>
 
-        <section className='grid w-[900px] gap-8'>
+        <section className='mx-auto grid w-full max-w-[400px] gap-8 md:max-w-[900px]'>
           <h2 className='text-center text-3xl font-bold'>画HACKの特徴</h2>
-          <div className='grid gap-4 md:grid-cols-3'>
-            <Card className='group relative overflow-hidden p-6 transition-all hover:-translate-y-1 hover:shadow-lg'>
+          <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
+            <Card className='group relative overflow-hidden p-6 transition-all hover:-translate-y-1 hover:shadow-lg md:w-full md:max-w-full'>
               <div className='absolute inset-0 bg-gradient-to-r from-pink-500/10 to-purple-500/10 opacity-0 transition-opacity group-hover:opacity-100' />
               <Palette className='size-12 text-pink-500' />
               <h3 className='mt-4 text-xl font-bold'>テーマで描く</h3>
@@ -109,7 +109,7 @@ const Main = () => {
                 テーマに沿って絵を描きましょう。 新たにテーマを設定することもできます。
               </p>
             </Card>
-            <Card className='group relative overflow-hidden p-6 transition-all hover:-translate-y-1 hover:shadow-lg'>
+            <Card className='group relative overflow-hidden p-6 transition-all hover:-translate-y-1 hover:shadow-lg md:w-full md:max-w-full'>
               <div className='absolute inset-0 bg-gradient-to-r from-purple-500/10 to-blue-500/10 opacity-0 transition-opacity group-hover:opacity-100' />
               <Users className='size-12 text-purple-500' />
               <h3 className='mt-4 text-xl font-bold'>みんなと共有</h3>
@@ -117,7 +117,7 @@ const Main = () => {
                 描いた絵をシェアして、他のユーザーと交流しよう。新しい発見があるかも。
               </p>
             </Card>
-            <Card className='group relative overflow-hidden p-6 transition-all hover:-translate-y-1 hover:shadow-lg'>
+            <Card className='group relative overflow-hidden p-6 transition-all hover:-translate-y-1 hover:shadow-lg md:w-full md:max-w-full'>
               <div className='absolute inset-0 bg-gradient-to-r from-blue-500/10 to-green-500/10 opacity-0 transition-opacity group-hover:opacity-100' />
               <Sparkles className='size-12 text-blue-500' />
               <h3 className='mt-4 text-xl font-bold'>描く喜び</h3>
@@ -127,14 +127,24 @@ const Main = () => {
             </Card>
           </div>
         </section>
-        <section className='mx-auto mt-8 w-[600px]'>
-          <Card className='flex justify-between p-8 text-center'>
-            <div>
-              <p className='text-left'>
-                あなただけの絵を描いて <br />
-                アプリの中に飾りましょう！
-              </p>
-              <div className='mt-8 flex items-start'>
+        <section className='mx-auto mt-8 w-full max-w-[600px]'>
+          <Card className='flex flex-col justify-between p-4 text-center sm:flex-row sm:p-8'>
+            <Image
+              alt='サンプル画像'
+              className='size-auto'
+              height={240}
+              priority
+              src='/firstTopIcon.png'
+              width={240}
+            />
+            <div className='mt-6 flex w-full flex-col items-end md:ml-8 md:mt-0 md:w-auto'>
+              <div className='flex flex-1 flex-col justify-center'>
+                <p className='text-center md:text-left'>
+                  あなただけの絵を描いて <br />
+                  アプリの中に飾りましょう！
+                </p>
+              </div>
+              <div className='mt-4 flex w-full justify-end'>
                 {status === 'loading' ? (
                   <Skeleton className='h-[38px] w-[140px]' />
                 ) : status === 'authenticated' ? (
@@ -162,16 +172,6 @@ const Main = () => {
                   </Dialog>
                 )}
               </div>
-            </div>
-            <div>
-              <Image
-                alt='サンプル画像'
-                className='size-auto'
-                height={240}
-                priority
-                src='/firstTopIcon.png'
-                width={240}
-              />
             </div>
           </Card>
         </section>
