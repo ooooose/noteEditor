@@ -31,7 +31,7 @@ export function TabContent() {
   }, [searchParams, tabs])
 
   return (
-    <div className='w-[700px] py-8'>
+    <div className='w-[360px] py-8 md:w-[700px]'>
       <section className='mb-8 border-b pt-8'>
         {tabs?.map((tab, index) => (
           <button
