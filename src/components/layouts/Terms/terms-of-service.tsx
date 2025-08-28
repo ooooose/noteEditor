@@ -1,6 +1,6 @@
 export const TermsOfService = () => {
   return (
-    <main className='text-gray-800'>
+    <main className='mx-auto w-full max-w-[360px] overflow-x-hidden px-4 text-gray-800 md:max-w-[900px]'>
       <div>
         <p>
           本利用規約（以下「本規約」といいます）は、合瀬雄紀（以下「運営者」といいます）が本ウェブサイト上で提供するサービス（以下「本サービス」といいます）の利用条件を定めるものです。
@@ -132,7 +132,7 @@ export const TermsOfService = () => {
           本サービスに関して紛争が生じた場合には、運営者の所在地を管轄する裁判所を第一審の専属的合意管轄裁判所とします。
         </p>
       </div>
-      <div className='float-right'>
+      <div className='mt-12 text-right text-sm sm:text-base'>
         <p>2024年12月24日 制定</p>
       </div>
     </main>

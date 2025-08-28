@@ -1,6 +1,6 @@
 export const PrivacyPolicy = () => {
   return (
-    <main className='text-gray-800'>
+    <main className='mx-auto w-full max-w-[900px] overflow-x-hidden px-4 text-gray-800'>
       <div>
         <p>
           本サービスは、以下のプライバシーポリシーを定め、個人情報の保護に関する法律（以下「個人情報保護法」といいます）を遵守すると共に、適切なプライバシー情報の保護に努めます。
@@ -98,7 +98,7 @@ export const PrivacyPolicy = () => {
           運営者は、利用者に通知または本ウェブサイト上で告知することで、本ポリシーを変更することができるものとします。
         </p>
       </div>
-      <div className='float-right'>
+      <div className='mt-12 text-right text-sm sm:text-base'>
         <p>2024年12月24日 制定</p>
       </div>
     </main>
