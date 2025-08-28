@@ -19,7 +19,7 @@ const Pictures = memo(({ pictures, isLoading }: PicturesProps) => {
   if (pictures?.length === 0) return <NoPictures />
   const getPictures = () => {
     return (
-      <div className='grid grid-cols-3 grid-rows-2 gap-10'>
+      <div className='grid grid-cols-1 gap-6 px-2 sm:grid-cols-2 md:grid-cols-3'>
         {pictures?.map((picture: PictureType) => {
           return (
             <PictureCard
