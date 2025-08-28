@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 
 export const Logout = () => {
   return (
-    <Button onClick={() => signOut()} variant='outline'>
+    <Button onClick={() => signOut()} variant='destructive'>
       ログアウト
     </Button>
   )

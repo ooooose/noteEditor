@@ -12,8 +12,8 @@ type TopPictureProps = {
 
 export const TopPicture = ({ picture }: TopPictureProps) => {
   return (
-    <Card className='group overflow-hidden bg-white/50 transition-shadow hover:shadow-lg'>
-      <div className='p-4'>
+    <Card className='group mx-auto w-[80vw] max-w-[100vw] overflow-hidden bg-white/50 transition-shadow hover:shadow-lg sm:mx-auto sm:w-full sm:max-w-md'>
+      <div className='p-2 sm:p-4'>
         <div className='flex items-center justify-between'>
           <div className='flex items-center gap-3'>
             <Avatar className='size-10 rounded-full shadow-sm'>
@@ -27,9 +27,9 @@ export const TopPicture = ({ picture }: TopPictureProps) => {
           </div>
         </div>
       </div>
-      <div className='mx-4'>
+      <div className='mx-1 sm:mx-4'>
         <div className='overflow-hidden'>
-          <div className='bg-white pb-4'>
+          <div className='w-full max-w-full bg-white pb-4'>
             <PictureComponent
               author={picture.user.name}
               frameId={picture.frameId}
