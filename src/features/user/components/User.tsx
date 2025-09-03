@@ -15,9 +15,9 @@ const User = () => {
 
   if (useProfilequery.isError) return <>Error loading</>
   return (
-    <div>
+    <div className='mx-auto w-full px-4 md:w-[960px]'>
       <Profile isLoading={useProfilequery.isLoading} user={useProfilequery?.data} />
-      <Tabs className='mt-5 w-[900px]' defaultValue='works'>
+      <Tabs className='mt-5 w-full' defaultValue='works'>
         <TabsList className='grid w-full grid-cols-2'>
           <TabsTrigger value='works'>Works</TabsTrigger>
           <TabsTrigger value='likes'>Likes</TabsTrigger>

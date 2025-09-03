@@ -15,7 +15,7 @@ const Timeline = () => {
   const pictures = picturesQuery.data?.pages.flatMap((page) => page.data)
   if (!pictures?.length) return <NoPictures />
   return (
-    <div className='mt-10'>
+    <div className='mt-5'>
       <Pictures isLoading={picturesQuery.isLoading} pictures={pictures} />
       {picturesQuery.hasNextPage && (
         <div className='flex items-center justify-center py-8'>

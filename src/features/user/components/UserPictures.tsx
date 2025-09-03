@@ -21,10 +21,10 @@ const UserPictures = memo(({ userUid }: LikedPicturesProps) => {
 
   if (useUserPicturesQuery.isLoading) return <LoadingPictures />
   return (
-    <div className='mt-10'>
+    <div className='mt-10 flex flex-col items-center'>
       <Pictures pictures={userPictures ?? []} />
       {useUserPicturesQuery.hasNextPage && (
-        <div className='flex items-center justify-center py-8'>
+        <div className='flex w-full items-center justify-center py-8'>
           <Button onClick={() => useUserPicturesQuery.fetchNextPage()} variant='outline'>
             {useUserPicturesQuery.isFetchingNextPage ? <Spinner /> : 'さらに読み込む'}
           </Button>
