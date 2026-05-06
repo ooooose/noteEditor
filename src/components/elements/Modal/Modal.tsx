@@ -21,9 +21,11 @@ const Modal = ({ text, description, open, setOpen, children }: ModalProps) => {
   return (
     <Dialog onOpenChange={setOpen} open={open}>
       <DialogTrigger asChild>
-        <Button variant='outline'>{text}</Button>
+        <Button className='w-full sm:w-auto' variant='outline'>
+          {text}
+        </Button>
       </DialogTrigger>
-      <DialogContent className='sm:max-w-[425px]'>
+      <DialogContent className='w-[calc(100vw-2rem)] max-w-md sm:max-w-[425px]'>
         <DialogHeader>
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>

@@ -13,7 +13,7 @@ type MainLayoutProps = {
 const MainLayout = ({ children }: MainLayoutProps) => {
   return (
     <div className='select-none overflow-x-hidden'>
-      <div className='mx-auto w-full'>
+      <div className='mx-auto w-full max-w-6xl px-4 sm:px-6'>
         <Header />
         <div className='flex flex-col items-center justify-between'>{children}</div>
         <nav className='fixed bottom-5 right-5 z-50 md:hidden'>

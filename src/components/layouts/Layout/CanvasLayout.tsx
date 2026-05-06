@@ -1,5 +1,6 @@
 import React from 'react'
 
+import Menu from '@/components/elements/Menu/Menu'
 import { Toaster } from '@/components/ui/sonner'
 
 import Header from '../Header/Header'
@@ -11,9 +12,12 @@ type CanvasLayoutProps = {
 const CanvasLayout = ({ children }: CanvasLayoutProps) => {
   return (
     <div className='select-none'>
-      <div className='mx-auto h-screen'>
+      <div className='mx-auto w-full max-w-6xl px-4 sm:px-6'>
         <Header />
         <div className='flex flex-col items-center justify-between'>{children}</div>
+        <nav className='fixed bottom-5 right-5 z-50 md:hidden'>
+          <Menu />
+        </nav>
       </div>
       <Toaster />
     </div>
