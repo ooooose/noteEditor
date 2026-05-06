@@ -24,11 +24,20 @@ export const metadata: Metadata = {
   openGraph: {
     title: '画HACK',
     description: 'あなただけの絵を描くアプリ',
+    images: [
+      {
+        url: '/api/og',
+        width: 1200,
+        height: 630,
+        alt: '画HACK',
+      },
+    ],
   },
   twitter: {
+    card: 'summary_large_image',
     title: '画HACK',
     description: 'あなただけの絵を描くアプリ',
-    card: 'summary_large_image',
+    images: ['/api/og'],
   },
 }
 
