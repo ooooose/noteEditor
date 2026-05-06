@@ -56,11 +56,16 @@ const Main = () => {
             <p className='text-center text-xs font-semibold tracking-[0.35em] text-gray-500 sm:text-sm'>
               EXHIBITION
             </p>
-            <h1 className='mt-4 text-center text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl md:text-6xl'>
-              絵を描いて、飾って、共有する
+            <h1 className='mt-4 text-center text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl'>
+              <span className='text-red-500'>画</span>
+              <span className='text-gray-900'>H</span>
+              <span className='text-yellow-500'>A</span>
+              <span className='text-green-500'>C</span>
+              <span className='text-blue-500'>K</span>
+              へようこそ
             </h1>
             <p className='mx-auto mt-6 max-w-[52ch] text-center text-sm leading-relaxed text-gray-600 sm:text-base md:text-lg'>
-              テーマに沿って描いた作品は、額縁に飾って“展示”できます。
+              テーマに沿って描いた作品は、額縁に飾って展示できます。
               <br className='hidden sm:block' />
               あなたのギャラリーを育てよう。
             </p>
