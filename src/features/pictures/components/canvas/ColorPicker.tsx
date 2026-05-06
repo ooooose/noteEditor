@@ -12,15 +12,15 @@ type ColorPickerProps = {
 
 export const ColorPicker = memo(({ setLineWidth, setColor, color }: ColorPickerProps) => {
   return (
-    <div className='flex flex-col gap-4'>
-      <p>色選択</p>
-      <div className='grid grid-cols-6 gap-2'>
+    <div className='flex w-full flex-col gap-3'>
+      <p className='text-sm font-medium text-gray-700'>色選択</p>
+      <div className='grid grid-cols-7 gap-2 sm:grid-cols-8'>
         <TooltipProvider>
           {Colors.map((c, i) => (
             <Tooltip key={i}>
               <TooltipTrigger asChild>
                 <button
-                  className={`size-8 rounded-full ${color === c.color ? 'ring-2 ring-offset-2' : ''}`}
+                  className={`size-7 rounded-full sm:size-8 ${color === c.color ? 'ring-2 ring-offset-2' : ''}`}
                   onClick={() => setColor(c.color)}
                   style={{ backgroundColor: c.color }}
                 />
@@ -33,7 +33,7 @@ export const ColorPicker = memo(({ setLineWidth, setColor, color }: ColorPickerP
           <Tooltip>
             <TooltipTrigger asChild>
               <button
-                className={`flex size-8 items-center justify-center rounded-full border bg-white ${
+                className={`flex size-7 items-center justify-center rounded-full border bg-white sm:size-8 ${
                   color === '#FFFFFF' ? 'ring-2 ring-offset-2' : ''
                 }`}
                 onClick={() => {

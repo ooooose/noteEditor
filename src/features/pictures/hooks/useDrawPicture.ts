@@ -37,6 +37,7 @@ export const useDrawPicture = ({ width, height }: IProps) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   let mouseX: number | null = null
   let mouseY: number | null = null
+  const isDrawingRef = useRef(false)
   const [title, setTitle] = useState<string>('')
   const [color, setColor] = useState<string>('#000000')
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -52,29 +53,39 @@ export const useDrawPicture = ({ width, height }: IProps) => {
     return canvas.getContext('2d')
   }
 
-  const OnClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    if (e.button !== 0) {
-      return
-    }
+  const getCanvasPoint = (clientX: number, clientY: number) => {
     const canvas: any = canvasRef.current
     const rect: IRect = canvas.getBoundingClientRect()
-    const x = ~~(e.clientX - rect.left)
-    const y = ~~(e.clientY - rect.top)
+    const scaleX = width / rect.width
+    const scaleY = height / rect.height
+    const x = Math.floor((clientX - rect.left) * scaleX)
+    const y = Math.floor((clientY - rect.top) * scaleY)
+    return { x, y }
+  }
+
+  const OnPointerDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    if (e.pointerType === 'mouse' && e.button !== 0) return
+    isDrawingRef.current = true
+    e.currentTarget.setPointerCapture(e.pointerId)
+    const { x, y } = getCanvasPoint(e.clientX, e.clientY)
     Draw(x, y)
   }
 
-  const OnMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    if (e.buttons !== 1) {
-      return
-    }
-    const canvas: any = canvasRef.current
-    const rect: IRect = canvas.getBoundingClientRect()
-    const x = ~~(e.clientX - rect.left)
-    const y = ~~(e.clientY - rect.top)
+  const OnPointerMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    if (!isDrawingRef.current) return
+    const { x, y } = getCanvasPoint(e.clientX, e.clientY)
     Draw(x, y)
   }
 
-  const DrawEnd = () => {
+  const DrawEnd = (e?: React.PointerEvent<HTMLCanvasElement>) => {
+    if (e) {
+      try {
+        e.currentTarget.releasePointerCapture(e.pointerId)
+      } catch {
+        // ignore
+      }
+    }
+    isDrawingRef.current = false
     mouseX = null
     mouseY = null
   }
@@ -150,8 +161,8 @@ export const useDrawPicture = ({ width, height }: IProps) => {
 
   return {
     canvasRef,
-    OnClick,
-    OnMove,
+    OnPointerDown,
+    OnPointerMove,
     DrawEnd,
     Reset,
     handleSelectChange,

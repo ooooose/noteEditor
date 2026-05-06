@@ -7,7 +7,7 @@ import { Canvas } from '@/features/pictures/components/canvas/Canvas'
 function CanvasPage() {
   return (
     <CanvasLayout>
-      <div className='mx-auto text-center'>
+      <div className='w-full'>
         <Canvas height={400} width={500} />
       </div>
     </CanvasLayout>

@@ -12,12 +12,12 @@ import {
 export const ThemeDescription = () => {
   return (
     <Dialog>
-      <DialogTrigger>
-        <div className='cursor-pointer text-blue-500'>
-          <p>テーマについて</p>
-        </div>
+      <DialogTrigger asChild>
+        <Button className='w-full sm:w-auto' variant='outline'>
+          テーマについて
+        </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className='w-[calc(100vw-2rem)] max-w-md sm:max-w-[425px]'>
         <DialogHeader>
           <DialogTitle>テーマとは？</DialogTitle>
         </DialogHeader>

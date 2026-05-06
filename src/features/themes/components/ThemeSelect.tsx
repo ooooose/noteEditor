@@ -25,10 +25,16 @@ export const ThemeSelect = memo(({ handleSelectChange }: ThemeSelectProps) => {
     })) || []
 
   return (
-    <div>
-      <label htmlFor='theme-select-instance-id'>テーマ</label>
+    <div className='w-full'>
+      <label
+        className='mb-2 block text-sm font-medium text-gray-700'
+        htmlFor='theme-select-instance-id'
+      >
+        テーマ
+      </label>
       <CreatableSelect
         aria-labelledby='theme-select-instance-id'
+        className='w-full'
         instanceId='theme-select-instance-id'
         isClearable
         isDisabled={isLoading}

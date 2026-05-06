@@ -49,23 +49,44 @@ const Main = () => {
   const { status } = useSession()
 
   return (
-    <main className='flex flex-col items-center justify-between px-4'>
-      <div className='mx-auto grid w-full max-w-[900px] gap-12'>
-        <section className='mx-auto my-8 grid w-full max-w-[900px] gap-6 text-center'>
-          <h1 className='my-10 grid gap-3 text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl'>
-            <span className='bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent'>
-              エモい絵、描こうよ！
-            </span>
-          </h1>
-          <p className='mx-auto max-w-[600px] text-gray-500 md:text-xl'>
-            テーマに沿って絵を描き、共有しよう。
-            <br />
-            描いた絵は額縁で飾ることができます。
-          </p>
+    <main className='flex w-full flex-col items-center justify-between'>
+      <div className='mx-auto grid w-full max-w-5xl gap-10 sm:gap-14'>
+        <section className='mx-auto w-full'>
+          <div className='mx-auto max-w-3xl rounded-3xl border border-white/40 bg-white/55 p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)] backdrop-blur sm:p-10'>
+            <p className='text-center text-xs font-semibold tracking-[0.35em] text-gray-500 sm:text-sm'>
+              EXHIBITION
+            </p>
+            <h1 className='mt-4 text-center text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl'>
+              <span className='text-red-500'>画</span>
+              <span className='text-gray-900'>H</span>
+              <span className='text-yellow-500'>A</span>
+              <span className='text-green-500'>C</span>
+              <span className='text-blue-500'>K</span>
+              へようこそ
+            </h1>
+            <p className='mx-auto mt-6 max-w-[52ch] text-center text-sm leading-relaxed text-gray-600 sm:text-base md:text-lg'>
+              テーマに沿って描いた作品は、額縁に飾って展示できます。
+              <br className='hidden sm:block' />
+              あなたのギャラリーを育てよう。
+            </p>
+          </div>
         </section>
-        <section className='mx-auto grid w-full max-w-[900px] gap-8'>
-          <h2 className='text-center text-3xl font-bold'>みんなの作品ギャラリー</h2>
-          <TopPictures />
+
+        <section className='mx-auto grid w-full gap-6'>
+          <div className='mx-auto flex w-full max-w-3xl items-end justify-between gap-4 px-1'>
+            <div>
+              <p className='text-xs font-semibold tracking-[0.35em] text-gray-500'>GALLERY</p>
+              <h2 className='mt-2 text-2xl font-semibold tracking-tight sm:text-3xl'>
+                みんなの作品
+              </h2>
+            </div>
+            <div className='hidden sm:block'>
+              <span className='text-sm text-gray-500'>最新の展示</span>
+            </div>
+          </div>
+          <div className='rounded-3xl border border-white/40 bg-white/50 p-4 backdrop-blur sm:p-6'>
+            <TopPictures />
+          </div>
         </section>
         <section>
           {status === 'authenticated' ? (
@@ -98,37 +119,40 @@ const Main = () => {
           )}
         </section>
 
-        <section className='mx-auto grid w-full max-w-[400px] gap-8 md:max-w-[900px]'>
-          <h2 className='text-center text-3xl font-bold'>画HACKの特徴</h2>
-          <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
-            <Card className='group relative overflow-hidden p-6 transition-all hover:-translate-y-1 hover:shadow-lg md:w-full md:max-w-full'>
-              <div className='absolute inset-0 bg-gradient-to-r from-pink-500/10 to-purple-500/10 opacity-0 transition-opacity group-hover:opacity-100' />
-              <Palette className='size-12 text-pink-500' />
-              <h3 className='mt-4 text-xl font-bold'>テーマで描く</h3>
-              <p className='mt-2 text-gray-500'>
-                テーマに沿って絵を描きましょう。 新たにテーマを設定することもできます。
+        <section className='mx-auto grid w-full gap-6'>
+          <div className='mx-auto w-full max-w-3xl px-1'>
+            <p className='text-xs font-semibold tracking-[0.35em] text-gray-500'>ABOUT</p>
+            <h2 className='mt-2 text-2xl font-semibold tracking-tight sm:text-3xl'>画HACKの特徴</h2>
+          </div>
+          <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3'>
+            <Card className='group relative overflow-hidden border-white/40 bg-white/60 p-6 backdrop-blur transition-all hover:-translate-y-1 hover:shadow-xl'>
+              <div className='pointer-events-none absolute inset-0 bg-gradient-to-br from-zinc-900/0 via-zinc-900/0 to-zinc-900/5 opacity-0 transition-opacity group-hover:opacity-100' />
+              <Palette className='size-12 text-zinc-900' />
+              <h3 className='mt-4 text-lg font-semibold'>テーマで描く</h3>
+              <p className='mt-2 text-sm leading-relaxed text-gray-600'>
+                テーマに沿って描き、日々のアウトプットを続けよう。
               </p>
             </Card>
-            <Card className='group relative overflow-hidden p-6 transition-all hover:-translate-y-1 hover:shadow-lg md:w-full md:max-w-full'>
-              <div className='absolute inset-0 bg-gradient-to-r from-purple-500/10 to-blue-500/10 opacity-0 transition-opacity group-hover:opacity-100' />
-              <Users className='size-12 text-purple-500' />
-              <h3 className='mt-4 text-xl font-bold'>みんなと共有</h3>
-              <p className='mt-2 text-gray-500'>
-                描いた絵をシェアして、他のユーザーと交流しよう。新しい発見があるかも。
+            <Card className='group relative overflow-hidden border-white/40 bg-white/60 p-6 backdrop-blur transition-all hover:-translate-y-1 hover:shadow-xl'>
+              <div className='pointer-events-none absolute inset-0 bg-gradient-to-br from-zinc-900/0 via-zinc-900/0 to-zinc-900/5 opacity-0 transition-opacity group-hover:opacity-100' />
+              <Users className='size-12 text-zinc-900' />
+              <h3 className='mt-4 text-lg font-semibold'>みんなと共有</h3>
+              <p className='mt-2 text-sm leading-relaxed text-gray-600'>
+                作品をシェアして、感想やリアクションでつながろう。
               </p>
             </Card>
-            <Card className='group relative overflow-hidden p-6 transition-all hover:-translate-y-1 hover:shadow-lg md:w-full md:max-w-full'>
-              <div className='absolute inset-0 bg-gradient-to-r from-blue-500/10 to-green-500/10 opacity-0 transition-opacity group-hover:opacity-100' />
-              <Sparkles className='size-12 text-blue-500' />
-              <h3 className='mt-4 text-xl font-bold'>描く喜び</h3>
-              <p className='mt-2 text-gray-500'>
-                毎日描くことで、自分の創造力が高まります。楽しみながら描いてみましょう。
+            <Card className='group relative overflow-hidden border-white/40 bg-white/60 p-6 backdrop-blur transition-all hover:-translate-y-1 hover:shadow-xl'>
+              <div className='pointer-events-none absolute inset-0 bg-gradient-to-br from-zinc-900/0 via-zinc-900/0 to-zinc-900/5 opacity-0 transition-opacity group-hover:opacity-100' />
+              <Sparkles className='size-12 text-zinc-900' />
+              <h3 className='mt-4 text-lg font-semibold'>飾って楽しむ</h3>
+              <p className='mt-2 text-sm leading-relaxed text-gray-600'>
+                描いた絵は額縁に入れて展示。ギャラリーを育てよう。
               </p>
             </Card>
           </div>
         </section>
-        <section className='mx-auto mt-8 w-full max-w-[600px]'>
-          <Card className='flex flex-col justify-between p-4 text-center sm:flex-row sm:p-8'>
+        <section className='mx-auto mt-2 w-full max-w-4xl'>
+          <Card className='flex flex-col justify-between border-white/40 bg-white/60 p-5 text-center backdrop-blur sm:flex-row sm:p-8'>
             <Image
               alt='サンプル画像'
               className='size-auto'

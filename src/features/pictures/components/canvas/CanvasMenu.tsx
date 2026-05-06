@@ -16,16 +16,14 @@ type CanvasMenuProps = {
 export const CanvasMenu = memo(
   ({ setColor, lineWidth, setLineWidth, handleSelectChange, color }: CanvasMenuProps) => {
     return (
-      <div className='h-[150px] w-full text-left'>
-        <div className='mx-5'>
-          <div className='mb-3 flex'>
+      <div className='w-full text-left'>
+        <div className='space-y-5 rounded-2xl border border-white/60 bg-white/70 p-4 shadow-sm backdrop-blur-sm sm:p-5'>
+          <div className='flex'>
             <ColorPicker color={color} setColor={setColor} setLineWidth={setLineWidth} />
           </div>
-          <div className='mt-6'>
+          <div className='space-y-5'>
             <ManageLineWidth lineWidth={lineWidth} setLineWidth={setLineWidth} />
-            <div className='mt-6'>
-              <ThemeSelect handleSelectChange={handleSelectChange} />
-            </div>
+            <ThemeSelect handleSelectChange={handleSelectChange} />
           </div>
         </div>
       </div>

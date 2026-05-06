@@ -12,10 +12,10 @@ export const ManageLineWidth = memo(({ lineWidth, setLineWidth }: ManageLineWidt
     setLineWidth(value[0])
   }
   return (
-    <div className='items-center justify-center'>
-      <p className='mb-3'>線の太さ: {lineWidth} px</p>
+    <div className='w-full'>
+      <p className='mb-3 text-sm font-medium text-gray-700'>線の太さ: {lineWidth} px</p>
       <Slider
-        className='w-[300px]'
+        className='w-full'
         max={24}
         min={1}
         onValueChange={handleWidthChange}
