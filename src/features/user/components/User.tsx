@@ -15,7 +15,7 @@ const User = () => {
 
   if (useProfilequery.isError) return <>Error loading</>
   return (
-    <div className='mx-auto w-full px-4 md:w-[960px]'>
+    <div className='mx-auto w-full max-w-4xl px-0 sm:px-1'>
       <Profile isLoading={useProfilequery.isLoading} user={useProfilequery?.data} />
       <Tabs className='mt-5 w-full' defaultValue='works'>
         <TabsList className='grid w-full grid-cols-2'>

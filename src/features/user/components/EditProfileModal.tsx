@@ -100,7 +100,7 @@ const EditProfileModal = ({ user }: EditProfileModalProps) => {
       <DialogTrigger>
         <Avatar src={avatarSrc} />
       </DialogTrigger>
-      <DialogContent className='sm:max-w-[425px]'>
+      <DialogContent className='w-[calc(100vw-2rem)] max-w-md sm:max-w-[425px]'>
         <DialogHeader>
           <DialogDescription>プロフィールを編集</DialogDescription>
         </DialogHeader>
@@ -124,6 +124,7 @@ const EditProfileModal = ({ user }: EditProfileModalProps) => {
                     <FormControl>
                       <Input
                         accept='image/*'
+                        className='w-full'
                         onChange={(e) => {
                           handleImagePreview(e)
                           field.onChange(e.target.files?.[0])
@@ -141,7 +142,7 @@ const EditProfileModal = ({ user }: EditProfileModalProps) => {
                 render={({ field, fieldState }) => (
                   <FormItem>
                     <FormControl>
-                      <Input {...field} />
+                      <Input {...field} className='w-full' />
                     </FormControl>
                     <FormMessage>{fieldState.error?.message}</FormMessage>
                   </FormItem>

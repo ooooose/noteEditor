@@ -7,11 +7,11 @@ import Menu from '@/components/elements/Menu/Menu'
 
 const Header = () => {
   return (
-    <header className='mx-auto bg-white/50 backdrop-blur-sm md:w-2/3'>
-      <div className='container flex h-20 items-center md:justify-between'>
-        <div className='flex items-center gap-2 '>
+    <header className='mx-auto w-full border-b border-white/40 bg-white/60 backdrop-blur-sm'>
+      <div className='flex h-16 items-center justify-between sm:h-20'>
+        <div className='flex items-center gap-2'>
           <Link href='/'>
-            <span className='text-4xl font-bold'>
+            <span className='text-3xl font-bold tracking-tight sm:text-4xl'>
               <span className='text-red-500'>画</span>
               <span className='text-gray-900'>H</span>
               <span className='text-yellow-500'>A</span>

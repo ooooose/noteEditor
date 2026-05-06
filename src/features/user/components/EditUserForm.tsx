@@ -95,16 +95,16 @@ export const EditUserForm = ({ user }: EditProfileModalProps) => {
   }
 
   return (
-    <Card>
-      <CardHeader>
+    <Card className='border-white/40 bg-white/70 backdrop-blur-sm'>
+      <CardHeader className='p-5 sm:p-6'>
         <CardTitle>プロフィール</CardTitle>
         <CardDescription>プロフィール情報を管理します</CardDescription>
       </CardHeader>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div>
-            <CardContent className='space-y-6'>
-              <div className='flex items-center gap-4'>
+            <CardContent className='space-y-6 px-5 pb-5 sm:px-6 sm:pb-6'>
+              <div className='flex flex-col items-start gap-4 sm:flex-row sm:items-center'>
                 <Image
                   alt='avatar'
                   className='size-20 rounded-full'
@@ -148,7 +148,7 @@ export const EditUserForm = ({ user }: EditProfileModalProps) => {
                 />
               </div>
               <div className='grid gap-4'>
-                <div className='grid w-64 gap-2'>
+                <div className='grid w-full gap-2'>
                   <FormField
                     control={form.control}
                     name='name'
