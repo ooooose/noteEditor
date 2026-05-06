@@ -34,7 +34,7 @@ export default function Settings() {
         </div>
 
         <Tabs className='space-y-4' defaultValue='profile'>
-          <TabsList className='grid w-full grid-cols-2'>
+          <TabsList className='grid w-full grid-cols-2 bg-gray-100'>
             <TabsTrigger className='gap-2 text-sm sm:text-base' value='profile'>
               <User className='size-4' />
               プロフィール
@@ -45,7 +45,7 @@ export default function Settings() {
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent className='space-y-4' value='profile'>
+          <TabsContent className='min-h-[480px] space-y-4' value='profile'>
             {useProfileQuery.isLoading ? (
               <LoadingUserForm />
             ) : (
@@ -53,7 +53,7 @@ export default function Settings() {
             )}
           </TabsContent>
 
-          <TabsContent className='space-y-4' value='account'>
+          <TabsContent className='min-h-[480px] space-y-4' value='account'>
             <Card className='border-red-200 bg-red-50/80'>
               <CardHeader className='p-5 sm:p-6'>
                 <CardTitle className='text-red-600'>危険な操作</CardTitle>
