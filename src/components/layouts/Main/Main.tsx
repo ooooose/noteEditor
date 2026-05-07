@@ -4,7 +4,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
-import { useState, useEffect } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -18,32 +17,24 @@ import {
 import { Skeleton } from '@/components/ui/skeleton'
 
 import { Login } from '@/features/auth/components'
-import { getPicture } from '@/features/pictures/api'
+import { usePicture } from '@/features/pictures/api'
 import QuizModal from '@/features/pictures/components/QuizModal'
 import { TopPictures } from '@/features/top/components/top-pictures'
 import { baseURL } from '@/lib/constants/env'
-
-import type { Picture } from '@/features/pictures/types'
 
 const Main = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const pictureId = searchParams.get('pictureId')
-  const [picture, setPicture] = useState<Picture | null>(null)
-  const [isModalOpan, setIsModalOpen] = useState<boolean>(false)
 
-  useEffect(() => {
-    if (pictureId) {
-      getPicture({ pictureId }).then((res) => {
-        setPicture(res)
-        setIsModalOpen(true)
-      })
-    }
-  }, [pictureId])
+  const { data: picture } = usePicture({
+    pictureId: pictureId ?? undefined,
+  })
+
+  const isModalOpen = Boolean(picture && pictureId)
 
   const onOpenChange = () => {
     router.replace(baseURL)
-    setIsModalOpen(false)
   }
 
   const { status } = useSession()
@@ -204,7 +195,7 @@ const Main = () => {
         <QuizModal
           author={picture.user.name}
           frameId={picture.frameId}
-          isOpen={isModalOpan}
+          isOpen={isModalOpen}
           onOpenChange={onOpenChange}
           src={picture.imageUrl}
           title={picture.theme?.title}
