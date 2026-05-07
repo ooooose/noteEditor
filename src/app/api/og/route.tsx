@@ -12,7 +12,6 @@ export async function GET(req: Request) {
 
   try {
     if (!pictureId) {
-      console.log('No pictureId provided, returning default image')
       return new ImageResponse(
         (
           <div
