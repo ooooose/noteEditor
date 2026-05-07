@@ -1,5 +1,5 @@
 import { UpdateIcon } from '@radix-ui/react-icons'
-import { memo } from 'react'
+import { memo, useState } from 'react'
 
 import { Button } from '@/components/elements/Button'
 import {
@@ -24,12 +24,18 @@ type SwitchPictureFrameProps = {
 }
 
 const SwitchPictureFrame = memo(({ picture, src, author, userUid }: SwitchPictureFrameProps) => {
-  const { frameId, handleUpdateFrameId, switchPictureFrameMutation } = useSwitchPictureFrame({
+  const { frameId, switchPictureFrameMutation } = useSwitchPictureFrame({
     picture: picture,
     userUid: userUid,
   })
+  const [selectedFrameId, setSelectedFrameId] = useState(frameId)
+
+  const handleSelectChange = (value: string) => {
+    setSelectedFrameId(parseInt(value, 10))
+  }
+
   return (
-    <Dialog>
+    <Dialog onOpenChange={(open) => open && setSelectedFrameId(frameId)}>
       <DialogTrigger className='p-2'>
         <UpdateIcon className='size-5' />
       </DialogTrigger>
@@ -38,13 +44,15 @@ const SwitchPictureFrame = memo(({ picture, src, author, userUid }: SwitchPictur
           <DialogTitle>フレームを変更できます</DialogTitle>
         </DialogHeader>
         <div className='mx-auto flex w-[240px] flex-col gap-4'>
-          <Picture author={author} frameId={frameId} src={src} />
-          <FrameSelect frameId={frameId} handleSelectChange={handleUpdateFrameId} />
+          <Picture author={author} frameId={selectedFrameId} src={src} />
+          <FrameSelect frameId={selectedFrameId} handleSelectChange={handleSelectChange} />
         </div>
         <DialogClose asChild>
           <Button
             className='mt-3 w-full'
-            onClick={() => switchPictureFrameMutation.mutate({ id: picture.id, frame_id: frameId })}
+            onClick={() =>
+              switchPictureFrameMutation.mutate({ id: picture.id, frame_id: selectedFrameId })
+            }
             variant='outline'
           >
             登録する
