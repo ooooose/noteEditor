@@ -12,6 +12,7 @@ export async function GET(req: Request) {
 
   try {
     if (!pictureId) {
+      console.log('No pictureId provided, returning default image')
       return new ImageResponse(
         (
           <div
@@ -19,38 +20,20 @@ export async function GET(req: Request) {
               width: '1200px',
               height: '630px',
               display: 'flex',
-              flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              background: 'white',
             }}
           >
-            <h1
+            <img
+              alt='画HACK'
+              src={`${baseURL}/twitter-imate.png`}
               style={{
-                fontSize: 96,
-                fontWeight: 'bold',
-                display: 'flex',
-                gap: 4,
-                color: 'white',
-                textShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                width: '1200px',
+                height: '630px',
+                objectFit: 'contain',
               }}
-            >
-              <span style={{ color: '#ef4444' }}>画</span>
-              <span style={{ color: '#fbbf24' }}>H</span>
-              <span style={{ color: '#10b981' }}>A</span>
-              <span style={{ color: '#3b82f6' }}>C</span>
-              <span style={{ color: '#a855f7' }}>K</span>
-            </h1>
-            <p
-              style={{
-                fontSize: 32,
-                color: 'white',
-                marginTop: 32,
-                textShadow: '0 2px 8px rgba(0,0,0,0.3)',
-              }}
-            >
-              あなただけの絵を描くアプリ
-            </p>
+            />
           </div>
         ),
         {
