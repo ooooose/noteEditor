@@ -26,7 +26,7 @@ export async function GET(req: Request) {
           >
             <img
               alt='画HACK'
-              src={`${baseURL}/twitter-imate.png`}
+              src={`url(${baseURL}/twitter-image.png)`}
               style={{
                 width: '1200px',
                 height: '630px',
