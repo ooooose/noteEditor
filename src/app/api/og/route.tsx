@@ -38,6 +38,9 @@ export async function GET(req: Request) {
         {
           width: 1200,
           height: 630,
+          headers: {
+            'Cache-Control': 'public, max-age=0, must-revalidate',
+          },
         },
       )
     }
@@ -134,6 +137,9 @@ export async function GET(req: Request) {
       {
         width: 1200,
         height: 630,
+        headers: {
+          'Cache-Control': 'public, max-age=0, must-revalidate',
+        },
       },
     )
   } catch (err) {
@@ -183,6 +189,9 @@ export async function GET(req: Request) {
       {
         width: 1200,
         height: 630,
+        headers: {
+          'Cache-Control': 'public, max-age=0, must-revalidate',
+        },
       },
     )
   }
