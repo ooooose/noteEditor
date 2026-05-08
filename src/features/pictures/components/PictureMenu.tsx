@@ -25,6 +25,7 @@ type PictureMenuProps = {
 
 const PictureMenu = memo(({ picture, userUid }: PictureMenuProps) => {
   const url = `${baseURL}?pictureId=${picture.uid}`
+  const ogImageUrl = `${baseURL}/api/og?pictureId=${picture.uid}&imageUrl=${encodeURIComponent(picture.imageUrl)}`
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className='h-[65px] focus:outline-none'>
@@ -43,7 +44,7 @@ const PictureMenu = memo(({ picture, userUid }: PictureMenuProps) => {
           />
         </Tooltip>
         <Tooltip content='Xに共有'>
-          <XShareButton url={url} />
+          <XShareButton ogImageUrl={ogImageUrl} url={url} />
         </Tooltip>
       </DropdownMenuContent>
     </DropdownMenu>

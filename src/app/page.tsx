@@ -12,7 +12,14 @@ type Props = {
 
 export function generateMetadata({ searchParams }: Props): Metadata {
   const pictureId = searchParams?.pictureId
-  const imageUrl = pictureId ? `${baseURL}/api/og?pictureId=${pictureId}` : `${baseURL}/api/og`
+  const imageUrl = searchParams?.imageUrl
+
+  let ogImageUrl = `${baseURL}/api/og`
+  if (pictureId) {
+    ogImageUrl = imageUrl
+      ? `${baseURL}/api/og?pictureId=${pictureId}&imageUrl=${imageUrl}`
+      : `${baseURL}/api/og?pictureId=${pictureId}`
+  }
 
   return {
     metadataBase: new URL(baseURL),
@@ -21,13 +28,13 @@ export function generateMetadata({ searchParams }: Props): Metadata {
     openGraph: {
       title: '画HACK',
       description: 'あなたらしい絵を描くアプリ',
-      images: [imageUrl],
+      images: [ogImageUrl],
     },
     twitter: {
       title: '画HACK',
       description: 'あなたらしい絵を描くアプリ',
       card: 'summary_large_image',
-      images: [imageUrl],
+      images: [ogImageUrl],
     },
   }
 }
