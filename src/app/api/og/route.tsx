@@ -9,6 +9,7 @@ export async function GET(req: Request) {
   const apiURL = process.env.NEXT_PUBLIC_API_URL ?? ''
   const { searchParams } = new URL(req.url)
   const pictureId = searchParams.get('pictureId')
+  const passedImageUrl = searchParams.get('imageUrl')
 
   try {
     if (!pictureId) {
@@ -19,18 +20,72 @@ export async function GET(req: Request) {
               width: '1200px',
               height: '630px',
               display: 'flex',
+              flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
-              background: 'white',
+              background: `url(${baseURL}/background.png)`,
+              backgroundSize: 'contain',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center',
+              position: 'relative',
             }}
           >
-            <img
-              alt='画HACK'
-              src={`${baseURL}/twitter-image.png`}
+            <h3
               style={{
-                width: '1200px',
-                height: '630px',
-                objectFit: 'contain',
+                fontSize: 72,
+                fontWeight: 'bold',
+                marginBottom: 24,
+                display: 'flex',
+                gap: 2,
+                textShadow: '0 2px 6px rgba(0,0,0,0.15)',
+              }}
+            >
+              <span style={{ color: '#ef4444' }}>画</span>
+              <span style={{ color: '#111827' }}>H</span>
+              <span style={{ color: '#f59e42' }}>A</span>
+              <span style={{ color: '#22c55e' }}>C</span>
+              <span style={{ color: '#3b82f6' }}>K</span>
+            </h3>
+            <div
+              style={{
+                position: 'relative',
+                padding: 24,
+                background: '#fff5e5',
+                border: '20px solid #3B1F0F',
+                boxShadow:
+                  'inset 0 0 12px rgba(0,0,0,0.15), 0 12px 36px rgba(0,0,0,0.25), 0 4px 12px rgba(0,0,0,0.15)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginBottom: 24,
+                minWidth: 500,
+                minHeight: 340,
+                borderRadius: 4,
+              }}
+            >
+              <img
+                alt='通常OGP'
+                height={260}
+                src={`${baseURL}/character-front.png`}
+                style={{
+                  objectFit: 'contain',
+                  boxShadow: '0 6px 18px rgba(0,0,0,0.2)',
+                  background: '#fff',
+                  display: 'block',
+                  borderRadius: 2,
+                }}
+                width={420}
+              />
+            </div>
+            <div
+              style={{
+                position: 'absolute',
+                bottom: 60,
+                width: '50%',
+                height: '40px',
+                background: 'rgba(0,0,0,0.08)',
+                filter: 'blur(20px)',
+                borderRadius: '50%',
               }}
             />
           </div>
@@ -45,16 +100,17 @@ export async function GET(req: Request) {
       )
     }
 
-    const res = await fetch(`${apiURL}/api/v1/pictures/${pictureId}`, {
-      headers: { Accept: 'application/json' },
-    })
+    const imageUrl = passedImageUrl
+      ? decodeURIComponent(passedImageUrl)
+      : await (async () => {
+          const res = await fetch(`${apiURL}/api/v1/pictures/${pictureId}`, {
+            headers: { Accept: 'application/json' },
+          })
+          if (!res.ok) throw new Error(`API error: ${res.status}`)
+          const data = await res.json()
+          return data.data.attributes.image_url
+        })()
 
-    if (!res.ok) {
-      throw new Error(`API error: ${res.status}`)
-    }
-
-    const data = await res.json()
-    const imageUrl = data.data.attributes.image_url
     const alt = 'OGP'
 
     return new ImageResponse(
@@ -144,7 +200,6 @@ export async function GET(req: Request) {
     )
   } catch (err) {
     console.error('OG generation error:', err)
-    // Return default error image
     return new ImageResponse(
       (
         <div
