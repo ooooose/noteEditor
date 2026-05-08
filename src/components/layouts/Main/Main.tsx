@@ -47,14 +47,24 @@ const Main = () => {
             <p className='text-center text-xs font-semibold tracking-[0.35em] text-gray-500 sm:text-sm'>
               EXHIBITION
             </p>
-            <h1 className='mt-4 text-center text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl'>
-              <span className='text-red-500'>画</span>
-              <span className='text-gray-900'>H</span>
-              <span className='text-yellow-500'>A</span>
-              <span className='text-green-500'>C</span>
-              <span className='text-blue-500'>K</span>
-              へようこそ
-            </h1>
+            <div className='mt-4 flex flex-col items-center justify-center gap-2 sm:flex-row sm:gap-3'>
+              <Image
+                alt='Character Front'
+                height={80}
+                loading='eager'
+                sizes='80px'
+                src='/character-front.png'
+                width={80}
+              />
+              <h1 className='text-center text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl'>
+                <span className='text-red-500'>画</span>
+                <span className='text-gray-900'>H</span>
+                <span className='text-yellow-500'>A</span>
+                <span className='text-green-500'>C</span>
+                <span className='text-blue-500'>K</span>
+                へようこそ
+              </h1>
+            </div>
             <p className='mx-auto mt-6 max-w-[52ch] text-center text-sm leading-relaxed text-gray-600 sm:text-base md:text-lg'>
               テーマに沿って描いた作品は、額縁に飾って展示できます。
               <br className='hidden sm:block' />
