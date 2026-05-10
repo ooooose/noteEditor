@@ -24,7 +24,8 @@ type PictureMenuProps = {
 }
 
 const PictureMenu = memo(({ picture, userUid }: PictureMenuProps) => {
-  const url = `${baseURL}?pictureId=${picture.uid}`
+  const imageName = decodeURIComponent(new URL(picture.imageUrl).pathname.split('/').pop() || '')
+  const url = `${baseURL}?imageName=${encodeURIComponent(imageName)}&pictureId=${picture.uid}`
 
   return (
     <DropdownMenu>
