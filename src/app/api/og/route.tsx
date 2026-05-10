@@ -7,10 +7,13 @@ export const runtime = 'edge'
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
-  const imageUrl = searchParams.get('imageUrl')
+
+  const rawImageName = searchParams.get('imageName')
+
+  const imageName = rawImageName ? decodeURIComponent(rawImageName) : null
 
   try {
-    if (!imageUrl) {
+    if (!imageName) {
       return new ImageResponse(
         (
           <div
@@ -151,7 +154,7 @@ export async function GET(req: Request) {
             <img
               alt='作品のOGP'
               height={260}
-              src={imageUrl}
+              src={`https://${process.env.CLOUDFLARE_URL}/${encodeURIComponent(imageName)}`}
               style={{
                 objectFit: 'contain',
                 boxShadow: '0 6px 18px rgba(0,0,0,0.2)',
