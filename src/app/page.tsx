@@ -14,10 +14,11 @@ export function generateMetadata({ searchParams }: Props): Metadata {
   const imageName = searchParams?.imageName
   const cloudflareHost = process.env.CLOUDFLARE_URL
 
-  const ogImage =
-    imageName && cloudflareHost
+  const ogImage = cloudflareHost
+    ? imageName
       ? `https://${cloudflareHost}/ogp/${decodeURIComponent(imageName)}`
-      : `${baseURL}/api/og`
+      : `https://${cloudflareHost}/ogp/default.png`
+    : `${baseURL}/api/og`
 
   return {
     metadataBase: new URL(baseURL),
