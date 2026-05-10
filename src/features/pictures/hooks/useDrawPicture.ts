@@ -118,13 +118,7 @@ export const useDrawPicture = ({ width, height }: IProps) => {
     setIsLoading(true)
     try {
       const blob = await new Promise<Blob | null>((resolve) => {
-        canvasRef.current?.toBlob(
-          (blob) => {
-            resolve(blob)
-          },
-          'image/png',
-          0.5,
-        )
+        canvasRef.current?.toBlob((blob) => resolve(blob), 'image/png', 0.5)
       })
 
       if (!blob) {
@@ -134,23 +128,20 @@ export const useDrawPicture = ({ width, height }: IProps) => {
 
       const compressedBase64 = await new Promise<string>((resolve) => {
         const reader = new FileReader()
-        reader.onloadend = () => {
-          resolve(reader.result as string)
-        }
+        reader.onloadend = () => resolve(reader.result as string)
         reader.readAsDataURL(blob)
       })
 
       const fileName = `${Date.now()}-${title}`
       const imageUrl = `${process.env.NEXT_PUBLIC_IMAGE_HOST_URL}/${fileName}`
-      const params = {
-        image: compressedBase64,
-        fileName: fileName,
-      }
-      await middleApiClient.apiPost('/api/pictures', params)
-      createPictureMutation.mutate({
-        image_url: imageUrl,
-        title: title,
-      })
+
+      await middleApiClient.apiPost('/api/pictures', { image: compressedBase64, fileName })
+
+      // OGPをウォームアップ（R2へのアップロード完了後に叩く）
+      const ogUrl = `/api/og?imageName=${encodeURIComponent(fileName)}`
+      fetch(ogUrl).catch(() => {})
+
+      createPictureMutation.mutate({ image_url: imageUrl, title })
       router.push('/timeline')
     } catch (err) {
       console.error(err)
