@@ -8,20 +8,15 @@ export const runtime = 'edge'
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
 
-  const rawImageUrl = searchParams.get('imageUrl')
   const rawImageName = searchParams.get('imageName')
 
-  const imageUrl = rawImageUrl ? decodeURIComponent(rawImageUrl) : null
   const imageName = rawImageName ? decodeURIComponent(rawImageName) : null
   const cloudflareHost = process.env.CLOUDFLARE_URL
 
-  let targetImageUrl: string | null = null
-
-  if (imageUrl) {
-    targetImageUrl = imageUrl
-  } else if (imageName && cloudflareHost) {
-    targetImageUrl = `https://${cloudflareHost}/${encodeURIComponent(imageName)}`
-  }
+  const targetImageUrl =
+    imageName && cloudflareHost
+      ? `https://${cloudflareHost}/${encodeURIComponent(imageName)}`
+      : null
 
   try {
     if (!targetImageUrl) {
@@ -165,7 +160,7 @@ export async function GET(req: Request) {
             <img
               alt='作品のOGP'
               height={260}
-              src={targetImageUrl ?? ''}
+              src={targetImageUrl}
               style={{
                 objectFit: 'contain',
                 boxShadow: '0 6px 18px rgba(0,0,0,0.2)',
