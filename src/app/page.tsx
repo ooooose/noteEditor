@@ -11,9 +11,13 @@ type Props = {
 }
 
 export function generateMetadata({ searchParams }: Props): Metadata {
-  const pictureId = searchParams?.pictureId
+  const imageName = searchParams?.imageName
+  const cloudflareHost = <process className='env CLOUDFLARE_URL'></process>
 
-  const ogImage = pictureId ? `${baseURL}/api/og?pictureId=${pictureId}` : `${baseURL}/api/og`
+  const ogImage =
+    imageName && cloudflareHost
+      ? `https://${cloudflareHost}/ogp/${decodeURIComponent(imageName)}`
+      : `${baseURL}/api/og`
 
   return {
     metadataBase: new URL(baseURL),
