@@ -3,6 +3,8 @@ import { ImageResponse } from 'next/og'
 
 import { baseURL } from '@/lib/constants/env'
 
+export const runtime = 'edge'
+
 const cacheHeaders = {
   'Cache-Control': 'public, max-age=31536000, immutable',
 }
@@ -173,24 +175,42 @@ function generateArticleOGP(targetImageUrl: string) {
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
-
+  const pictureId = searchParams.get('pictureId')
   const rawImageName = searchParams.get('imageName')
   const imageName = rawImageName ? decodeURIComponent(rawImageName) : null
   const cloudflareHost = process.env.CLOUDFLARE_URL
-
-  const targetImageUrl =
-    imageName && cloudflareHost
-      ? `https://${cloudflareHost}/${encodeURIComponent(imageName)}`
-      : null
+  const apiBaseUrl = process.env.API_BASE_URL
 
   try {
-    if (targetImageUrl) {
-      const imageRes = await fetch(targetImageUrl)
-      if (!imageRes.ok) {
-        console.error('R2 image fetch failed:', imageRes.status, targetImageUrl)
-        return generateDefaultOGP()
+    if (pictureId && apiBaseUrl) {
+      const res = await fetch(`${apiBaseUrl}/api/v1/pictures/${pictureId}`)
+      if (res.ok) {
+        const { data } = await res.json()
+        const ogpImageUrl = data?.attributes?.ogp_image_url
+        if (ogpImageUrl) {
+          // スタイリング済み画像なのでそのままimgとして返す
+          return new ImageResponse(
+            (
+              <img
+                alt='作品のOGP'
+                height={630}
+                src={ogpImageUrl}
+                style={{ objectFit: 'cover' }}
+                width={1200}
+              />
+            ),
+            { width: 1200, height: 630, headers: cacheHeaders },
+          )
+        }
       }
-      return generateArticleOGP(targetImageUrl)
+    }
+
+    if (imageName && cloudflareHost) {
+      const targetImageUrl = `https://${cloudflareHost}/${encodeURIComponent(imageName)}`
+      const imageRes = await fetch(targetImageUrl)
+      if (imageRes.ok) {
+        return generateArticleOGP(targetImageUrl)
+      }
     }
 
     return generateDefaultOGP()
