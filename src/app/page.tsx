@@ -13,12 +13,15 @@ type Props = {
 export function generateMetadata({ searchParams }: Props): Metadata {
   const pictureId = searchParams?.pictureId
   const imageUrl = searchParams?.imageUrl
+  const imageName = searchParams?.imageName
 
   let ogImageUrl = `${baseURL}/api/og`
   if (pictureId) {
     ogImageUrl = imageUrl
-      ? `${baseURL}/api/og?pictureId=${pictureId}&imageUrl=${imageUrl}`
+      ? `${baseURL}/api/og?pictureId=${pictureId}&imageUrl=${encodeURIComponent(imageUrl)}`
       : `${baseURL}/api/og?pictureId=${pictureId}`
+  } else if (imageName) {
+    ogImageUrl = `${baseURL}/api/og?imageName=${encodeURIComponent(imageName)}`
   }
 
   return {
