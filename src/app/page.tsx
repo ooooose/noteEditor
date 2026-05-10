@@ -12,7 +12,7 @@ type Props = {
 
 export function generateMetadata({ searchParams }: Props): Metadata {
   const imageName = searchParams?.imageName
-  const cloudflareHost = <process className='env CLOUDFLARE_URL'></process>
+  const cloudflareHost = process.env.CLOUDFLARE_URL
 
   const ogImage =
     imageName && cloudflareHost
