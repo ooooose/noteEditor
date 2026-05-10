@@ -6,13 +6,11 @@ import { baseURL } from '@/lib/constants/env'
 export const runtime = 'edge'
 
 export async function GET(req: Request) {
-  const apiURL = process.env.NEXT_PUBLIC_API_URL ?? ''
   const { searchParams } = new URL(req.url)
-  const pictureId = searchParams.get('pictureId')
-  const passedImageUrl = searchParams.get('imageUrl')
+  const imageUrl = searchParams.get('imageUrl')
 
   try {
-    if (!pictureId) {
+    if (!imageUrl) {
       return new ImageResponse(
         (
           <div
@@ -100,19 +98,6 @@ export async function GET(req: Request) {
       )
     }
 
-    const imageUrl = passedImageUrl
-      ? decodeURIComponent(passedImageUrl)
-      : await (async () => {
-          const res = await fetch(`${apiURL}/api/v1/pictures/${pictureId}`, {
-            headers: { Accept: 'application/json' },
-          })
-          if (!res.ok) throw new Error(`API error: ${res.status}`)
-          const data = await res.json()
-          return data.data.attributes.image_url
-        })()
-
-    const alt = 'OGP'
-
     return new ImageResponse(
       (
         <div
@@ -164,7 +149,7 @@ export async function GET(req: Request) {
             }}
           >
             <img
-              alt={alt}
+              alt='作品のOGP'
               height={260}
               src={imageUrl}
               style={{
