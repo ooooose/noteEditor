@@ -3,8 +3,6 @@ import { ImageResponse } from 'next/og'
 
 import { baseURL } from '@/lib/constants/env'
 
-export const runtime = 'edge'
-
 const cacheHeaders = {
   'Cache-Control': 'public, max-age=31536000, immutable',
 }
