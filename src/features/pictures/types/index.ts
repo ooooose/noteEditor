@@ -6,6 +6,7 @@ import type { Entity } from '@/types/api'
 
 export type Picture = Entity<{
   imageUrl: string
+  ogpImageUrl: string | null
   frameId: number
   uid: string
   userId: number

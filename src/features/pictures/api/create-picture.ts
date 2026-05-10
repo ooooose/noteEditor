@@ -9,6 +9,7 @@ import type { MutationConfig } from '@/lib/react-query/react-query'
 
 type CreatePictureParams = {
   image_url: string
+  ogp_image_url: string | null
   title: string
 }
 

@@ -120,11 +120,7 @@ export const useDrawPicture = ({ width, height }: IProps) => {
       const blob = await new Promise<Blob | null>((resolve) => {
         canvasRef.current?.toBlob((blob) => resolve(blob), 'image/png', 0.5)
       })
-
-      if (!blob) {
-        console.error('Failed to convert canvas to blob.')
-        return
-      }
+      if (!blob) return
 
       const compressedBase64 = await new Promise<string>((resolve) => {
         const reader = new FileReader()
@@ -133,22 +129,33 @@ export const useDrawPicture = ({ width, height }: IProps) => {
       })
 
       const fileName = `${Date.now()}-${title}`
+
+      await middleApiClient.apiPost('/api/pictures', {
+        image: compressedBase64,
+        fileName,
+      })
+
+      const ogpRes = await fetch('/api/og-save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ imageName: fileName }),
+      })
+
+      const { ogpImageUrl } = ogpRes.ok ? await ogpRes.json() : { ogpImageUrl: null }
+
       const imageUrl = `${process.env.NEXT_PUBLIC_IMAGE_HOST_URL}/${fileName}`
 
-      await middleApiClient.apiPost('/api/pictures', { image: compressedBase64, fileName })
-
-      // OGPをウォームアップ（R2へのアップロード完了後に叩く）
-      const ogUrl = `/api/og?imageName=${encodeURIComponent(fileName)}`
-      fetch(ogUrl).catch(() => {})
-
-      createPictureMutation.mutate({ image_url: imageUrl, title })
-      router.push('/timeline')
+      createPictureMutation.mutate({
+        image_url: imageUrl,
+        ogp_image_url: ogpImageUrl,
+        title,
+      })
     } catch (err) {
       console.error(err)
     } finally {
       setIsLoading(false)
     }
-  }, [title, createPictureMutation, router])
+  }, [title, createPictureMutation])
 
   return {
     canvasRef,
