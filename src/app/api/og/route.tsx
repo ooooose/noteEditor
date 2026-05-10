@@ -8,12 +8,23 @@ export const runtime = 'edge'
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
 
+  const rawImageUrl = searchParams.get('imageUrl')
   const rawImageName = searchParams.get('imageName')
 
+  const imageUrl = rawImageUrl ? decodeURIComponent(rawImageUrl) : null
   const imageName = rawImageName ? decodeURIComponent(rawImageName) : null
+  const cloudflareHost = process.env.CLOUDFLARE_URL
+
+  let targetImageUrl: string | null = null
+
+  if (imageUrl) {
+    targetImageUrl = imageUrl
+  } else if (imageName && cloudflareHost) {
+    targetImageUrl = `https://${cloudflareHost}/${encodeURIComponent(imageName)}`
+  }
 
   try {
-    if (!imageName) {
+    if (!targetImageUrl) {
       return new ImageResponse(
         (
           <div
@@ -154,7 +165,7 @@ export async function GET(req: Request) {
             <img
               alt='作品のOGP'
               height={260}
-              src={`https://${process.env.CLOUDFLARE_URL}/${encodeURIComponent(imageName)}`}
+              src={targetImageUrl ?? ''}
               style={{
                 objectFit: 'contain',
                 boxShadow: '0 6px 18px rgba(0,0,0,0.2)',
@@ -188,54 +199,5 @@ export async function GET(req: Request) {
     )
   } catch (err) {
     console.error('OG generation error:', err)
-    return new ImageResponse(
-      (
-        <div
-          style={{
-            width: '1200px',
-            height: '630px',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-          }}
-        >
-          <h1
-            style={{
-              fontSize: 96,
-              fontWeight: 'bold',
-              display: 'flex',
-              gap: 4,
-              color: 'white',
-              textShadow: '0 4px 12px rgba(0,0,0,0.3)',
-            }}
-          >
-            <span style={{ color: '#ef4444' }}>画</span>
-            <span style={{ color: '#fbbf24' }}>H</span>
-            <span style={{ color: '#10b981' }}>A</span>
-            <span style={{ color: '#3b82f6' }}>C</span>
-            <span style={{ color: '#a855f7' }}>K</span>
-          </h1>
-          <p
-            style={{
-              fontSize: 32,
-              color: 'white',
-              marginTop: 32,
-              textShadow: '0 2px 8px rgba(0,0,0,0.3)',
-            }}
-          >
-            あなただけの絵を描くアプリ
-          </p>
-        </div>
-      ),
-      {
-        width: 1200,
-        height: 630,
-        headers: {
-          'Cache-Control': 'public, max-age=0, must-revalidate',
-        },
-      },
-    )
   }
 }
