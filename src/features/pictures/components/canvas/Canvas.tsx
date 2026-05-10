@@ -93,6 +93,11 @@ export const Canvas: React.FC<IProps> = (props) => {
           <div className='grid w-full grid-cols-1 gap-3 sm:flex sm:w-auto sm:justify-end'>
             <Modal description='絵を登録しますか？' text='登録'>
               {!title && <small className='text-red-500'>テーマを入力してください</small>}
+              {isLoading && (
+                <small className='text-gray-500'>
+                  画像を処理しています。しばらくお待ちください...
+                </small>
+              )}
               <Button
                 className='w-full sm:w-auto'
                 disabled={!title || isLoading}

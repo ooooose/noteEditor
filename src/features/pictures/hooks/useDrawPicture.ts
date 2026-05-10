@@ -23,24 +23,28 @@ interface IRect {
 
 export const useDrawPicture = ({ width, height }: IProps) => {
   const router = useRouter()
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
   const createPictureMutation = useCreatePicture({
     mutationConfig: {
       onSuccess: async () => {
         toast('画像を投稿しました', { position: 'top-center' })
         router.push('/timeline')
+        setIsLoading(false)
       },
       onError: () => {
         toast('画像の投稿に失敗しました', { position: 'top-center' })
+        setIsLoading(false)
       },
     },
   })
+
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   let mouseX: number | null = null
   let mouseY: number | null = null
   const isDrawingRef = useRef(false)
   const [title, setTitle] = useState<string>('')
   const [color, setColor] = useState<string>('#000000')
-  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [lineWidth, setLineWidth] = useState<number>(2)
 
   const handleSelectChange = (value: string) => {
@@ -130,11 +134,13 @@ export const useDrawPicture = ({ width, height }: IProps) => {
 
       const fileName = `${Date.now()}-${title}`
 
+      // 元画像をR2にアップロード
       await middleApiClient.apiPost('/api/pictures', {
         image: compressedBase64,
         fileName,
       })
 
+      // OGP画像をサーバーサイドで生成・R2に保存
       const ogpRes = await fetch('/api/og-save', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -152,7 +158,6 @@ export const useDrawPicture = ({ width, height }: IProps) => {
       })
     } catch (err) {
       console.error(err)
-    } finally {
       setIsLoading(false)
     }
   }, [title, createPictureMutation])
